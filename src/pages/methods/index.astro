@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allMethods = await getCollection('methods');
+
+// Custom order for standard HTTP verbs
+const verbOrder = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'];
+const sortedMethods = allMethods.sort((a, b) => {
+  const indexA = verbOrder.indexOf(a.data.name);
+  const indexB = verbOrder.indexOf(b.data.name);
+  if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+  return a.data.name.localeCompare(b.data.name);
+});
+---
+
+<Layout 
+  title="HTTP Methods Reference Directory | apiguide.dev"
+  description="Reference directory of the HTTP request methods (verbs) used in REST APIs, detailing safety, idempotency, and caching behaviors."
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Header -->
+    <header class="mb-12 border-b border-paper-300 pb-8">
+      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
+        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
+        <span class="mx-2 text-paper-400">/</span>
+        <span class="text-paper-600">HTTP Methods</span>
+      </nav>
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">HTTP Request Methods</h1>
+      <p class="text-lg text-paper-600 max-w-2xl">
+        A semantic guide to HTTP verbs, outlining their proper application, safety/idempotency rules, and common status code correlations.
+      </p>
+    </header>
+
+    <!-- Methods List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {sortedMethods.map(m => (
+        <div class="border border-paper-300 rounded-xl p-6 bg-paper-100/50 hover:bg-paper-100 hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <h2 class="text-2xl font-bold">
+                <a href={`/methods/${m.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                  {m.data.name}
+                </a>
+              </h2>
+              
+              <!-- Badges -->
+              <div class="flex flex-wrap gap-1.5 justify-end">
+                {m.data.safe ? (
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    Safe
+                  </span>
+                ) : (
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-paper-200 text-paper-600 border border-paper-300">
+                    Unsafe
+                  </span>
+                )}
+                
+                {m.data.idempotent ? (
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-yinmn-100 text-yinmn-800 border border-yinmn-200">
+                    Idempotent
+                  </span>
+                ) : (
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-ochre-100 text-ochre-800 border border-ochre-200">
+                    Non-Idempotent
+                  </span>
+                )}
+                
+                {m.data.cacheable && (
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-chartres-100 text-chartres-800 border border-chartres-200">
+                    Cacheable
+                  </span>
+                )}
+              </div>
+            </div>
+            
+            <p class="text-sm text-paper-700 leading-relaxed mb-6">
+              {m.data.description}
+            </p>
+          </div>
+          
+          <div class="text-xs text-paper-500 font-medium border-t border-paper-300 pt-4 flex items-center justify-between">
+            <a href={`/methods/${m.id}/`} class="text-chartres-600 hover:underline">
+              Read semantic usage &rarr;
+            </a>
+            {m.data.relatedCodes && m.data.relatedCodes.length > 0 && (
+              <span class="text-paper-400">
+                Common Codes: {m.data.relatedCodes.join(',')}
+              </span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+</Layout>

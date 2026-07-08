@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MetaItem from '../../components/MetaItem.astro';
+
+export async function getStaticPaths() {
+  const specs = await getCollection('specifications');
+  return specs.map(spec => ({
+    params: { slug: spec.id },
+    props: { spec },
+  }));
+}
+
+const { spec } = Astro.props;
+const { Content } = await render(spec);
+
+import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+
+const specJsonLd = [
+  getTechArticleSchema({
+    headline: `${spec.data.title} Reference Guide`,
+    description: spec.data.description,
+    url: Astro.url.href,
+    category: "API Specifications",
+    aboutName: spec.data.title,
+    aboutUrl: spec.data.officialUrl
+  }),
+  getBreadcrumbSchema([
+    { name: "Specifications", path: "/specifications/" },
+    { name: spec.data.title, path: `/specifications/${spec.id}/` }
+  ])
+];
+---
+
+<Layout 
+  title={`${spec.data.title} Reference Guide | apiguide.dev`}
+  description={spec.data.description}
+  jsonLd={specJsonLd}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Breadcrumbs Component -->
+    <Breadcrumbs items={[
+      { name: "Specifications Reference", href: "/specifications/" },
+      { name: spec.data.title }
+    ]} />
+
+    <!-- Title & Metadata -->
+    <header class="mb-10 border-b border-paper-300 pb-6">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950 font-display">
+        {spec.data.title}
+      </h1>
+      <p class="text-lg text-paper-600 mb-6">
+        {spec.data.description}
+      </p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
+        <MetaItem label="Standard Version">
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-200">
+            v{spec.data.currentVersion}
+          </span>
+        </MetaItem>
+        <MetaItem label="Official Specification">
+          <span class="font-bold text-chartres-600 block">
+            <a href={spec.data.officialUrl} target="_blank" rel="noopener noreferrer" class="hover:underline">
+              Official Spec Website &rarr;
+            </a>
+          </span>
+          <span class="text-xxs text-paper-400 block mt-0.5 break-all">{spec.data.officialUrl}</span>
+        </MetaItem>
+      </div>
+    </header>
+
+    <!-- Markdown Content Body -->
+    <article class="prose max-w-none">
+      <Content />
+    </article>
+  </main>
+</Layout>
+
+

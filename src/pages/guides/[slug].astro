@@ -1,0 +1,72 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map(g => ({
+    params: { slug: g.id },
+    props: { g },
+  }));
+}
+
+const { g } = Astro.props;
+const { Content } = await render(g);
+
+import { guideCategoryThemes } from '../../config/themes';
+
+const activeTheme = guideCategoryThemes[g.data.category];
+
+import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+
+const guideJsonLd = [
+  getTechArticleSchema({
+    headline: g.data.title,
+    description: g.data.description,
+    url: Astro.url.href,
+    category: activeTheme.label
+  }),
+  getBreadcrumbSchema([
+    { name: "Guides", path: "/guides/" },
+    { name: g.data.title, path: `/guides/${g.id}/` }
+  ])
+];
+---
+
+<Layout 
+  title={`${g.data.title} | Developer Guide`}
+  description={g.data.description}
+  jsonLd={guideJsonLd}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Breadcrumbs Component -->
+    <Breadcrumbs items={[
+      { name: "Guides", href: "/guides/" },
+      { name: g.data.title }
+    ]} />
+
+    <!-- Title & Metadata -->
+    <header class="mb-10 border-b border-paper-300 pb-6">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
+        {g.data.title}
+      </h1>
+      <p class="text-lg text-paper-600 mb-4">
+        {g.data.description}
+      </p>
+      <div class="flex items-center gap-2 text-sm">
+        <span class="text-paper-500">Topic:</span>
+        <span class={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider ${activeTheme.badge}`}>
+          {activeTheme.label}
+        </span>
+      </div>
+    </header>
+
+    <!-- Markdown Content Body -->
+    <article class="prose max-w-none">
+      <Content />
+    </article>
+  </main>
+</Layout>
+
+

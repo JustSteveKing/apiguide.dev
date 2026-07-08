@@ -1,0 +1,14 @@
+---
+interface Props {
+  label: string;
+  value?: string;
+}
+
+const { label, value } = Astro.props;
+---
+<div class="border border-paper-300 rounded-xl p-4 bg-paper-100/30 backdrop-blur-xs flex flex-col justify-between">
+  <span class="block text-paper-500 font-medium text-xs mb-1.5">{label}</span>
+  <span class="text-paper-900 font-semibold text-sm">
+    {value !== undefined ? value : <slot />}
+  </span>
+</div>

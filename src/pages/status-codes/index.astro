@@ -1,0 +1,100 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allCodes = await getCollection('statusCodes');
+
+// Sort codes numerically
+const sortedCodes = allCodes.sort((a, b) => a.data.code - b.data.code);
+
+const categories = [
+  { key: 'informational', label: 'Informational (1xx)', codes: sortedCodes.filter(c => c.data.category === 'informational') },
+  { key: 'success', label: 'Success (2xx)', codes: sortedCodes.filter(c => c.data.category === 'success') },
+  { key: 'redirection', label: 'Redirection (3xx)', codes: sortedCodes.filter(c => c.data.category === 'redirection') },
+  { key: 'client-error', label: 'Client Errors (4xx)', codes: sortedCodes.filter(c => c.data.category === 'client-error') },
+  { key: 'server-error', label: 'Server Errors (5xx)', codes: sortedCodes.filter(c => c.data.category === 'server-error') }
+];
+
+const categoryThemes = {
+  'informational': {
+    badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200 border',
+    card: 'border-paper-300 hover:border-yinmn-400 bg-paper-100/50 hover:bg-yinmn-50/50 hover:shadow-xs transition-all'
+  },
+  'success': {
+    badge: 'bg-emerald-100 text-emerald-900 border-emerald-200 border',
+    card: 'border-paper-300 hover:border-emerald-400 bg-paper-100/50 hover:bg-emerald-50/50 hover:shadow-xs transition-all'
+  },
+  'redirection': {
+    badge: 'bg-chartres-100 text-chartres-900 border-chartres-200 border',
+    card: 'border-paper-300 hover:border-chartres-400 bg-paper-100/50 hover:bg-chartres-50/50 hover:shadow-xs transition-all'
+  },
+  'client-error': {
+    badge: 'bg-ochre-100 text-ochre-900 border-ochre-200 border',
+    card: 'border-paper-300 hover:border-ochre-400 bg-paper-100/50 hover:bg-ochre-50/50 hover:shadow-xs transition-all'
+  },
+  'server-error': {
+    badge: 'bg-uranium-100 text-uranium-900 border-uranium-200 border',
+    card: 'border-paper-300 hover:border-uranium-400 bg-paper-100/50 hover:bg-uranium-50/50 hover:shadow-xs transition-all'
+  }
+} as const;
+---
+
+<Layout 
+  title="HTTP Status Codes Catalog | apiguide.dev"
+  description="The ultimate developer reference for all standard HTTP status codes (1xx, 2xx, 3xx, 4xx, 5xx) with REST API best practices."
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Header -->
+    <header class="mb-12 border-b border-paper-300 pb-8">
+      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
+        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
+        <span class="mx-2 text-paper-400">/</span>
+        <span class="text-paper-600">HTTP Status Codes</span>
+      </nav>
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">HTTP Status Codes Catalog</h1>
+      <p class="text-lg text-paper-600 max-w-2xl">
+        A comprehensive reference of HTTP status codes, explaining when to use them in REST APIs and mapping them to concrete error schemas.
+      </p>
+    </header>
+
+    <!-- Categories list -->
+    <div class="space-y-16">
+      {categories.filter(cat => cat.codes.length > 0).map(cat => {
+        const theme = categoryThemes[cat.key];
+        return (
+          <section aria-labelledby={`cat-title-${cat.key}`}>
+            <h2 id={`cat-title-${cat.key}`} class="text-2xl font-bold mb-6 text-paper-800 border-b border-paper-300 pb-2">
+              {cat.label}
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {cat.codes.map(sc => (
+                <div class={`border rounded-lg p-5 transition-all flex flex-col justify-between ${theme.card}`}>
+                  <div>
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                      <h3 class="text-lg font-bold">
+                        <a href={`/status-codes/${sc.data.code}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                          HTTP {sc.data.code}
+                        </a>
+                      </h3>
+                      <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap ${theme.badge}`}>
+                        {sc.data.title}
+                      </span>
+                    </div>
+                    <p class="text-sm text-paper-700 leading-relaxed mb-4">
+                      {sc.data.description}
+                    </p>
+                  </div>
+                  <div class="text-xs text-paper-500 font-medium">
+                    <a href={`/status-codes/${sc.data.code}/`} class="text-chartres-600 hover:underline">
+                      Read full semantics &rarr;
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allHeaders = await getCollection('headers');
+
+// Sort alphabetically
+const sortedHeaders = allHeaders.sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+const categories = [
+  { key: 'request', label: 'Request Headers', headers: sortedHeaders.filter(h => h.data.category === 'request') },
+  { key: 'response', label: 'Response Headers', headers: sortedHeaders.filter(h => h.data.category === 'response') },
+  { key: 'both', label: 'Bidirectional Headers (Request & Response)', headers: sortedHeaders.filter(h => h.data.category === 'both') }
+];
+
+const categoryThemes = {
+  'request': {
+    badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200 border',
+    card: 'border-paper-300 hover:border-yinmn-400 bg-paper-100/50 hover:bg-yinmn-50/50 hover:shadow-xs transition-all'
+  },
+  'response': {
+    badge: 'bg-chartres-100 text-chartres-900 border-chartres-200 border',
+    card: 'border-paper-300 hover:border-chartres-400 bg-paper-100/50 hover:bg-chartres-50/50 hover:shadow-xs transition-all'
+  },
+  'both': {
+    badge: 'bg-paper-200 text-paper-900 border-paper-300 border',
+    card: 'border-paper-300 hover:border-paper-400 bg-paper-100/50 hover:bg-paper-200/50 hover:shadow-xs transition-all'
+  }
+} as const;
+---
+
+<Layout 
+  title="API HTTP Headers Reference | apiguide.dev"
+  description="Reference directory of the key HTTP headers used in REST APIs, including request authorization, conditional checks, caching, and rate limiting headers."
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Header -->
+    <header class="mb-12 border-b border-paper-300 pb-8">
+      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
+        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
+        <span class="mx-2 text-paper-400">/</span>
+        <span class="text-paper-600">HTTP Headers</span>
+      </nav>
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">HTTP Headers Directory</h1>
+      <p class="text-lg text-paper-600 max-w-2xl">
+        A comprehensive reference of HTTP headers commonly utilized in web APIs to manage authentication, pagination, rate limiting, and content negotiation.
+      </p>
+    </header>
+
+    <!-- Categories List -->
+    <div class="space-y-16">
+      {categories.filter(cat => cat.headers.length > 0).map(cat => {
+        const theme = categoryThemes[cat.key];
+        return (
+          <section aria-labelledby={`cat-title-${cat.key}`}>
+            <h2 id={`cat-title-${cat.key}`} class="text-2xl font-bold mb-6 text-paper-800 border-b border-paper-300 pb-2">
+              {cat.label}
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {cat.headers.map(h => (
+                <div class={`border rounded-lg p-5 transition-all flex flex-col justify-between ${theme.card}`}>
+                  <div>
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                      <h3 class="text-lg font-bold">
+                        <a href={`/headers/${h.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                          {h.data.name}
+                        </a>
+                      </h3>
+                      
+                      <div class="flex flex-col items-end gap-1.5">
+                        <span class={`inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase tracking-wider ${theme.badge}`}>
+                          {h.data.category}
+                        </span>
+                        
+                        {h.data.standard ? (
+                          <span class="inline-flex items-center px-1.5 py-0.25 rounded text-xxs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                            RFC Std
+                          </span>
+                        ) : (
+                          <span class="inline-flex items-center px-1.5 py-0.25 rounded text-xxs font-semibold bg-ochre-100 text-ochre-800 border border-ochre-200">
+                            Custom
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <p class="text-sm text-paper-700 leading-relaxed mb-4">
+                      {h.data.description}
+                    </p>
+                  </div>
+                  
+                  <div class="text-xs text-paper-500 font-medium border-t border-paper-300 pt-3 flex items-center justify-between">
+                    <a href={`/headers/${h.id}/`} class="text-chartres-600 hover:underline">
+                      View reference &rarr;
+                    </a>
+                    {h.data.relatedCodes && h.data.relatedCodes.length > 0 && (
+                      <span class="text-paper-400">
+                        Codes: {h.data.relatedCodes.join(',')}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </main>
+</Layout>

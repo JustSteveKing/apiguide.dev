@@ -1,0 +1,140 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const errors = await getCollection('errors');
+
+// Helper to extract a short excerpt from the markdown body
+function getExcerpt(body?: string) {
+  if (!body) return '';
+  const clean = body
+    .replace(/^##\s+.*$/gm, '')
+    .replace(/```[\s\S]*?```/g, '')
+    .trim();
+  
+  const paragraphs = clean.split(/\n{2,}/);
+  const firstParagraph = paragraphs.find(p => p.trim().length > 0) || '';
+  
+  if (firstParagraph.length > 160) {
+    return firstParagraph.substring(0, 160).trim() + '...';
+  }
+  return firstParagraph;
+}
+
+// Group errors by category
+const clientErrors = errors
+  .filter(error => error.data.category === 'client-error')
+  .sort((a, b) => a.data.statusCode - b.data.statusCode || a.data.title.localeCompare(b.data.title));
+
+const serverErrors = errors
+  .filter(error => error.data.category === 'server-error')
+  .sort((a, b) => a.data.statusCode - b.data.statusCode || a.data.title.localeCompare(b.data.title));
+
+// Category theme mapping to satisfy accessibility and Tailwind detection
+const categoryThemes = {
+  'client-error': {
+    badge: 'bg-ochre-100 text-ochre-900 border-ochre-200 border',
+    card: 'border-paper-300 hover:border-ochre-400 bg-paper-100/50 hover:bg-ochre-50/50 hover:shadow-xs transition-all',
+    status: 'text-ochre-800'
+  },
+  'server-error': {
+    badge: 'bg-uranium-100 text-uranium-900 border-uranium-200 border',
+    card: 'border-paper-300 hover:border-uranium-400 bg-paper-100/50 hover:bg-uranium-50/50 hover:shadow-xs transition-all',
+    status: 'text-uranium-800'
+  }
+} as const;
+---
+
+<Layout 
+  title="API Errors Reference Catalog | apiguide.dev"
+  description="Authoritative reference index of standard API error definitions grouped by Client Errors (4xx) and Server Errors (5xx)."
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <header class="mb-12 border-b border-paper-300 pb-8">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">API Errors Reference</h1>
+      <p class="text-lg text-paper-600 max-w-2xl">
+        This catalog provides dereferenceable error definitions to link to directly from Problem+JSON responses in production APIs.
+      </p>
+    </header>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Client Errors Section -->
+      <section aria-labelledby="client-errors-title">
+        <h2 id="client-errors-title" class="text-2xl font-bold mb-6 text-paper-800 border-b border-paper-300 pb-2">
+          Client Errors (4xx)
+        </h2>
+        <div class="space-y-6">
+          {clientErrors.map(error => {
+            const theme = categoryThemes[error.data.category];
+            return (
+              <div class={`border rounded-lg p-5 transition-all ${theme.card}`}>
+                <div class="flex items-start justify-between gap-4 mb-2">
+                  <h3 class="text-lg font-bold">
+                    <a href={`/errors/${error.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                      {error.data.title}
+                    </a>
+                  </h3>
+                  <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap ${theme.badge}`}>
+                    HTTP {error.data.statusCode}
+                  </span>
+                </div>
+                <p class="text-sm text-paper-700 mb-3 line-clamp-3 leading-relaxed">
+                  {getExcerpt(error.body)}
+                </p>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-paper-500 font-medium">
+                    {error.data.statusText}
+                  </span>
+                  {error.data.deprecated && (
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-uranium-100 text-uranium-900 border border-uranium-200">
+                      Deprecated
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <!-- Server Errors Section -->
+      <section aria-labelledby="server-errors-title">
+        <h2 id="server-errors-title" class="text-2xl font-bold mb-6 text-paper-800 border-b border-paper-300 pb-2">
+          Server Errors (5xx)
+        </h2>
+        <div class="space-y-6">
+          {serverErrors.map(error => {
+            const theme = categoryThemes[error.data.category];
+            return (
+              <div class={`border rounded-lg p-5 transition-all ${theme.card}`}>
+                <div class="flex items-start justify-between gap-4 mb-2">
+                  <h3 class="text-lg font-bold">
+                    <a href={`/errors/${error.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                      {error.data.title}
+                    </a>
+                  </h3>
+                  <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap ${theme.badge}`}>
+                    HTTP {error.data.statusCode}
+                  </span>
+                </div>
+                <p class="text-sm text-paper-700 mb-3 line-clamp-3 leading-relaxed">
+                  {getExcerpt(error.body)}
+                </p>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-paper-500 font-medium">
+                    {error.data.statusText}
+                  </span>
+                  {error.data.deprecated && (
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-uranium-100 text-uranium-900 border border-uranium-200">
+                      Deprecated
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>

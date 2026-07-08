@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allTools = await getCollection('tools');
+
+const categoryThemes = {
+  'design-documentation': 'border-paper-300 hover:border-yinmn-400 bg-paper-100/50 hover:bg-yinmn-50/10 text-yinmn-900',
+  'testing-mocking': 'border-paper-300 hover:border-emerald-400 bg-paper-100/50 hover:bg-emerald-50/10 text-emerald-900',
+  'clients-debugging': 'border-paper-300 hover:border-chartres-400 bg-paper-100/50 hover:bg-chartres-50/10 text-chartres-900',
+  'gateways-management': 'border-paper-300 hover:border-ochre-400 bg-paper-100 hover:bg-ochre-50 text-ochre-900',
+  'observability': 'border-paper-300 hover:border-uranium-400 bg-paper-100/50 hover:bg-uranium-50/10 text-uranium-900'
+} as const;
+
+type CategoryId = keyof typeof categoryThemes;
+
+const categories: Array<{
+  id: CategoryId;
+  label: string;
+  desc: string;
+  count: number;
+}> = [
+  { 
+    id: 'design-documentation', 
+    label: 'Design & Documentation', 
+    desc: 'Tools to structure, design, lint, and document API specifications before or during development, establishing robust client/server contracts.', 
+    count: allTools.filter(t => t.data.category === 'design-documentation').length 
+  },
+  { 
+    id: 'testing-mocking', 
+    label: 'Testing & Mocking', 
+    desc: 'Mock servers and test suites designed to simulate endpoints, validate responses, and automate contract validations.', 
+    count: allTools.filter(t => t.data.category === 'testing-mocking').length 
+  },
+  { 
+    id: 'clients-debugging', 
+    label: 'Clients & Debugging', 
+    desc: 'Graphical interfaces, command-line request tools, and proxy monitors used to capture, manipulate, and inspect API traffic.', 
+    count: allTools.filter(t => t.data.category === 'clients-debugging').length 
+  },
+  { 
+    id: 'gateways-management', 
+    label: 'Gateways & Management', 
+    desc: 'Edge proxies, security coordinators, and traffic administrators designed to manage rate limits, authentication, and routing policies.', 
+    count: allTools.filter(t => t.data.category === 'gateways-management').length 
+  },
+  { 
+    id: 'observability', 
+    label: 'Observability & Monitoring', 
+    desc: 'Distributed trace monitors, user analytics, and diagnostic logs built to oversee latency profiles and capture exceptions in production.', 
+    count: allTools.filter(t => t.data.category === 'observability').length 
+  }
+];
+
+---
+
+<Layout 
+  title="API Lifecycle Tooling Directory | apiguide.dev"
+  description="Explore the best tools for web APIs across the entire development lifecycle, grouped by category."
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Header -->
+    <header class="mb-12 border-b border-paper-300 pb-8">
+      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
+        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
+        <span class="mx-2 text-paper-400">/</span>
+        <span class="text-paper-600">API Tooling</span>
+      </nav>
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">API Lifecycle Tooling</h1>
+      <p class="text-lg text-paper-600 max-w-2xl">
+        Select a category below to explore the standard tools developers use to build, test, secure, and monitor APIs.
+      </p>
+    </header>
+
+    <!-- Categories Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {categories.map(cat => (
+        <a 
+          href={`/tools/${cat.id}/`} 
+          class={`p-8 border rounded-xl transition-all hover:shadow-md flex flex-col justify-between group ${categoryThemes[cat.id]}`}
+        >
+          <div>
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <h2 class="text-2xl font-bold text-paper-900 group-hover:text-chartres-600 transition-colors">
+                {cat.label}
+              </h2>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-paper-200 text-paper-800 border border-paper-300">
+                {cat.count} {cat.count === 1 ? 'tool' : 'tools'}
+              </span>
+            </div>
+            <p class="text-sm text-paper-600 leading-relaxed mb-6">
+              {cat.desc}
+            </p>
+          </div>
+          
+          <div class="text-sm font-bold text-chartres-600 group-hover:text-chartres-800 group-hover:underline flex items-center gap-1">
+            Browse category tools &rarr;
+          </div>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>

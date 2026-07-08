@@ -1,0 +1,141 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MetaItem from '../../components/MetaItem.astro';
+import RelatedCard from '../../components/RelatedCard.astro';
+
+export async function getStaticPaths() {
+  const methods = await getCollection('methods');
+  return methods.map(m => ({
+    params: { slug: m.id },
+    props: { m },
+  }));
+}
+
+const { m } = Astro.props;
+const { Content } = await render(m);
+
+// Fetch all status codes to cross-reference related codes
+const allCodes = await getCollection('statusCodes');
+const relatedCodes = m.data.relatedCodes
+  ? allCodes.filter(c => m.data.relatedCodes.includes(c.data.code))
+  : [];
+const sortedRelatedCodes = relatedCodes.sort((a, b) => a.data.code - b.data.code);
+
+const getCodeTheme = (cat: string) => {
+  if (cat === 'client-error') return 'ochre';
+  if (cat === 'server-error') return 'uranium';
+  if (cat === 'success') return 'emerald';
+  if (cat === 'redirection') return 'chartres';
+  return 'yinmn';
+};
+
+import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+
+const methodJsonLd = [
+  getTechArticleSchema({
+    headline: `${m.data.name} Request Method Reference`,
+    description: m.data.description,
+    url: Astro.url.href,
+    category: "Request Methods"
+  }),
+  getBreadcrumbSchema([
+    { name: "HTTP Methods", path: "/methods/" },
+    { name: m.data.name, path: `/methods/${m.id}/` }
+  ])
+];
+---
+
+<Layout 
+  title={`${m.data.name} Request Method | HTTP Verb Reference`}
+  description={`Detailed usage patterns, specifications, safety/idempotency rules, and common response codes for the HTTP ${m.data.name} request method.`}
+  jsonLd={methodJsonLd}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Breadcrumbs Component -->
+    <Breadcrumbs items={[
+      { name: "HTTP Methods Reference", href: "/methods/" },
+      { name: `HTTP ${m.data.name}` }
+    ]} />
+
+    <!-- Title & Metadata -->
+    <header class="mb-10">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
+        HTTP <code>{m.data.name}</code> Method
+      </h1>
+      <p class="text-lg text-paper-600 mb-6 italic">
+        {m.data.description}
+      </p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
+        <MetaItem label="Safety">
+          {m.data.safe ? (
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-200">
+              Safe Method
+            </span>
+          ) : (
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-paper-200 text-paper-700 border border-paper-300">
+              Unsafe (State-Mutating)
+            </span>
+          )}
+        </MetaItem>
+        <MetaItem label="Idempotency">
+          {m.data.idempotent ? (
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-yinmn-100 text-yinmn-900 border border-yinmn-200">
+              Idempotent
+            </span>
+          ) : (
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-ochre-100 text-ochre-900 border border-ochre-200">
+              Non-Idempotent (Replay Risk)
+            </span>
+          )}
+        </MetaItem>
+        <MetaItem label="Caching">
+          {m.data.cacheable ? (
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-chartres-100 text-chartres-900 border border-chartres-200">
+              Cacheable by default
+            </span>
+          ) : (
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-paper-200 text-paper-700 border border-paper-300">
+              Non-Cacheable
+            </span>
+          )}
+        </MetaItem>
+      </div>
+    </header>
+
+    <!-- Markdown Content Body -->
+    <article class="prose max-w-none border-b border-paper-300 pb-10">
+      <Content />
+    </article>
+
+    <!-- Associated HTTP Status Codes -->
+    <section class="mt-10">
+      <h2 class="text-2xl font-bold mb-6 text-paper-800">
+        Common Response Status Codes
+      </h2>
+      
+      {sortedRelatedCodes.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {sortedRelatedCodes.map(code => (
+            <RelatedCard 
+              href={`/status-codes/${code.data.code}/`}
+              title={`HTTP ${code.data.code} — ${code.data.title}`}
+              description={code.data.description}
+              theme={getCodeTheme(code.data.category)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="bg-paper-100 border border-paper-300 text-paper-700 p-5 rounded-xl text-sm">
+          <p>
+            No specific HTTP status codes are explicitly tied to HTTP {m.data.name} in our reference yet.
+          </p>
+        </div>
+      )}
+    </section>
+  </main>
+</Layout>
+
+

@@ -1,0 +1,25 @@
+---
+import Logo from "@/components/Logo.astro";
+---
+<footer class="bg-paper-100 border-t border-paper-300 py-12 text-sm text-paper-700">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div>
+      <a href="/" class="group inline-block mb-1">
+        <Logo size="sm" />
+      </a>
+      <p class="text-xs text-paper-600">The flagship reference site for modern, authoritative API design patterns.</p>
+    </div>
+    
+    <div class="flex flex-wrap gap-6 text-xs font-medium">
+      <a href="/specifications/" class="hover:text-chartres-600 transition-colors">Specifications</a>
+      <a href="/problem-json/" class="hover:text-chartres-600 transition-colors">Problem+JSON Guide</a>
+      <a href="/sitemap-index.xml" class="hover:text-chartres-600 transition-colors" target="_blank">Sitemap</a>
+      <a href="https://datatracker.ietf.org/doc/html/rfc9457" class="hover:text-chartres-600 transition-colors" target="_blank" rel="noopener noreferrer">RFC 9457 Spec</a>
+    </div>
+  </div>
+  
+  <div class="max-w-6xl mx-auto px-6 mt-8 pt-6 border-t border-paper-300 text-xxs text-paper-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <span>&copy; {new Date().getFullYear()} apiguide.dev. Built as an open, language-agnostic reference catalog.</span>
+    <span>Pigment palettes derived from storied hues.</span>
+  </div>
+</footer>

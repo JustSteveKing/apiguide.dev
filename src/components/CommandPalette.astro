@@ -1,0 +1,242 @@
+---
+---
+<!-- Command Palette Modal -->
+<div id="command-palette" class="fixed inset-0 bg-paper-950/40 backdrop-blur-md z-100 hidden items-start justify-center pt-24 px-4 transition-all duration-200" aria-modal="true" role="dialog" aria-label="Search Reference">
+  <div id="palette-container" class="bg-paper-50/90 backdrop-blur-xl border border-paper-300 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-300">
+    <!-- Search Input Header -->
+    <div class="relative flex items-center border-b border-paper-300">
+      <svg class="absolute left-5 w-5 h-5 text-paper-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input 
+        type="text" 
+        id="palette-input" 
+        placeholder="Search errors, status codes, headers, methods..." 
+        class="w-full bg-transparent text-paper-950 pl-14 pr-6 py-4 outline-none text-base placeholder-paper-400 font-sans"
+        autocomplete="off"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="palette-results"
+        aria-autocomplete="list"
+      />
+      <button id="palette-close" class="absolute right-5 text-paper-400 hover:text-paper-600 text-xs px-2 py-1 rounded bg-paper-100 border border-paper-200" aria-label="Close search">ESC</button>
+    </div>
+
+    <!-- Results Body -->
+    <div id="palette-results" class="max-h-96 overflow-y-auto p-3 space-y-1 min-h-25" role="listbox" aria-label="Search results">
+      <div class="text-center text-sm text-paper-400 py-10 font-sans">
+        Type to start searching...
+      </div>
+    </div>
+
+    <!-- Footer Help -->
+    <div class="border-t border-paper-300 px-6 py-3 bg-paper-100/50 text-xxs text-paper-500 flex justify-between items-center font-mono select-none">
+      <div class="flex gap-4">
+        <span><kbd class="px-1 bg-paper-200 rounded border border-paper-300">↑↓</kbd> Navigate</span>
+        <span><kbd class="px-1 bg-paper-200 rounded border border-paper-300">Enter</kbd> Select</span>
+      </div>
+      <span>apiguide.dev search</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Wrap execution inside the Astro page load event to support ClientRouter transition hydration
+  document.addEventListener('astro:page-load', () => {
+    // --- 1. COMMAND PALETTE & SEARCH ---
+    const trigger = document.getElementById('search-trigger');
+    const palette = document.getElementById('command-palette');
+    const container = document.getElementById('palette-container');
+    const input = document.getElementById('palette-input') as HTMLInputElement | null;
+    const results = document.getElementById('palette-results');
+    const closeBtn = document.getElementById('palette-close');
+    
+    let searchIndex: any[] | null = null;
+    let activeIndex = -1;
+    let matches: any[] = [];
+    let previouslyFocusedElement: HTMLElement | null = null;
+
+    async function loadIndex() {
+      if (searchIndex) return;
+      try {
+        const res = await fetch('/search-index.json');
+        searchIndex = await res.json();
+      } catch (e) {
+        console.error("Failed to load search index", e);
+      }
+    }
+
+    function openPalette() {
+      if (!palette || !container || !input) return;
+      previouslyFocusedElement = document.activeElement as HTMLElement;
+      loadIndex();
+      palette.classList.remove('hidden');
+      palette.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      
+      // Trigger animations
+      setTimeout(() => {
+        container.classList.remove('scale-95', 'opacity-0');
+        container.classList.add('scale-100', 'opacity-100');
+        input.focus();
+        input.setAttribute('aria-expanded', 'true');
+      }, 20);
+    }
+
+    function closePalette() {
+      if (!palette || !container || !input) return;
+      container.classList.remove('scale-100', 'opacity-100');
+      container.classList.add('scale-95', 'opacity-0');
+      input.setAttribute('aria-expanded', 'false');
+      
+      setTimeout(() => {
+        palette.classList.remove('flex');
+        palette.classList.add('hidden');
+        document.body.style.overflow = '';
+        input.value = '';
+        if (results) {
+          results.innerHTML = '<div class="text-center text-sm text-paper-400 py-10 font-sans">Type to start searching...</div>';
+        }
+        activeIndex = -1;
+        matches = [];
+        if (previouslyFocusedElement) {
+          previouslyFocusedElement.focus();
+        }
+      }, 200);
+    }
+
+    function renderResults(filtered: any[]) {
+      if (!results) return;
+      matches = filtered;
+      activeIndex = -1;
+      
+      if (filtered.length === 0) {
+        results.innerHTML = '<div class="text-center text-sm text-paper-400 py-10 font-sans">No matching records found.</div>';
+        return;
+      }
+
+      results.innerHTML = filtered.map((item, idx) => `
+        <a href="${item.url}" role="option" aria-selected="${idx === 0 ? 'true' : 'false'}" class="block p-3 rounded-lg hover:bg-chartres-50/70 text-left transition-colors font-sans group ${idx === 0 ? 'bg-chartres-50/40 border border-chartres-200' : 'border border-transparent'}" data-index="${idx}">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="font-bold text-sm text-paper-900 group-hover:text-chartres-800">${item.title}</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-paper-200 text-paper-600 border border-paper-300">${item.type}</span>
+          </div>
+          <p class="text-xs text-paper-500 line-clamp-1">${item.description}</p>
+        </a>
+      `).join('');
+
+      // Add click triggers to result list
+      results.querySelectorAll('a').forEach(el => {
+        el.addEventListener('click', () => {
+          closePalette();
+        });
+      });
+    }
+
+    function performSearch() {
+      if (!input || !searchIndex) return;
+      const q = input.value.toLowerCase().trim();
+      if (!q) {
+        if (results) {
+          results.innerHTML = '<div class="text-center text-sm text-paper-400 py-10 font-sans">Type to start searching...</div>';
+        }
+        matches = [];
+        activeIndex = -1;
+        return;
+      }
+
+      const terms = q.split(/\s+/);
+      const filtered = searchIndex.filter(item => {
+        const searchStr = `${item.title} ${item.description} ${item.type}`.toLowerCase();
+        return terms.every(term => searchStr.includes(term));
+      }).slice(0, 8); // cap results for clean fit
+
+      renderResults(filtered);
+    }
+
+    function updateActiveItem(index: number) {
+      if (!results) return;
+      const items = results.querySelectorAll('a');
+      items.forEach((item, idx) => {
+        if (idx === index) {
+          item.classList.add('bg-chartres-50/70', 'border-chartres-200');
+          item.setAttribute('aria-selected', 'true');
+          item.scrollIntoView({ block: 'nearest' });
+        } else {
+          item.classList.remove('bg-chartres-50/70', 'border-chartres-200');
+          item.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+
+    // Keyboard bindings
+    const keydownHandler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openPalette();
+      }
+      if (e.key === 'Escape') {
+        closePalette();
+      }
+
+      // Focus Trap when palette is active
+      if (palette && !palette.classList.contains('hidden') && e.key === 'Tab') {
+        const focusables = Array.from(
+          palette.querySelectorAll(
+            'input, button:not([disabled]), a[href]'
+          )
+        ) as HTMLElement[];
+
+        if (focusables.length > 0) {
+          const firstFocusable = focusables[0];
+          const lastFocusable = focusables[focusables.length - 1];
+
+          if (e.shiftKey) {
+            // Shift + Tab (Backward)
+            if (document.activeElement === firstFocusable) {
+              lastFocusable.focus();
+              e.preventDefault();
+            }
+          } else {
+            // Tab (Forward)
+            if (document.activeElement === lastFocusable) {
+              firstFocusable.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      }
+    };
+    window.removeEventListener('keydown', keydownHandler);
+    window.addEventListener('keydown', keydownHandler);
+
+    trigger?.addEventListener('click', openPalette);
+    closeBtn?.addEventListener('click', closePalette);
+    palette?.addEventListener('click', (e) => {
+      if (e.target === palette) closePalette();
+    });
+
+    input?.addEventListener('input', performSearch);
+    input?.addEventListener('keydown', (e) => {
+      if (matches.length === 0) return;
+      
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIndex = (activeIndex + 1) % matches.length;
+        updateActiveItem(activeIndex);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIndex = (activeIndex - 1 + matches.length) % matches.length;
+        updateActiveItem(activeIndex);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const selectedIndex = activeIndex >= 0 ? activeIndex : 0;
+        const target = matches[selectedIndex];
+        if (target) {
+          window.location.href = target.url;
+          closePalette();
+        }
+      }
+    });
+  });
+</script>

@@ -1,0 +1,288 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-paper-50: #FAF6F0;
+  --color-paper-100: #F2ECE0;
+  --color-paper-200: #E7DECD;
+  --color-paper-300: #D6C8AF;
+  --color-paper-400: #BBA98D;
+  --color-paper-500: #9C896C;
+  --color-paper-600: #817056;
+  --color-paper-700: #665842;
+  --color-paper-800: #4B402F;
+  --color-paper-900: #31291D;
+  --color-paper-950: #1F1A12;
+
+  --color-chartres-50: #F7F8FB;
+  --color-chartres-100: #ECEFF6;
+  --color-chartres-200: #CED7EE;
+  --color-chartres-300: #A6B8E5;
+  --color-chartres-400: #7392DD;
+  --color-chartres-500: #1F3F8E;
+  --color-chartres-600: #2852B8;
+  --color-chartres-700: #204193;
+  --color-chartres-800: #1B336F;
+  --color-chartres-900: #162750;
+  --color-chartres-950: #0F1933;
+
+  --color-ochre-50: #FCFAF6;
+  --color-ochre-100: #F9F5E9;
+  --color-ochre-200: #F5EAC6;
+  --color-ochre-300: #F4DE98;
+  --color-ochre-400: #F6D25B;
+  --color-ochre-500: #CB9D06;
+  --color-ochre-600: #DAA906;
+  --color-ochre-700: #AD8605;
+  --color-ochre-800: #836607;
+  --color-ochre-900: #5E4A08;
+  --color-ochre-950: #3C2F07;
+
+  --color-uranium-50: #FBF7F6;
+  --color-uranium-100: #F8ECEA;
+  --color-uranium-200: #F3D0C8;
+  --color-uranium-300: #F0AB9B;
+  --color-uranium-400: #F07C61;
+  --color-uranium-500: #D7350F;
+  --color-uranium-600: #D2340F;
+  --color-uranium-700: #A7290C;
+  --color-uranium-800: #7E220C;
+  --color-uranium-900: #5B1A0B;
+  --color-uranium-950: #3A1209;
+
+  --color-emerald-50: #F7FAF8;
+  --color-emerald-100: #EDF5F0;
+  --color-emerald-200: #D1EBDA;
+  --color-emerald-300: #ACDFBD;
+  --color-emerald-400: #7DD39A;
+  --color-emerald-500: #50C878;
+  --color-emerald-600: #36AB5D;
+  --color-emerald-700: #2B884A;
+  --color-emerald-800: #236739;
+  --color-emerald-900: #1B4B2B;
+  --color-emerald-950: #12301C;
+
+  --color-yinmn-50: #F7F8FA;
+  --color-yinmn-100: #EDF0F5;
+  --color-yinmn-200: #D1DAEB;
+  --color-yinmn-300: #ACBEDF;
+  --color-yinmn-400: #7E9BD3;
+  --color-yinmn-500: #2E5090;
+  --color-yinmn-600: #365EAA;
+  --color-yinmn-700: #2B4B87;
+  --color-yinmn-800: #233B67;
+  --color-yinmn-900: #1B2C4B;
+  --color-yinmn-950: #131D30;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Lora', 'Outfit', serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+/* Global Typography Overrides */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+@layer utilities {
+  .prose {
+    font-family: var(--font-sans);
+    
+    /* Standard light mode values */
+    --tw-prose-body: var(--color-paper-800);
+    --tw-prose-headings: var(--color-paper-950);
+    --tw-prose-links: var(--color-chartres-600);
+    --tw-prose-bold: var(--color-paper-950);
+    --tw-prose-quotes: var(--color-chartres-900);
+    --tw-prose-quote-borders: var(--color-chartres-500);
+    --tw-prose-counters: var(--color-paper-500);
+    --tw-prose-bullets: var(--color-paper-400);
+    --tw-prose-hr: var(--color-paper-300);
+    --tw-prose-th-borders: var(--color-paper-300);
+    --tw-prose-td-borders: var(--color-paper-200);
+
+    & h2 {
+      font-family: var(--font-display);
+      font-size: 1.625rem;
+      font-weight: 700;
+      margin-top: 2.75rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--tw-prose-hr);
+      padding-bottom: 0.5rem;
+    }
+
+    & h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 2.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    & pre {
+      background-color: var(--color-paper-100);
+      border: 1px solid var(--color-paper-300);
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--color-paper-950);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    & code {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      background-color: var(--color-paper-200);
+      padding: 0.15rem 0.35rem;
+      border-radius: 0.375rem;
+      color: var(--color-paper-950);
+      border: 1px solid var(--color-paper-300);
+      font-weight: normal;
+
+      &::before, &::after {
+        content: "" !important;
+      }
+    }
+
+    & pre code {
+      background-color: transparent;
+      padding: 0;
+      border: none;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    & ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    & ol {
+      list-style-type: decimal;
+      padding-left: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    & li {
+      margin-bottom: 0.5rem;
+      color: var(--color-paper-800);
+    }
+
+    & blockquote {
+      font-style: normal;
+      quotes: none;
+      background-color: var(--color-chartres-50);
+      border-radius: 0 0.5rem 0.5rem 0;
+      border-left: 4px solid var(--tw-prose-quote-borders);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+
+      & p {
+        color: var(--tw-prose-quotes);
+      }
+
+      & p::before, & p::after {
+        content: "" !important;
+      }
+    }
+
+    & table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+    }
+
+    & th {
+      background-color: var(--color-paper-100);
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    & td {
+      padding: 0.75rem 1rem;
+    }
+
+    & tr:hover td {
+      background-color: var(--color-paper-100);
+    }
+
+    & hr {
+      border: 0;
+      border-top: 1px solid var(--tw-prose-hr);
+      margin: 2.5rem 0;
+    }
+  }
+}
+
+/* --- Modernization Pass styles --- */
+
+/* 1. Clean paper background style */
+body {
+  background-color: var(--color-paper-50);
+}
+
+/* 2. Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-paper-300);
+  border-radius: 9999px;
+  border: 2px solid var(--color-paper-50);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-paper-400);
+}
+
+/* 3. Smooth focus rings */
+*:focus-visible {
+  outline: 2px solid var(--color-chartres-500);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* 4. Elegant Interactive Card Hover & Lift Effects */
+.border.rounded-xl, 
+.border.rounded-lg {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+a.border.rounded-xl:hover, 
+a.border.rounded-lg:hover,
+div.border.rounded-xl[class*="hover:"]:hover,
+div.border.rounded-lg[class*="hover:"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px -8px rgba(49, 41, 29, 0.08), 
+              0 4px 8px -4px rgba(49, 41, 29, 0.04);
+}
+
+/* 5. Smooth content reveal animation on load */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main {
+  animation: fadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}

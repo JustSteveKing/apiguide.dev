@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allSpecs = await getCollection('specifications');
+const sortedSpecs = allSpecs.sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<Layout 
+  title="API Specifications Directory | apiguide.dev"
+  description="Reference catalog of the major specification standards defining REST, event-driven, and payload grammar structures for modern web APIs."
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Header -->
+    <header class="mb-12 border-b border-paper-300 pb-8">
+      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
+        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
+        <span class="mx-2 text-paper-400">/</span>
+        <span class="text-paper-600">Specifications</span>
+      </nav>
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">API Specifications & Standards</h1>
+      <p class="text-lg text-paper-600 max-w-2xl">
+        A directory of the industry-standard specifications that govern API contract definitions, message formatting, and validation grammar.
+      </p>
+    </header>
+
+    <!-- Specs Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {sortedSpecs.map(spec => (
+        <div class="border border-paper-300 rounded-xl p-6 bg-paper-100/50 hover:bg-paper-100/100 hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <h2 class="text-2xl font-bold">
+                <a href={`/specifications/${spec.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                  {spec.data.title}
+                </a>
+              </h2>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded text-xxs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-200">
+                v{spec.data.currentVersion}
+              </span>
+            </div>
+            
+            <p class="text-sm text-paper-700 leading-relaxed mb-6">
+              {spec.data.description}
+            </p>
+          </div>
+          
+          <div class="text-xs text-paper-500 font-medium border-t border-paper-300 pt-4 flex items-center justify-between">
+            <a href={`/specifications/${spec.id}/`} class="text-chartres-600 hover:underline font-bold">
+              Read specification guide &rarr;
+            </a>
+            <a href={spec.data.officialUrl} target="_blank" rel="noopener noreferrer" class="text-paper-400 hover:text-paper-600 underline">
+              Official Spec
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+</Layout>

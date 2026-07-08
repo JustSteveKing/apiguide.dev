@@ -1,0 +1,140 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MetaItem from '../../components/MetaItem.astro';
+import RelatedCard from '../../components/RelatedCard.astro';
+
+export async function getStaticPaths() {
+  const statusCodes = await getCollection('statusCodes');
+  return statusCodes.map(sc => ({
+    params: { code: String(sc.data.code) },
+    props: { sc },
+  }));
+}
+
+const { sc } = Astro.props;
+const { Content } = await render(sc);
+
+// Fetch all specific errors that share this HTTP status code
+const allErrors = await getCollection('errors');
+const matchingErrors = allErrors.filter(e => e.data.statusCode === sc.data.code);
+
+// Fetch all headers that are related to this HTTP status code
+const allHeaders = await getCollection('headers');
+const matchingHeaders = allHeaders.filter(h => h.data.relatedCodes?.includes(sc.data.code));
+
+import { statusCategoryThemes } from '../../config/themes';
+
+const activeTheme = statusCategoryThemes[sc.data.category];
+
+import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+
+const scJsonLd = [
+  getTechArticleSchema({
+    headline: `HTTP ${sc.data.code} ${sc.data.title} Reference`,
+    description: sc.data.description,
+    url: Astro.url.href,
+    category: activeTheme.label
+  }),
+  getBreadcrumbSchema([
+    { name: "HTTP Status Codes", path: "/status-codes/" },
+    { name: `HTTP ${sc.data.code}`, path: `/status-codes/${sc.data.code}/` }
+  ])
+];
+---
+
+<Layout 
+  title={`HTTP ${sc.data.code} ${sc.data.title} | HTTP Status Code Reference`}
+  description={`Detailed guide explaining when and how to use HTTP status code ${sc.data.code} (${sc.data.title}) in REST APIs, including specific error subtypes.`}
+  jsonLd={scJsonLd}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Breadcrumbs Component -->
+    <Breadcrumbs items={[
+      { name: "HTTP Status Codes Reference", href: "/status-codes/" },
+      { name: `HTTP ${sc.data.code}` }
+    ]} />
+
+    <!-- Title & Metadata -->
+    <header class="mb-10">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
+        HTTP {sc.data.code} &mdash; {sc.data.title}
+      </h1>
+      <p class="text-lg text-paper-600 mb-6 italic">
+        {sc.data.description}
+      </p>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
+        <MetaItem label="Status Code">
+          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
+            HTTP {sc.data.code}
+          </span>
+        </MetaItem>
+        <MetaItem label="Category" value={activeTheme.label} />
+        <MetaItem label="API Error Subtypes" value={`${matchingErrors.length} ${matchingErrors.length === 1 ? 'error schema' : 'error schemas'}`} />
+        <MetaItem label="HTTP Headers" value={`${matchingHeaders.length} ${matchingHeaders.length === 1 ? 'header' : 'headers'}`} />
+      </div>
+    </header>
+
+    <!-- Markdown Content Body -->
+    <article class="prose max-w-none border-b border-paper-300 pb-10">
+      <Content />
+    </article>
+
+    <!-- Specific API Errors Using This Status Code -->
+    <section class="mt-10">
+      <h2 class="text-2xl font-bold mb-6 text-paper-800">
+        Specific API Error Types for {sc.data.code}
+      </h2>
+      
+      {matchingErrors.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {matchingErrors.map(error => (
+            <RelatedCard 
+              href={`/errors/${error.id}/`}
+              title={error.data.title}
+              description={`Custom error schema (Slug: ${error.id})`}
+              badge={error.data.deprecated ? "Deprecated" : undefined}
+              theme={error.data.category === 'client-error' ? 'ochre' : 'uranium'}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="bg-paper-100 border border-paper-300 text-paper-700 p-5 rounded-xl text-sm">
+          <p>
+            No specific Problem+JSON schemas have been defined for HTTP {sc.data.code} on apiguide.dev yet.
+          </p>
+        </div>
+      )}
+    </section>
+
+    <!-- Associated HTTP Headers -->
+    <section class="mt-12 border-t border-paper-300 pt-10">
+      <h2 class="text-2xl font-bold mb-6 text-paper-800">
+        Associated HTTP Headers
+      </h2>
+      
+      {matchingHeaders.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {matchingHeaders.map(h => (
+            <RelatedCard 
+              href={`/headers/${h.id}/`}
+              title={h.data.name}
+              description={h.data.description}
+              theme="yinmn"
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="bg-paper-100 border border-paper-300 text-paper-700 p-5 rounded-xl text-sm">
+          <p>
+            No specific HTTP headers are explicitly linked to HTTP {sc.data.code} in our directory yet.
+          </p>
+        </div>
+      )}
+    </section>
+  </main>
+</Layout>
+
+

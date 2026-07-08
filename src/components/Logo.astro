@@ -1,0 +1,63 @@
+---
+interface Props {
+  className?: string;
+  iconOnly?: boolean;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+const { className = '', iconOnly = false, size = 'md' } = Astro.props;
+
+// Map size to Tailwind classes for container, icon, and text
+const sizeClasses = {
+  sm: {
+    container: 'h-6 w-6 rounded-[6px]',
+    icon: 'h-3.5 w-3.5',
+    text: 'text-base font-bold tracking-tight',
+  },
+  md: {
+    container: 'h-8 w-8 rounded-lg',
+    icon: 'h-4.5 w-4.5',
+    text: 'text-lg font-bold tracking-tight',
+  },
+  lg: {
+    container: 'h-10 w-10 rounded-xl',
+    icon: 'h-5.5 w-5.5',
+    text: 'text-xl font-extrabold tracking-tight',
+  },
+  xl: {
+    container: 'h-12 w-12 rounded-2xl',
+    icon: 'h-7 w-7',
+    text: 'text-2xl font-extrabold tracking-tight',
+  }
+};
+
+const currentSize = sizeClasses[size] || sizeClasses.md;
+---
+
+<div class={`flex items-center gap-2.5 ${className}`}>
+  <!-- Logo Icon Container with Brand Gradient & Hover Lift -->
+  <div class={`flex items-center justify-center bg-gradient-to-br from-chartres-500 to-chartres-700 text-paper-50 shadow-md shadow-chartres-600/10 transition-transform duration-300 group-hover:scale-105 ${currentSize.container}`}>
+    <svg 
+      fill="currentColor" 
+      viewBox="0 0 24 24" 
+      stroke="currentColor" 
+      stroke-width="1"
+      stroke-linejoin="round"
+      class={`${currentSize.icon} transition-transform duration-300 group-hover:rotate-12`}
+      aria-hidden="true"
+    >
+      <path 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" 
+      />
+    </svg>
+  </div>
+  
+  <!-- Logo Wordmark -->
+  {!iconOnly && (
+    <span class={`font-sans ${currentSize.text} text-paper-900 transition-colors duration-200`}>
+      api<span class="text-chartres-600 group-hover:text-chartres-700">guide</span><span class="text-paper-400 font-normal">.dev</span>
+    </span>
+  )}
+</div>

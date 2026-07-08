@@ -1,0 +1,221 @@
+---
+import Logo from "@/components/Logo.astro";
+
+const pathname = Astro.url.pathname;
+const isActive = (path: string) => {
+  return pathname.startsWith(path);
+};
+---
+<header class="sticky top-0 z-50 bg-paper-50/95 backdrop-blur-sm border-b border-paper-300 relative">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+    <!-- Logo & Wordmark -->
+    <a href="/" class="group shrink-0">
+      <Logo size="md" />
+    </a>
+    
+    <div class="flex items-center gap-4 md:gap-6">
+      <!-- Global Nav Links (Desktop) -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a 
+          href="/errors/" 
+          class={`transition-colors ${isActive('/errors/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
+        >
+          Errors
+        </a>
+        <a 
+          href="/status-codes/" 
+          class={`transition-colors ${isActive('/status-codes/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
+        >
+          Status Codes
+        </a>
+        <a 
+          href="/headers/" 
+          class={`transition-colors ${isActive('/headers/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
+        >
+          Headers
+        </a>
+        <a 
+          href="/methods/" 
+          class={`transition-colors ${isActive('/methods/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
+        >
+          Methods
+        </a>
+        <a 
+          href="/guides/" 
+          class={`transition-colors ${isActive('/guides/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
+        >
+          Guides
+        </a>
+        <a 
+          href="/specifications/" 
+          class={`transition-colors ${isActive('/specifications/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
+        >
+          Specs
+        </a>
+        <a 
+          href="/tools/" 
+          class={`transition-colors ${isActive('/tools/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
+        >
+          Tooling
+        </a>
+      </nav>
+
+      <!-- Search Button -->
+      <button id="search-trigger" class="flex items-center gap-2 px-3 py-1.5 text-xs text-paper-600 hover:text-paper-800 bg-paper-100 hover:bg-paper-200 border border-paper-300 rounded-lg transition-all font-medium cursor-pointer shadow-xs" aria-label="Open command palette search">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span>Search <span class="hidden sm:inline">reference</span>...</span>
+        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-xxs font-sans bg-paper-50 border border-paper-300 rounded text-paper-600">⌘K</kbd>
+      </button>
+
+
+
+      <!-- Responsive Mobile Hamburger Trigger -->
+      <button 
+        id="mobile-menu-trigger" 
+        class="md:hidden flex items-center justify-center p-1.5 rounded-lg text-paper-700 hover:text-chartres-600 hover:bg-paper-100 transition-all cursor-pointer border border-paper-300 bg-paper-100/50"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle navigation menu"
+      >
+        <svg id="menu-icon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="close-icon" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Dropdown (Absolute below header border) -->
+  <div 
+    id="mobile-menu" 
+    class="hidden absolute top-full left-0 right-0 bg-paper-50/98 backdrop-blur-md border-b border-paper-300 shadow-lg px-6 py-6 transition-all duration-200 transform -translate-y-2 opacity-0 z-40"
+  >
+    <nav class="flex flex-col gap-2 text-sm font-semibold">
+      <a 
+        href="/errors/" 
+        class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/errors/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
+      >
+        Errors
+      </a>
+      <a 
+        href="/status-codes/" 
+        class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/status-codes/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
+      >
+        Status Codes
+      </a>
+      <a 
+        href="/headers/" 
+        class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/headers/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
+      >
+        Headers
+      </a>
+      <a 
+        href="/methods/" 
+        class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/methods/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
+      >
+        Methods
+      </a>
+      <a 
+        href="/guides/" 
+        class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/guides/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
+      >
+        Guides
+      </a>
+      <a 
+        href="/specifications/" 
+        class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/specifications/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
+      >
+        Specs
+      </a>
+      <a 
+        href="/tools/" 
+        class={`py-2 px-3 rounded-lg transition-colors ${isActive('/tools/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
+      >
+        Tooling
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function initMobileMenu() {
+    const trigger = document.getElementById('mobile-menu-trigger');
+    const menu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (!trigger || !menu || !menuIcon || !closeIcon) return;
+
+    let isOpen = false;
+
+    function toggleMenu(show) {
+      isOpen = show !== undefined ? show : !isOpen;
+      
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+      if (isOpen) {
+        document.body.classList.add('overflow-hidden');
+        menu.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          menu.classList.remove('-translate-y-2', 'opacity-0');
+          menu.classList.add('translate-y-0', 'opacity-100');
+        });
+        menuIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      } else {
+        document.body.classList.remove('overflow-hidden');
+        menu.classList.remove('translate-y-0', 'opacity-100');
+        menu.classList.add('-translate-y-2', 'opacity-0');
+        
+        const onTransitionEnd = () => {
+          if (!isOpen) {
+            menu.classList.add('hidden');
+          }
+          menu.removeEventListener('transitionend', onTransitionEnd);
+        };
+        menu.addEventListener('transitionend', onTransitionEnd);
+
+        menuIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      }
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (isOpen && !menu.contains(e.target as Node) && !trigger.contains(e.target as Node)) {
+        toggleMenu(false);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        toggleMenu(false);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && isOpen) {
+        toggleMenu(false);
+      }
+    });
+
+    // Close menu when a link inside it is clicked (supports instant router reactions)
+    const links = menu.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        toggleMenu(false);
+      });
+    });
+  }
+
+  // Hook into Astro page load for View Transitions compatibility
+  document.addEventListener('astro:page-load', () => {
+    initMobileMenu();
+  });
+</script>

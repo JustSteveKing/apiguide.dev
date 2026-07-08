@@ -1,0 +1,103 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import MetaItem from '@/components/MetaItem.astro';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('tools');
+  return tools.map(t => ({
+    params: { 
+      category: t.data.category,
+      slug: t.id
+    },
+    props: { t }
+  }));
+}
+
+const { t } = Astro.props;
+const { Content } = await render(t);
+
+import { toolCategoryThemes, pricingThemes } from '@/config/themes';
+
+const activeTheme = toolCategoryThemes[t.data.category];
+
+import { getSoftwareApplicationSchema, getBreadcrumbSchema } from '@/utils/jsonLd';
+
+const toolJsonLd = [
+  getSoftwareApplicationSchema({
+    name: t.data.name,
+    description: t.data.description,
+    url: t.data.url,
+    pricing: t.data.pricing,
+    category: t.data.category
+  }),
+  getBreadcrumbSchema([
+    { name: "API Tooling", path: "/tools/" },
+    { name: activeTheme.label, path: `/tools/${t.data.category}/` },
+    { name: t.data.name, path: `/tools/${t.data.category}/${t.id}/` }
+  ])
+];
+---
+
+<Layout 
+  title={`${t.data.name} API Tool Reference | apiguide.dev`}
+  description={t.data.description}
+  jsonLd={toolJsonLd}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Breadcrumbs Component -->
+    <Breadcrumbs items={[
+      { name: "API Tooling Reference", href: "/tools/" },
+      { name: activeTheme.label, href: `/tools/${t.data.category}/` },
+      { name: t.data.name }
+    ]} />
+
+    <!-- Title & Metadata -->
+    <header class="mb-10">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950 font-display">
+        {t.data.name}
+      </h1>
+      <p class="text-lg text-paper-600 mb-6 italic">
+        {t.data.description}
+      </p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
+        <MetaItem label="Category">
+          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
+            {activeTheme.label}
+          </span>
+        </MetaItem>
+        <MetaItem label="Pricing Model">
+          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold uppercase ${pricingThemes[t.data.pricing]}`}>
+            {t.data.pricing.replace('-', '')}
+          </span>
+        </MetaItem>
+        <MetaItem label="Lifecycle Stages">
+          <div class="flex flex-wrap gap-1">
+            {t.data.lifecycleStages.map(stage => (
+              <span class="inline-flex items-center px-1.5 py-px rounded bg-paper-200 text-paper-700 border border-paper-300 text-xxs font-semibold uppercase">
+                {stage}
+              </span>
+            ))}
+          </div>
+        </MetaItem>
+        <MetaItem label="Official Website">
+          <span class="font-bold text-chartres-600 block mb-0.5">
+            <a href={t.data.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
+              Official Website &rarr;
+            </a>
+          </span>
+          <span class="text-xxs text-paper-400 block break-all">{t.data.url}</span>
+        </MetaItem>
+      </div>
+    </header>
+
+    <!-- Markdown Content Body -->
+    <article class="prose max-w-none">
+      <Content />
+    </article>
+  </main>
+</Layout>
+
+

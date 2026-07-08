@@ -1,11 +1,406 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Fetch all collections to compile statistics and highlights
+const errors: CollectionEntry<'errors'>[] = await getCollection('errors');
+const statusCodes: CollectionEntry<'statusCodes'>[] = await getCollection('statusCodes');
+const headers: CollectionEntry<'headers'>[] = await getCollection('headers');
+const methods: CollectionEntry<'methods'>[] = await getCollection('methods');
+const guides: CollectionEntry<'guides'>[] = await getCollection('guides');
+const specifications: CollectionEntry<'specifications'>[] = await getCollection('specifications');
+const tools: CollectionEntry<'tools'>[] = await getCollection('tools');
+
+// Select highlighted items to show on the dashboard
+const highlightedErrors = errors
+  .filter(e => ['rate-limit-exceeded', 'validation-failed', 'unauthorized', 'resource-conflict'].includes(e.id))
+  .sort((a, b) => a.data.statusCode - b.data.statusCode);
+
+const highlightedHeaders = headers
+  .filter(h => ['authorization', 'cache-control', 'retry-after', 'idempotency-key'].includes(h.id));
+
+const httpVerbs = methods
+  .filter(m => ['get', 'post', 'put', 'patch', 'delete'].includes(m.id))
+  .sort((a, b) => {
+    const order = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+    return order.indexOf(a.data.name) - order.indexOf(b.data.name);
+  });
+
+import { getWebSiteSchema } from '../utils/jsonLd';
+
+const homeJsonLd = getWebSiteSchema();
 ---
 
-<Layout>
-	<Welcome />
+<Layout 
+  title="apiguide.dev | Authoritative HTTP & API Reference"
+  description="The flagship catalog for HTTP status codes, headers, request methods, and Problem+JSON error schemas for web APIs."
+  jsonLd={homeJsonLd}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    
+    <!-- Hero Header -->
+    <header class="mb-16 text-center md:text-left">
+      <h1 class="text-5xl font-extrabold tracking-tight mb-4 text-paper-950">apiguide.dev</h1>
+      <p class="text-xl text-paper-600 max-w-3xl leading-relaxed mb-8">
+        Authoritative design patterns for developer-friendly APIs. Standardize your error schemas, document your status codes, secure your headers, and master the HTTP specification.
+      </p>
+      
+      <!-- Hero Search Trigger -->
+      <div class="max-w-xl">
+        <button id="hero-search-trigger" class="w-full flex items-center gap-3 px-5 py-4 text-base text-paper-600 bg-paper-100 hover:bg-paper-200 border border-paper-300 rounded-2xl transition-all cursor-pointer shadow-sm text-left select-none" aria-label="Search catalog references">
+          <svg class="w-5 h-5 text-paper-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <span>Search HTTP status codes, headers, errors...</span>
+          <kbd class="ml-auto hidden sm:inline-block px-2 py-0.5 text-xs font-sans bg-paper-50 border border-paper-300 rounded text-paper-500">⌘K</kbd>
+        </button>
+        
+        <!-- Refined Metadata Stats -->
+        <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xxs text-paper-500 select-none px-1">
+          <span>Index counts:</span>
+          <a href="/errors/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{errors.length}</strong> Errors</a>
+          <span class="text-paper-300">•</span>
+          <a href="/status-codes/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{statusCodes.length}</strong> Status Codes</a>
+          <span class="text-paper-300">•</span>
+          <a href="/headers/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{headers.length}</strong> Headers</a>
+          <span class="text-paper-300">•</span>
+          <a href="/methods/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{methods.length}</strong> Methods</a>
+          <span class="text-paper-300">•</span>
+          <a href="/guides/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{guides.length}</strong> Guides</a>
+          <span class="text-paper-300">•</span>
+          <a href="/specifications/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{specifications.length}</strong> Specs</a>
+          <span class="text-paper-300">•</span>
+          <a href="/tools/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{tools.length}</strong> Tools</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation Catalogs -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold text-paper-900 mb-8 border-b border-paper-300 pb-2">Reference Directories</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <a href="/errors/" class="block p-6 border border-ochre-200/60 rounded-xl hover:border-ochre-450 hover:shadow-md transition-all bg-ochre-50/30 flex flex-col justify-between group">
+          <div>
+            <h3 class="text-xl font-bold text-ochre-600 group-hover:text-ochre-800 mb-2">API Errors &rarr;</h3>
+            <p class="text-paper-700 text-sm leading-relaxed">
+              Standard Problem+JSON structures for validation, authentication, and state conflicts.
+            </p>
+          </div>
+          <span class="text-xs text-ochre-700 mt-4 font-semibold block">{errors.length} schemas defined</span>
+        </a>
+
+        <a href="/status-codes/" class="block p-6 border border-emerald-200/60 rounded-xl hover:border-emerald-450 hover:shadow-md transition-all bg-emerald-50/30 flex flex-col justify-between group">
+          <div>
+            <h3 class="text-xl font-bold text-emerald-600 group-hover:text-emerald-800 mb-2">Status Codes &rarr;</h3>
+            <p class="text-paper-700 text-sm leading-relaxed">
+              Semantics and API usage boundaries for informational, redirection, client, and server codes.
+            </p>
+          </div>
+          <span class="text-xs text-emerald-700 mt-4 font-semibold block">{statusCodes.length} codes cataloged</span>
+        </a>
+
+        <a href="/headers/" class="block p-6 border border-yinmn-200/60 rounded-xl hover:border-yinmn-450 hover:shadow-md transition-all bg-yinmn-50/30 flex flex-col justify-between group">
+          <div>
+            <h3 class="text-xl font-bold text-yinmn-600 group-hover:text-yinmn-800 mb-2">HTTP Headers &rarr;</h3>
+            <p class="text-paper-700 text-sm leading-relaxed">
+              Full specification metadata covering standard authorization, concurrency, and rate limits.
+            </p>
+          </div>
+          <span class="text-xs text-yinmn-700 mt-4 font-semibold block">{headers.length} headers cataloged</span>
+        </a>
+
+        <a href="/methods/" class="block p-6 border border-chartres-200/60 rounded-xl hover:border-chartres-450 hover:shadow-md transition-all bg-chartres-50/30 flex flex-col justify-between group">
+          <div>
+            <h3 class="text-xl font-bold text-chartres-600 group-hover:text-chartres-800 mb-2">Request Methods &rarr;</h3>
+            <p class="text-paper-700 text-sm leading-relaxed">
+              Guarantees of safety, idempotence, and cacheability for HTTP request verbs.
+            </p>
+          </div>
+          <span class="text-xs text-chartres-700 mt-4 font-semibold block">{methods.length} request verbs</span>
+        </a>
+
+        <a href="/guides/" class="block p-6 border border-ochre-200/60 rounded-xl hover:border-ochre-450 hover:shadow-md transition-all bg-ochre-50/30 flex flex-col justify-between group">
+          <div>
+            <h3 class="text-xl font-bold text-ochre-600 group-hover:text-ochre-800 mb-2">Developer Guides &rarr;</h3>
+            <p class="text-paper-700 text-sm leading-relaxed">
+              Architectural guides detailing HTTP Caching, CORS preflight flow, and token security.
+            </p>
+          </div>
+          <span class="text-xs text-ochre-700 mt-4 font-semibold block">{guides.length} guides available</span>
+        </a>
+
+        <a href="/specifications/" class="block p-6 border border-yinmn-200/60 rounded-xl hover:border-yinmn-450 hover:shadow-md transition-all bg-yinmn-50/30 flex flex-col justify-between group">
+          <div>
+            <h3 class="text-xl font-bold text-yinmn-600 group-hover:text-yinmn-800 mb-2">API Specifications &rarr;</h3>
+            <p class="text-paper-700 text-sm leading-relaxed">
+              In-depth references covering schema standard specifications like OpenAPI, AsyncAPI, and JSON Schema.
+            </p>
+          </div>
+          <span class="text-xs text-yinmn-700 mt-4 font-semibold block">{specifications.length} standards cataloged</span>
+        </a>
+
+        <a href="/tools/" class="block p-6 border border-emerald-200/60 rounded-xl hover:border-emerald-450 hover:shadow-md transition-all bg-emerald-50/30 flex flex-col justify-between group">
+          <div>
+            <h3 class="text-xl font-bold text-emerald-600 group-hover:text-emerald-800 mb-2">API Tooling &rarr;</h3>
+            <p class="text-paper-700 text-sm leading-relaxed">
+              Curated directory of industry tools covering documentation, mock testing, gateways, and observability.
+            </p>
+          </div>
+          <span class="text-xs text-emerald-700 mt-4 font-semibold block">{tools.length} tools review cataloged</span>
+        </a>
+
+        <a href="/problem-json/" class="block p-6 border border-uranium-200/60 rounded-xl hover:border-uranium-450 hover:shadow-md transition-all bg-uranium-50/30 flex flex-col justify-between group">
+          <div>
+            <h3 class="text-xl font-bold text-uranium-600 group-hover:text-uranium-800 mb-2">Problem+JSON Guide &rarr;</h3>
+            <p class="text-paper-700 text-sm leading-relaxed">
+              Understand the RFC 9457 specification and why using URIs for error types is crucial.
+            </p>
+          </div>
+          <span class="text-xs text-uranium-700 mt-4 font-semibold block">RFC 9457 / RFC 7807</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- API Scenarios Recipe Box -->
+    <section class="mb-16 border-t border-paper-300 pt-16">
+      <h2 class="text-2xl font-bold text-paper-900 mb-8 pb-2">Common API Scenarios</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Card 1: Rate Limiting -->
+        <div class="p-6 border border-chartres-200/60 rounded-xl bg-chartres-50/30 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-chartres-500"></span>
+              <h3 class="text-lg font-bold text-chartres-700">How to handle rate limits?</h3>
+            </div>
+            <p class="text-paper-700 text-sm leading-relaxed mb-4">
+              Protect your servers from abuse by implementing uniform rate-limiting responses. Learn which headers to write and when to drop client requests.
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <a href="/status-codes/429/" class="px-2.5 py-0.5 rounded bg-chartres-100 text-chartres-800 border border-chartres-200 hover:underline">HTTP 429 Status</a>
+              <a href="/headers/retry-after/" class="px-2.5 py-0.5 rounded bg-chartres-100 text-chartres-800 border border-chartres-200 hover:underline">Retry-After Header</a>
+              <a href="/errors/rate-limit-exceeded/" class="px-2.5 py-0.5 rounded bg-chartres-100 text-chartres-800 border border-chartres-200 hover:underline">RateLimit Error Schema</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Concurrency Controls -->
+        <div class="p-6 border border-yinmn-200/60 rounded-xl bg-yinmn-50/30 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-yinmn-500"></span>
+              <h3 class="text-lg font-bold text-yinmn-700">How to lock concurrency?</h3>
+            </div>
+            <p class="text-paper-700 text-sm leading-relaxed mb-4">
+              Prevent "mid-air collisions" and race conditions where multiple clients update the same database entity concurrently using optimistic locking.
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <a href="/headers/etag/" class="px-2.5 py-0.5 rounded bg-yinmn-100 text-yinmn-800 border border-yinmn-200 hover:underline">ETag Header</a>
+              <a href="/headers/if-match/" class="px-2.5 py-0.5 rounded bg-yinmn-100 text-yinmn-800 border border-yinmn-200 hover:underline">If-Match Header</a>
+              <a href="/status-codes/412/" class="px-2.5 py-0.5 rounded bg-yinmn-100 text-yinmn-800 border border-yinmn-200 hover:underline">HTTP 412 Precondition Failed</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Validation Errors -->
+        <div class="p-6 border border-ochre-200/60 rounded-xl bg-ochre-50/30 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-ochre-500"></span>
+              <h3 class="text-lg font-bold text-ochre-700">How to structure validation failures?</h3>
+            </div>
+            <p class="text-paper-700 text-sm leading-relaxed mb-4">
+              Return clear, nested parameter-level validation errors to clients when form submissions fail, using RFC 9457 standard patterns.
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <a href="/status-codes/422/" class="px-2.5 py-0.5 rounded bg-ochre-100 text-ochre-800 border border-ochre-200 hover:underline">HTTP 422 Status</a>
+              <a href="/errors/validation-failed/" class="px-2.5 py-0.5 rounded bg-ochre-100 text-ochre-800 border border-ochre-200 hover:underline">Validation Error Schema</a>
+              <a href="/problem-json/" class="px-2.5 py-0.5 rounded bg-ochre-100 text-ochre-800 border border-ochre-200 hover:underline">Problem+JSON Standard</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Idempotence Guarantees -->
+        <div class="p-6 border border-emerald-200/60 rounded-xl bg-emerald-50/30 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <h3 class="text-lg font-bold text-emerald-700">How to guarantee request idempotence?</h3>
+            </div>
+            <p class="text-paper-700 text-sm leading-relaxed mb-4">
+              Ensure safe retries for state-mutating requests (like payment actions) without duplicate charge processing by utilizing unique header keys.
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
+              <a href="/headers/idempotency-key/" class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200 hover:underline">Idempotency-Key Header</a>
+              <a href="/methods/post/" class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200 hover:underline">POST Request Verb</a>
+              <a href="/guides/security/" class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200 hover:underline">API Security Guide</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Error Design Comparison Section -->
+    <section class="mb-16 border-t border-paper-300 pt-16">
+      <h2 class="text-2xl font-bold text-paper-900 mb-4">The Standardized Error Pattern</h2>
+      <p class="text-sm text-paper-600 mb-8 max-w-2xl">
+        Web APIs should use RFC 9457 (Problem+JSON) error responses rather than arbitrary ad-hoc properties, providing predictable error categorization.
+      </p>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 font-mono text-xs">
+        <!-- Bad Error Payload -->
+        <div class="border border-uranium-200/60 rounded-xl bg-uranium-50/30 p-5">
+          <div class="text-uranium-800 font-bold mb-3 uppercase tracking-wider text-xxs">🚫 Bad Ad-hoc Error Payload</div>
+          <pre class="bg-white/80 p-4 border border-uranium-200/40 rounded-lg overflow-x-auto text-paper-800"><code>{`{
+  "error": true,
+  "msg": "Invalid email format",
+  "code": 9942,
+  "timestamp": 178598402
+}`}</code></pre>
+        </div>
+
+        <!-- Good Error Payload -->
+        <div class="border border-emerald-200/60 rounded-xl bg-emerald-50/30 p-5">
+          <div class="text-emerald-800 font-bold mb-3 uppercase tracking-wider text-xxs">✅ Standard RFC 9457 Problem+JSON</div>
+          <pre class="bg-white/80 p-4 border border-emerald-200/40 rounded-lg overflow-x-auto text-paper-900"><code>{`{
+  "type": "https://apiguide.dev/errors/validation-failed",
+  "title": "Validation Failed",
+  "status": 422,
+  "detail": "The request body validation parameters failed.",
+  "instance": "/users/102/profile",
+  "invalid_params": [
+    {
+      "name": "email",
+      "reason": "Email address must contain '@' sign"
+    }
+  ]
+}`}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Insights Dashboard -->
+    <section class="border-t border-paper-300 pt-16">
+      <h2 class="text-2xl font-bold text-paper-900 mb-8 pb-2">Quick Reference Dashboard</h2>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        
+        <!-- Column 1: Featured Errors -->
+        <div>
+          <h3 class="text-lg font-bold text-paper-800 mb-4 border-b border-paper-300 pb-1">Featured Error Schemas</h3>
+          <div class="space-y-4">
+            {highlightedErrors.map(error => (
+              <div class="p-4 border border-ochre-200/50 rounded-lg bg-ochre-50/20 hover:bg-ochre-50/50 hover:shadow-xs transition-all">
+                <div class="flex items-center justify-between gap-2 mb-1">
+                  <a href={`/errors/${error.id}/`} class="font-bold text-sm text-ochre-700 hover:underline line-clamp-1">
+                    {error.data.title}
+                  </a>
+                  <span class="text-xxs font-semibold bg-ochre-100 text-ochre-900 border border-ochre-200 px-1.5 py-px rounded whitespace-nowrap">
+                    HTTP {error.data.statusCode}
+                  </span>
+                </div>
+                <p class="text-xs text-paper-600 line-clamp-2 leading-relaxed">
+                  {error.data.statusText}: A standardized definition for this error code.
+                </p>
+              </div>
+            ))}
+          </div>
+          <a href="/errors/" class="inline-block mt-4 text-xs font-bold text-ochre-700 hover:underline">
+            View all error schemas &rarr;
+          </a>
+        </div>
+
+        <!-- Column 2: Essential Headers -->
+        <div>
+          <h3 class="text-lg font-bold text-paper-800 mb-4 border-b border-paper-300 pb-1">Essential HTTP Headers</h3>
+          <div class="space-y-4">
+            {highlightedHeaders.map(h => (
+              <div class="p-4 border border-yinmn-200/50 rounded-lg bg-yinmn-50/20 hover:bg-yinmn-50/50 hover:shadow-xs transition-all">
+                <div class="flex items-center justify-between gap-2 mb-1">
+                  <a href={`/headers/${h.id}/`} class="font-bold text-sm text-yinmn-700 hover:underline font-mono">
+                    {h.data.name}
+                  </a>
+                  <span class="text-xxs font-semibold bg-yinmn-100 text-yinmn-900 border border-yinmn-200 px-1.5 py-px rounded uppercase">
+                    {h.data.category}
+                  </span>
+                </div>
+                <p class="text-xs text-paper-600 line-clamp-2 leading-relaxed">
+                  {h.data.description}
+                </p>
+              </div>
+            ))}
+          </div>
+          <a href="/headers/" class="inline-block mt-4 text-xs font-bold text-yinmn-700 hover:underline">
+            View all headers &rarr;
+          </a>
+        </div>
+
+        <!-- Column 3: Request Verbs Cheat Sheet -->
+        <div>
+          <h3 class="text-lg font-bold text-paper-800 mb-4 border-b border-paper-300 pb-1">HTTP Methods Cheat Sheet</h3>
+          <div class="border border-chartres-200/60 rounded-lg overflow-hidden bg-chartres-50/20 text-xs">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-chartres-100/50 border-b border-chartres-200/40 text-chartres-800 font-bold">
+                  <th class="p-2.5">Method</th>
+                  <th class="p-2.5">Safe</th>
+                  <th class="p-2.5">Idempotent</th>
+                </tr>
+              </thead>
+              <tbody>
+                {httpVerbs.map(verb => (
+                  <tr class="border-b border-chartres-200/20 last:border-0 hover:bg-chartres-50/40">
+                    <td class="p-2.5 font-bold">
+                      <a href={`/methods/${verb.id}/`} class="text-chartres-600 hover:underline">
+                        {verb.data.name}
+                      </a>
+                    </td>
+                    <td class="p-2.5">
+                      {verb.data.safe ? (
+                        <span class="text-emerald-700 font-semibold">Yes</span>
+                      ) : (
+                        <span class="text-paper-400">No</span>
+                      )}
+                    </td>
+                    <td class="p-2.5">
+                      {verb.data.idempotent ? (
+                        <span class="text-yinmn-700 font-semibold">Yes</span>
+                      ) : (
+                        <span class="text-ochre-800 font-semibold">No</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <a href="/methods/" class="inline-block mt-4 text-xs font-bold text-chartres-600 hover:underline">
+            View all request verbs &rarr;
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const trigger = document.getElementById('hero-search-trigger');
+      const palette = document.getElementById('command-palette');
+      const input = document.getElementById('palette-input') as HTMLInputElement | null;
+      
+      if (trigger && palette && input) {
+        trigger.addEventListener('click', () => {
+          palette.classList.remove('hidden');
+          palette.classList.add('flex');
+          setTimeout(() => {
+            const container = document.getElementById('palette-container');
+            if (container) {
+              container.classList.remove('scale-95', 'opacity-0');
+              container.classList.add('scale-100', 'opacity-100');
+            }
+            input.focus();
+          }, 50);
+        });
+      }
+    });
+  </script>
 </Layout>

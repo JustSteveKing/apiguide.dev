@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const categories = [
+    { id: 'design-documentation', label: 'Design & Documentation', desc: 'Tools to structure, design, lint, and document API specifications before or during development, establishing robust client/server contracts.' },
+    { id: 'testing-mocking', label: 'Testing & Mocking', desc: 'Mock servers and test suites designed to simulate endpoints, validate responses, and automate contract validations.' },
+    { id: 'clients-debugging', label: 'Clients & Debugging', desc: 'Graphical interfaces, command-line request tools, and proxy monitors used to capture, manipulate, and inspect API traffic.' },
+    { id: 'gateways-management', label: 'Gateways & Management', desc: 'Edge proxies, security coordinators, and traffic administrators designed to manage rate limits, authentication, and routing policies.' },
+    { id: 'observability', label: 'Observability & Monitoring', desc: 'Distributed trace monitors, user analytics, and diagnostic logs built to oversee latency profiles and capture exceptions in production.' }
+  ];
+  return categories.map(cat => ({
+    params: { category: cat.id },
+    props: { category: cat }
+  }));
+}
+
+const { category } = Astro.props;
+const allTools = await getCollection('tools');
+const matchingTools = allTools.filter(t => t.data.category === category.id)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+import { pricingThemes, toolCategoryHoverThemes } from '@/config/themes';
+
+const activeThemeClass = toolCategoryHoverThemes[category.id as keyof typeof toolCategoryHoverThemes];
+---
+
+<Layout 
+  title={`${category.label} API Tools | apiguide.dev`}
+  description={category.desc}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Header -->
+    <header class="mb-12 border-b border-paper-300 pb-8">
+      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
+        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
+        <span class="mx-2 text-paper-400">/</span>
+        <a href="/tools/" class="text-chartres-600 hover:text-chartres-800 hover:underline">API Tooling</a>
+        <span class="mx-2 text-paper-400">/</span>
+        <span class="text-paper-600">{category.label}</span>
+      </nav>
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">{category.label} Tools</h1>
+      <p class="text-lg text-paper-600 max-w-3xl">
+        {category.desc}
+      </p>
+    </header>
+
+    <!-- Tools Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {matchingTools.map(t => (
+        <div class={`border border-paper-300 rounded-lg p-5 transition-all flex flex-col justify-between ${activeThemeClass}`}>
+          <div>
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <h2 class="text-lg font-bold">
+                <a href={`/tools/${category.id}/${t.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                  {t.data.name}
+                </a>
+              </h2>
+              <span class={`inline-flex items-center px-2 py-px rounded text-xxs font-semibold uppercase tracking-wider ${pricingThemes[t.data.pricing]}`}>
+                {t.data.pricing.replace('-', '')}
+              </span>
+            </div>
+            
+            <p class="text-sm text-paper-700 leading-relaxed mb-4">
+              {t.data.description}
+            </p>
+          </div>
+          
+          <div class="text-xs text-paper-500 font-medium border-t border-paper-300 pt-3 flex flex-col gap-2">
+            <div class="flex flex-wrap gap-1">
+              {t.data.lifecycleStages.map(stage => (
+                <span class="inline-flex items-center px-1.5 py-px rounded bg-paper-200 text-paper-600 text-xxs font-semibold uppercase">
+                  {stage}
+                </span>
+              ))}
+            </div>
+            <div class="flex items-center justify-between mt-1">
+              <a href={`/tools/${category.id}/${t.id}/`} class="text-chartres-600 hover:underline font-bold">
+                Read review &rarr;
+              </a>
+              <a href={t.data.url} target="_blank" rel="noopener noreferrer" class="text-paper-400 hover:text-paper-600 underline">
+                Website
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+</Layout>

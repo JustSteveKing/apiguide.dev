@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allGuides = await getCollection('guides');
+
+const categoryThemes = {
+  'caching': {
+    badge: 'bg-chartres-100 text-chartres-900 border-chartres-200 border',
+    label: 'Performance & Caching'
+  },
+  'security': {
+    badge: 'bg-uranium-100 text-uranium-900 border-uranium-200 border',
+    label: 'Security & Auth'
+  },
+  'negotiation': {
+    badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200 border',
+    label: 'Content Negotiation'
+  },
+  'core': {
+    badge: 'bg-paper-200 text-paper-800 border-paper-300 border',
+    label: 'API Core'
+  },
+  'specification': {
+    badge: 'bg-emerald-100 text-emerald-900 border-emerald-200 border',
+    label: 'API Specifications'
+  }
+} as const;
+---
+
+<Layout 
+  title="API Guides & Specifications | apiguide.dev"
+  description="In-depth developer guides covering HTTP caching, CORS, authentication schemes, and content negotiation for web APIs."
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Header -->
+    <header class="mb-12 border-b border-paper-300 pb-8">
+      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
+        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
+        <span class="mx-2 text-paper-400">/</span>
+        <span class="text-paper-600">Guides</span>
+      </nav>
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">Developer Guides & specifications</h1>
+      <p class="text-lg text-paper-600 max-w-2xl">
+        Authoritative guides mapping complex HTTP specifications (Caching, CORS, Authentication) to concrete web API design patterns.
+      </p>
+    </header>
+
+    <!-- Guides List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {allGuides.map(g => {
+        const theme = categoryThemes[g.data.category];
+        return (
+          <div class="border border-paper-300 rounded-xl p-6 bg-paper-100/50 hover:bg-paper-100 hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-4 mb-4">
+                <h2 class="text-2xl font-bold text-paper-950">
+                  <a href={`/guides/${g.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                    {g.data.title}
+                  </a>
+                </h2>
+                <span class={`inline-flex items-center px-2.5 py-0.5 rounded text-xxs font-semibold uppercase tracking-wider ${theme.badge}`}>
+                  {theme.label}
+                </span>
+              </div>
+              <p class="text-sm text-paper-700 leading-relaxed mb-6">
+                {g.data.description}
+              </p>
+            </div>
+            <div class="text-xs text-paper-500 font-medium border-t border-paper-300 pt-4">
+              <a href={`/guides/${g.id}/`} class="text-chartres-600 hover:underline">
+                Read full guide &rarr;
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </main>
+</Layout>

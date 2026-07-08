@@ -1,0 +1,129 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MetaItem from '../../components/MetaItem.astro';
+import RelatedCard from '../../components/RelatedCard.astro';
+
+export async function getStaticPaths() {
+  const headers = await getCollection('headers');
+  return headers.map(h => ({
+    params: { slug: h.id },
+    props: { h },
+  }));
+}
+
+const { h } = Astro.props;
+const { Content } = await render(h);
+
+// Fetch all status codes to cross-reference related codes
+const allCodes = await getCollection('statusCodes');
+const relatedCodes = h.data.relatedCodes
+  ? allCodes.filter(c => h.data.relatedCodes.includes(c.data.code))
+  : [];
+const sortedRelatedCodes = relatedCodes.sort((a, b) => a.data.code - b.data.code);
+
+import { headerCategoryThemes } from '../../config/themes';
+
+const activeTheme = headerCategoryThemes[h.data.category];
+
+const getCodeTheme = (cat: string) => {
+  if (cat === 'client-error') return 'ochre';
+  if (cat === 'server-error') return 'uranium';
+  if (cat === 'success') return 'emerald';
+  if (cat === 'redirection') return 'chartres';
+  return 'yinmn';
+};
+
+import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+
+const headerJsonLd = [
+  getTechArticleSchema({
+    headline: `${h.data.name} HTTP Header Reference`,
+    description: h.data.description,
+    url: Astro.url.href,
+    category: activeTheme.label
+  }),
+  getBreadcrumbSchema([
+    { name: "HTTP Headers", path: "/headers/" },
+    { name: h.data.name, path: `/headers/${h.id}/` }
+  ])
+];
+---
+
+<Layout 
+  title={`${h.data.name} HTTP Header Reference | apiguide.dev`}
+  description={`Detailed usage patterns, RFC specifications, and status code correlations for the HTTP ${h.data.name} header.`}
+  jsonLd={headerJsonLd}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Breadcrumbs Component -->
+    <Breadcrumbs items={[
+      { name: "HTTP Headers Reference", href: "/headers/" },
+      { name: h.data.name }
+    ]} />
+
+    <!-- Title & Metadata -->
+    <header class="mb-10">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
+        <code>{h.data.name}</code> Header
+      </h1>
+      <p class="text-lg text-paper-600 mb-6 italic">
+        {h.data.description}
+      </p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
+        <MetaItem label="Header Type">
+          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
+            {activeTheme.label}
+          </span>
+        </MetaItem>
+        <MetaItem label="Specification">
+          {h.data.standard ? (
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-200">
+              Standard RFC compliant
+            </span>
+          ) : (
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-ochre-100 text-ochre-900 border border-ochre-200">
+              Custom / Draft Extension
+            </span>
+          )}
+        </MetaItem>
+        <MetaItem label="Associated Codes" value={h.data.relatedCodes && h.data.relatedCodes.length > 0 ? h.data.relatedCodes.map(code => 'HTTP ' + code).join(',') : 'None'} />
+      </div>
+    </header>
+
+    <!-- Markdown Content Body -->
+    <article class="prose max-w-none border-b border-paper-300 pb-10">
+      <Content />
+    </article>
+
+    <!-- Associated HTTP Status Codes -->
+    <section class="mt-10">
+      <h2 class="text-2xl font-bold mb-6 text-paper-800">
+        Associated HTTP Status Codes
+      </h2>
+      
+      {sortedRelatedCodes.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {sortedRelatedCodes.map(code => (
+            <RelatedCard 
+              href={`/status-codes/${code.data.code}/`}
+              title={`HTTP ${code.data.code} — ${code.data.title}`}
+              description={code.data.description}
+              theme={getCodeTheme(code.data.category)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="bg-paper-100 border border-paper-300 text-paper-700 p-5 rounded-xl text-sm">
+          <p>
+            No specific HTTP status codes are explicitly tied to the usage of the <code>{h.data.name}</code> header in our reference yet.
+          </p>
+        </div>
+      )}
+    </section>
+  </main>
+</Layout>
+
+

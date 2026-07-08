@@ -1,0 +1,113 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MetaItem from '../../components/MetaItem.astro';
+import RelatedCard from '../../components/RelatedCard.astro';
+
+export async function getStaticPaths() {
+  const errors = await getCollection('errors');
+  return errors.map(error => ({
+    params: { slug: error.id },
+    props: { error },
+  }));
+}
+
+const { error } = Astro.props as { error: CollectionEntry<'errors'> };
+const { Content } = await render(error);
+
+// Fetch all errors to resolve information for related codes
+const allErrors: CollectionEntry<'errors'>[] = await getCollection('errors');
+const relatedErrors = error.data.relatedCodes
+  ? allErrors.filter(e => error.data.relatedCodes?.includes(e.id))
+  : [];
+
+// Category theme mapping
+import { errorCategoryThemes } from '../../config/themes';
+
+const activeTheme = errorCategoryThemes[error.data.category];
+
+import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+
+const errorJsonLd = [
+  getTechArticleSchema({
+    headline: `${error.data.statusCode} ${error.data.title} Error Schema`,
+    description: error.data.statusText,
+    url: Astro.url.href,
+    category: activeTheme.label,
+    publishedDate: error.data.publishedDate,
+    updatedDate: error.data.updatedDate
+  }),
+  getBreadcrumbSchema([
+    { name: "API Errors", path: "/errors/" },
+    { name: error.data.title, path: `/errors/${error.id}/` }
+  ])
+];
+---
+
+<Layout 
+  title={`${error.data.title} | API Error Reference`}
+  description={`Authoritative reference schema and details for the HTTP ${error.data.statusCode} (${error.data.title}) error.`}
+  jsonLd={errorJsonLd}
+>
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+    <!-- Breadcrumbs Component -->
+    <Breadcrumbs items={[
+      { name: "API Errors Reference", href: "/errors/" },
+      { name: error.data.title }
+    ]} />
+
+    <!-- Deprecation Notice (Always uses Uranium theme) -->
+    {error.data.deprecated && (
+      <div class="bg-uranium-100 border border-uranium-200 text-uranium-900 p-5 rounded-lg mb-8" role="alert">
+        <h2 class="font-bold text-lg mb-1">Deprecated</h2>
+        <p class="text-sm">
+          This error type has been deprecated. If you are designing new API endpoints, avoid throwing this error and consult the related errors listed below.
+        </p>
+      </div>
+    )}
+
+    <!-- Title & Metadata -->
+    <header class="mb-10">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-6 text-paper-950">{error.data.title}</h1>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
+        <MetaItem label="HTTP Status">
+          <a href={`/status-codes/${error.data.statusCode}/`} class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold hover:underline ${activeTheme.badge}`}>
+            {error.data.statusCode} {error.data.statusText}
+          </a>
+        </MetaItem>
+        <MetaItem label="Category" value={activeTheme.label} />
+        <MetaItem label="Published" value={error.data.publishedDate.toISOString().split('T')[0]} />
+        {error.data.updatedDate && (
+          <MetaItem label="Last Updated" value={error.data.updatedDate.toISOString().split('T')[0]} />
+        )}
+      </div>
+    </header>
+
+    <!-- Markdown Content Body -->
+    <article class="prose max-w-none border-b border-paper-300 pb-10">
+      <Content />
+    </article>
+
+    <!-- Related Errors -->
+    {relatedErrors.length > 0 && (
+      <section class="mt-10">
+        <h2 class="text-2xl font-bold mb-6 text-paper-800">Related Errors</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {relatedErrors.map(related => {
+            const relatedTheme = errorCategoryThemes[related.data.category];
+            return (
+              <RelatedCard 
+                href={`/errors/${related.id}/`}
+                title={related.data.title}
+                description={`HTTP ${related.data.statusCode} • ${related.data.statusText}`}
+                theme={related.data.category === 'client-error' ? 'ochre' : 'uranium'}
+              />
+            );
+          })}
+        </div>
+      </section>
+    )}
+  </main>
+</Layout>
