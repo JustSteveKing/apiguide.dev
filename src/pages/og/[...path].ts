@@ -65,9 +65,34 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
       .replace(/'/g, '&apos;');
   };
 
-  const escapedTitle = escapeXml(title);
-  const escapedSubtitle = escapeXml(subtitle);
+  const wrapText = (text: string, maxCharsPerLine: number): string[] => {
+    const words = text.split(' ');
+    const lines: string[] = [];
+    let currentLine = '';
+
+    for (const word of words) {
+      if ((currentLine + ' ' + word).trim().length <= maxCharsPerLine) {
+        currentLine = (currentLine + ' ' + word).trim();
+      } else {
+        if (currentLine) lines.push(currentLine);
+        currentLine = word;
+      }
+    }
+    if (currentLine) lines.push(currentLine);
+    return lines;
+  };
+
+  const titleLines = wrapText(title, 26).map(escapeXml);
+  const subtitleLines = wrapText(subtitle, 50).map(escapeXml);
   const escapedCategory = escapeXml(category.toUpperCase());
+
+  // Layout positions
+  const titleStartY = 230;
+  const titleLineHeight = 65;
+  const titleEndY = titleStartY + (titleLines.length - 1) * titleLineHeight;
+
+  const subtitleStartY = titleEndY + 65;
+  const subtitleLineHeight = 36;
 
   // Render a 1200x630 vector SVG inside a safe 100px bleed boundary
   const svg = `
@@ -98,6 +123,9 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
           @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@800&amp;family=Inter:wght@400;500;600&amp;display=swap');
           .wordmark { font-family: 'Outfit', 'Inter', sans-serif; font-weight: 800; font-size: 28px; fill: #FDFDFC; }
           .tagline { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 20px; fill: #837A67; }
+          .category { font-family: 'Outfit', 'Inter', sans-serif; font-weight: 800; font-size: 18px; fill: #7392DD; letter-spacing: 4px; }
+          .title { font-family: 'Outfit', 'Inter', sans-serif; font-weight: 800; font-size: 56px; fill: #FDFDFC; }
+          .subtitle { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 24px; fill: #C0BAAF; }
         </style>
       </defs>
 
@@ -112,23 +140,18 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
       <line x1="100" y1="80" x2="1100" y2="80" stroke="#DDDAD5" stroke-opacity="0.1" stroke-width="2" />
       <line x1="100" y1="550" x2="1100" y2="550" stroke="#DDDAD5" stroke-opacity="0.1" stroke-width="2" />
 
-      <!-- Content wrapper within safe bleed boundaries -->
-      <foreignObject x="100" y="130" width="1000" height="360">
-        <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Inter', system-ui, sans-serif; line-height: 1.4; color: #FDFDFC;">
-          <!-- Category label -->
-          <div style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 18px; color: #7392DD; letter-spacing: 4px; margin-bottom: 24px; text-transform: uppercase;">
-            ${escapedCategory}
-          </div>
-          <!-- Title block -->
-          <h1 style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 58px; line-height: 1.15; color: #FDFDFC; margin: 0 0 20px 0; max-height: 140px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-            ${escapedTitle}
-          </h1>
-          <!-- Subtitle description block -->
-          <p style="font-size: 25px; font-weight: 400; line-height: 1.5; color: #C0BAAF; margin: 0; max-height: 115px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
-            ${escapedSubtitle}
-          </p>
-        </div>
-      </foreignObject>
+      <!-- Category label -->
+      <text x="100" y="150" class="category">${escapedCategory}</text>
+
+      <!-- Title block (multi-line via dy tspans) -->
+      <text x="100" y="${titleStartY}" class="title">
+        ${titleLines.map((line, idx) => `<tspan x="100" dy="${idx === 0 ? 0 : titleLineHeight}">${line}</tspan>`).join('')}
+      </text>
+
+      <!-- Subtitle description block (multi-line via dy tspans) -->
+      <text x="100" y="${subtitleStartY}" class="subtitle">
+        ${subtitleLines.map((line, idx) => `<tspan x="100" dy="${idx === 0 ? 0 : subtitleLineHeight}">${line}</tspan>`).join('')}
+      </text>
 
       <!-- Footer elements aligned with safe bleed -->
       <g transform="translate(100, 484)">
