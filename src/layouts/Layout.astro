@@ -20,11 +20,11 @@ const {
 // Compile a stable canonical URL
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://apiguide.dev");
 
-// Compile the Open Graph SVG preview image path dynamically
-let ogImagePath = "index.svg";
+// Compile the Open Graph PNG preview image path dynamically
+let ogImagePath = "index.png";
 const pathParts = Astro.url.pathname.replace(/^\/|\/$/g, ""); // strip leading/trailing slashes
 if (pathParts) {
-	ogImagePath = `${pathParts}.svg`;
+	ogImagePath = `${pathParts}.png`;
 }
 const ogImageURL = new URL(`/og/${ogImagePath}`, Astro.site || "https://apiguide.dev");
 

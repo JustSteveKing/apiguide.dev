@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import sharp from 'sharp';
 
 export async function getStaticPaths() {
   const errors = await getCollection('errors');
@@ -11,39 +12,39 @@ export async function getStaticPaths() {
 
   const paths = [
     {
-      params: { path: 'index.svg' },
+      params: { path: 'index.png' },
       props: { title: 'apiguide.dev', subtitle: 'Authoritative HTTP & API Reference Catalog.', category: 'Home' }
     },
     {
-      params: { path: 'problem-json.svg' },
+      params: { path: 'problem-json.png' },
       props: { title: 'Problem+JSON (RFC 9457)', subtitle: 'The standard error response payload format for web APIs.', category: 'Guide' }
     },
     ...errors.map(e => ({
-      params: { path: `errors/${e.id}.svg` },
+      params: { path: `errors/${e.id}.png` },
       props: { title: e.data.title, subtitle: `HTTP ${e.data.statusCode} — Category: ${e.data.category}. Standard error response pattern details.`, category: 'API Error' }
     })),
     ...statusCodes.map(sc => ({
-      params: { path: `status-codes/${sc.data.code}.svg` },
+      params: { path: `status-codes/${sc.data.code}.png` },
       props: { title: `${sc.data.code} ${sc.data.title}`, subtitle: sc.data.description, category: 'Status Code' }
     })),
     ...headers.map(h => ({
-      params: { path: `headers/${h.id}.svg` },
+      params: { path: `headers/${h.id}.png` },
       props: { title: h.data.name, subtitle: h.data.description, category: 'HTTP Header' }
     })),
     ...methods.map(m => ({
-      params: { path: `methods/${m.id}.svg` },
+      params: { path: `methods/${m.id}.png` },
       props: { title: m.data.name, subtitle: m.data.description, category: 'Request Method' }
     })),
     ...guides.map(g => ({
-      params: { path: `guides/${g.id}.svg` },
+      params: { path: `guides/${g.id}.png` },
       props: { title: g.data.title, subtitle: g.data.description, category: 'Developer Guide' }
     })),
     ...specs.map(s => ({
-      params: { path: `specifications/${s.id}.svg` },
+      params: { path: `specifications/${s.id}.png` },
       props: { title: s.data.title, subtitle: `v${s.data.currentVersion} Standard Specification: ${s.data.description}`, category: 'API Spec' }
     })),
     ...tools.map(t => ({
-      params: { path: `tools/${t.data.category}/${t.id}.svg` },
+      params: { path: `tools/${t.data.category}/${t.id}.png` },
       props: { title: t.data.name, subtitle: t.data.description, category: 'API Tool' }
     }))
   ];
@@ -154,9 +155,14 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
     </svg>
   `;
 
-  return new Response(svg, {
+  // Convert SVG string to high-quality PNG buffer using sharp
+  const pngBuffer = await sharp(Buffer.from(svg))
+    .png()
+    .toBuffer();
+
+  return new Response(pngBuffer, {
     headers: {
-      'Content-Type': 'image/svg+xml',
+      'Content-Type': 'image/png',
       'Cache-Control': 'public, max-age=31536000, immutable'
     }
   });
