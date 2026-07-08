@@ -69,4 +69,14 @@ const guideJsonLd = [
   </main>
 </Layout>
 
+<script is:inline define:vars={{ guideTitle: g.data.title, guideCategory: activeTheme.label, guideSlug: g.id }}>
+  document.addEventListener('astro:page-load', function () {
+    window.posthog?.capture('guide_viewed', {
+      guide_title: guideTitle,
+      guide_category: guideCategory,
+      guide_slug: guideSlug,
+    });
+  });
+</script>
+
 

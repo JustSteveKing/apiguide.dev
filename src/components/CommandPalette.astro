@@ -73,7 +73,8 @@
       palette.classList.remove('hidden');
       palette.classList.add('flex');
       document.body.style.overflow = 'hidden';
-      
+      (window as any).posthog?.capture('search_opened');
+
       // Trigger animations
       setTimeout(() => {
         container.classList.remove('scale-95', 'opacity-0');
@@ -128,6 +129,15 @@
       // Add click triggers to result list
       results.querySelectorAll('a').forEach(el => {
         el.addEventListener('click', () => {
+          const idx = parseInt((el as HTMLElement).dataset.index || '0', 10);
+          const item = filtered[idx];
+          if (item) {
+            (window as any).posthog?.capture('search_result_clicked', {
+              result_title: item.title,
+              result_type: item.type,
+              result_url: item.url,
+            });
+          }
           closePalette();
         });
       });
@@ -233,6 +243,11 @@
         const selectedIndex = activeIndex >= 0 ? activeIndex : 0;
         const target = matches[selectedIndex];
         if (target) {
+          (window as any).posthog?.capture('search_result_clicked', {
+            result_title: target.title,
+            result_type: target.type,
+            result_url: target.url,
+          });
           window.location.href = target.url;
           closePalette();
         }

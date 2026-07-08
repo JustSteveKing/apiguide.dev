@@ -78,4 +78,19 @@ const specJsonLd = [
   </main>
 </Layout>
 
+<script is:inline define:vars={{ specTitle: spec.data.title, specOfficialUrl: spec.data.officialUrl, specVersion: spec.data.currentVersion }}>
+  document.addEventListener('astro:page-load', function () {
+    var externalLink = document.querySelector('a[href="' + specOfficialUrl + '"][target="_blank"]');
+    if (externalLink) {
+      externalLink.addEventListener('click', function () {
+        window.posthog?.capture('specification_external_link_clicked', {
+          spec_title: specTitle,
+          spec_url: specOfficialUrl,
+          spec_version: specVersion,
+        });
+      });
+    }
+  });
+</script>
+
 

@@ -1,0 +1,42 @@
+[
+  {
+    "event_name": "search_opened",
+    "event_description": "User opened the command palette search overlay.",
+    "file": "src/components/CommandPalette.astro"
+  },
+  {
+    "event_name": "search_result_clicked",
+    "event_description": "User clicked on a result returned from the command palette search.",
+    "file": "src/components/CommandPalette.astro"
+  },
+  {
+    "event_name": "hero_search_trigger_clicked",
+    "event_description": "User clicked the hero search bar on the homepage to open the search palette.",
+    "file": "src/pages/index.astro"
+  },
+  {
+    "event_name": "catalog_card_clicked",
+    "event_description": "User clicked on a reference directory card on the homepage.",
+    "file": "src/pages/index.astro"
+  },
+  {
+    "event_name": "api_scenario_resource_clicked",
+    "event_description": "User clicked a related resource link within a Common API Scenario card on the homepage.",
+    "file": "src/pages/index.astro"
+  },
+  {
+    "event_name": "guide_viewed",
+    "event_description": "User navigated to a developer guide detail page (top of guides content funnel).",
+    "file": "src/pages/guides/[slug].astro"
+  },
+  {
+    "event_name": "external_tool_link_clicked",
+    "event_description": "User clicked the official website link on an API tool reference page.",
+    "file": "src/pages/tools/[category]/[slug].astro"
+  },
+  {
+    "event_name": "specification_external_link_clicked",
+    "event_description": "User clicked the official specification website link on a specification detail page.",
+    "file": "src/pages/specifications/[slug].astro"
+  }
+]

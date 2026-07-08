@@ -389,6 +389,7 @@ const homeJsonLd = getWebSiteSchema();
       
       if (trigger && palette && input) {
         trigger.addEventListener('click', () => {
+          (window as any).posthog?.capture('hero_search_trigger_clicked');
           palette.classList.remove('hidden');
           palette.classList.add('flex');
           setTimeout(() => {
@@ -401,6 +402,31 @@ const homeJsonLd = getWebSiteSchema();
           }, 50);
         });
       }
+    });
+  </script>
+
+  <script is:inline>
+    document.addEventListener('astro:page-load', function () {
+      // Catalog reference directory card clicks
+      document.querySelectorAll('main section a.block.p-6').forEach(function (card) {
+        card.addEventListener('click', function () {
+          var heading = card.querySelector('h3');
+          window.posthog?.capture('catalog_card_clicked', {
+            section_name: heading ? heading.textContent.replace(' →', '').trim() : '',
+            section_url: card.getAttribute('href') || '',
+          });
+        });
+      });
+
+      // Common API Scenario resource tag clicks
+      document.querySelectorAll('main section.mb-16.border-t a[href]').forEach(function (link) {
+        link.addEventListener('click', function () {
+          window.posthog?.capture('api_scenario_resource_clicked', {
+            resource_label: link.textContent ? link.textContent.trim() : '',
+            resource_url: link.getAttribute('href') || '',
+          });
+        });
+      });
     });
   </script>
 </Layout>
