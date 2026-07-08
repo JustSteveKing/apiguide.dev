@@ -19,6 +19,56 @@ export async function getStaticPaths() {
       params: { path: 'problem-json.png' },
       props: { title: 'Problem+JSON (RFC 9457)', subtitle: 'The standard error response payload format for web APIs.', category: 'Guide' }
     },
+    // Collection Index Pages
+    {
+      params: { path: 'errors.png' },
+      props: { title: 'API Errors Reference', subtitle: 'A catalog of common HTTP API error patterns, Problem+JSON schemas, and design guidelines.', category: 'Index' }
+    },
+    {
+      params: { path: 'status-codes.png' },
+      props: { title: 'HTTP Status Codes', subtitle: 'A reference index of standard HTTP status codes, their semantics, and best practices.', category: 'Index' }
+    },
+    {
+      params: { path: 'headers.png' },
+      props: { title: 'HTTP Headers Reference', subtitle: 'A directory of request and response HTTP headers, standard usage, and code examples.', category: 'Index' }
+    },
+    {
+      params: { path: 'methods.png' },
+      props: { title: 'HTTP Request Methods', subtitle: 'An overview of HTTP methods, safety, idempotency, caching rules, and use cases.', category: 'Index' }
+    },
+    {
+      params: { path: 'guides.png' },
+      props: { title: 'Developer Guides', subtitle: 'Authoritative design guides on pagination, versioning, idempotency, caching, and webhooks.', category: 'Index' }
+    },
+    {
+      params: { path: 'specifications.png' },
+      props: { title: 'API Specifications', subtitle: 'Guides and references for OpenAPI, AsyncAPI, JSON Schema, JSON:API, and gRPC.', category: 'Index' }
+    },
+    {
+      params: { path: 'tools.png' },
+      props: { title: 'API Developer Tooling', subtitle: 'A catalog and review of API gateways, debugging proxies, testing frameworks, and observability suites.', category: 'Index' }
+    },
+    // Tool Category Index Pages
+    {
+      params: { path: 'tools/observability.png' },
+      props: { title: 'Observability & Monitoring Tools', subtitle: 'Reviews of API monitoring, alerting, telemetry, and tracking tools.', category: 'Tool Category' }
+    },
+    {
+      params: { path: 'tools/design-documentation.png' },
+      props: { title: 'Design & Documentation Tools', subtitle: 'Reviews of editors, schema checkers, doc generators, and design suites.', category: 'Tool Category' }
+    },
+    {
+      params: { path: 'tools/testing-mocking.png' },
+      props: { title: 'Testing & Mocking Tools', subtitle: 'Reviews of load testers, API test runners, and mock servers.', category: 'Tool Category' }
+    },
+    {
+      params: { path: 'tools/gateways-management.png' },
+      props: { title: 'API Gateways & Management', subtitle: 'Reviews of reverse proxies, rate limiters, security gateways, and management tools.', category: 'Tool Category' }
+    },
+    {
+      params: { path: 'tools/clients-debugging.png' },
+      props: { title: 'API Clients & Debugging', subtitle: 'Reviews of HTTP desktop clients, CLI tools, and debugging proxies.', category: 'Tool Category' }
+    },
     ...errors.map(e => ({
       params: { path: `errors/${e.id}.png` },
       props: { title: e.data.title, subtitle: `HTTP ${e.data.statusCode} — Category: ${e.data.category}. Standard error response pattern details.`, category: 'API Error' }
