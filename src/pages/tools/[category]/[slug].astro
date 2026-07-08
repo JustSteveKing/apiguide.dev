@@ -100,4 +100,20 @@ const toolJsonLd = [
   </main>
 </Layout>
 
+<script is:inline define:vars={{ toolName: t.data.name, toolCategory: t.data.category, toolUrl: t.data.url, toolPricing: t.data.pricing }}>
+  document.addEventListener('astro:page-load', function () {
+    var externalLink = document.querySelector('a[href="' + toolUrl + '"][target="_blank"]');
+    if (externalLink) {
+      externalLink.addEventListener('click', function () {
+        window.posthog?.capture('external_tool_link_clicked', {
+          tool_name: toolName,
+          tool_category: toolCategory,
+          tool_url: toolUrl,
+          tool_pricing: toolPricing,
+        });
+      });
+    }
+  });
+</script>
+
 

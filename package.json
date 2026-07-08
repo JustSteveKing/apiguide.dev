@@ -20,6 +20,7 @@
     "astro": "^7.0.6",
     "astro-expressive-code": "^0.44.0",
     "clsx": "^2.1.1",
+    "posthog-js": "^1.398.7",
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {

@@ -4,6 +4,7 @@ import { ClientRouter } from 'astro:transitions';
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import CommandPalette from "@/components/CommandPalette.astro";
+import PostHog from "@/components/posthog.astro";
 
 interface Props {
 	title?: string;
@@ -83,6 +84,9 @@ const jsonLdPayload = Array.isArray(jsonLd)
 
 		<!-- View Transitions -->
 		<ClientRouter />
+
+		<!-- PostHog Analytics -->
+		<PostHog />
 	</head>
 	<body class="flex flex-col min-h-screen bg-paper-50 text-paper-900 selection:bg-chartres-200 selection:text-chartres-950 font-sans antialiased">
 		<a href="#main-content" class="sr-only">Skip to main content</a>
