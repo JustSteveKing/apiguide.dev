@@ -2,7 +2,7 @@
 name: "AsyncAPI Specification"
 description: "An open-source specification format used to design, document, and manage event-driven APIs."
 category: "design-documentation"
-lifecycleStages: ["design"]
+lifecycleStages: ["design", "development"]
 url: "https://asyncapi.com"
 pricing: "open-source"
 ---

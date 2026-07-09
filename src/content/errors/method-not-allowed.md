@@ -4,7 +4,7 @@ statusCode: 405
 statusText: Method Not Allowed
 category: client-error
 relatedCodes: ['resource-not-found']
-publishedDate: 2026-07-07
+publishedDate: 2025-12-22
 ---
 
 ## When to use it

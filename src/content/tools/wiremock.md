@@ -4,7 +4,7 @@ description: "A simulator for HTTP-based APIs, enabling developers to mock downs
 category: "testing-mocking"
 lifecycleStages: ["testing"]
 url: "https://wiremock.org"
-pricing: "open-source"
+pricing: "freemium"
 ---
 
 ## What is WireMock?

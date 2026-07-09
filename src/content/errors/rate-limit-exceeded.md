@@ -4,7 +4,8 @@ statusCode: 429
 statusText: Too Many Requests
 category: client-error
 relatedCodes: ['service-unavailable']
-publishedDate: 2026-07-07
+publishedDate: 2026-06-08
+updatedDate: 2026-06-29
 ---
 
 ## When to use it

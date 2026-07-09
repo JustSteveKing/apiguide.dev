@@ -4,7 +4,7 @@ description: "Generates clean, responsive, and highly readable API reference doc
 category: "design-documentation"
 lifecycleStages: ["design"]
 url: "https://redocly.com"
-pricing: "open-source"
+pricing: "freemium"
 ---
 
 ## What is Redoc?

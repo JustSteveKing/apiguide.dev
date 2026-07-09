@@ -4,7 +4,7 @@ statusCode: 409
 statusText: Conflict
 category: client-error
 relatedCodes: ['idempotency-key-conflict', 'stale-resource-version']
-publishedDate: 2026-07-07
+publishedDate: 2026-02-24
 ---
 
 ## When to use it

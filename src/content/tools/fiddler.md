@@ -4,7 +4,7 @@ description: "A classic debugging proxy for routing, decrypting, and rewriting H
 category: "clients-debugging"
 lifecycleStages: ["testing", "development"]
 url: "https://telerik.com/fiddler"
-pricing: "paid"
+pricing: "freemium"
 ---
 
 ## What is Fiddler?

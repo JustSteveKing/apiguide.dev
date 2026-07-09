@@ -4,7 +4,7 @@ statusCode: 504
 statusText: Gateway Timeout
 category: server-error
 relatedCodes: ['service-unavailable', 'internal-server-error']
-publishedDate: 2026-07-07
+publishedDate: 2025-12-04
 ---
 
 ## When to use it

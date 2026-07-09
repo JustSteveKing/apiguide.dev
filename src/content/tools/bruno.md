@@ -4,7 +4,7 @@ description: "A fast, git-friendly open-source API client that stores collection
 category: "clients-debugging"
 lifecycleStages: ["development"]
 url: "https://usebruno.com"
-pricing: "open-source"
+pricing: "freemium"
 ---
 
 ## What is Bruno?

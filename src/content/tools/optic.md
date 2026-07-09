@@ -1,7 +1,7 @@
 ---
 name: "Optic"
 description: "Automates API contract testing by tracking changes, catching breaking changes, and verifying documentation accuracy."
-category: "design-documentation"
+category: "testing-mocking"
 lifecycleStages: ["development", "testing"]
 url: "https://useoptic.com"
 pricing: "freemium"

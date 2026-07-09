@@ -4,7 +4,7 @@ description: "An ultra-performant, stateless API gateway built in Go, designed t
 category: "gateways-management"
 lifecycleStages: ["deployment"]
 url: "https://krakend.io"
-pricing: "open-source"
+pricing: "freemium"
 ---
 
 ## What is KrakenD?

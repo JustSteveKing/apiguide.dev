@@ -4,7 +4,7 @@ statusCode: 400
 statusText: Bad Request
 category: client-error
 relatedCodes: ['unprocessable-query']
-publishedDate: 2026-07-07
+publishedDate: 2026-04-14
 ---
 
 ## When to use it
