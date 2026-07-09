@@ -5,7 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 const allMethods = await getCollection('methods');
 
 // Custom order for standard HTTP verbs
-const verbOrder = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'];
+const verbOrder = ['GET', 'QUERY', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'];
 const sortedMethods = allMethods.sort((a, b) => {
   const indexA = verbOrder.indexOf(a.data.name);
   const indexB = verbOrder.indexOf(b.data.name);
