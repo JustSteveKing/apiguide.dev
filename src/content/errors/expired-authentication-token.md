@@ -4,7 +4,7 @@ statusCode: 401
 statusText: Unauthorized
 category: client-error
 relatedCodes: ['unauthorized', 'insufficient-scope']
-publishedDate: 2026-07-07
+publishedDate: 2026-02-11
 ---
 
 ## When to use it
@@ -27,4 +27,10 @@ Do not use this if the client sent no token at all, or if the token is completel
   "detail": "The access token expired at 2026-07-07T10:00:00Z. Please request a new token.",
   "instance": "/v1/leads"
 }
+```
+
+Include a `WWW-Authenticate` header describing exactly why the token was rejected, per RFC 6750:
+
+```
+WWW-Authenticate: Bearer error="invalid_token", error_description="The access token expired"
 ```

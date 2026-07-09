@@ -17,11 +17,11 @@ CORS is enforced entirely by the client browser. If an API does not return the p
 Browsers segment cross-origin requests into two categories:
 
 ### Simple Requests
-Requests using `GET`, `HEAD`, or `POST` with standard media types (like URL-encoded form data) do not trigger a preflight. The browser makes the request directly and inspects the response headers to see if the origin is allowed.
+Requests using [`GET`](/methods/get), [`HEAD`](/methods/head), or [`POST`](/methods/post) with standard media types (like URL-encoded form data) do not trigger a preflight. The browser makes the request directly and inspects the response headers to see if the origin is allowed.
 
 ### Preflight Requests
-Requests that use mutating methods (`PUT`, `PATCH`, `DELETE`) or send custom headers (like `Authorization` or JSON `Content-Type: application/json`) require a preflight check. 
-* The browser automatically sends a preflight **`OPTIONS`** request first.
+Requests that use mutating methods ([`PUT`](/methods/put), [`PATCH`](/methods/patch), [`DELETE`](/methods/delete)) or send custom headers (like [`Authorization`](/headers/authorization) or JSON [`Content-Type: application/json`](/headers/content-type)) require a preflight check. 
+* The browser automatically sends a preflight [**`OPTIONS`**](/methods/options) request first.
 * The server must respond with access control headers permitting the actual request.
 * If the preflight succeeds, the browser sends the actual request.
 

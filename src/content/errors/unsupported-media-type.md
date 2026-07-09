@@ -4,7 +4,7 @@ statusCode: 415
 statusText: Unsupported Media Type
 category: client-error
 relatedCodes: ['malformed-request-body', 'payload-too-large']
-publishedDate: 2026-07-07
+publishedDate: 2026-04-28
 ---
 
 ## When to use it

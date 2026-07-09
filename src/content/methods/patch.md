@@ -21,4 +21,7 @@ The `PATCH` method applies partial modifications to a resource. Unlike PUT, whic
 
 * **200 OK**: The resource was modified and returned.
 * **204 No Content**: The modification succeeded but returns no response body.
+* **400 Bad Request**: The patch document itself is structurally malformed (invalid JSON or invalid JSON Patch syntax).
+* **404 Not Found**: The target resource doesn't exist.
+* **412 Precondition Failed**: An `If-Match` ETag check failed, indicating concurrent edits.
 * **422 Unprocessable Entity**: The requested modifications violate business constraints.

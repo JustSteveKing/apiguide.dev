@@ -1,7 +1,7 @@
 ---
 title: "Pagination Patterns (Offset vs. Cursor)"
 description: "Detailed guide comparing offset and cursor pagination, detailing how to implement cursors and hypermedia headers."
-category: "caching"
+category: "core"
 ---
 
 ## Introduction to Pagination
@@ -43,7 +43,7 @@ Instead of offset skips, cursor pagination tracks a specific pointer (usually th
 
 ## 3. Serialization via Link Headers
 
-Avoid packing pagination links in your JSON payload envelope. Use the standard `Link` header to convey traversal options to clients:
+Avoid packing pagination links in your JSON payload envelope. Use the standard [`Link`](/headers/link) header to convey traversal options to clients:
 
 ```http
 HTTP/1.1 200 OK

@@ -4,7 +4,7 @@ statusCode: 404
 statusText: Not Found
 category: client-error
 relatedCodes: ['method-not-allowed']
-publishedDate: 2026-07-07
+publishedDate: 2025-11-03
 ---
 
 ## When to use it

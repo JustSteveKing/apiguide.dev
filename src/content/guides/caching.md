@@ -12,7 +12,7 @@ HTTP caching is one of the most powerful mechanisms available to optimize web AP
 
 ## 1. Freshness Controls (`Cache-Control`)
 
-The `Cache-Control` header specifies caching directives that must be obeyed by all caches along the request/response chain.
+The [`Cache-Control`](/headers/cache-control) header specifies caching directives that must be obeyed by all caches along the request/response chain.
 
 ### Key Directives:
 * **`no-store`**: Under no circumstances should the response be cached. Enforce this on all mutating or sensitive user endpoints (GET credentials, transactions).
@@ -28,7 +28,7 @@ The `Cache-Control` header specifies caching directives that must be obeyed by a
 When a cache stores a response, it eventually needs to check if that copy is still valid. This is called validation, and it relies on two server-generated metadata markers:
 
 ### Etags (Entity Tags)
-An `ETag` is a unique string hash representing the current version of the resource. If the resource changes, the ETag changes.
+An [`ETag`](/headers/etag) is a unique string hash representing the current version of the resource. If the resource changes, the ETag changes.
 
 ### Last-Modified
 A timestamp indicating the last time the resource was modified.
@@ -41,11 +41,11 @@ A client makes a conditional request by sending specific headers containing the 
 
 ### Read Operations (GET Validation)
 1. The client requests a resource and receives `ETag: "abc1234"`.
-2. Later, the client requests the resource again and sends `If-None-Match: "abc1234"`.
-3. If the resource has not changed, the server responds with **`304 Not Modified`** and no body, saving bandwidth.
+2. Later, the client requests the resource again and sends [`If-None-Match: "abc1234"`](/headers/if-none-match).
+3. If the resource has not changed, the server responds with [**`304 Not Modified`**](/status-codes/304) and no body, saving bandwidth.
 
 ### Write Operations (Concurrency Check)
 1. The client reads a resource and receives `ETag: "version_5"`.
-2. The client prepares a PUT update. To prevent overwriting concurrent updates, they send **`If-Match: "version_5"`**.
+2. The client prepares a [PUT](/methods/put) update. To prevent overwriting concurrent updates, they send [**`If-Match: "version_5"`**](/headers/if-match).
 3. If the resource ETag on the server is still `"version_5"`, the update succeeds.
-4. If another process updated the resource first (updating its ETag to `"version_6"`), the check fails. The server aborts the update and returns **`412 Precondition Failed`** (or `409 Conflict`).
+4. If another process updated the resource first (updating its ETag to `"version_6"`), the check fails. The server aborts the update and returns [**`412 Precondition Failed`**](/status-codes/412) — this is the code the spec defines for a failed conditional check; don't substitute [`409 Conflict`](/status-codes/409), which signals a different kind of state conflict.

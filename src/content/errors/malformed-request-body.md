@@ -4,7 +4,7 @@ statusCode: 400
 statusText: Bad Request
 category: client-error
 relatedCodes: ['validation-failed', 'unsupported-media-type']
-publishedDate: 2026-07-07
+publishedDate: 2025-11-17
 ---
 
 ## When to use it

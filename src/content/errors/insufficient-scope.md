@@ -4,7 +4,7 @@ statusCode: 403
 statusText: Forbidden
 category: client-error
 relatedCodes: ['unauthorized', 'expired-authentication-token']
-publishedDate: 2026-07-07
+publishedDate: 2026-03-02
 ---
 
 ## When to use it
@@ -27,4 +27,10 @@ Do not use this if the client is unauthenticated (use `unauthorized` or 401). Do
   "detail": "The token provided lacks the required 'leads:write' scope.",
   "instance": "/v1/leads"
 }
+```
+
+Include a `WWW-Authenticate` header naming the missing scope, per RFC 6750:
+
+```
+WWW-Authenticate: Bearer error="insufficient_scope", error_description="The request requires the 'leads:write' scope", scope="leads:write"
 ```

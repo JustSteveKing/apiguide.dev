@@ -49,7 +49,7 @@ Validation failures on payloads require returning details about individual field
 
 ## 3. Decoupling HTTP Status and Domain Codes
 
-HTTP status codes are generic (e.g., 400 Bad Request, 403 Forbidden). Often, your application requires domain-specific errors (e.g., `insufficient_funds` or `limit_exceeded`).
+HTTP status codes are generic (e.g., [400 Bad Request](/status-codes/400), [403 Forbidden](/status-codes/403)). Often, your application requires domain-specific errors (e.g., `insufficient_funds` or `limit_exceeded`).
 
 * **Use URIs**: Use the `type` field URI (or a custom `code` token) to convey the specific domain error code.
-* **Keep HTTP status correct**: Never return a 200 OK containing an error object. Ensure transport-level status codes match the HTTP layer.
+* **Keep HTTP status correct**: Never return a [200 OK](/status-codes/200) containing an error object. Ensure transport-level status codes match the HTTP layer.

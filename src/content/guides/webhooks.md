@@ -6,7 +6,7 @@ category: "security"
 
 ## Introduction to Webhooks
 
-Webhooks allow your application to send real-time HTTP POST notifications to client servers when events occur, reversing the request/response pattern. 
+Webhooks allow your application to send real-time HTTP [POST](/methods/post) notifications to client servers when events occur, reversing the request/response pattern. 
 
 Because webhooks execute over the public internet, designing them demands rigorous attention to delivery reliability and receiver security.
 

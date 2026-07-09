@@ -4,7 +4,7 @@ statusCode: 500
 statusText: Internal Server Error
 category: server-error
 relatedCodes: ['service-unavailable', 'gateway-timeout']
-publishedDate: 2026-07-07
+publishedDate: 2025-11-10
 ---
 
 ## When to use it

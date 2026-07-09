@@ -5,7 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 const allMethods = await getCollection('methods');
 
 // Custom order for standard HTTP verbs
-const verbOrder = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'];
+const verbOrder = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD', 'QUERY'];
 const sortedMethods = allMethods.sort((a, b) => {
   const indexA = verbOrder.indexOf(a.data.name);
   const indexB = verbOrder.indexOf(b.data.name);
@@ -46,6 +46,11 @@ const sortedMethods = allMethods.sort((a, b) => {
               
               <!-- Badges -->
               <div class="flex flex-wrap gap-1.5 justify-end">
+                {m.data.draft && (
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-yinmn-100 text-yinmn-800 border border-yinmn-200">
+                    Draft
+                  </span>
+                )}
                 {m.data.safe ? (
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-emerald-100 text-emerald-800 border border-emerald-200">
                     Safe

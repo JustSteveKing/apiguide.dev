@@ -21,7 +21,7 @@ The version is embedded directly in the URL path.
 * **Cons**: Violates the principle that a URI should identify a unique resource over its lifetime, rather than its version representation.
 
 ### Header Versioning (Content Negotiation)
-The version is passed in the `Accept` header using a vendor-specific media type.
+The version is passed in the [`Accept`](/headers/accept) header using a vendor-specific media type.
 * **Example**: `Accept: application/vnd.example.v2+json`
 * **Pros**: Preserves clean URIs; represents versioning as content representation.
 * **Cons**: Harder to test in browsers; requires complex content negotiation routing on the server.
@@ -32,6 +32,12 @@ The version is defined by a specific release date passed in a custom header (e.g
 * **Pros**: Offers high granularity. Users lock in their registration date and receive backwards-compatible translations on the server.
 * **Cons**: Extremely complex to maintain; requires writing middleware chains to transform payloads backwards and forwards.
 
+### Query Parameter Versioning
+The version is passed as a query string parameter alongside the request.
+* **Example**: `https://api.example.com/leads?version=2`
+* **Pros**: Easy to test directly in a browser; doesn't require custom headers or URI path changes.
+* **Cons**: Pollutes caching and logging keyed on path+query; easy for clients to omit accidentally and silently fall back to a default version.
+
 ---
 
 ## 2. Deprecation & Sunsetting
@@ -40,7 +46,7 @@ When a version or endpoint must be retired, do not shut it down abruptly. Use st
 
 * **`Deprecation`**: Tells the client that the endpoint is deprecated and should no longer be used. Can carry a date or boolean value.
 * **`Sunset`**: Specifies the exact future timestamp when the endpoint will be turned off permanently.
-* **`Link`**: Link to documentation explaining the migration path.
+* [**`Link`**](/headers/link): Link to documentation explaining the migration path.
 
 ### Example Response:
 ```http

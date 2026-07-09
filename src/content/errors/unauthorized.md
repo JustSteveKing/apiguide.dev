@@ -4,7 +4,8 @@ statusCode: 401
 statusText: Unauthorized
 category: client-error
 relatedCodes: ['expired-authentication-token', 'insufficient-scope']
-publishedDate: 2026-07-07
+publishedDate: 2025-11-24
+updatedDate: 2026-04-02
 ---
 
 ## When to use it

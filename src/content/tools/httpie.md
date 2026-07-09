@@ -4,7 +4,7 @@ description: "A command-line HTTP client built for developers, offering clean sy
 category: "clients-debugging"
 lifecycleStages: ["development"]
 url: "https://httpie.io"
-pricing: "free"
+pricing: "freemium"
 ---
 
 ## What is HTTPie?

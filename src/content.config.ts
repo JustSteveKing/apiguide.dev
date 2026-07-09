@@ -29,6 +29,7 @@ export const collections = {
             title: z.string(),
             description: z.string(),
             category: z.enum(['informational', 'success', 'redirection', 'client-error', 'server-error']),
+            relatedCodes: z.array(z.number()).optional(),
         }),
     }),
     headers: defineCollection({
@@ -56,6 +57,7 @@ export const collections = {
             idempotent: z.boolean(),
             cacheable: z.boolean(),
             relatedCodes: z.array(z.number()).optional(),
+            draft: z.boolean().optional(),
         }),
     }),
     guides: defineCollection({

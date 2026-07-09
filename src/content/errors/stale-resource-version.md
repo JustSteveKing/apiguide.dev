@@ -4,7 +4,7 @@ statusCode: 409
 statusText: Conflict
 category: client-error
 relatedCodes: ['resource-conflict', 'idempotency-key-conflict']
-publishedDate: 2026-07-07
+publishedDate: 2026-05-05
 ---
 
 ## When to use it
@@ -27,4 +27,11 @@ Do not use this for general data conflicts like duplicate unique values (use `re
   "detail": "The resource version '5' is stale. The resource has been updated by another process and is now version '6'.",
   "instance": "/v1/leads/lead_12345"
 }
+```
+
+Return the current `ETag` so the client can re-fetch, alongside the `If-Match` value it sent that was rejected:
+
+```
+ETag: "6"
+If-Match: "5"
 ```

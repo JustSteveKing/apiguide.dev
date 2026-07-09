@@ -4,7 +4,7 @@ statusCode: 409
 statusText: Conflict
 category: client-error
 relatedCodes: ['resource-conflict', 'stale-resource-version']
-publishedDate: 2026-07-07
+publishedDate: 2026-05-19
 ---
 
 ## When to use it
@@ -27,4 +27,11 @@ Do not use this for general business logic conflicts, such as attempting to crea
   "detail": "The Idempotency-Key 'key_abc123' has already been used for a different request payload.",
   "instance": "/v1/charges"
 }
+```
+
+Echo the key back so the client can confirm which request is in conflict, and include a short `Retry-After` if the original request is still being processed:
+
+```
+Idempotency-Key: key_abc123
+Retry-After: 5
 ```

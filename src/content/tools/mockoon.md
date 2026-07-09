@@ -4,7 +4,7 @@ description: "An easy-to-use local desktop mock server generator featuring a gra
 category: "testing-mocking"
 lifecycleStages: ["development", "testing"]
 url: "https://mockoon.com"
-pricing: "open-source"
+pricing: "freemium"
 ---
 
 ## What is Mockoon?

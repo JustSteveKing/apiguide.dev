@@ -4,7 +4,7 @@ statusCode: 422
 statusText: Unprocessable Entity
 category: client-error
 relatedCodes: ['invalid-pagination-cursor']
-publishedDate: 2026-07-07
+publishedDate: 2026-03-16
 ---
 
 ## When to use it

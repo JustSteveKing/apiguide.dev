@@ -4,7 +4,7 @@ statusCode: 413
 statusText: Payload Too Large
 category: client-error
 relatedCodes: ['malformed-request-body', 'unsupported-media-type']
-publishedDate: 2026-07-07
+publishedDate: 2026-01-27
 ---
 
 ## When to use it

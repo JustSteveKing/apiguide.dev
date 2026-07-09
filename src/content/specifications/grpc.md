@@ -1,7 +1,7 @@
 ---
 title: gRPC & Protocol Buffers
 description: A high-performance, open-source universal RPC framework using Protocol Buffers as its interface definition and serialization language.
-currentVersion: Proto3
+currentVersion: "proto3 (IDL) / HTTP/2"
 officialUrl: https://grpc.io/
 ---
 
@@ -111,7 +111,7 @@ Both sides send a sequence of messages using an active read-write stream. The tw
 
 ## Best Practices in gRPC Design
 
-1. **Maintain Backwards Compatibility**: Never change the field tag numbers (e.g., `string name = 2;`) of existing properties. Renaming fields is safe as long as type signatures and field tags remain intact.
+1. **Maintain Backwards Compatibility**: Never change the field tag numbers (e.g., `string name = 2;`) of existing properties. Renaming fields is safe for wire compatibility as long as type signatures and field tags remain intact, but it still breaks anything that depends on the field name directly — proto reflection, JSON transcoding, and generated code call sites all need updating too.
 2. **Utilize Standard Status Codes**: gRPC does not use HTTP status codes directly. It uses a specific set of **17 gRPC codes** (e.g. `OK`, `NOT_FOUND`, `ALREADY_EXISTS`, `UNAUTHENTICATED`) returned in HTTP/2 trailers.
 3. **Use Keepalives for Long-Lived Streams**: Configure keepalive pings to detect half-closed TCP connections and keep load balancers from tearing down idle HTTP/2 multiplexed connections.
 4. **Design for Idempotency**: Use `option idempotency_level = IDEMPOTENT;` metadata annotation inside the method definition to signal safe auto-retry behaviors to client libraries.
