@@ -7,15 +7,17 @@ url: "https://telerik.com/fiddler"
 pricing: "freemium"
 ---
 
-## What is Fiddler?
+## What is Fiddler (Progress)?
 
-Fiddler is a popular web debugging proxy developed by Telerik. It intercepts all HTTP/HTTPS traffic between your computer and the internet, allowing you to inspect, modify, and replay requests.
+Fiddler is a web debugging proxy tool for Windows, macOS, and Linux that helps identify and resolve issues in web applications. It inspects and modifies HTTP/S traffic, allowing developers and QA professionals to troubleshoot problems, optimize performance, and ensure security and functionality. The tool offers a suite of debugging solutions including Fiddler Everywhere, Fiddler Classic, Fiddler Everywhere Reporter, and FiddlerCore.
 
 ## Why use it in the API Lifecycle?
 
-* **Request Composer**: Construct and edit HTTP requests manually to test server responses without writing client-side code.
-* **AutoResponder**: Configure rules to automatically respond to matching requests with local files, simulating various error states (e.g. simulating HTTP 503).
-* **Security Audits**: Analyze traffic sizes, caching directives, cookie scopes, and TLS encryption configurations.
+* **Traffic Capture**: Provides multiple options for capturing web and network traffic, including from remote devices.
+* **Protocol Support**: Supports the debugging of multiple network protocols.
+* **Traffic Modification Rules**: Offers extensive rules for modifying intercepted web traffic.
+* **Advanced Filtering**: Includes advanced filters for narrowing down and focusing on specific network traffic.
+* **Offline Mode Operation**: Functions in an offline mode for analysis without an active internet connection.
 
 ## Best Practices
 

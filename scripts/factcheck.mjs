@@ -11,14 +11,15 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { join, basename, extname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { research, pool } from './lib/tabstack.mjs';
 import { readFile } from './lib/content.mjs';
 import { bodyOf, parseFrontmatter } from './lib/frontmatter.mjs';
 
 const CONCURRENCY = 2;
 const MAX_BODY = 2500; // cap characters sent to control cost/latency
-const CONTENT_ROOT = fileURLToPath(new URL('../src/content/', import.meta.url));
+// Anchor on cwd (npm/node run from the package root) rather than import.meta.url,
+// which can resolve off an unexpected base in sandboxed shells.
+const CONTENT_ROOT = join(process.cwd(), 'src/content');
 const FLAG = /\b(incorrect|inaccurate|wrong|error|mistake|outdated|misleading|false)\b/i;
 
 function resolveTarget(arg) {

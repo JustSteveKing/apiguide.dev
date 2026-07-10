@@ -9,14 +9,19 @@ pricing: "open-source"
 
 ## What is mitmproxy?
 
-mitmproxy is an open-source, interactive man-in-the-middle proxy for HTTP and HTTPS. It provides a CLI (terminal) interface, a web interface (mitmweb), and a Python scripting API for request interception.
+mitmproxy is a free and open source interactive HTTPS proxy that can intercept, inspect, modify, and replay web traffic including HTTP/1, HTTP/2, HTTP/3, WebSockets, and other SSL/TLS-protected protocols. It is a tool for debugging, testing, privacy measurements, and penetration testing.
 
 ## Why use it in the API Lifecycle?
 
-* **Command Line Native**: Inspect and manipulate HTTP traffic directly from your terminal.
-* **Python Scripting**: Write Python scripts to programmatically modify requests/responses on the fly (e.g., injecting authentication headers or altering payloads).
-* **Record & Playback**: Save traffic streams into files and replay them later to simulate exact user interactions.
+* **Traffic Interception and Manipulation**: The tool allows for the interception, inspection, modification, and replaying of web traffic across various protocols, including HTTP/1, HTTP/2, HTTP/3, WebSockets, and any SSL/TLS-protected protocols.
+* **Message Decoding and Prettification**: It provides capabilities to prettify and decode a range of message types, from HTML content to Protobuf messages.
+* **Web-Based Graphical Interface**: A web interface, mitmweb, offers a graphical environment for core features, enabling request interception and replay for diverse applications and devices.
+* **Python Scripting API**: The mitmdump component offers a Python API for full control over the proxy, allowing for automated message modification, traffic redirection, and implementation of custom commands.
+* **Addon Ecosystem Integration**: The tool supports an ecosystem of addons and tools, enabling extended functionality and integration with other systems, such as converting captures to OpenAPI specifications or interacting with Kubernetes Services.
 
 ## Best Practices
 
-* Use mitmproxy's console interface during local microservice development to inspect request traffic between containers.
+* Utilize mitmproxy for specific use cases like debugging, testing, privacy measurements, and penetration testing of web traffic.
+* Employ mitmweb to gain a graphical overview and control of traffic for applications or devices outside of a browser's built-in developer tools.
+* Develop custom Python scripts with mitmdump to automate complex traffic manipulation tasks or integrate the proxy into automated testing workflows.
+* Explore existing community-contributed addons and tools to enhance mitmproxy's capabilities for specific needs, such as converting captures to OpenAPI specifications.

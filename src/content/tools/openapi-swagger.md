@@ -4,20 +4,25 @@ description: "The industry-standard specification format for describing, designi
 category: "design-documentation"
 lifecycleStages: ["design", "development"]
 url: "https://swagger.io"
-pricing: "open-source"
+pricing: "freemium"
 ---
 
 ## What is OpenAPI / Swagger?
 
-OpenAPI (formerly Swagger Specification) is a machine-readable interface description language for describing, producing, consuming, and visualizing RESTful web services. Swagger is the suite of open-source tools built around the OpenAPI Specification (OAS).
+Swagger provides a toolset for API documentation and design, supporting the full API lifecycle from design and governance to testing. It caters to individuals, teams, and enterprises for developing APIs using OpenAPI and AsyncAPI specifications.
 
 ## Why use it in the API Lifecycle?
 
-* **Design-First Development**: Define your API contract in YAML or JSON *before* writing code. This allows frontend and backend teams to develop in parallel.
-* **Auto-generated Documentation**: Tools like Swagger UI generate interactive developer documentation where users can test API requests directly in the browser.
-* **Code Generation**: Automatically generate client libraries (SDKs) and server stubs in dozens of programming languages.
+* **API Design Collaboration**: Facilitate collaborative API design processes with consistency across OpenAPI and AsyncAPI.
+* **API Documentation Delivery**: Generate and deliver up-to-date interactive API documentation for consumers.
+* **Automated Functional Testing**: Automate tests for API functionality to enhance development confidence.
+* **Contract Testing**: Implement contract testing to prevent breaking changes in APIs during deployment.
+* **In-browser API Editing**: Edit and design APIs directly in a browser environment, receiving real-time feedback and auto-completion.
+* **API Specification Visualization**: Render and interact with OpenAPI Specification definitions in a user-friendly interface.
 
 ## Best Practices
 
-* Use spectral linters to enforce organizational style guides on your OpenAPI schemas.
-* Treat the OpenAPI file as the single source of truth and store it in version control (git).
+* Utilize API specifications like OpenAPI and AsyncAPI as a central guide for design and documentation throughout the API lifecycle.
+* Implement consistent API design standards and governance policies across an organization to simplify development and ensure compliance.
+* Leverage role-based access controls and collaboration features to streamline team workflows in API development.
+* Integrate the tool with existing deployment pipelines including API gateways and version control systems.

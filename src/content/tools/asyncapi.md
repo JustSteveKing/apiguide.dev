@@ -7,15 +7,16 @@ url: "https://asyncapi.com"
 pricing: "open-source"
 ---
 
-## What is AsyncAPI?
+## What is AsyncAPI Specification?
 
-AsyncAPI is a specification format for event-driven architectures. Similar to how OpenAPI defines synchronous HTTP request-response interfaces, AsyncAPI defines asynchronous, message-based communication schemas.
+AsyncAPI is an initiative that provides open-source tools for building and maintaining event-driven architectures. Its tooling is powered by the AsyncAPI specification, which serves as an industry standard for defining asynchronous APIs.
 
 ## Why use it in the API Lifecycle?
 
-* **Document Event-Driven Architecture**: Define message payloads, channels (topics), and protocols (Kafka, RabbitMQ, WebSockets, MQTT, AWS SQS) in a standard format.
-* **Unified Interface**: Enable client applications to understand how to publish and subscribe to events without inspecting source code.
-* **Tool Ecosystem**: Supports code generation, payload validation, and interactive documentation viewers similar to Swagger.
+* **API Definition using Standard Specification**: Enables users to define asynchronous APIs through the use of the AsyncAPI specification, an industry standard.
+* **Event-Driven Architecture Development Tools**: Provides open-source tools designed to facilitate the construction of event-driven architectures.
+* **Event-Driven Architecture Maintenance Tools**: Offers open-source tools that assist in the ongoing management and upkeep of event-driven architectures.
+* **Standardization for Asynchronous APIs**: Utilizes the AsyncAPI specification, which is recognized as an industry standard for defining asynchronous APIs.
 
 ## Best Practices
 

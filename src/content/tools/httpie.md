@@ -9,14 +9,19 @@ pricing: "freemium"
 
 ## What is HTTPie?
 
-HTTPie is an open-source command-line HTTP client. It is designed to be a modern, developer-friendly alternative to curl, featuring colorized output, auto-formatted JSON payloads, and simple, readable query syntax.
+HTTPie is an API testing client available as a command-line interface, a desktop application, and a web-based tool. Its purpose is to simplify and make intuitive the interaction with HTTP servers, RESTful APIs, and web services.
 
 ## Why use it in the API Lifecycle?
 
-* **Developer Ergonomics**: Syntax is clean and human-friendly (e.g., `http POST api.com name=John` instead of verbose curl syntax).
-* **Auto-JSON**: Automatically sends appropriate Content-Type headers and formats incoming JSON responses with colors and indentations.
-* **Header separation**: Keeps requests and responses visually distinct in the terminal terminal output.
+* **Web and Desktop Graphical Interface**: Provides a user-friendly graphical interface for API testing, allowing visual construction and execution of requests.
+* **Command-Line Interface**: Offers a terminal-based client for interacting with APIs, suitable for scripting and command-line workflows.
+* **Request Export and Import**: Supports exporting and importing API requests, which facilitates sharing and backup of test configurations.
+* **Path Parameter Handling**: Includes functionality for managing and utilizing path parameters within API requests.
+* **Command Generation**: Allows users to copy and generate API requests as formatted command-line commands.
+* **AI Integration**: Features AI capabilities designed to assist with API interactions.
 
 ## Best Practices
 
-* Use HTTPie during local development for quick, manual testing of complex JSON endpoints.
+* Utilize the graphical interface for interactive development and debugging, reserving the command-line interface for automated tests and scripting.
+* Version control exported API request collections to manage changes and facilitate collaborative development workflows.
+* Consult the changelogs and documentation to discover and integrate new features and improvements into testing routines.

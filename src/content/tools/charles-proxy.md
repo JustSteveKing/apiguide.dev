@@ -9,14 +9,19 @@ pricing: "paid"
 
 ## What is Charles Proxy?
 
-Charles is an HTTP proxy, HTTP monitor, and Reverse Proxy that enables a developer to view all HTTP and SSL/HTTPS traffic between their local machine (or mobile device) and the internet.
+Charles is an HTTP proxy, HTTP monitor, and web debugging proxy application. It sits between a machine and the Internet as a forward proxy, letting developers view all HTTP and SSL/HTTPS traffic passing through. This includes requests, responses, and HTTP headers containing cookies and caching information.
 
 ## Why use it in the API Lifecycle?
 
-* **Mobile App Debugging**: Route your iOS or Android device traffic through Charles to inspect exact API payloads sent by mobile apps.
-* **SSL Proxying**: Decrypts SSL/HTTPS traffic in real-time (using local trust certificates) so you can inspect headers and JSON bodies.
-* **Bandwidth Throttling**: Simulate slow networks (3G, high latency, dropped packets) to test client app behavior under poor conditions.
+* **Traffic Recording**: Records all HTTP and HTTPS traffic between the machine and the Internet.
+* **Content Inspection**: Displays the contents of HTTP requests, responses, cookies, and headers.
+* **SSL/HTTPS Support**: Functions as an SSL/HTTPS proxy to inspect encrypted traffic.
+* **Network Throttling**: Allows simulation of slower internet connection speeds for testing.
+* **Traffic Statistics**: Provides statistics for network activity.
 
 ## Best Practices
 
-* Use Charles' "Map Local" feature to intercept an API response and replace it with a mock local file to test UI layouts.
+* Utilize Charles for observing and modifying traffic during mobile application testing workflows.
+* Employ Charles to debug HTTP connections specifically for mobile devices.
+* Analyze application store XML data by proxying traffic through Charles.
+* Debug Flash/server interactions by monitoring traffic flows in Charles.

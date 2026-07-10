@@ -7,16 +7,22 @@ url: "https://redocly.com"
 pricing: "freemium"
 ---
 
-## What is Redoc?
+## What is Redoc (Redocly)?
 
-Redoc is an open-source tool that generates documentation from OpenAPI definitions. Developed and maintained by Redocly, it is famous for its clean, three-column layout, which places navigation on the left, main documentation in the center, and code examples on the right.
+Redocly is an OpenAPI-generated documentation tool that assists companies in integrating APIs and fostering innovation. It provides a suite of products designed to accelerate API adoption and manage API ecosystems. The core Redoc tool is a popular API documentation renderer.
 
 ## Why use it in the API Lifecycle?
 
-* **Readability**: Widely considered to offer the most readable documentation layout for developers, featuring scroll-sync, deep nesting support, and clean typography.
-* **OpenAPI Compatibility**: Full support for OpenAPI 2.0 (Swagger) and 3.0, including advanced features like `oneOf`, `anyOf`, and discriminator fields.
-* **CLI & Deployment**: Easy to bundle into a single static HTML page using Redocly CLI for zero-overhead hosting (e.g., via GitHub Pages).
+* **OpenAPI Documentation Generation**: Automatically creates production-ready reference documentation from OpenAPI definitions.
+* **Auto-generated Code Samples**: Provides code examples within the documentation for various languages.
+* **Mock Servers**: Offers mock server functionality for API testing and development.
+* **Schema Support**: Includes support for advanced schema features such as polymorphism and discriminators.
+* **API Governance**: Allows for the enforcement and management of API standards and quality across an organization.
+* **API Discovery**: Enables internal teams to discover and manage APIs within an organization's ecosystem.
 
 ## Best Practices
 
-* Use Redocly CLI to validate your OpenAPI files before bundling to ensure your generated documentation is error-free.
+* Integrate API building, testing, and documentation workflows directly within the development environment (IDE).
+* Establish and enforce API governance rules organization-wide to maintain consistency and quality.
+* Automate the documentation pipeline from source control to customer-facing platforms.
+* Utilize Markdown for creating single-source content, enabling flexible documentation generation.

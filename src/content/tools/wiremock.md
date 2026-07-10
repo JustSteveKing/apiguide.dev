@@ -9,14 +9,20 @@ pricing: "freemium"
 
 ## What is WireMock?
 
-WireMock is an open-source library and server for stubbing and mocking HTTP services. It runs a mock server that matches specific requests (using regex headers, paths, or body content) and returns custom responses.
+WireMock is a tool used to simulate APIs and software dependencies, allowing teams to build stable development environments. It enables testing applications without live dependencies, simulating edge cases, and developing dependent features concurrently.
 
 ## Why use it in the API Lifecycle?
 
-* **Stub Third-Party APIs**: Mock downstream dependencies (like Stripe, SendGrid, or internal microservices) in integration tests, making tests fast and deterministic.
-* **Simulate Failures**: Test client resilience by configuring WireMock to simulate slow network responses (delays), broken connections, or server faults (HTTP 500/503).
-* **Stateful Behavior**: Allows mock endpoints to change states across sequential requests (e.g. simulating a state machine).
+* **HTTP Mocking and Matching**: Stub HTTP responses and match incoming requests based on URL patterns, headers, query parameters, cookies, and request body content.
+* **Dynamic Response Templating**: Generate responses dynamically using Handlebars templates, incorporating request data, random values, and custom helpers.
+* **Record & Playback**: Capture interactions with actual services and replay them during testing to replicate realistic scenarios.
+* **Fault Simulation**: Introduce network faults, delays, and malformed responses to assess an application's resilience.
+* **Request Verification**: Confirm that the application sent expected requests with correct parameters and timing.
+* **Extensibility**: Extend the tool with custom request matchers, response transformers, and administrative API extensions.
 
 ## Best Practices
 
-* Keep WireMock configurations versioned alongside your test suites to prevent environment drift.
+* Test applications without relying on external dependencies.
+* Develop dependent features in parallel by mocking unavailable APIs.
+* Integrate WireMock with testing frameworks like JUnit for test automation.
+* Simulate edge cases to ensure application resilience.
