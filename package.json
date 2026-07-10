@@ -11,7 +11,11 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "wrangler pages deploy",
-    "pages:dev": "wrangler pages dev dist"
+    "pages:dev": "wrangler pages dev dist",
+    "check:gaps": "node scripts/check-gaps.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:content": "npm run check:gaps && npm run check:links",
+    "factcheck": "node scripts/factcheck.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

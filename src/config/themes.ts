@@ -107,6 +107,6 @@ export const toolCategoryHoverThemes = {
   'design-documentation': 'hover:border-yinmn-400 bg-paper-100/50 hover:bg-yinmn-50/10',
   'testing-mocking': 'hover:border-emerald-400 bg-paper-100/50 hover:bg-emerald-50/10',
   'clients-debugging': 'hover:border-chartres-400 bg-paper-100/50 hover:bg-chartres-50/10',
-  'gateways-management': 'hover:border-ochre-400 bg-paper-100 dark:bg-paper-900 hover:bg-ochre-50 dark:hover:bg-ochre-950',
+  'gateways-management': 'hover:border-ochre-400 bg-paper-100 hover:bg-ochre-50',
   'observability': 'hover:border-uranium-400 bg-paper-100/50 hover:bg-uranium-50/10'
 } as const;
