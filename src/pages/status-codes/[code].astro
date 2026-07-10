@@ -24,6 +24,21 @@ const matchingErrors = allErrors.filter(e => e.data.statusCode === sc.data.code)
 const allHeaders = await getCollection('headers');
 const matchingHeaders = allHeaders.filter(h => h.data.relatedCodes?.includes(sc.data.code));
 
+// Cross-reference explicitly related status codes
+const allStatusCodes = await getCollection('statusCodes');
+const relatedStatusCodes = sc.data.relatedCodes
+  ? allStatusCodes.filter(c => sc.data.relatedCodes.includes(c.data.code))
+  : [];
+const sortedRelatedCodes = relatedStatusCodes.sort((a, b) => a.data.code - b.data.code);
+
+const getCodeTheme = (cat: string) => {
+  if (cat === 'client-error') return 'ochre';
+  if (cat === 'server-error') return 'uranium';
+  if (cat === 'success') return 'emerald';
+  if (cat === 'redirection') return 'chartres';
+  return 'yinmn';
+};
+
 import { statusCategoryThemes } from '../../config/themes';
 
 const activeTheme = statusCategoryThemes[sc.data.category];
@@ -134,6 +149,26 @@ const scJsonLd = [
         </div>
       )}
     </section>
+
+    <!-- Related HTTP Status Codes -->
+    {sortedRelatedCodes.length > 0 && (
+      <section class="mt-12 border-t border-paper-300 pt-10">
+        <h2 class="text-2xl font-bold mb-6 text-paper-800">
+          Related HTTP Status Codes
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {sortedRelatedCodes.map(code => (
+            <RelatedCard
+              href={`/status-codes/${code.data.code}/`}
+              title={`HTTP ${code.data.code} — ${code.data.title}`}
+              description={code.data.description}
+              theme={getCodeTheme(code.data.category)}
+            />
+          ))}
+        </div>
+      </section>
+    )}
   </main>
 </Layout>
 
