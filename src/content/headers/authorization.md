@@ -14,6 +14,7 @@ The `Authorization` request header carries credentials that authenticate the cli
 
 * **Use the Bearer scheme**: For modern token-based APIs (JWTs, OAuth2, API Keys), format the header as `Bearer <token>`.
 * **Never transmit sensitive keys in query strings**: Always pass credentials in the `Authorization` header to prevent them from being logged in proxy servers.
+* **Shared caches skip authenticated responses**: Per RFC 9111, a shared cache (like a CDN) must not store a response to a request that carried an `Authorization` header unless the response explicitly opts in with a directive such as `public`, `must-revalidate`, or `s-maxage`.
 
 ## Examples
 
