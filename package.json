@@ -16,7 +16,8 @@
     "check:links": "node scripts/check-links.mjs",
     "check:content": "npm run check:gaps && npm run check:links",
     "factcheck": "node scripts/factcheck.mjs",
-    "enrich:tools": "node scripts/enrich-tools.mjs"
+    "enrich:tools": "node scripts/enrich-tools.mjs",
+    "research:guides": "node scripts/research-guides.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
