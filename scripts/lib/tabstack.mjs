@@ -44,6 +44,14 @@ export async function extractJson(url, schema, { effort } = {}) {
   return JSON.parse(out);
 }
 
+// generate json <url> --instructions … --schema …  →  AI-transformed object
+export async function generateJson(url, instructions, schema, { effort } = {}) {
+  const args = ['generate', 'json', url, '--instructions', instructions, '--schema', '-'];
+  if (effort) args.push('--effort', effort);
+  const out = await runRaw(args, { input: JSON.stringify(schema), timeoutMs: 180_000 });
+  return JSON.parse(out);
+}
+
 // extract markdown <url>  →  { content, url }
 export async function extractMarkdown(url) {
   const out = await runRaw(['extract', 'markdown', url], { timeoutMs: 120_000 });

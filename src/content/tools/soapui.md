@@ -9,14 +9,19 @@ pricing: "freemium"
 
 ## What is SoapUI?
 
-SoapUI is an industry-veteran functional testing application for both SOAP and REST APIs. It is designed to handle complex, enterprise-grade validation scenarios, multi-step transactions, and protocol conversions.
+SoapUI is an automated testing tool designed for SOAP and REST APIs. It allows users to write, run, integrate, and automate API tests. This tool is widely used for getting started with API testing fundamentals.
 
 ## Why use it in the API Lifecycle?
 
-* **SOAP & WSDL Native**: The premier tool for validating legacy SOAP web services, parsing WSDL contracts, and validating XML schemas.
-* **Data-driven Testing**: Feed testing suites using external data sources (CSV, databases) to validate API responses against bulk variations.
-* **Security & Vulnerability Scans**: Run built-in security scans checking for SQL injection, boundary violations, and cross-site scripting vulnerabilities.
+* **Multi-Protocol Support**: Supports testing of REST, SOAP, GraphQL, and JMS protocols.
+* **Scripted Test Automation**: Enables running multiple API tests using Groovy or Javascript code via scripting.
+* **Basic Functional Testing**: Provides capabilities for fundamental functional testing of APIs.
+* **Basic Performance Testing**: Offers functionalities for basic performance testing.
+* **Test Log Analysis**: Allows users to manually compare test results through detailed test logs.
 
 ## Best Practices
 
-* Use SoapUI when maintaining enterprise software that mixes legacy SOAP services with modern REST endpoints.
+* Develop custom scripts using Groovy or JavaScript to manage and automate intricate test sequences and logic within the tool.
+* Regularly analyze detailed test logs to manually identify trends, regressions, and areas for improvement across test runs.
+* Implement basic functional tests early in the development cycle to validate core API behavior.
+* Conduct basic performance tests to identify potential bottlenecks under expected load conditions.

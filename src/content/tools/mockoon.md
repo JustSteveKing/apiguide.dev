@@ -9,14 +9,20 @@ pricing: "freemium"
 
 ## What is Mockoon?
 
-Mockoon is an open-source desktop application that allows developers to design and run local mock API servers. It provides a simple GUI to configure endpoints, status codes, custom headers, and body payloads.
+Mockoon is a desktop application and CLI tool for designing and running mock REST API servers. It provides an intuitive interface for creating mock APIs locally, without requiring remote deployment or an account. The tool is free, open-source, and cross-platform.
 
 ## Why use it in the API Lifecycle?
 
-* **Instant Setup**: Start local mock servers in seconds without writing code or editing YAML files.
-* **Rules Engine**: Serve different payloads based on incoming request parameters (e.g. returning a 400 if a query parameter is missing).
-* **Proxy Pass-through**: Route requests to a real API, and only mock specific endpoints that are still in development.
+* **Dynamic Templating**: Create mock APIs with dynamic data using a templating system.
+* **Rules Matching**: Define conditions for mock API responses based on request parameters.
+* **Request Proxying and Recording**: Forward requests to real APIs, record them, and replay for testing.
+* **CLI and Docker Support**: Run mock APIs on servers and headless environments using command-line interface and Docker images.
+* **Cloud Function Deployment**: Deploy mock REST APIs to various cloud function providers like AWS Lambda, GCP Functions, and Firebase Functions.
+* **Failure & Latency Simulation**: Configure error responses, delays, and edge-case scenarios to test how an application handles unreliable dependencies.
 
 ## Best Practices
 
-* Export your Mockoon environment configurations as JSON files to version control them alongside frontend codebases.
+* Integrate mock APIs into existing API design workflows by utilizing OpenAPI specification compatibility.
+* Leverage request recording and proxying to capture real-world data and integrate with actual APIs for comprehensive testing.
+* Self-host mock APIs using the CLI and Docker to incorporate them into CI/CD pipelines and various testing environments.
+* Employ dynamic templating and rules-matching systems to create realistic scenarios and thoroughly test application behavior.

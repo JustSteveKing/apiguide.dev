@@ -7,15 +7,18 @@ url: "https://grpc.io"
 pricing: "open-source"
 ---
 
-## What is gRPC?
+## What is gRPC / Protocol Buffers?
 
-gRPC is a language-agnostic, high-performance Remote Procedure Call (RPC) framework developed by Google. It uses HTTP/2 for transport and Protocol Buffers (Protobuf) as its interface description and message serialization language.
+gRPC is an open source Remote Procedure Call (RPC) framework that operates in various environments. It facilitates efficient service connection within and across data centers. The framework is also suitable for connecting devices, mobile applications, and browsers to backend services, offering pluggable support for various functionalities.
 
 ## Why use it in the API Lifecycle?
 
-* **Binary Serialization**: Protocol Buffers serialize payloads into a compact binary format, making them significantly faster and smaller than text-based JSON.
-* **Bi-directional Streaming**: Native support for client streaming, server streaming, and bi-directional streaming via HTTP/2.
-* **Microservices Communication**: The gold standard for low-overhead, inter-service communication inside secure cloud environments.
+* **Service Definition with Protocol Buffers**: Services are defined using Protocol Buffers, a binary serialization toolset and language for structured data.
+* **Cross-Language and Cross-Platform Support**: The framework automatically generates idiomatic client and server stubs for services across multiple programming languages and platforms.
+* **Scalability for RPCs**: gRPC supports scaling to millions of Remote Procedure Calls per second, with streamlined installation of runtime and development environments.
+* **Bi-directional Streaming Communication**: It enables bi-directional streaming between client and server components.
+* **Integrated Pluggable Authentication**: gRPC provides integrated and pluggable authentication capabilities, utilizing HTTP/2-based transport.
+* **Pluggable Service Management**: It offers pluggable support for functionalities such as load balancing, tracing, and health checking.
 
 ## Best Practices
 

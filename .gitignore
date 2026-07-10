@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # PostHog setup wizard artifact
 posthog-setup-report.md
+
+# Tabstack enrichment review output (not committed)
+scripts/out/
