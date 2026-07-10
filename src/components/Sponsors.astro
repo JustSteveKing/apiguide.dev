@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+
+// Where "Support the project" points — update to the real sponsorship URL.
+const supportUrl = 'https://github.com/sponsors/JustSteveKing';
+
+const rank: Record<string, number> = { premier: 0, standard: 1 };
+const sponsors = (await getCollection('sponsors')).sort((a, b) => {
+  const t = (rank[a.data.tier] ?? 9) - (rank[b.data.tier] ?? 9);
+  if (t !== 0) return t;
+  const o = (a.data.order ?? 999) - (b.data.order ?? 999);
+  if (o !== 0) return o;
+  return a.data.name.localeCompare(b.data.name);
+});
+---
+
+{sponsors.length > 0 && (
+  <section aria-labelledby="sponsors-heading" class="border-t border-paper-300 bg-paper-50">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="flex items-center justify-between mb-8">
+        <h2 id="sponsors-heading" class="text-xs font-semibold uppercase tracking-wider text-paper-500">
+          Sponsors
+        </h2>
+        <a
+          href={supportUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-xs font-semibold text-chartres-600 hover:text-chartres-800 hover:underline"
+        >
+          Support the project &rarr;
+        </a>
+      </div>
+
+      <ul class="flex flex-wrap items-center gap-x-10 gap-y-6">
+        {sponsors.map((s) => (
+          <li>
+            <a
+              href={s.data.url}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              title={s.data.blurb ?? s.data.name}
+              class="group inline-flex items-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+            >
+              {s.data.logo ? (
+                <img
+                  src={s.data.logo}
+                  alt={s.data.name}
+                  loading="lazy"
+                  class={`w-auto ${s.data.tier === 'premier' ? 'h-10' : 'h-8'}`}
+                />
+              ) : (
+                <span
+                  class={`font-bold text-paper-600 group-hover:text-paper-900 ${
+                    s.data.tier === 'premier' ? 'text-2xl' : 'text-lg'
+                  }`}
+                >
+                  {s.data.name}
+                </span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}

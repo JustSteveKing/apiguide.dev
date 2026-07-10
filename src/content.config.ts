@@ -97,4 +97,18 @@ export const collections = {
             officialUrl: z.string().url(),
         }),
     }),
+    sponsors: defineCollection({
+        loader: glob({
+            base: 'src/content/sponsors',
+            pattern: '**/*.{md,mdx}'
+        }),
+        schema: z.object({
+            name: z.string(),
+            url: z.string().url(),
+            tier: z.enum(['premier', 'standard']).default('standard'),
+            logo: z.string().optional(), // image src (path in /public or absolute URL)
+            blurb: z.string().optional(),
+            order: z.number().optional(),
+        }),
+    }),
 };
