@@ -40,7 +40,7 @@ ABAC gives fine-grained, context-aware control, which suits cloud-native and mul
 
 ### Where attributes come from
 
-Trust matters more than flexibility. Signed OAuth access tokens and their claims are an excellent attribute source because their integrity is protected. You may supplement them with data from your own database or another trusted store. **Never** trust attributes taken from request headers, query strings, or the body — those are trivially spoofed. See [`Authorization`](/headers/authorization) and [JWT](/specifications/jwt).
+Trust matters more than flexibility. Signed OAuth access tokens and their claims are an excellent attribute source because their integrity is protected — even when delivered in the `Authorization` request header, the signature makes their claims safe to rely on *after* you verify it. You may supplement them with data from your own database or another trusted store. **Never** trust *unsigned or unverified* attributes taken from request headers, query strings, or the body — those are trivially spoofed. See [`Authorization`](/headers/authorization) and [JWT](/specifications/jwt).
 
 ---
 

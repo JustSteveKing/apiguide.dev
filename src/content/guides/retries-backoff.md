@@ -25,6 +25,8 @@ Retries only help when the failure is **transient** — a temporary, self-correc
 | [`503 Service Unavailable`](/status-codes/503) | Temporary overload or maintenance |
 | `504 Gateway Timeout` | Gateway timed out waiting upstream |
 
+These codes are safe to retry **only when the request method is idempotent** — `GET`, `HEAD`, `PUT`, `DELETE`, `OPTIONS`, `TRACE`. Retrying a non-idempotent method (`POST`, `PATCH`) risks duplicate side effects if the original request was processed but its response was lost. To retry those safely, make them idempotent with an [`Idempotency-Key`](/headers/idempotency-key) first (see section 4).
+
 ### Do not retry
 
 Most `4xx` client errors — `400`, `401`, `403`, `404` — indicate a problem with the request itself that will not resolve on its own. Retrying them only burns resources.
