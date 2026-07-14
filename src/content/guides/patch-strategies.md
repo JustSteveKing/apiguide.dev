@@ -6,7 +6,7 @@ category: "core"
 
 ## Introduction to PATCH Strategies
 
-HTTP APIs often need to update only part of a resource rather than replacing the whole entity. The [`PATCH`](/methods/patch) method exists for exactly this, but sending an arbitrary partial JSON object is ambiguous and can silently overwrite fields. Two IETF standards remove that ambiguity: **JSON Patch (RFC 6902)** and **JSON Merge Patch (RFC 7386)**. Both describe partial updates, but they differ fundamentally in structure, granularity, and how they treat `null`. Choosing between them comes down to how complex your changes are and how much control you need.
+HTTP APIs often need to update only part of a resource rather than replacing the whole entity. The [`PATCH`](/methods/patch) method exists for exactly this, but sending an arbitrary partial JSON object is ambiguous and can silently overwrite fields. Two IETF standards remove that ambiguity: **JSON Patch (RFC 6902)** and **JSON Merge Patch (RFC 7396)**. Both describe partial updates, but they differ fundamentally in structure, granularity, and how they treat `null`. Choosing between them comes down to how complex your changes are and how much control you need.
 
 Servers advertise which formats they accept using the `Accept-Patch` response header, typically in an `OPTIONS` response.
 
@@ -50,7 +50,7 @@ The `test` operation makes JSON Patch well suited to conditional updates: if `/v
 
 ---
 
-## 2. JSON Merge Patch (RFC 7386)
+## 2. JSON Merge Patch (RFC 7396)
 
 JSON Merge Patch is a **state-based** format. Instead of a list of operations, the body is a partial JSON object describing the desired end state.
 

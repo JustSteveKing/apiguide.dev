@@ -48,7 +48,7 @@ Several algorithms are in common use, each defined by its own specification.
 | Gzip | `gzip` | RFC 1952 | Universal support; the long-standing default. |
 | Brotli | `br` | RFC 7932 | Higher ratios than gzip for text; widely supported by modern clients. |
 | Zstandard | `zstd` | RFC 8878 | Very fast compression and decompression; ratios comparable to gzip and better. |
-| Deflate | `deflate` | RFC 1951 | Less common as a direct content encoding; used internally by gzip. |
+| Deflate | `deflate` | RFC 1950 | The `deflate` content-encoding is the zlib format (RFC 1950), which wraps the DEFLATE algorithm (RFC 1951). Less common as a direct content encoding. |
 
 Reported figures put Brotli's ratio slightly ahead of Zstandard, while Zstandard compresses noticeably faster, which makes it attractive for dynamic responses generated per request. A practical preference order for APIs is Brotli first, gzip as a broadly compatible fallback, and Zstandard where throughput and CPU cost matter most.
 

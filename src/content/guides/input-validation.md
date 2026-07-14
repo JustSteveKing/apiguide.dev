@@ -19,7 +19,7 @@ Client-side validation improves user experience but provides no security: an att
 * Do not trust input parameters or objects, regardless of source.
 * Validate length, range, format, and type.
 * Reject unexpected or illegal content rather than trying to clean it.
-* Return [`400 Bad Request`](/status-codes/400) for malformed input and `413 Request Entity Too Large` for oversized payloads.
+* Return [`400 Bad Request`](/status-codes/400) for malformed input and `413 Content Too Large` for oversized payloads.
 
 ---
 
