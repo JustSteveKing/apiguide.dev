@@ -1,28 +1,39 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
+
+// This page is hand-authored rather than a content collection, so its headings are
+// declared here in the same shape `render()` would return.
+const headings = [
+  { depth: 2, slug: 'why-a-standard-error-format', text: 'Why a standard error format?' },
+  { depth: 2, slug: 'core-fields', text: 'Core Fields' },
+  { depth: 2, slug: 'why-is-type-a-uri', text: 'Why is type a URI?' },
+  { depth: 2, slug: 'example-implementation', text: 'Example Implementation' },
+];
 ---
 
 <Layout 
   title="Problem+JSON Specification (RFC 9457) | apiguide.dev"
   description="Comprehensive guide to the Problem+JSON error response format, URI types, self-documenting APIs, and standard implementation patterns."
 >
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumb -->
     <nav class="mb-8 text-sm" aria-label="Breadcrumb">
       <a href="/errors/" class="text-chartres-600 hover:text-chartres-800 hover:underline">API Errors Reference</a>
-      <span class="mx-2 text-paper-400">/</span>
+      <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
       <span class="text-paper-600">Problem+JSON Specification</span>
     </nav>
 
     <h1 class="text-4xl font-extrabold tracking-tight mb-8 text-paper-950">Problem+JSON (RFC 9457) Guide</h1>
 
     <!-- Semantic Content Body -->
-    <article class="prose max-w-none">
+    <div class="lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+      <article class="prose max-w-[60ch]">
       <p class="text-lg leading-relaxed text-paper-800">
         <strong>Problem+JSON</strong> (defined in <a href="https://datatracker.ietf.org/doc/html/rfc9457" class="text-chartres-600 hover:text-chartres-800 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9457</a>, which obsoletes RFC 7807) is a standardized format for carrying machine-readable details of errors in HTTP response payloads. It avoids the need to invent custom error formats for every API.
       </p>
 
-      <h2>Why a standard error format?</h2>
+      <h2 id="why-a-standard-error-format">Why a standard error format?</h2>
       <p>
         In traditional APIs, error formats vary wildy. One API might return <code>{`{"error": "message"}`}</code>, another might return <code>{`{"status": "fail", "code": 4041}`}</code>, and another might just return plain HTML.
       </p>
@@ -30,7 +41,7 @@ import Layout from '../../layouts/Layout.astro';
         Problem+JSON provides a predictable structure that clients can parse programmatically, while remaining flexible enough to contain custom attributes for complex validation or debugging information.
       </p>
 
-      <h2>Core Fields</h2>
+      <h2 id="core-fields">Core Fields</h2>
       <p>A standard Problem+JSON response body can contain the following members:</p>
       <ul>
         <li><strong><code>type</code></strong> (string): A URI reference that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem.</li>
@@ -40,7 +51,7 @@ import Layout from '../../layouts/Layout.astro';
         <li><strong><code>instance</code></strong> (string): A URI reference that identifies the specific occurrence of the problem. Often, this is the request path.</li>
       </ul>
 
-      <h2>Why is <code>type</code> a URI?</h2>
+      <h2 id="why-is-type-a-uri">Why is <code>type</code> a URI?</h2>
       
       <!-- Yinmn informational semantic note -->
       <aside class="bg-yinmn-100 border-l-4 border-yinmn-500 p-5 text-yinmn-950 rounded-r-lg shadow-sm my-6" role="note">
@@ -60,7 +71,7 @@ import Layout from '../../layouts/Layout.astro';
         </li>
       </ol>
 
-      <h2>Example Implementation</h2>
+      <h2 id="example-implementation">Example Implementation</h2>
       <p>Here is how a rate limit exceeded error looks in Problem+JSON format:</p>
       
       <pre class="bg-paper-100 border border-paper-300 rounded-lg p-5 overflow-x-auto font-mono text-sm text-paper-950"><code>{`{
@@ -75,5 +86,7 @@ import Layout from '../../layouts/Layout.astro';
         By pointing the <code>type</code> field to <code>https://apiguide.dev/errors/rate-limit-exceeded</code>, we ensure that both developers and automated client tooling have a single source of truth for understanding this HTTP response.
       </p>
     </article>
+      <TableOfContents headings={headings} />
+    </div>
   </main>
 </Layout>

@@ -23,7 +23,7 @@ const sortedMethods = allMethods.sort((a, b) => {
     <header class="mb-12 border-b border-paper-300 pb-8">
       <nav class="mb-4 text-sm" aria-label="Breadcrumb">
         <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
-        <span class="mx-2 text-paper-400">/</span>
+        <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
         <span class="text-paper-600">HTTP Methods</span>
       </nav>
       <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">HTTP Request Methods</h1>
@@ -35,7 +35,7 @@ const sortedMethods = allMethods.sort((a, b) => {
     <!-- Methods List -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {sortedMethods.map(m => (
-        <div class="border border-paper-300 rounded-xl p-6 bg-paper-100/50 hover:bg-paper-100 hover:shadow-md transition-all flex flex-col justify-between">
+        <div class="card border border-paper-300 rounded-xl p-6 bg-paper-100/50 hover:bg-paper-100 hover:shadow-md transition-all flex flex-col justify-between">
           <div>
             <div class="flex items-start justify-between gap-4 mb-4">
               <h2 class="text-2xl font-bold">
@@ -56,7 +56,7 @@ const sortedMethods = allMethods.sort((a, b) => {
                     Safe
                   </span>
                 ) : (
-                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-paper-200 text-paper-600 border border-paper-300">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold uppercase bg-paper-200 text-paper-800 border border-paper-300">
                     Unsafe
                   </span>
                 )}
@@ -84,12 +84,12 @@ const sortedMethods = allMethods.sort((a, b) => {
             </p>
           </div>
           
-          <div class="text-xs text-paper-500 font-medium border-t border-paper-300 pt-4 flex items-center justify-between">
+          <div class="text-xs text-paper-600 font-medium border-t border-paper-300 pt-4 flex items-center justify-between">
             <a href={`/methods/${m.id}/`} class="text-chartres-600 hover:underline">
               Read semantic usage &rarr;
             </a>
             {m.data.relatedCodes && m.data.relatedCodes.length > 0 && (
-              <span class="text-paper-400">
+              <span class="text-paper-600">
                 Common Codes: {m.data.relatedCodes.join(',')}
               </span>
             )}

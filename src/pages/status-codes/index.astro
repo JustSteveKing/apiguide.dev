@@ -48,7 +48,7 @@ const categoryThemes = {
     <header class="mb-12 border-b border-paper-300 pb-8">
       <nav class="mb-4 text-sm" aria-label="Breadcrumb">
         <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
-        <span class="mx-2 text-paper-400">/</span>
+        <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
         <span class="text-paper-600">HTTP Status Codes</span>
       </nav>
       <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">HTTP Status Codes Catalog</h1>
@@ -84,7 +84,7 @@ const categoryThemes = {
                       {sc.data.description}
                     </p>
                   </div>
-                  <div class="text-xs text-paper-500 font-medium">
+                  <div class="text-xs text-paper-600 font-medium">
                     <a href={`/status-codes/${sc.data.code}/`} class="text-chartres-600 hover:underline">
                       Read full semantics &rarr;
                     </a>

@@ -40,36 +40,32 @@ const homeJsonLd = getWebSiteSchema();
   <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     
     <!-- Hero Header -->
-    <header class="mb-16 text-center md:text-left">
-      <h1 class="text-5xl font-extrabold tracking-tight mb-4 text-paper-950">apiguide.dev</h1>
-      <p class="text-xl text-paper-600 max-w-3xl leading-relaxed mb-8">
-        Authoritative design patterns for developer-friendly APIs. Standardize your error schemas, document your status codes, secure your headers, and master the HTTP specification.
+    <header class="mb-16">
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4 text-paper-950 max-w-3xl">
+        Authoritative design patterns for developer-friendly APIs
+      </h1>
+      <p class="text-lg sm:text-xl text-paper-700 max-w-3xl leading-relaxed mb-8">
+        Standardize your error schemas, document your status codes, secure your headers, and master the HTTP specification.
       </p>
       
       <!-- Hero Search Trigger -->
       <div class="max-w-xl">
-        <button id="hero-search-trigger" class="w-full flex items-center gap-3 px-5 py-4 text-base text-paper-600 bg-paper-100 hover:bg-paper-200 border border-paper-300 rounded-2xl transition-all cursor-pointer shadow-sm text-left select-none" aria-label="Search catalog references">
-          <svg class="w-5 h-5 text-paper-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <span>Search HTTP status codes, headers, errors...</span>
-          <kbd class="ml-auto hidden sm:inline-block px-2 py-0.5 text-xs font-sans bg-paper-50 border border-paper-300 rounded text-paper-500">⌘K</kbd>
+        <button id="hero-search-trigger" class="w-full flex items-center gap-3 px-5 py-4 text-base text-paper-700 bg-paper-100 hover:bg-paper-200 border border-paper-300 rounded-2xl transition-all cursor-pointer shadow-sm text-left select-none" aria-label="Search catalog references">
+          <svg class="w-5 h-5 text-paper-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <span class="sm:hidden">Search references&hellip;</span>
+          <span class="hidden sm:inline">Search HTTP status codes, headers, errors&hellip;</span>
+          <kbd class="ml-auto hidden sm:inline-block px-2 py-0.5 text-xs font-sans bg-paper-50 border border-paper-300 rounded text-paper-700">⌘K</kbd>
         </button>
         
-        <!-- Refined Metadata Stats -->
-        <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xxs text-paper-500 select-none px-1">
-          <span>Index counts:</span>
-          <a href="/errors/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{errors.length}</strong> Errors</a>
-          <span class="text-paper-300">•</span>
-          <a href="/status-codes/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{statusCodes.length}</strong> Status Codes</a>
-          <span class="text-paper-300">•</span>
-          <a href="/headers/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{headers.length}</strong> Headers</a>
-          <span class="text-paper-300">•</span>
-          <a href="/methods/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{methods.length}</strong> Methods</a>
-          <span class="text-paper-300">•</span>
-          <a href="/guides/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{guides.length}</strong> Guides</a>
-          <span class="text-paper-300">•</span>
-          <a href="/specifications/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{specifications.length}</strong> Specs</a>
-          <span class="text-paper-300">•</span>
-          <a href="/tools/" class="hover:text-chartres-600 transition-colors font-medium"><strong>{tools.length}</strong> Tools</a>
+        <!-- Index counts -->
+        <div class="mt-4 flex flex-wrap gap-2 text-xs" aria-label="Reference index counts">
+          <a href="/errors/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{errors.length}</strong> Errors</a>
+          <a href="/status-codes/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{statusCodes.length}</strong> Status Codes</a>
+          <a href="/headers/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{headers.length}</strong> Headers</a>
+          <a href="/methods/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{methods.length}</strong> Methods</a>
+          <a href="/guides/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{guides.length}</strong> Guides</a>
+          <a href="/specifications/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{specifications.length}</strong> Specs</a>
+          <a href="/tools/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{tools.length}</strong> Tools</a>
         </div>
       </div>
     </header>
@@ -78,84 +74,84 @@ const homeJsonLd = getWebSiteSchema();
     <section class="mb-16">
       <h2 class="text-2xl font-bold text-paper-900 mb-8 border-b border-paper-300 pb-2">Reference Directories</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <a href="/errors/" class="block p-6 border border-ochre-200/60 rounded-xl hover:border-ochre-450 hover:shadow-md transition-all bg-ochre-50/30 flex flex-col justify-between group">
+        <a href="/errors/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
-            <h3 class="text-xl font-bold text-ochre-600 group-hover:text-ochre-800 mb-2">API Errors &rarr;</h3>
+            <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">API Errors &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
               Standard Problem+JSON structures for validation, authentication, and state conflicts.
             </p>
           </div>
-          <span class="text-xs text-ochre-700 mt-4 font-semibold block">{errors.length} schemas defined</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">{errors.length} schemas defined</span>
         </a>
 
-        <a href="/status-codes/" class="block p-6 border border-emerald-200/60 rounded-xl hover:border-emerald-450 hover:shadow-md transition-all bg-emerald-50/30 flex flex-col justify-between group">
+        <a href="/status-codes/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
-            <h3 class="text-xl font-bold text-emerald-600 group-hover:text-emerald-800 mb-2">Status Codes &rarr;</h3>
+            <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">Status Codes &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
               Semantics and API usage boundaries for informational, redirection, client, and server codes.
             </p>
           </div>
-          <span class="text-xs text-emerald-700 mt-4 font-semibold block">{statusCodes.length} codes cataloged</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">{statusCodes.length} codes cataloged</span>
         </a>
 
-        <a href="/headers/" class="block p-6 border border-yinmn-200/60 rounded-xl hover:border-yinmn-450 hover:shadow-md transition-all bg-yinmn-50/30 flex flex-col justify-between group">
+        <a href="/headers/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
-            <h3 class="text-xl font-bold text-yinmn-600 group-hover:text-yinmn-800 mb-2">HTTP Headers &rarr;</h3>
+            <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">HTTP Headers &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
               Full specification metadata covering standard authorization, concurrency, and rate limits.
             </p>
           </div>
-          <span class="text-xs text-yinmn-700 mt-4 font-semibold block">{headers.length} headers cataloged</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">{headers.length} headers cataloged</span>
         </a>
 
-        <a href="/methods/" class="block p-6 border border-chartres-200/60 rounded-xl hover:border-chartres-450 hover:shadow-md transition-all bg-chartres-50/30 flex flex-col justify-between group">
+        <a href="/methods/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
-            <h3 class="text-xl font-bold text-chartres-600 group-hover:text-chartres-800 mb-2">Request Methods &rarr;</h3>
+            <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">Request Methods &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
               Guarantees of safety, idempotence, and cacheability for HTTP request verbs.
             </p>
           </div>
-          <span class="text-xs text-chartres-700 mt-4 font-semibold block">{methods.length} request verbs</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">{methods.length} request verbs</span>
         </a>
 
-        <a href="/guides/" class="block p-6 border border-ochre-200/60 rounded-xl hover:border-ochre-450 hover:shadow-md transition-all bg-ochre-50/30 flex flex-col justify-between group">
+        <a href="/guides/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
-            <h3 class="text-xl font-bold text-ochre-600 group-hover:text-ochre-800 mb-2">Developer Guides &rarr;</h3>
+            <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">Developer Guides &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
               Architectural guides detailing HTTP Caching, CORS preflight flow, and token security.
             </p>
           </div>
-          <span class="text-xs text-ochre-700 mt-4 font-semibold block">{guides.length} guides available</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">{guides.length} guides available</span>
         </a>
 
-        <a href="/specifications/" class="block p-6 border border-yinmn-200/60 rounded-xl hover:border-yinmn-450 hover:shadow-md transition-all bg-yinmn-50/30 flex flex-col justify-between group">
+        <a href="/specifications/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
-            <h3 class="text-xl font-bold text-yinmn-600 group-hover:text-yinmn-800 mb-2">API Specifications &rarr;</h3>
+            <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">API Specifications &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
               In-depth references covering schema standard specifications like OpenAPI, AsyncAPI, and JSON Schema.
             </p>
           </div>
-          <span class="text-xs text-yinmn-700 mt-4 font-semibold block">{specifications.length} standards cataloged</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">{specifications.length} standards cataloged</span>
         </a>
 
-        <a href="/tools/" class="block p-6 border border-emerald-200/60 rounded-xl hover:border-emerald-450 hover:shadow-md transition-all bg-emerald-50/30 flex flex-col justify-between group">
+        <a href="/tools/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
-            <h3 class="text-xl font-bold text-emerald-600 group-hover:text-emerald-800 mb-2">API Tooling &rarr;</h3>
+            <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">API Tooling &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
               Curated directory of industry tools covering documentation, mock testing, gateways, and observability.
             </p>
           </div>
-          <span class="text-xs text-emerald-700 mt-4 font-semibold block">{tools.length} tools review cataloged</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">{tools.length} tools review cataloged</span>
         </a>
 
-        <a href="/problem-json/" class="block p-6 border border-uranium-200/60 rounded-xl hover:border-uranium-450 hover:shadow-md transition-all bg-uranium-50/30 flex flex-col justify-between group">
+        <a href="/problem-json/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
-            <h3 class="text-xl font-bold text-uranium-600 group-hover:text-uranium-800 mb-2">Problem+JSON Guide &rarr;</h3>
+            <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">Problem+JSON Guide &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
               Understand the RFC 9457 specification and why using URIs for error types is crucial.
             </p>
           </div>
-          <span class="text-xs text-uranium-700 mt-4 font-semibold block">RFC 9457 / RFC 7807</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">RFC 9457 / RFC 7807</span>
         </a>
       </div>
     </section>
@@ -165,73 +161,73 @@ const homeJsonLd = getWebSiteSchema();
       <h2 class="text-2xl font-bold text-paper-900 mb-8 pb-2">Common API Scenarios</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Card 1: Rate Limiting -->
-        <div class="p-6 border border-chartres-200/60 rounded-xl bg-chartres-50/30 flex flex-col justify-between">
+        <div class="p-6 border border-paper-300 rounded-xl bg-paper-100/40 flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-2 mb-3">
               <span class="w-2.5 h-2.5 rounded-full bg-chartres-500"></span>
-              <h3 class="text-lg font-bold text-chartres-700">How to handle rate limits?</h3>
+              <h3 class="text-lg font-bold text-chartres-800">How to handle rate limits?</h3>
             </div>
             <p class="text-paper-700 text-sm leading-relaxed mb-4">
               Protect your servers from abuse by implementing uniform rate-limiting responses. Learn which headers to write and when to drop client requests.
             </p>
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
-              <a href="/status-codes/429/" class="px-2.5 py-0.5 rounded bg-chartres-100 text-chartres-800 border border-chartres-200 hover:underline">HTTP 429 Status</a>
-              <a href="/headers/retry-after/" class="px-2.5 py-0.5 rounded bg-chartres-100 text-chartres-800 border border-chartres-200 hover:underline">Retry-After Header</a>
-              <a href="/errors/rate-limit-exceeded/" class="px-2.5 py-0.5 rounded bg-chartres-100 text-chartres-800 border border-chartres-200 hover:underline">RateLimit Error Schema</a>
+              <a href="/status-codes/429/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 429 Status</a>
+              <a href="/headers/retry-after/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Retry-After Header</a>
+              <a href="/errors/rate-limit-exceeded/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">RateLimit Error Schema</a>
             </div>
           </div>
         </div>
 
         <!-- Card 2: Concurrency Controls -->
-        <div class="p-6 border border-yinmn-200/60 rounded-xl bg-yinmn-50/30 flex flex-col justify-between">
+        <div class="p-6 border border-paper-300 rounded-xl bg-paper-100/40 flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <span class="w-2.5 h-2.5 rounded-full bg-yinmn-500"></span>
-              <h3 class="text-lg font-bold text-yinmn-700">How to lock concurrency?</h3>
+              <span class="w-2.5 h-2.5 rounded-full bg-chartres-500"></span>
+              <h3 class="text-lg font-bold text-chartres-800">How to lock concurrency?</h3>
             </div>
             <p class="text-paper-700 text-sm leading-relaxed mb-4">
               Prevent "mid-air collisions" and race conditions where multiple clients update the same database entity concurrently using optimistic locking.
             </p>
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
-              <a href="/headers/etag/" class="px-2.5 py-0.5 rounded bg-yinmn-100 text-yinmn-800 border border-yinmn-200 hover:underline">ETag Header</a>
-              <a href="/headers/if-match/" class="px-2.5 py-0.5 rounded bg-yinmn-100 text-yinmn-800 border border-yinmn-200 hover:underline">If-Match Header</a>
-              <a href="/status-codes/412/" class="px-2.5 py-0.5 rounded bg-yinmn-100 text-yinmn-800 border border-yinmn-200 hover:underline">HTTP 412 Precondition Failed</a>
+              <a href="/headers/etag/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">ETag Header</a>
+              <a href="/headers/if-match/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">If-Match Header</a>
+              <a href="/status-codes/412/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 412 Precondition Failed</a>
             </div>
           </div>
         </div>
 
         <!-- Card 3: Validation Errors -->
-        <div class="p-6 border border-ochre-200/60 rounded-xl bg-ochre-50/30 flex flex-col justify-between">
+        <div class="p-6 border border-paper-300 rounded-xl bg-paper-100/40 flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <span class="w-2.5 h-2.5 rounded-full bg-ochre-500"></span>
-              <h3 class="text-lg font-bold text-ochre-700">How to structure validation failures?</h3>
+              <span class="w-2.5 h-2.5 rounded-full bg-chartres-500"></span>
+              <h3 class="text-lg font-bold text-chartres-800">How to structure validation failures?</h3>
             </div>
             <p class="text-paper-700 text-sm leading-relaxed mb-4">
               Return clear, nested parameter-level validation errors to clients when form submissions fail, using RFC 9457 standard patterns.
             </p>
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
-              <a href="/status-codes/422/" class="px-2.5 py-0.5 rounded bg-ochre-100 text-ochre-800 border border-ochre-200 hover:underline">HTTP 422 Status</a>
-              <a href="/errors/validation-failed/" class="px-2.5 py-0.5 rounded bg-ochre-100 text-ochre-800 border border-ochre-200 hover:underline">Validation Error Schema</a>
-              <a href="/problem-json/" class="px-2.5 py-0.5 rounded bg-ochre-100 text-ochre-800 border border-ochre-200 hover:underline">Problem+JSON Standard</a>
+              <a href="/status-codes/422/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 422 Status</a>
+              <a href="/errors/validation-failed/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Validation Error Schema</a>
+              <a href="/problem-json/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Problem+JSON Standard</a>
             </div>
           </div>
         </div>
 
         <!-- Card 4: Idempotence Guarantees -->
-        <div class="p-6 border border-emerald-200/60 rounded-xl bg-emerald-50/30 flex flex-col justify-between">
+        <div class="p-6 border border-paper-300 rounded-xl bg-paper-100/40 flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              <h3 class="text-lg font-bold text-emerald-700">How to guarantee request idempotence?</h3>
+              <span class="w-2.5 h-2.5 rounded-full bg-chartres-500"></span>
+              <h3 class="text-lg font-bold text-chartres-800">How to guarantee request idempotence?</h3>
             </div>
             <p class="text-paper-700 text-sm leading-relaxed mb-4">
               Ensure safe retries for state-mutating requests (like payment actions) without duplicate charge processing by utilizing unique header keys.
             </p>
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
-              <a href="/headers/idempotency-key/" class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200 hover:underline">Idempotency-Key Header</a>
-              <a href="/methods/post/" class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200 hover:underline">POST Request Verb</a>
-              <a href="/guides/security/" class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200 hover:underline">API Security Guide</a>
+              <a href="/headers/idempotency-key/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Idempotency-Key Header</a>
+              <a href="/methods/post/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">POST Request Verb</a>
+              <a href="/guides/security/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">API Security Guide</a>
             </div>
           </div>
         </div>
@@ -241,7 +237,7 @@ const homeJsonLd = getWebSiteSchema();
     <!-- Error Design Comparison Section -->
     <section class="mb-16 border-t border-paper-300 pt-16">
       <h2 class="text-2xl font-bold text-paper-900 mb-4">The Standardized Error Pattern</h2>
-      <p class="text-sm text-paper-600 mb-8 max-w-2xl">
+      <p class="text-sm text-paper-700 mb-8 max-w-2xl">
         Web APIs should use RFC 9457 (Problem+JSON) error responses rather than arbitrary ad-hoc properties, providing predictable error categorization.
       </p>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 font-mono text-xs">
@@ -287,22 +283,22 @@ const homeJsonLd = getWebSiteSchema();
           <h3 class="text-lg font-bold text-paper-800 mb-4 border-b border-paper-300 pb-1">Featured Error Schemas</h3>
           <div class="space-y-4">
             {highlightedErrors.map(error => (
-              <div class="p-4 border border-ochre-200/50 rounded-lg bg-ochre-50/20 hover:bg-ochre-50/50 hover:shadow-xs transition-all">
+              <div class="card p-4 border border-ochre-200/50 rounded-lg bg-ochre-50/20 hover:bg-ochre-50/50 hover:shadow-xs transition-all">
                 <div class="flex items-center justify-between gap-2 mb-1">
-                  <a href={`/errors/${error.id}/`} class="font-bold text-sm text-ochre-700 hover:underline line-clamp-1">
+                  <a href={`/errors/${error.id}/`} class="font-bold text-sm text-ochre-900 hover:underline line-clamp-1">
                     {error.data.title}
                   </a>
                   <span class="text-xxs font-semibold bg-ochre-100 text-ochre-900 border border-ochre-200 px-1.5 py-px rounded whitespace-nowrap">
                     HTTP {error.data.statusCode}
                   </span>
                 </div>
-                <p class="text-xs text-paper-600 line-clamp-2 leading-relaxed">
+                <p class="text-xs text-paper-700 line-clamp-2 leading-relaxed">
                   {error.data.statusText}: A standardized definition for this error code.
                 </p>
               </div>
             ))}
           </div>
-          <a href="/errors/" class="inline-block mt-4 text-xs font-bold text-ochre-700 hover:underline">
+          <a href="/errors/" class="inline-block mt-4 text-xs font-bold text-ochre-900 hover:underline">
             View all error schemas &rarr;
           </a>
         </div>
@@ -312,7 +308,7 @@ const homeJsonLd = getWebSiteSchema();
           <h3 class="text-lg font-bold text-paper-800 mb-4 border-b border-paper-300 pb-1">Essential HTTP Headers</h3>
           <div class="space-y-4">
             {highlightedHeaders.map(h => (
-              <div class="p-4 border border-yinmn-200/50 rounded-lg bg-yinmn-50/20 hover:bg-yinmn-50/50 hover:shadow-xs transition-all">
+              <div class="card p-4 border border-yinmn-200/50 rounded-lg bg-yinmn-50/20 hover:bg-yinmn-50/50 hover:shadow-xs transition-all">
                 <div class="flex items-center justify-between gap-2 mb-1">
                   <a href={`/headers/${h.id}/`} class="font-bold text-sm text-yinmn-700 hover:underline font-mono">
                     {h.data.name}
@@ -321,7 +317,7 @@ const homeJsonLd = getWebSiteSchema();
                     {h.data.category}
                   </span>
                 </div>
-                <p class="text-xs text-paper-600 line-clamp-2 leading-relaxed">
+                <p class="text-xs text-paper-700 line-clamp-2 leading-relaxed">
                   {h.data.description}
                 </p>
               </div>
@@ -354,16 +350,16 @@ const homeJsonLd = getWebSiteSchema();
                     </td>
                     <td class="p-2.5">
                       {verb.data.safe ? (
-                        <span class="text-emerald-700 font-semibold">Yes</span>
+                        <span class="text-emerald-900 font-semibold">Yes</span>
                       ) : (
-                        <span class="text-paper-400">No</span>
+                        <span class="text-paper-700">No</span>
                       )}
                     </td>
                     <td class="p-2.5">
                       {verb.data.idempotent ? (
-                        <span class="text-yinmn-700 font-semibold">Yes</span>
+                        <span class="text-yinmn-800 font-semibold">Yes</span>
                       ) : (
-                        <span class="text-ochre-800 font-semibold">No</span>
+                        <span class="text-ochre-900 font-semibold">No</span>
                       )}
                     </td>
                   </tr>

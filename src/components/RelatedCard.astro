@@ -13,36 +13,36 @@ const themeMap = {
   chartres: {
     border: 'border-chartres-200/60',
     bg: 'bg-chartres-50/30 hover:bg-chartres-50/60',
-    hoverText: 'group-hover:text-chartres-600 group-hover:underline',
-    text: 'text-chartres-600',
+    hoverText: 'group-hover:text-chartres-800 group-hover:underline',
+    text: 'text-chartres-800',
     badge: 'bg-chartres-100 text-chartres-900 border-chartres-200'
   },
   ochre: {
     border: 'border-ochre-200/60',
     bg: 'bg-ochre-50/30 hover:bg-ochre-50/60',
-    hoverText: 'group-hover:text-ochre-600 group-hover:underline',
-    text: 'text-ochre-600',
+    hoverText: 'group-hover:text-ochre-800 group-hover:underline',
+    text: 'text-ochre-800',
     badge: 'bg-ochre-100 text-ochre-900 border-ochre-200'
   },
   yinmn: {
     border: 'border-yinmn-200/60',
     bg: 'bg-yinmn-50/30 hover:bg-yinmn-50/60',
-    hoverText: 'group-hover:text-yinmn-600 group-hover:underline',
-    text: 'text-yinmn-600',
+    hoverText: 'group-hover:text-yinmn-800 group-hover:underline',
+    text: 'text-yinmn-800',
     badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200'
   },
   emerald: {
     border: 'border-emerald-200/60',
     bg: 'bg-emerald-50/30 hover:bg-emerald-50/60',
-    hoverText: 'group-hover:text-emerald-600 group-hover:underline',
-    text: 'text-emerald-600',
+    hoverText: 'group-hover:text-emerald-800 group-hover:underline',
+    text: 'text-emerald-800',
     badge: 'bg-emerald-100 text-emerald-900 border-emerald-200'
   },
   uranium: {
     border: 'border-uranium-200/60',
     bg: 'bg-uranium-50/30 hover:bg-uranium-50/60',
-    hoverText: 'group-hover:text-uranium-600 group-hover:underline',
-    text: 'text-uranium-600',
+    hoverText: 'group-hover:text-uranium-800 group-hover:underline',
+    text: 'text-uranium-800',
     badge: 'bg-uranium-100 text-uranium-900 border-uranium-200'
   }
 } as const;
@@ -51,7 +51,7 @@ const activeTheme = themeMap[theme];
 ---
 <a 
   href={href} 
-  class={`block p-5 border ${activeTheme.border} rounded-xl ${activeTheme.bg} transition-all group flex flex-col justify-between`}
+  class={`card p-5 border ${activeTheme.border} rounded-xl ${activeTheme.bg} transition-all group flex flex-col justify-between`}
 >
   <div>
     <div class="flex items-start justify-between gap-4 mb-2">
@@ -64,7 +64,7 @@ const activeTheme = themeMap[theme];
         </span>
       )}
     </div>
-    <p class="text-xs text-paper-500 leading-relaxed line-clamp-2">
+    <p class="text-xs text-paper-600 leading-relaxed line-clamp-2">
       {description}
     </p>
   </div>

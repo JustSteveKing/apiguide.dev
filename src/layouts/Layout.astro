@@ -46,7 +46,7 @@ const jsonLdPayload = Array.isArray(jsonLd)
 <html lang="en" class="h-full bg-paper-50 text-paper-900 scroll-smooth">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
 		<link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192" />
@@ -57,7 +57,7 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 		
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>
@@ -90,12 +90,15 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		<PostHog />
 	</head>
 	<body class="flex flex-col min-h-screen bg-paper-50 text-paper-900 selection:bg-chartres-200 selection:text-chartres-950 font-sans antialiased">
-		<a href="#main-content" class="sr-only">Skip to main content</a>
+		<a
+			href="#main-content"
+			class="sr-only focus:not-sr-only focus:whitespace-nowrap focus:fixed focus:top-3 focus:left-3 focus:z-100 focus:rounded-lg focus:border focus:border-paper-300 focus:bg-paper-50 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-chartres-700 focus:shadow-lg"
+		>Skip to main content</a>
 		<!-- Persistent Sticky Header -->
 		<Header />
 
 		<!-- Main Content Slot -->
-		<div id="main-content" class="grow">
+		<div id="main-content" tabindex="-1" class="grow">
 			<slot />
 		</div>
 
@@ -107,6 +110,22 @@ const jsonLdPayload = Array.isArray(jsonLd)
 
 		<!-- Command Palette Search Overlay -->
 		<CommandPalette />
+
+		<script>
+			// Give every long-form heading a copyable link, so sections can be cited directly.
+			document.addEventListener('astro:page-load', () => {
+				document.querySelectorAll<HTMLElement>('.prose h2[id], .prose h3[id]').forEach(heading => {
+					if (heading.querySelector('.heading-anchor')) return;
+
+					const anchor = document.createElement('a');
+					anchor.className = 'heading-anchor';
+					anchor.href = `#${heading.id}`;
+					anchor.textContent = '#';
+					anchor.setAttribute('aria-label', `Link to section: ${heading.textContent?.trim() ?? ''}`);
+					heading.appendChild(anchor);
+				});
+			});
+		</script>
 
 
 	</body>
