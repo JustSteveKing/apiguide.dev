@@ -18,9 +18,9 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => {
   <section aria-labelledby="sponsors-heading" class="border-t border-paper-300 bg-paper-50">
     <div class="max-w-6xl mx-auto px-6 py-12">
       <div class="flex items-center justify-between mb-8">
-        <h2 id="sponsors-heading" class="text-xs font-semibold uppercase tracking-wider text-paper-500">
+        <p id="sponsors-heading" class="text-xs font-semibold uppercase tracking-wider text-paper-700">
           Sponsors
-        </h2>
+        </p>
         <a
           href={supportUrl}
           target="_blank"
@@ -50,7 +50,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => {
                 />
               ) : (
                 <span
-                  class={`font-bold text-paper-600 group-hover:text-paper-900 ${
+                  class={`font-bold text-paper-700 group-hover:text-paper-900 ${
                     s.data.tier === 'premier' ? 'text-2xl' : 'text-lg'
                   }`}
                 >

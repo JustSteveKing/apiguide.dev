@@ -5,7 +5,7 @@
   <div id="palette-container" class="bg-paper-50/90 backdrop-blur-xl border border-paper-300 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-300">
     <!-- Search Input Header -->
     <div class="relative flex items-center border-b border-paper-300">
-      <svg class="absolute left-5 w-5 h-5 text-paper-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <svg class="absolute left-5 w-5 h-5 text-paper-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
       <input 
@@ -19,18 +19,18 @@
         aria-controls="palette-results"
         aria-autocomplete="list"
       />
-      <button id="palette-close" class="absolute right-5 text-paper-400 hover:text-paper-600 text-xs px-2 py-1 rounded bg-paper-100 border border-paper-200" aria-label="Close search">ESC</button>
+      <button id="palette-close" class="absolute right-5 text-paper-600 hover:text-paper-900 text-xs px-2 py-1 rounded bg-paper-100 border border-paper-200" aria-label="Close search">ESC</button>
     </div>
 
     <!-- Results Body -->
     <div id="palette-results" class="max-h-96 overflow-y-auto p-3 space-y-1 min-h-25" role="listbox" aria-label="Search results">
-      <div class="text-center text-sm text-paper-400 py-10 font-sans">
+      <div class="text-center text-sm text-paper-600 py-10 font-sans">
         Type to start searching...
       </div>
     </div>
 
     <!-- Footer Help -->
-    <div class="border-t border-paper-300 px-6 py-3 bg-paper-100/50 text-xxs text-paper-500 flex justify-between items-center font-mono select-none">
+    <div class="border-t border-paper-300 px-6 py-3 bg-paper-100/50 text-xxs text-paper-700 flex justify-between items-center font-mono select-none">
       <div class="flex gap-4">
         <span><kbd class="px-1 bg-paper-200 rounded border border-paper-300">↑↓</kbd> Navigate</span>
         <span><kbd class="px-1 bg-paper-200 rounded border border-paper-300">Enter</kbd> Select</span>
@@ -96,7 +96,7 @@
         document.body.style.overflow = '';
         input.value = '';
         if (results) {
-          results.innerHTML = '<div class="text-center text-sm text-paper-400 py-10 font-sans">Type to start searching...</div>';
+          results.innerHTML = '<div class="text-center text-sm text-paper-600 py-10 font-sans">Type to start searching...</div>';
         }
         activeIndex = -1;
         matches = [];
@@ -112,17 +112,17 @@
       activeIndex = -1;
       
       if (filtered.length === 0) {
-        results.innerHTML = '<div class="text-center text-sm text-paper-400 py-10 font-sans">No matching records found.</div>';
+        results.innerHTML = '<div class="text-center text-sm text-paper-600 py-10 font-sans">No matching records found.</div>';
         return;
       }
 
       results.innerHTML = filtered.map((item, idx) => `
-        <a href="${item.url}" role="option" aria-selected="${idx === 0 ? 'true' : 'false'}" class="block p-3 rounded-lg hover:bg-chartres-50/70 text-left transition-colors font-sans group ${idx === 0 ? 'bg-chartres-50/40 border border-chartres-200' : 'border border-transparent'}" data-index="${idx}">
+        <a href="${item.url}" role="option" aria-selected="${idx === 0 ? 'true' : 'false'}" class="card block p-3 rounded-lg hover:bg-chartres-50/70 text-left transition-colors font-sans group ${idx === 0 ? 'bg-chartres-50/40 border border-chartres-200' : 'border border-transparent'}" data-index="${idx}">
           <div class="flex items-center justify-between mb-0.5">
             <span class="font-bold text-sm text-paper-900 group-hover:text-chartres-800">${item.title}</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-paper-200 text-paper-600 border border-paper-300">${item.type}</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-paper-200 text-paper-800 border border-paper-300">${item.type}</span>
           </div>
-          <p class="text-xs text-paper-500 line-clamp-1">${item.description}</p>
+          <p class="text-xs text-paper-600 line-clamp-1">${item.description}</p>
         </a>
       `).join('');
 
@@ -148,7 +148,7 @@
       const q = input.value.toLowerCase().trim();
       if (!q) {
         if (results) {
-          results.innerHTML = '<div class="text-center text-sm text-paper-400 py-10 font-sans">Type to start searching...</div>';
+          results.innerHTML = '<div class="text-center text-sm text-paper-600 py-10 font-sans">Type to start searching...</div>';
         }
         matches = [];
         activeIndex = -1;

@@ -1,5 +1,70 @@
 import { getCollection } from 'astro:content';
 import sharp from 'sharp';
+import fs from 'node:fs';
+import path from 'node:path';
+import { create } from 'fontkitten';
+
+// sharp rasterises SVG through librsvg, which resolves text against the build machine's
+// own fontconfig and ignores @font-face (embedded data: URIs included). Text is therefore
+// converted to vector paths here, so a card renders identically wherever it is built.
+// See src/assets/fonts/README.md.
+// Resolved from the project root rather than import.meta.url: this module is bundled into
+// dist/.prerender/ before it runs, so a path relative to the source file no longer exists.
+const fontFile = (name: string) =>
+  fs.readFileSync(path.join(process.cwd(), 'src/assets/fonts', name));
+
+// Static instances rather than variable files: fontkitten cannot instance a variation
+// out of a WOFF2, so each weight is its own file.
+const faces = {
+  display: create(fontFile('lora-latin-700-normal.woff2')) as any,
+  body: create(fontFile('inter-latin-400-normal.woff2')) as any,
+  bodyBold: create(fontFile('inter-latin-600-normal.woff2')) as any,
+  wordmark: create(fontFile('inter-latin-700-normal.woff2')) as any,
+};
+
+type Face = typeof faces.display;
+
+// These are Latin subsets, so a title carrying something outside their coverage would
+// otherwise render as .notdef boxes. Substitute what has an obvious ASCII equivalent and
+// drop the rest, rather than shipping a card full of tofu.
+const SUBSTITUTIONS: Record<string, string> = {
+  '\u2192': '->',
+  '\u2190': '<-',
+  '\u00d7': 'x',
+  '\u2122': 'TM',
+};
+
+const supported = (face: Face, text: string): string =>
+  [...text]
+    .map(char =>
+      face.hasGlyphForCodePoint(char.codePointAt(0)!) ? char : (SUBSTITUTIONS[char] ?? '')
+    )
+    .join('');
+
+/** Advance width of a string at a given size, including any letter tracking. */
+const measure = (face: Face, text: string, size: number, tracking = 0): number => {
+  const scale = size / face.unitsPerEm;
+  const safe = supported(face, text);
+  let width = 0;
+  for (const glyph of face.glyphsForString(safe)) width += glyph.advanceWidth * scale + tracking;
+  return width - (safe.length ? tracking : 0);
+};
+
+/** SVG path data for a string, with its baseline origin at (x, y). */
+const textPath = (face: Face, text: string, size: number, x: number, y: number, tracking = 0): string => {
+  const scale = size / face.unitsPerEm;
+  const parts: string[] = [];
+  let cursor = x;
+
+  for (const glyph of face.glyphsForString(supported(face, text))) {
+    // Glyph outlines are y-up; SVG is y-down, hence the negative vertical scale.
+    const d = glyph.path.scale(scale, -scale).translate(cursor, y).toSVG();
+    if (d) parts.push(d);
+    cursor += glyph.advanceWidth * scale + tracking;
+  }
+
+  return parts.join(' ');
+};
 
 export async function getStaticPaths() {
   const errors = await getCollection('errors');
@@ -13,7 +78,7 @@ export async function getStaticPaths() {
   const paths = [
     {
       params: { path: 'index.png' },
-      props: { title: 'apiguide.dev', subtitle: 'Authoritative HTTP & API Reference Catalog.', category: 'Home' }
+      props: { title: 'Authoritative design patterns for developer-friendly APIs', subtitle: 'HTTP status codes, headers, request methods and Problem+JSON error schemas.', category: 'Reference' }
     },
     {
       params: { path: 'problem-json.png' },
@@ -106,25 +171,19 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
   const { title, subtitle, category } = props;
 
   // Escape text fields to prevent malformed SVG XML tag parsing errors
-  const escapeXml = (str: string) => {
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&apos;');
-  };
 
-  const wrapText = (text: string, maxCharsPerLine: number): string[] => {
-    const words = text.split(' ');
+  // Wrapping by measured width rather than character count, now that the exact
+  // advances are available: a proportional face makes character counts a poor proxy.
+  const wrapText = (face: Face, text: string, size: number, maxWidth: number): string[] => {
     const lines: string[] = [];
     let currentLine = '';
 
-    for (const word of words) {
-      if ((currentLine + ' ' + word).trim().length <= maxCharsPerLine) {
-        currentLine = (currentLine + ' ' + word).trim();
+    for (const word of text.split(' ')) {
+      const candidate = (currentLine + ' ' + word).trim();
+      if (!currentLine || measure(face, candidate, size) <= maxWidth) {
+        currentLine = candidate;
       } else {
-        if (currentLine) lines.push(currentLine);
+        lines.push(currentLine);
         currentLine = word;
       }
     }
@@ -132,9 +191,21 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
     return lines;
   };
 
-  const titleLines = wrapText(title, 26).map(escapeXml);
-  const subtitleLines = wrapText(subtitle, 50).map(escapeXml);
-  const escapedCategory = escapeXml(category.toUpperCase());
+  // The text block is top-anchored at a fixed y, so line counts have to be capped or a
+  // long title walks down into the footer row. Three title lines plus two subtitle lines
+  // is the most that fits above it.
+  const clamp = (lines: string[], max: number): string[] => {
+    if (lines.length <= max) return lines;
+    const kept = lines.slice(0, max);
+    kept[max - 1] = kept[max - 1].replace(/[\s,.:;-]+$/, '') + '\u2026';
+    return kept;
+  };
+
+  const titleSize = 56;
+  const subtitleSize = 24;
+
+  const titleLines = clamp(wrapText(faces.display, title, titleSize, 1000), 3);
+  const subtitleLines = clamp(wrapText(faces.body, subtitle, subtitleSize, 900), 2);
 
   // Layout positions
   const titleStartY = 230;
@@ -168,15 +239,7 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
           <stop offset="0%" stop-color="#2852B8" /> <!-- chartres-600 -->
           <stop offset="100%" stop-color="#162750" /> <!-- chartres-900 -->
         </linearGradient>
-        <!-- Inline Styling -->
-        <style>
-          @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@800&amp;family=Inter:wght@400;500;600&amp;display=swap');
-          .wordmark { font-family: 'Outfit', 'Inter', sans-serif; font-weight: 800; font-size: 28px; fill: #FDFDFC; }
-          .tagline { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 20px; fill: #837A67; }
-          .category { font-family: 'Outfit', 'Inter', sans-serif; font-weight: 800; font-size: 18px; fill: #7392DD; letter-spacing: 4px; }
-          .title { font-family: 'Outfit', 'Inter', sans-serif; font-weight: 800; font-size: 56px; fill: #FDFDFC; }
-          .subtitle { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 24px; fill: #C0BAAF; }
-        </style>
+
       </defs>
 
       <!-- Canvas background -->
@@ -187,21 +250,21 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
       <circle cx="1000" cy="480" r="400" fill="url(#glow2)" />
 
       <!-- Framing border grids to visually establish bleed guidelines -->
-      <line x1="100" y1="80" x2="1100" y2="80" stroke="#DDDAD5" stroke-opacity="0.1" stroke-width="2" />
-      <line x1="100" y1="550" x2="1100" y2="550" stroke="#DDDAD5" stroke-opacity="0.1" stroke-width="2" />
+      <line x1="100" y1="80" x2="1100" y2="80" stroke="#D6C8AF" stroke-opacity="0.1" stroke-width="2" />
+      <line x1="100" y1="550" x2="1100" y2="550" stroke="#D6C8AF" stroke-opacity="0.1" stroke-width="2" />
 
       <!-- Category label -->
-      <text x="100" y="150" class="category">${escapedCategory}</text>
+      <path fill="#7392DD" d="${textPath(faces.bodyBold, category.toUpperCase(), 18, 100, 150, 4)}" />
 
-      <!-- Title block (multi-line via dy tspans) -->
-      <text x="100" y="${titleStartY}" class="title">
-        ${titleLines.map((line, idx) => `<tspan x="100" dy="${idx === 0 ? 0 : titleLineHeight}">${line}</tspan>`).join('')}
-      </text>
+      <!-- Title block -->
+      <path fill="#FAF6F0" d="${titleLines
+        .map((line, idx) => textPath(faces.display, line, titleSize, 100, titleStartY + idx * titleLineHeight))
+        .join(' ')}" />
 
-      <!-- Subtitle description block (multi-line via dy tspans) -->
-      <text x="100" y="${subtitleStartY}" class="subtitle">
-        ${subtitleLines.map((line, idx) => `<tspan x="100" dy="${idx === 0 ? 0 : subtitleLineHeight}">${line}</tspan>`).join('')}
-      </text>
+      <!-- Subtitle description block -->
+      <path fill="#D6C8AF" d="${subtitleLines
+        .map((line, idx) => textPath(faces.body, line, subtitleSize, 100, subtitleStartY + idx * subtitleLineHeight))
+        .join(' ')}" />
 
       <!-- Footer elements aligned with safe bleed -->
       <g transform="translate(100, 484)">
@@ -222,8 +285,26 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
         </g>
         
         <!-- Wordmark text with inline gradient colors matching the site's logo -->
-        <text x="48" y="27" class="wordmark">api<tspan fill="#7392DD">guide</tspan><tspan fill="#C0BAAF" font-weight="400">.dev</tspan></text>
-        <text x="1000" y="27" text-anchor="end" class="tagline">The Flagship Web API Reference</text>
+        ${(() => {
+          // Three-tone wordmark, laid out by advancing through each run in turn.
+          const size = 28;
+          const apiX = 48;
+          const guideX = apiX + measure(faces.wordmark, 'api', size);
+          const devX = guideX + measure(faces.wordmark, 'guide', size);
+
+          return [
+            `<path fill="#FAF6F0" d="${textPath(faces.wordmark, 'api', size, apiX, 27)}" />`,
+            `<path fill="#7392DD" d="${textPath(faces.wordmark, 'guide', size, guideX, 27)}" />`,
+            `<path fill="#BBA98D" d="${textPath(faces.body, '.dev', size, devX, 27)}" />`,
+          ].join('');
+        })()}
+        ${(() => {
+          // Right-aligned against the same bleed line the framing rules use.
+          const tagline = 'The Flagship Web API Reference';
+          const size = 20;
+          const x = 1000 - measure(faces.bodyBold, tagline, size);
+          return `<path fill="#BBA98D" d="${textPath(faces.bodyBold, tagline, size, x, 27)}" />`;
+        })()}
       </g>
     </svg>
   `;

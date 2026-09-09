@@ -24,17 +24,19 @@ Each family runs from 50 (lightest) to 950 (darkest), following the Tailwind v4 
 
 | Step | Hex |
 | --- | --- |
-| 50 | FDFDFC |
-| 100 | F7F6F5 |
-| 200 | EDEBE9 |
-| 300 | DDDAD5 |
-| 400 | C0BAAF |
-| 500 | A19887 |
-| 600 | 837A67 |
-| 700 | 615A4D |
-| 800 | 443F37 |
-| 900 | 2D2A25 |
-| 950 | 191815 |
+| 50 | FAF6F0 |
+| 100 | F2ECE0 |
+| 200 | E7DECD |
+| 300 | D6C8AF |
+| 400 | BBA98D |
+| 500 | 9C896C |
+| 600 | 71624A |
+| 700 | 665842 |
+| 800 | 4B402F |
+| 900 | 31291D |
+| 950 | 1F1A12 |
+
+Paper 600 is the lightest step that clears 4.5:1 for small text on paper 50, 100 and 200, so it is the floor for body and label text. Paper 400 and 500 are for borders, dividers and decorative separators only, never for text.
 
 ### Chartres (brand)
 
@@ -124,17 +126,17 @@ Defined once via the theme directive, no config file required.
 @import "tailwindcss";
 
 @theme {
-  --color-paper-50: #FDFDFC;
-  --color-paper-100: #F7F6F5;
-  --color-paper-200: #EDEBE9;
-  --color-paper-300: #DDDAD5;
-  --color-paper-400: #C0BAAF;
-  --color-paper-500: #A19887;
-  --color-paper-600: #837A67;
-  --color-paper-700: #615A4D;
-  --color-paper-800: #443F37;
-  --color-paper-900: #2D2A25;
-  --color-paper-950: #191815;
+  --color-paper-50: #FAF6F0;
+  --color-paper-100: #F2ECE0;
+  --color-paper-200: #E7DECD;
+  --color-paper-300: #D6C8AF;
+  --color-paper-400: #BBA98D;
+  --color-paper-500: #9C896C;
+  --color-paper-600: #71624A;
+  --color-paper-700: #665842;
+  --color-paper-800: #4B402F;
+  --color-paper-900: #31291D;
+  --color-paper-950: #1F1A12;
 
   --color-chartres-50: #F7F8FB;
   --color-chartres-100: #ECEFF6;
@@ -206,6 +208,12 @@ These are the rules to follow when building components and templates, so colour 
 
 Use in place of grey for all backgrounds, borders and body text. Paper 50 to 200 for backgrounds, paper 600 to 900 for text, paper 300 to 400 for borders and dividers.
 
+### Contrast floors
+
+Accent 500 and 600 steps are fill and border colours, not text colours. Ochre 600 sits at 2.0:1 and emerald 600 at 2.7:1 on paper 50, so small text uses the 800 or 900 step of any accent family. This resolves the second open question below.
+
+Navigation and index cards that do not represent a category use paper and chartres only. Hue is reserved for pages and badges where it maps to a real category, so a colour carries the same meaning everywhere it appears.
+
 ### Chartres
 
 The brand colour. Use for the site logo or wordmark, primary navigation, all inline links, and heading accents. This is the default interactive colour whenever nothing more specific applies.
@@ -252,7 +260,7 @@ The site uses a custom-designed logo based on a lightning bolt path. Below are t
 ### Typography
 - `api`: **Paper-900** (`#31291D`)
 - `guide`: **Chartres-600** (`#2852B8`)
-- `.dev`: **Paper-400** (`#BBA98D`) in regular font weight (`font-normal`)
+- `.dev`: **Paper-600** (`#71624A`) in regular font weight (`font-normal`)
 
 ### Colors & Gradients
 - **Logo Gradient background**: **Chartres-500** (`#1F3F8E`) to **Chartres-700** (`#204193`).

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
 import RelatedCard from '../../components/RelatedCard.astro';
@@ -14,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { error } = Astro.props as { error: CollectionEntry<'errors'> };
-const { Content } = await render(error);
+const { Content, headings } = await render(error);
 
 // Fetch all errors to resolve information for related codes
 const allErrors: CollectionEntry<'errors'>[] = await getCollection('errors');
@@ -50,7 +51,7 @@ const errorJsonLd = [
   description={`Authoritative reference schema and details for the HTTP ${error.data.statusCode} (${error.data.title}) error.`}
   jsonLd={errorJsonLd}
 >
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
       { name: "API Errors Reference", href: "/errors/" },
@@ -86,9 +87,12 @@ const errorJsonLd = [
     </header>
 
     <!-- Markdown Content Body -->
-    <article class="prose max-w-none border-b border-paper-300 pb-10">
-      <Content />
-    </article>
+    <div class="border-b border-paper-300 pb-10 lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+      <article class="prose max-w-[60ch]">
+        <Content />
+      </article>
+      <TableOfContents headings={headings} />
+    </div>
 
     <!-- Related Errors -->
     {relatedErrors.length > 0 && (

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
 
@@ -13,7 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { spec } = Astro.props;
-const { Content } = await render(spec);
+const { Content, headings } = await render(spec);
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
 
@@ -38,7 +39,7 @@ const specJsonLd = [
   description={spec.data.description}
   jsonLd={specJsonLd}
 >
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
       { name: "Specifications Reference", href: "/specifications/" },
@@ -66,15 +67,18 @@ const specJsonLd = [
               Official Spec Website &rarr;
             </a>
           </span>
-          <span class="text-xxs text-paper-400 block mt-0.5 break-all">{spec.data.officialUrl}</span>
+          <span class="text-xxs text-paper-600 block mt-0.5 break-all">{spec.data.officialUrl}</span>
         </MetaItem>
       </div>
     </header>
 
     <!-- Markdown Content Body -->
-    <article class="prose max-w-none">
-      <Content />
-    </article>
+    <div class="lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+      <article class="prose max-w-[60ch]">
+        <Content />
+      </article>
+      <TableOfContents headings={headings} />
+    </div>
   </main>
 </Layout>
 

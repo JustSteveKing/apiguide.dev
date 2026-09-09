@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
 import RelatedCard from '../../components/RelatedCard.astro';
@@ -14,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { m } = Astro.props;
-const { Content } = await render(m);
+const { Content, headings } = await render(m);
 
 // Fetch all status codes to cross-reference related codes
 const allCodes = await getCollection('statusCodes');
@@ -52,7 +53,7 @@ const methodJsonLd = [
   description={`Detailed usage patterns, specifications, safety/idempotency rules, and common response codes for the HTTP ${m.data.name} request method.`}
   jsonLd={methodJsonLd}
 >
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
       { name: "HTTP Methods Reference", href: "/methods/" },
@@ -116,9 +117,12 @@ const methodJsonLd = [
     </header>
 
     <!-- Markdown Content Body -->
-    <article class="prose max-w-none border-b border-paper-300 pb-10">
-      <Content />
-    </article>
+    <div class="border-b border-paper-300 pb-10 lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+      <article class="prose max-w-[60ch]">
+        <Content />
+      </article>
+      <TableOfContents headings={headings} />
+    </div>
 
     <!-- Associated HTTP Status Codes -->
     <section class="mt-10">

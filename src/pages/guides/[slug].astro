@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 export async function getStaticPaths() {
@@ -12,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { g } = Astro.props;
-const { Content } = await render(g);
+const { Content, headings } = await render(g);
 
 import { guideCategoryThemes } from '../../config/themes';
 
@@ -39,7 +40,7 @@ const guideJsonLd = [
   description={g.data.description}
   jsonLd={guideJsonLd}
 >
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
       { name: "Guides", href: "/guides/" },
@@ -55,7 +56,7 @@ const guideJsonLd = [
         {g.data.description}
       </p>
       <div class="flex items-center gap-2 text-sm">
-        <span class="text-paper-500">Topic:</span>
+        <span class="text-paper-600">Topic:</span>
         <span class={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider ${activeTheme.badge}`}>
           {activeTheme.label}
         </span>
@@ -63,9 +64,12 @@ const guideJsonLd = [
     </header>
 
     <!-- Markdown Content Body -->
-    <article class="prose max-w-none">
-      <Content />
-    </article>
+    <div class="lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+      <article class="prose max-w-[60ch]">
+        <Content />
+      </article>
+      <TableOfContents headings={headings} />
+    </div>
   </main>
 </Layout>
 

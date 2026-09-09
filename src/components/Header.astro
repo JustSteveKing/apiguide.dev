@@ -7,15 +7,15 @@ const isActive = (path: string) => {
 };
 ---
 <header class="sticky top-0 z-50 bg-paper-50/95 backdrop-blur-sm border-b border-paper-300 relative">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
     <!-- Logo & Wordmark -->
     <a href="/" class="group shrink-0">
       <Logo size="md" />
     </a>
     
-    <div class="flex items-center gap-4 md:gap-6">
+    <div class="flex items-center gap-4 lg:gap-6">
       <!-- Global Nav Links (Desktop) -->
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
         <a 
           href="/errors/" 
           class={`transition-colors ${isActive('/errors/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
@@ -61,10 +61,10 @@ const isActive = (path: string) => {
       </nav>
 
       <!-- Search Button -->
-      <button id="search-trigger" class="flex items-center gap-2 px-3 py-1.5 text-xs text-paper-600 hover:text-paper-800 bg-paper-100 hover:bg-paper-200 border border-paper-300 rounded-lg transition-all font-medium cursor-pointer shadow-xs" aria-label="Open command palette search">
+      <button id="search-trigger" class="flex items-center gap-2 px-3 py-2.5 text-xs text-paper-700 hover:text-paper-900 bg-paper-100 hover:bg-paper-200 border border-paper-300 rounded-lg transition-all font-medium cursor-pointer shadow-xs" aria-label="Open command palette search">
         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         <span>Search <span class="hidden sm:inline">reference</span>...</span>
-        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-xxs font-sans bg-paper-50 border border-paper-300 rounded text-paper-600">⌘K</kbd>
+        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-xxs font-sans bg-paper-50 border border-paper-300 rounded text-paper-700">⌘K</kbd>
       </button>
 
 
@@ -72,7 +72,7 @@ const isActive = (path: string) => {
       <!-- Responsive Mobile Hamburger Trigger -->
       <button 
         id="mobile-menu-trigger" 
-        class="md:hidden flex items-center justify-center p-1.5 rounded-lg text-paper-700 hover:text-chartres-600 hover:bg-paper-100 transition-all cursor-pointer border border-paper-300 bg-paper-100/50"
+        class="lg:hidden flex items-center justify-center p-2.5 rounded-lg text-paper-700 hover:text-chartres-600 hover:bg-paper-100 transition-all cursor-pointer border border-paper-300 bg-paper-100/50"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Toggle navigation menu"
@@ -200,7 +200,7 @@ const isActive = (path: string) => {
     });
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768 && isOpen) {
+      if (window.innerWidth >= 1024 && isOpen) {
         toggleMenu(false);
       }
     });

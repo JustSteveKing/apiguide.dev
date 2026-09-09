@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
 import RelatedCard from '../../components/RelatedCard.astro';
@@ -14,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { h } = Astro.props;
-const { Content } = await render(h);
+const { Content, headings } = await render(h);
 
 // Fetch all status codes to cross-reference related codes
 const allCodes = await getCollection('statusCodes');
@@ -56,7 +57,7 @@ const headerJsonLd = [
   description={`Detailed usage patterns, RFC specifications, and status code correlations for the HTTP ${h.data.name} header.`}
   jsonLd={headerJsonLd}
 >
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
       { name: "HTTP Headers Reference", href: "/headers/" },
@@ -94,9 +95,12 @@ const headerJsonLd = [
     </header>
 
     <!-- Markdown Content Body -->
-    <article class="prose max-w-none border-b border-paper-300 pb-10">
-      <Content />
-    </article>
+    <div class="border-b border-paper-300 pb-10 lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+      <article class="prose max-w-[60ch]">
+        <Content />
+      </article>
+      <TableOfContents headings={headings} />
+    </div>
 
     <!-- Associated HTTP Status Codes -->
     <section class="mt-10">

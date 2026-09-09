@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import MetaItem from '@/components/MetaItem.astro';
 
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { t } = Astro.props;
-const { Content } = await render(t);
+const { Content, headings } = await render(t);
 
 import { toolCategoryThemes, pricingThemes } from '@/config/themes';
 
@@ -45,7 +46,7 @@ const toolJsonLd = [
   description={t.data.description}
   jsonLd={toolJsonLd}
 >
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
       { name: "API Tooling Reference", href: "/tools/" },
@@ -88,15 +89,18 @@ const toolJsonLd = [
               Official Website &rarr;
             </a>
           </span>
-          <span class="text-xxs text-paper-400 block break-all">{t.data.url}</span>
+          <span class="text-xxs text-paper-600 block break-all">{t.data.url}</span>
         </MetaItem>
       </div>
     </header>
 
     <!-- Markdown Content Body -->
-    <article class="prose max-w-none">
-      <Content />
-    </article>
+    <div class="lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+      <article class="prose max-w-[60ch]">
+        <Content />
+      </article>
+      <TableOfContents headings={headings} />
+    </div>
   </main>
 </Layout>
 

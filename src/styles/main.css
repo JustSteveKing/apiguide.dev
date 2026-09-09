@@ -8,7 +8,7 @@
   --color-paper-300: #D6C8AF;
   --color-paper-400: #BBA98D;
   --color-paper-500: #9C896C;
-  --color-paper-600: #817056;
+  --color-paper-600: #71624A;
   --color-paper-700: #665842;
   --color-paper-800: #4B402F;
   --color-paper-900: #31291D;
@@ -74,8 +74,11 @@
   --color-yinmn-900: #1B2C4B;
   --color-yinmn-950: #131D30;
 
+  --text-xxs: 0.625rem;
+  --text-xxs--line-height: 1rem;
+
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Lora', 'Outfit', serif;
+  --font-display: 'Lora', Georgia, 'Times New Roman', serif;
   --font-mono: 'Fira Code', monospace;
 }
 
@@ -109,6 +112,10 @@ h1, h2, h3, h4, h5, h6 {
       margin-bottom: 1.25rem;
       border-bottom: 1px solid var(--tw-prose-hr);
       padding-bottom: 0.5rem;
+    }
+
+    & :is(h2, h3) {
+      scroll-margin-top: 6rem;
     }
 
     & h3 {
@@ -253,21 +260,19 @@ body {
   border-radius: 4px;
 }
 
-/* 4. Elegant Interactive Card Hover & Lift Effects */
-.border.rounded-xl, 
-.border.rounded-lg {
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+/* 4. Interactive card hover and lift.
+   Keyed on an explicit .card class rather than the utility classes a card happens
+   to carry, so restyling a corner radius cannot silently remove the behaviour. */
+.card {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
               box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
               border-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
               background-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-a.border.rounded-xl:hover, 
-a.border.rounded-lg:hover,
-div.border.rounded-xl[class*="hover:"]:hover,
-div.border.rounded-lg[class*="hover:"]:hover {
+.card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 20px -8px rgba(49, 41, 29, 0.08), 
+  box-shadow: 0 12px 20px -8px rgba(49, 41, 29, 0.08),
               0 4px 8px -4px rgba(49, 41, 29, 0.04);
 }
 
@@ -285,4 +290,41 @@ div.border.rounded-lg[class*="hover:"]:hover {
 
 main {
   animation: fadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* 6. Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  main {
+    animation: none;
+  }
+}
+
+/* 7. Linkable headings inside long-form content */
+.heading-anchor {
+  margin-left: 0.4rem;
+  color: var(--color-paper-600);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+:is(h2, h3):hover > .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.heading-anchor:hover {
+  color: var(--color-chartres-600);
 }
