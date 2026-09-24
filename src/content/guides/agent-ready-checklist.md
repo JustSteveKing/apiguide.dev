@@ -29,6 +29,8 @@ An agent never sees your controllers, your documentation site, or your README. I
 
 A quick way to see what you are actually shipping: take one operation, generate the tool definition from it, and read that definition without the specification beside you. If you cannot tell what the operation does or how to call it, neither can the caller.
 
+[How an API becomes tool definitions](/guides/tool-definitions) walks through that conversion in full, including which parts of the contract do not survive it.
+
 See [REST principles](/guides/rest-principles) and [OpenAPI](/specifications/openapi).
 
 ---
