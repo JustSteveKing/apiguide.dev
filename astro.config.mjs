@@ -8,8 +8,11 @@ import expressiveCode from "astro-expressive-code";
 export default defineConfig({
     integrations: [
         expressiveCode({
-            themes: ['github-light']
-        }), 
+            // Two themes, light first. Expressive Code switches between them on
+            // prefers-color-scheme, which keeps code blocks in step with the
+            // dark theme in main.css instead of staying light on a dark page.
+            themes: ['github-light', 'github-dark']
+        }),
         sitemap()
     ],
     

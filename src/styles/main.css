@@ -244,6 +244,118 @@ p, li, dd, figcaption, blockquote {
   }
 }
 
+/* --- Dark theme ---------------------------------------------------------
+   Every colour utility on this site resolves through a `var(--color-*)`, so
+   dark mode is done once here at the token layer rather than by adding a
+   `dark:` variant to several hundred class attributes.
+
+   The scale is mirrored: 50 swaps with 950, 100 with 900, and so on, leaving
+   500 fixed. That is not a shortcut, it is what makes the inversion correct.
+   In light mode a raised surface is a step darker than the page (paper-100 on
+   paper-50); mirrored, it becomes a step lighter (paper-900 on paper-950),
+   which is exactly the elevation convention dark interfaces use. Link hover
+   moves toward 900, which in light mode deepens the blue and in dark mode
+   brightens it. Both read as "more emphasis" without a second rule.
+
+   The page lands on paper-950 #1F1A12, a warm near-black rather than a neutral
+   one, so the paper identity survives the switch. Every pair below was checked:
+   body text 12.95:1, links 5.67:1, muted text 7.55:1, focus ring 8.73:1.
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --color-paper-50: #1F1A12;
+    --color-paper-100: #31291D;
+    --color-paper-200: #4B402F;
+    --color-paper-300: #665842;
+    --color-paper-400: #71624A;
+    --color-paper-500: #9C896C;
+    --color-paper-600: #BBA98D;
+    --color-paper-700: #D6C8AF;
+    --color-paper-800: #E7DECD;
+    --color-paper-900: #F2ECE0;
+    --color-paper-950: #FAF6F0;
+
+    --color-chartres-50: #0F1933;
+    --color-chartres-100: #162750;
+    --color-chartres-200: #1B336F;
+    --color-chartres-300: #1F3F8E;
+    --color-chartres-400: #2852B8;
+    --color-chartres-500: #4D72CB;
+    --color-chartres-600: #7392DD;
+    --color-chartres-700: #A6B8E5;
+    --color-chartres-800: #CED7EE;
+    --color-chartres-900: #ECEFF6;
+    --color-chartres-950: #F7F8FB;
+
+    --color-ochre-50: #3C2F07;
+    --color-ochre-100: #5E4A08;
+    --color-ochre-200: #836607;
+    --color-ochre-300: #CB9D06;
+    --color-ochre-400: #DAA906;
+    --color-ochre-500: #E8BD3C;
+    --color-ochre-600: #F6D25B;
+    --color-ochre-700: #F4DE98;
+    --color-ochre-800: #F5EAC6;
+    --color-ochre-900: #F9F5E9;
+    --color-ochre-950: #FCFAF6;
+
+    --color-uranium-50: #3A1209;
+    --color-uranium-100: #5B1A0B;
+    --color-uranium-200: #7E220C;
+    --color-uranium-300: #A7290C;
+    --color-uranium-400: #D2340F;
+    --color-uranium-500: #D7350F;
+    --color-uranium-600: #F07C61;
+    --color-uranium-700: #F0AB9B;
+    --color-uranium-800: #F3D0C8;
+    --color-uranium-900: #F8ECEA;
+    --color-uranium-950: #FBF7F6;
+
+    --color-emerald-50: #12301C;
+    --color-emerald-100: #1B4B2B;
+    --color-emerald-200: #236739;
+    --color-emerald-300: #2B884A;
+    --color-emerald-400: #36AB5D;
+    --color-emerald-500: #50C878;
+    --color-emerald-600: #7DD39A;
+    --color-emerald-700: #ACDFBD;
+    --color-emerald-800: #D1EBDA;
+    --color-emerald-900: #EDF5F0;
+    --color-emerald-950: #F7FAF8;
+
+    --color-yinmn-50: #131D30;
+    --color-yinmn-100: #1B2C4B;
+    --color-yinmn-200: #233B67;
+    --color-yinmn-300: #2E5090;
+    --color-yinmn-400: #365EAA;
+    --color-yinmn-500: #5A7CBF;
+    --color-yinmn-600: #7E9BD3;
+    --color-yinmn-700: #ACBEDF;
+    --color-yinmn-800: #D1DAEB;
+    --color-yinmn-900: #EDF0F5;
+    --color-yinmn-950: #F7F8FA;
+  }
+
+  /* A warm, low-alpha shadow vanishes against a dark page. Deepen it so the
+     card lift is still legible. */
+  .card:hover {
+    box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.55),
+                0 4px 8px -4px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Code blocks carry an inset highlight that only works on a light surface. */
+  .prose pre {
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+}
+
 /* --- Modernization Pass styles --- */
 
 /* 1. Clean paper background style */
