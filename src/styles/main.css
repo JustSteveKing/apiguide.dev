@@ -84,9 +84,9 @@
   --text-4xl: clamp(1.75rem, 1.5rem + 1.25vw, 2.25rem);
   --text-5xl: clamp(2rem, 1.6rem + 2vw, 3rem);
 
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Lora', Georgia, 'Times New Roman', serif;
-  --font-mono: 'Fira Code', monospace;
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Lora Variable', 'Lora', Georgia, 'Times New Roman', serif;
+  --font-mono: 'Fira Code Variable', 'Fira Code', ui-monospace, SFMono-Regular, monospace;
 }
 
 /* Global Typography Overrides */

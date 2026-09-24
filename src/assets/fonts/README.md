@@ -3,8 +3,13 @@
 These are the Latin subsets of the site's two typefaces, used **only** at build time by
 `src/pages/og/[...path].ts` to convert social-card text into SVG paths.
 
-They are not served to browsers. The site itself loads Lora and Inter from Google Fonts in
-`src/layouts/Layout.astro`.
+They are not served to browsers. The site itself now self-hosts its typefaces as variable
+fonts, imported from `@fontsource-variable/*` in `src/layouts/Layout.astro`; it used to load
+them from Google Fonts, which changed on 2026-09-24.
+
+These static instances stay because the OG pipeline still needs them, and because fontkitten
+cannot instance a variation out of a WOFF2. So the two paths deliberately use different
+files for the same typefaces: variable fonts for browsers, static instances at build time.
 
 ## Why they exist
 
