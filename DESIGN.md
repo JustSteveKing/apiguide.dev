@@ -8,11 +8,42 @@ The palette is derived from real pigment colours documented on Storied Colors, a
 
 Five accent families were pulled from the source:
 
-- Chartres Blue, hex 1F3F8E
-- Yellow Ochre, hex CB9D06
-- Uranium Red, hex D7350F
-- Emerald Green, hex 50C878
-- YInMn Blue, hex 2E5090
+- Chartres Blue, hex 1F3F8E, at step **700**
+- Yellow Ochre, hex CB9D06, at step **700**
+- Uranium Red, hex D7350F, at step 500
+- Emerald Green, hex 50C878, at step 500
+- YInMn Blue, hex 2E5090, at step **700**
+
+### Why three pigments sit at 700 rather than 500
+
+Corrected 2026-09-24. Every pigment was originally pinned at step 500, which is
+the conventional home for a brand hue. For Uranium and Emerald that works,
+because those two happen to sit at roughly the lightness a 500 wants.
+
+Chartres, Ochre and YInMn are darker than that. Pinning them at 500 while the
+rest of each ramp was generated independently left all three scales
+**non-monotonic**: step 600 came out lighter than step 500 before darkening
+again at 700, which contradicts the rule stated above that each family runs
+from 50 lightest to 950 darkest. Anything reaching for 600 as "one step darker
+than 500" got a lighter colour instead, and a conventional 500 to 600 hover
+would have brightened rather than deepened.
+
+Each of those three pigments is now at step 700, which is where its lightness
+actually falls, and step 500 is the OKLab midpoint of 400 and 600. All six
+families are monotonic.
+
+The change is close to invisible on screen, which is the point: the old 700s
+were already within a few thousandths of the pigment in relative luminance, so
+the swap preserved the rendering while making the scale honest. It also fixed
+something that was quietly broken. The logo is a gradient from chartres-500 to
+chartres-700, and those two used to differ in luminance by 0.004, so it barely
+read as a gradient at all. It now spans 0.12.
+
+One consequence worth knowing: **the blue most people see is not Chartres
+Blue.** `chartres-600` carries the links and the bulk of the interface, and it
+is its own value rather than the pigment. The pigment now carries the focus
+ring, the blockquote rule, the homepage card headings and the dark end of the
+logo gradient.
 
 A sixth family, Paper, is a warm neutral scale built for this project rather than pulled directly from a single pigment. It replaces standard grey throughout the site, since a clinical grey works against the archival, catalogued feel the rest of the palette is going for.
 
@@ -36,7 +67,7 @@ Each family runs from 50 (lightest) to 950 (darkest), following the Tailwind v4 
 | 900 | 31291D |
 | 950 | 1F1A12 |
 
-Paper 600 is the lightest step that clears 4.5:1 for small text on paper 50, 100 and 200, so it is the floor for body and label text. Paper 400 and 500 are for borders, dividers and decorative separators only, never for text.
+Paper 600 is the lightest step that clears 4.5:1 for small text on paper 50 and 100, so it is the floor for body and label text. On paper 200 it reaches 4.43:1, marginally short, so avoid small text on that background. Paper 400 and 500 are for borders, dividers and decorative separators only, never for text.
 
 ### Chartres (brand)
 
@@ -47,9 +78,9 @@ Paper 600 is the lightest step that clears 4.5:1 for small text on paper 50, 100
 | 200 | CED7EE |
 | 300 | A6B8E5 |
 | 400 | 7392DD |
-| 500 | 1F3F8E |
+| 500 | 4D72CB |
 | 600 | 2852B8 |
-| 700 | 204193 |
+| 700 | 1F3F8E |
 | 800 | 1B336F |
 | 900 | 162750 |
 | 950 | 0F1933 |
@@ -63,9 +94,9 @@ Paper 600 is the lightest step that clears 4.5:1 for small text on paper 50, 100
 | 200 | F5EAC6 |
 | 300 | F4DE98 |
 | 400 | F6D25B |
-| 500 | CB9D06 |
+| 500 | E8BD3C |
 | 600 | DAA906 |
-| 700 | AD8605 |
+| 700 | CB9D06 |
 | 800 | 836607 |
 | 900 | 5E4A08 |
 | 950 | 3C2F07 |
@@ -111,9 +142,9 @@ Paper 600 is the lightest step that clears 4.5:1 for small text on paper 50, 100
 | 200 | D1DAEB |
 | 300 | ACBEDF |
 | 400 | 7E9BD3 |
-| 500 | 2E5090 |
+| 500 | 5A7CBF |
 | 600 | 365EAA |
-| 700 | 2B4B87 |
+| 700 | 2E5090 |
 | 800 | 233B67 |
 | 900 | 1B2C4B |
 | 950 | 131D30 |
