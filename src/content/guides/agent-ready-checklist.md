@@ -1,14 +1,14 @@
 ---
 title: "Agent-Ready API Checklist"
-description: "A review checklist for an existing API and its webhooks, covering the contract, errors, idempotency, deprecation, delivery and enforcement — written for consumers that cannot ask you a question."
+description: "A review checklist for an existing API and its webhooks, covering the contract, errors, idempotency, deprecation, delivery and enforcement. Written for consumers that cannot ask you a question."
 category: "core"
 ---
 
 ## Why This Checklist Exists
 
-Every API has two kinds of consumer. One is a person, who reads your documentation, infers what you meant, tries something, gets confused, and eventually asks. The other is an autonomous agent, which receives your specification flattened into a set of tool definitions and then acts on it. The difference that matters is not intelligence — it is that only one of them can ask a follow-up question.
+Every API has two kinds of consumer. One is a person, who reads your documentation, infers what you meant, tries something, gets confused, and eventually asks. The other is an autonomous agent, which receives your specification flattened into a set of tool definitions and then acts on it. The difference that matters is not intelligence. Only one of them can ask a follow-up question.
 
-That makes an agent the strictest consumer your API will ever have, and a useful one to design for. A human reads endpoint one, meets an inconsistency at endpoint fifty, and adapts. An agent reads endpoint one and *generalises*, so an inconsistency is no longer an aesthetic complaint — it produces a confidently wrong call. A description that is vague becomes a wrong parameter. An error returned as `200 OK` becomes a success. A retry with no idempotency guarantee becomes a duplicate charge.
+That makes an agent the strictest consumer your API will ever have, and a useful one to design for. A human reads endpoint one, meets an inconsistency at endpoint fifty, and adapts. An agent reads endpoint one and *generalises*, so an inconsistency is no longer an aesthetic complaint. It produces a confidently wrong call. A description that is vague becomes a wrong parameter. An error returned as `200 OK` becomes a success. A retry with no idempotency guarantee becomes a duplicate charge.
 
 The useful consequence is that almost nothing here is new. These are the same practices that make an API pleasant for people; agents simply remove the tolerance that let you skip them. Work through the checklist against an API you already have. Each row states what to check, why it matters to a caller that cannot ask, and where the full treatment lives.
 
@@ -20,12 +20,12 @@ An agent never sees your controllers, your documentation site, or your README. I
 
 | Check | Why it matters |
 | --- | --- |
-| A specification exists and is generated from, or verified against, the running API | A specification that drifts is worse than none — it is confidently wrong, and it is the only thing the caller has |
+| A specification exists and is generated from, or verified against, the running API | A specification that drifts is worse than none. It is confidently wrong, and it is the only thing the caller has |
 | Every operation has an `operationId` that is unique, stable and under 64 characters | The `operationId` typically becomes the tool's function name. OpenAI caps names at 64 characters and Anthropic at 128, so 64 is the safe intersection; longer names are rejected outright rather than truncated |
 | Every operation has a description that states what it does *and when to use it* | The description is the entire prompt the caller reasons over. "Gets a user" does not distinguish this operation from the three beside it |
 | Every parameter and response property is typed and described | An untyped `data` object is an instruction to guess |
 | Request and response examples are complete payloads, not fragments | A caller assembling a body from leaf-level examples will omit whatever had none |
-| Schema nesting stays shallow — five levels is a practical ceiling | Deeply nested schemas exceed provider limits and are assembled incorrectly long before that |
+| Schema nesting stays shallow, five levels being a practical ceiling | Deeply nested schemas exceed provider limits and are assembled incorrectly long before that |
 
 A quick way to see what you are actually shipping: take one operation, generate the tool definition from it, and read that definition without the specification beside you. If you cannot tell what the operation does or how to call it, neither can the caller.
 
@@ -58,13 +58,13 @@ An error is not the absence of a response. It is a documented outcome, and for a
 | --- | --- |
 | Errors use `application/problem+json` per RFC 9457, across the whole API | One shape, learned once. A caller that can parse one error can parse all of them |
 | Framework and validation errors go through the same shape | The default error page is the one a caller meets first and the one nobody styles |
-| **No error is ever returned with a `200`** | A `200` carrying `"error": true` is not an error to a caller that branches on status — it is a success with strange contents |
+| **No error is ever returned with a `200`** | A `200` carrying `"error": true` is not an error to a caller that branches on status. It is a success with strange contents |
 | Callers branch on the stable `type` URI, never on the human-readable prose | Prose is for people and gets rewritten. The `type` is the machine-readable part and must not change |
 | Every `type` URI resolves to a page that documents that error | This is the only part of your contract that ships with a URL inside it, and therefore the only part a confused caller can look up unaided |
 | The response says what to do next, not only what went wrong | "Retry after 30 seconds" and "this will never succeed" are different instructions |
-| Internals never leak — no stack traces, no SQL, no internal hostnames | A verified caller is still not a trusted one |
+| Internals never leak: no stack traces, no SQL, no internal hostnames | A verified caller is still not a trusted one |
 
-The resolvable `type` is the item most often skipped, and the cheapest to fix. Either point at a published catalogue — every error in [the error reference](/errors) has a stable URI, such as [idempotency key conflict](/errors/idempotency-key-conflict) or [validation failed](/errors/validation-failed) — or host your own under a path like `/problems/{type}` and keep a page per type. What matters is that the URI resolves to something that explains the error, rather than being a namespaced string that 404s.
+The resolvable `type` is the item most often skipped, and the cheapest to fix. Either point at a published catalogue, where every error in [the error reference](/errors) has a stable URI such as [idempotency key conflict](/errors/idempotency-key-conflict) or [validation failed](/errors/validation-failed), or host your own under a path like `/problems/{type}` and keep a page per type. What matters is that the URI resolves to something that explains the error, rather than being a namespaced string that 404s.
 
 See [error handling](/guides/error-handling) and [input validation](/guides/input-validation).
 
@@ -72,7 +72,7 @@ See [error handling](/guides/error-handling) and [input validation](/guides/inpu
 
 ## 4. Writes Survive Being Retried
 
-A caller that does not get a response does not know whether the write happened. It will try again — and an agent will do so immediately, without the pause a human takes to check.
+A caller that does not get a response does not know whether the write happened. It will try again, and an agent will do so immediately, without the pause a human takes to check.
 
 | Check | Why it matters |
 | --- | --- |
@@ -83,7 +83,7 @@ A caller that does not get a response does not know whether the write happened. 
 | `GET`, `PUT` and `DELETE` are genuinely safe or idempotent as HTTP specifies | Free interoperability, and callers assume it whether or not you honoured it |
 | Conditional requests are available for read-modify-write | `ETag` and `If-Match` beat inventing an optimistic-concurrency scheme |
 
-One caveat worth stating, because the rule is often applied mechanically: an endpoint whose `POST` is a pure function — validate this document, convert this payload, look up this identifier — has nothing to make idempotent, because calling it twice already produces the same result and changes no state. Adding a key there is ceremony. The check is not "does every write have a key" but "do you know which of your writes have effects".
+One caveat worth stating, because the rule is often applied mechanically: an endpoint whose `POST` is a pure function (validate this document, convert this payload, look up this identifier) has nothing to make idempotent, because calling it twice already produces the same result and changes no state. Adding a key there is ceremony. The check is not "does every write have a key" but "do you know which of your writes have effects".
 
 See [idempotency](/guides/idempotency) and [conditional requests](/guides/conditional-requests).
 
@@ -110,8 +110,8 @@ A caller integrated six months ago and is not reading your changelog. The only c
 | Check | Why it matters |
 | --- | --- |
 | Most change is additive, so most change needs no new version | Tolerant readers and additive responses are what let an API evolve without a `v2` |
-| Deprecated operations send a `Deprecation` header — **RFC 9745** | Two separate RFCs, frequently conflated |
-| Retiring operations send a `Sunset` header with a real date — **RFC 8594** | "Soon" is not a date, and a caller cannot schedule against it |
+| Deprecated operations send a `Deprecation` header, **RFC 9745** | Two separate RFCs, frequently conflated |
+| Retiring operations send a `Sunset` header with a real date, **RFC 8594** | "Soon" is not a date, and a caller cannot schedule against it |
 | A `Link` relation points at the migration guide | The header says something is ending; the link says what to do |
 | Usage is instrumented per version | You cannot retire what you cannot see, and "who is still calling this" is the only question that matters at the end |
 | Nothing is removed without having been announced in a response first | A surprise `404` is indistinguishable from an outage |
@@ -129,14 +129,14 @@ Everything above applies to the events you push, and this is the half most teams
 | The payload is signed, and the signature covers the raw body | Signing a re-serialised payload is the most common implementation bug in the whole subject |
 | The signature scheme is documented well enough to implement without asking | Receivers get this wrong in ways that fail intermittently |
 | Every delivery carries a unique, stable event identifier | It is the key a receiver dedupes on, and dedupe is the only defence that neutralises retries, replays and at-least-once delivery at once |
-| Every payload carries an explicit event `type` | Two payloads that are otherwise just fields over the same object must not be interchangeable — a caller must never be able to present one as the other |
+| Every payload carries an explicit event `type` | Two payloads that are otherwise just fields over the same object must not be interchangeable, because a caller must never be able to present one as the other |
 | A change to a payload is a new event type, not a quiet mutation | Receivers parse these; a silently added meaning is a silently broken receiver |
-| The retry schedule is published — how many attempts, what backoff, when you give up | Without it a receiver cannot distinguish "still coming" from "lost", and cannot size its own replay window |
+| The retry schedule is published: how many attempts, what backoff, when you give up | Without it a receiver cannot distinguish "still coming" from "lost", and cannot size its own replay window |
 | The tolerance window on a signed timestamp is wider than your last retry | Otherwise your own final retry fails verification |
 | **Delivery is dispatched after the transaction commits** | Otherwise the notification can arrive before the row it describes is readable, and the receiver fetches a resource that does not exist yet. The outbox pattern exists for this |
 | A replay or re-delivery mechanism exists | Receivers have outages, and the alternative is a support ticket |
 
-Consider whether a shared secret is the right root of trust. HMAC is the common case and is fine, but it gives every receiver a key capable of forging your signatures, and the signature stops meaning anything once the body is copied out of the request. Asymmetric signing — a private key you hold, a public key you publish — keeps verifying after a receiver has stored the payload, which is exactly what a receiver handling anything auditable should do with it.
+Consider whether a shared secret is the right root of trust. HMAC is the common case and is fine, but it gives every receiver a key capable of forging your signatures, and the signature stops meaning anything once the body is copied out of the request. Asymmetric signing, where you hold a private key and publish a public one, keeps verifying after a receiver has stored the payload, which is exactly what a receiver handling anything auditable should do with it.
 
 See [webhooks](/guides/webhooks) and [webhook signature verification](/guides/webhook-signatures).
 
@@ -164,7 +164,7 @@ The same rules, inverted. A webhook endpoint is a public URL that accepts unsoli
 
 This is the item that is almost universally missing, and the one that decides whether an integration problem takes ten minutes or a week.
 
-Recording the *current state* of a delivery is not the same as recording its *history*. A row carrying `delivered_at`, an attempt counter and a last-error field clears the error on success — which means a delivery that failed five times and then succeeded reads, forever afterwards, as though it had always worked. The information you need to fix anything is the information that got overwritten.
+Recording the *current state* of a delivery is not the same as recording its *history*. A row carrying `delivered_at`, an attempt counter and a last-error field clears the error on success. A delivery that failed five times and then succeeded therefore reads, forever afterwards, as though it had always worked. The information you need to fix anything is the information that got overwritten.
 
 | Check | Why it matters |
 | --- | --- |
@@ -188,16 +188,16 @@ Every item above is a rule someone can agree with and then not apply. A conventi
 | Check | Why it matters |
 | --- | --- |
 | The specification is linted in CI, and the build fails on regression | The specification is the artefact the caller consumes, so it is the artefact to gate |
-| The lint covers descriptions, naming, examples and error shapes — not just schema validity | A document can be valid OpenAPI and still be unusable. Validators already exist; this is a different check |
+| The lint covers descriptions, naming, examples and error shapes, not only schema validity | A document can be valid OpenAPI and still be unusable. Validators already exist; this is a different check |
 | Each rule reports why it fired, not only that it did | A report that does not explain itself is noise a team learns to skip |
 | New endpoints are checked against this list before they ship | Retrofitting consistency across fifty endpoints costs far more than applying it to one |
 
-Specification linting is a solved problem with several tools available; see [API tooling](/tools). Webhook contracts have no equivalent, so for now section 7 through section 9 remain a review rather than a gate — which is a good reason to do that review deliberately, and to write down what you decided.
+Specification linting is a solved problem with several tools available; see [API tooling](/tools). Webhook contracts have no equivalent, so for now section 7 through section 9 remain a review rather than a gate. That is a good reason to do the review deliberately, and to write down what you decided.
 
 ---
 
 ## Using This
 
-Run it against one API rather than all of them, and in order — sections 1 to 6 are the request/response contract, 7 to 9 are the event contract, and section 10 is what stops the result decaying. Most teams find the first four sections mostly satisfied and the last three mostly absent, because the outbound event surface is the one that never had a design review.
+Run it against one API rather than all of them, and in order. Sections 1 to 6 are the request/response contract, 7 to 9 are the event contract, and section 10 is what stops the result decaying. Most teams find the first four sections mostly satisfied and the last three mostly absent, because the outbound event surface is the one that never had a design review.
 
-None of this is specific to agents. It is what an API owes any consumer that has to integrate without being able to ask you a question — a partner team in another timezone, an SDK generated from your specification, a customer's CI job, or a language model. Agents are just the consumer that made the cost visible.
+None of this is specific to agents. It is what an API owes any consumer that has to integrate without being able to ask you a question: a partner team in another timezone, an SDK generated from your specification, a customer's CI job, or a language model. Agents are just the consumer that made the cost visible.
