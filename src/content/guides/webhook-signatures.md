@@ -125,6 +125,23 @@ HMAC uses one shared secret, which means the receiver also holds a key capable o
 
 The Standard Webhooks spec supports Ed25519 (identified as `v1a`) alongside symmetric HMAC (`v1`). Some providers issue signed JWTs, for example using ES384, with the public key exposed at a known endpoint. RFC 9421 "HTTP Message Signatures" generalizes this further, allowing signatures over selected headers and body components with algorithms including HMAC-SHA256, ECDSA, and EdDSA. For token-based schemes, see [JWT](/specifications/jwt).
 
+### The signature outlives the request
+
+Forgery risk is the usual argument for asymmetric signing, and it is the weaker half. The stronger one is what happens after verification.
+
+A receiver handling anything consequential does not verify a payload and discard it. It stores the raw body, because that is the evidence of what it was told and when. The question is whether that stored copy still means anything a month later.
+
+With HMAC it does not, in any way a third party can rely on:
+
+* **Verifying requires the ability to forge.** Anyone who can check the stored payload holds the secret, and anyone holding the secret could have written it. The receiver cannot use it to demonstrate to an auditor, a customer or a court what the sender sent, because the receiver could have produced the same bytes.
+* **Rotation invalidates the archive.** Rotate the shared secret, which section 6 recommends doing on a schedule, and every payload signed with the old one becomes uncheckable unless you keep retired secrets indefinitely. That is the opposite of what rotation is for.
+
+An asymmetric signature has neither problem. The verifier holds only a public key, so checking a payload proves the sender produced it and does not enable anyone else to produce another. Rotation publishes a new key and leaves the old public key available, so archived payloads stay verifiable for as long as you publish the key that signed them. The check needs nothing agreed in advance and nothing that the two parties must both keep secret, which means it still works once the body has been copied out of the request and filed.
+
+**Choose on that basis rather than on threat model alone.** HMAC is the right default for ordinary notifications, and it is what Stripe, GitHub, Shopify, Zendesk and Slack use. Prefer asymmetric signing when the event is something a receiver may later need to prove: financial movements, audit and compliance records, anything a regulator or a dispute could reach. The useful test is whether a receiver storing your payload would ever need to show it to a third party. If so, give them something that a third party can check without trusting either of you.
+
+A practical consequence worth designing for: **a body that is independently signed does not need transport-level authentication to remain meaningful.** Put the signature over the payload itself rather than over a reconstruction of the HTTP request, and include the location of the key list in the body. Verification then needs nothing rebuilt from headers and nothing looked up from an agreement, which is exactly what makes a filed copy checkable years later.
+
 ---
 
 ## 8. Defense in Depth
