@@ -77,6 +77,13 @@
   --text-xxs: 0.625rem;
   --text-xxs--line-height: 1rem;
 
+  /* Fluid headings. The utility names stay the same; only the values scale with
+     the viewport, so no template has to change. */
+  --text-2xl: clamp(1.3rem, 1.22rem + 0.4vw, 1.5rem);
+  --text-3xl: clamp(1.5rem, 1.33rem + 0.85vw, 1.875rem);
+  --text-4xl: clamp(1.75rem, 1.5rem + 1.25vw, 2.25rem);
+  --text-5xl: clamp(2rem, 1.6rem + 2vw, 3rem);
+
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Lora', Georgia, 'Times New Roman', serif;
   --font-mono: 'Fira Code', monospace;
@@ -85,6 +92,14 @@
 /* Global Typography Overrides */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
+  /* Keep short headings from leaving one word stranded on its own line. */
+  text-wrap: balance;
+}
+
+/* Avoid a single-word last line in running text. Cheap, and it only ever
+   improves the rag, so it is safe to apply broadly. */
+p, li, dd, figcaption, blockquote {
+  text-wrap: pretty;
 }
 
 @layer utilities {
@@ -106,7 +121,7 @@ h1, h2, h3, h4, h5, h6 {
 
     & h2 {
       font-family: var(--font-display);
-      font-size: 1.625rem;
+      font-size: clamp(1.4rem, 1.3rem + 0.5vw, 1.625rem);
       font-weight: 700;
       margin-top: 2.75rem;
       margin-bottom: 1.25rem;
@@ -120,7 +135,7 @@ h1, h2, h3, h4, h5, h6 {
 
     & h3 {
       font-family: var(--font-display);
-      font-size: 1.25rem;
+      font-size: clamp(1.125rem, 1.09rem + 0.18vw, 1.25rem);
       font-weight: 600;
       margin-top: 2.25rem;
       margin-bottom: 0.75rem;
@@ -236,7 +251,14 @@ body {
   background-color: var(--color-paper-50);
 }
 
-/* 2. Custom Sleek Scrollbar */
+/* 2. Custom Sleek Scrollbar.
+   The standard properties come first so Firefox is styled too; the WebKit
+   pseudo-elements follow for the finer control Chrome and Safari allow. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-paper-300) transparent;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
