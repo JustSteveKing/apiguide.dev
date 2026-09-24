@@ -1,6 +1,6 @@
 ---
 title: "Webhooks & Event-Driven API Design"
-description: "Best practices for webhooks, including secure payload signing (HMAC) and retry scheduling."
+description: "Best practices for webhooks, covering secure payload signing, retry scheduling, receiver idempotency, and typed payloads whose changes are new event types rather than quiet mutations."
 category: "security"
 ---
 
@@ -38,8 +38,41 @@ Network glitches are inevitable. If a client server fails to respond, execute a 
 * **Retry Schedule**: Implement exponential backoff (e.g., retrying after 1 min, 5 mins, 30 mins, 2 hours, 6 hours) over a 24-hour period before disabling the webhook subscription.
 * **Status Codes**: Only treat `2xx` responses as success. Treat redirects (3xx), client errors (4xx), and server errors (5xx) as delivery failures.
 
+Publish the schedule you actually implement. A receiver cannot size its own replay window, or tell "still coming" apart from "given up", against a policy it has not been told.
+
+Record every attempt while you are at it, rather than the current state of each delivery. See [webhook delivery history](/guides/webhook-delivery-history) for why the distinction matters and what each record should hold.
+
 ---
 
 ## 3. Idempotency on the Receiver
 
 Webhook consumers must design their endpoints to be idempotent. Due to delivery retries, they may receive the same event multiple times. They should check the event UUID against a local cache or database before executing business operations.
+
+---
+
+## 4. Typed, Versioned Payloads
+
+Every payload should carry an explicit event `type`, and that type is a contract in its own right.
+
+The reason is stronger than readability. Two payloads over the same underlying object are often structurally similar enough to be mistaken for one another, and a receiver that dispatches on shape rather than on a declared type can be led into treating one as the other. An explicit type removes the ambiguity, and when the payload is signed, it means the signature covers what the message *claims to be* as well as what it contains.
+
+```json
+{
+  "id": "evt_9d3d1f",
+  "type": "invoice.paid",
+  "created": "2026-09-24T10:15:00Z",
+  "data": { }
+}
+```
+
+### Changing a payload
+
+Once consumers are parsing an event, its shape is published. The rules are the same as for any other part of an API contract, with one difference: you cannot see who is depending on which field, because a receiver never tells you what it read.
+
+* **Adding an optional field is safe.** Receivers should be tolerant readers and ignore what they do not recognize.
+* **Removing a field, renaming one, or changing what an existing field means is a breaking change**, and it is worse than the equivalent break in a request/response API because it fails silently on someone else's server, hours later, in code you cannot see.
+* **A breaking change is therefore a new event type, not a quiet mutation** of the existing one. Emit `invoice.paid.v2` alongside `invoice.paid`, let subscribers choose, and retire the old one on a published timeline the way you would retire an endpoint.
+
+Never reuse an existing type with different semantics. A receiver that was working will keep accepting the message, keep verifying the signature, and start doing the wrong thing.
+
+See [versioning](/guides/versioning) and [deprecation and sunsetting](/guides/deprecation-sunsetting) for the retirement half, and [CloudEvents](/specifications/cloudevents) for a standard envelope that already carries `type`, `id` and `time`.
