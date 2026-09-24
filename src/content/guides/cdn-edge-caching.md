@@ -27,7 +27,7 @@ The [`Cache-Control`](/headers/cache-control) header carries the core directives
 
 * **`max-age=<seconds>`**: freshness lifetime for any cache.
 * **`s-maxage=<seconds>`**: freshness lifetime for shared caches only, overriding `max-age` at the CDN. This lets the edge hold content far longer than a browser would.
-* **`no-cache`**: may be stored but must be revalidated before every reuse — it does not mean "do not store."
+* **`no-cache`**: may be stored but must be revalidated before every reuse. It does not mean "do not store."
 * **`no-store`**: must never be stored anywhere; reserve it for tokens and sensitive data.
 
 ```http
@@ -35,7 +35,7 @@ HTTP/1.1 200 OK
 Cache-Control: public, max-age=60, s-maxage=86400
 ```
 
-Here browsers treat the response as fresh for 60 seconds while the CDN holds it for a full day. Pair these with an [`ETag`](/headers/etag) so that when content does expire the edge can revalidate cheaply — see [conditional requests](/guides/conditional-requests) and the [caching guide](/guides/caching).
+Here browsers treat the response as fresh for 60 seconds while the CDN holds it for a full day. Pair these with an [`ETag`](/headers/etag) so that when content does expire the edge can revalidate cheaply. See [conditional requests](/guides/conditional-requests) and the [caching guide](/guides/caching).
 
 ---
 
@@ -48,7 +48,7 @@ HTTP/1.1 200 OK
 Cache-Control: public, max-age=60, stale-while-revalidate=300
 ```
 
-Content is fresh for 60 seconds. For the next 300 seconds it is served stale while the edge refreshes it. Past 360 seconds total, the cache must revalidate before serving. This models three states — fresh, stale-but-usable, and expired — and suits data that changes occasionally but tolerates slight lag: profiles, catalogs, configuration. It is unsuitable for live inventory, auction prices, or session tokens. Modern browsers (Chrome 75+, Edge 79+, Safari 14+, Firefox 68+) and CDNs including Fastly, CloudFront, and Cloudflare support it.
+Content is fresh for 60 seconds. For the next 300 seconds it is served stale while the edge refreshes it. Past 360 seconds total, the cache must revalidate before serving. This models three states (fresh, stale-but-usable, and expired) and suits data that changes occasionally but tolerates slight lag: profiles, catalogs, configuration. It is unsuitable for live inventory, auction prices, or session tokens. Modern browsers (Chrome 75+, Edge 79+, Safari 14+, Firefox 68+) and CDNs including Fastly, CloudFront, and Cloudflare support it.
 
 ---
 
@@ -64,7 +64,7 @@ Vary: Accept, Accept-Encoding
 
 Without `Vary: Accept`, a cache might serve a JSON body to a client that asked for XML. Without `Vary: Accept-Encoding`, it might hand a gzip body to a client that cannot decode it.
 
-The risk is cardinality. Varying on `User-Agent` (thousands of values) or `Cookie` (unique per user) fragments the cache so badly it stops working. Normalize first — collapse `User-Agent` into a `mobile`/`desktop` class and vary on that, and reduce `Accept-Encoding` to gzip-or-not. Never use `Vary: *`; prefer `Cache-Control: private` when a response truly must not be shared.
+The risk is cardinality. Varying on `User-Agent` (thousands of values) or `Cookie` (unique per user) fragments the cache so badly it stops working. Normalize first, collapsing `User-Agent` into a `mobile`/`desktop` class and vary on that, and reduce `Accept-Encoding` to gzip-or-not. Never use `Vary: *`; prefer `Cache-Control: private` when a response truly must not be shared.
 
 ---
 
@@ -84,7 +84,7 @@ When product 123 changes, a single purge for `product-123` invalidates every cac
 
 ## 6. Design Choices That Improve Cacheability
 
-* **Keep resources granular.** Split a large resource so each part caches on its own lifecycle — separate invoice details from payment status rather than serving one blob.
+* **Keep resources granular.** Split a large resource so each part caches on its own lifecycle, separating invoice details from payment status rather than serving one blob.
 * **Separate public from private.** Do not mix generic and user-specific fields in one representation; the private field forces the whole response out of shared caches.
 * **Aim for a high hit ratio.** A healthy public API often targets around 90% edge hits; measure and tune toward it.
 

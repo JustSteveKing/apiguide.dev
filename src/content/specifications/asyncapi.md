@@ -15,7 +15,7 @@ An AsyncAPI specification document organizes message-driven configurations into 
 1. **Info Object**: Contains basic metadata about the API (version, title, description, and contact info).
 2. **Servers Array**: Details the physical message brokers (e.g., Apache Kafka cluster, RabbitMQ exchange, or WebSockets server) and their protocols.
 3. **Channels Object**: Maps the transmission pathways (topics, queues, routing keys, or paths) where message payloads are sent.
-4. **Operations Object**: Defines actions clients can take on specific channels—either `send` (publishing messages) or `receive` (subscribing to streams).
+4. **Operations Object**: Defines actions clients can take on specific channels: either `send` (publishing messages) or `receive` (subscribing to streams).
 5. **Components Object**: Acts as a central registry for reusable message definitions, security parameters, and data validation payload schemas.
 
 ---

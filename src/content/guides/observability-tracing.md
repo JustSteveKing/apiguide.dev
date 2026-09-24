@@ -39,15 +39,15 @@ Metrics are cheap, aggregated numbers ideal for dashboards and alerts. Two compl
 
 **RED** describes request-driven services (your API surface):
 
-- **Rate** — requests per second.
-- **Errors** — failed requests per second.
-- **Duration** — latency distribution (track percentiles, not averages).
+- **Rate**: requests per second.
+- **Errors**: failed requests per second.
+- **Duration**: latency distribution (track percentiles, not averages).
 
 **USE** describes resources (the machines underneath):
 
-- **Utilization** — how busy a resource is.
-- **Saturation** — queued work it cannot yet handle.
-- **Errors** — resource-level error counts.
+- **Utilization**: how busy a resource is.
+- **Saturation**: queued work it cannot yet handle.
+- **Errors**: resource-level error counts.
 
 RED tells you the API is slow; USE tells you the database CPU is the reason.
 
@@ -93,8 +93,8 @@ OpenTelemetry (OTel) is the vendor-neutral CNCF standard for generating and expo
 
 Adopting OTel means:
 
-- **No vendor lock-in** — instrument once, switch backends by reconfiguring the exporter.
-- **Automatic propagation** — its instrumentation handles W3C Trace Context for you.
-- **Unified signals** — logs, metrics, and traces share consistent attributes, so a `trace_id` in a log links straight to the trace.
+- **No vendor lock-in**: instrument once, switch backends by reconfiguring the exporter.
+- **Automatic propagation**: its instrumentation handles W3C Trace Context for you.
+- **Unified signals**: logs, metrics, and traces share consistent attributes, so a `trace_id` in a log links straight to the trace.
 
 Instrument at the framework layer for broad coverage, add manual spans around business-critical operations, and sample intelligently so trace volume stays affordable at scale.

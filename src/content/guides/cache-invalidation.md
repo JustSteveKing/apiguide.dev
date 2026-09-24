@@ -6,7 +6,7 @@ category: "caching"
 
 ## Introduction to Cache Invalidation
 
-Cache invalidation is the discipline of removing or refreshing cached data once it no longer reflects the source of truth. For HTTP APIs it means balancing three competing goals — performance, scalability, and freshness — across several cache layers: the browser, the CDN edge, a reverse proxy, an application cache like Redis, and the database query cache. No single technique fits every layer, so effective systems combine standardized HTTP mechanisms with application-level strategies. RFC 9111 defines the HTTP foundation.
+Cache invalidation is the discipline of removing or refreshing cached data once it no longer reflects the source of truth. For HTTP APIs it means balancing three competing goals (performance, scalability, and freshness) across several cache layers: the browser, the CDN edge, a reverse proxy, an application cache like Redis, and the database query cache. No single technique fits every layer, so effective systems combine standardized HTTP mechanisms with application-level strategies. RFC 9111 defines the HTTP foundation.
 
 ---
 
@@ -48,13 +48,13 @@ HTTP/1.1 200 OK
 Cache-Control: max-age=3600, stale-while-revalidate=600, stale-if-error=86400
 ```
 
-This response is fresh for one hour, then served stale for up to 10 minutes while revalidating, and — if the origin fails — kept serving for up to 24 hours. CDNs including Amazon CloudFront and Cloudflare support both directives.
+This response is fresh for one hour, then served stale for up to 10 minutes while revalidating, and, if the origin fails, kept serving for up to 24 hours. CDNs including Amazon CloudFront and Cloudflare support both directives.
 
 ---
 
 ## 4. Event-Based Invalidation
 
-Rather than waiting for a timer, event-based invalidation reacts to actual data changes for near real-time consistency. When the source system writes an update, it emits an event — over Kafka, RabbitMQ, Redis Pub/Sub, or a webhook — and cache listeners evict or refresh the affected entries.
+Rather than waiting for a timer, event-based invalidation reacts to actual data changes for near real-time consistency. When the source system writes an update, it emits an event over Kafka, RabbitMQ, Redis Pub/Sub, or a webhook, and cache listeners evict or refresh the affected entries.
 
 The payoff can be dramatic. EVE Online moved its skills endpoints from time-based to event-driven invalidation and saw the cache hit ratio jump from around 1% to over 90%, because entries were only evicted when data genuinely changed. The trade-off is operational complexity and the need for reliable delivery, so a durable at-least-once queue usually backs the event stream.
 
@@ -69,7 +69,7 @@ HTTP/1.1 200 OK
 Surrogate-Key: product:123 category:electronics
 ```
 
-When a change occurs, purging the tag `product:123` invalidates every object carrying it across distributed caches. Fastly implements this with `Surrogate-Key` headers and propagates purges globally in roughly 150 ms; Amazon CloudFront supports native tag invalidation via API calls (path-based invalidation there typically takes 10–60 seconds). Common implementations use a tag registry mapping tags to keys, or version tokens embedded in the key. Entity-level tags give precise control at the cost of many tag sets; type-level tags are simpler but over-invalidate.
+When a change occurs, purging the tag `product:123` invalidates every object carrying it across distributed caches. Fastly implements this with `Surrogate-Key` headers and propagates purges globally in roughly 150 ms; Amazon CloudFront supports native tag invalidation via API calls (path-based invalidation there typically takes 10-60 seconds). Common implementations use a tag registry mapping tags to keys, or version tokens embedded in the key. Entity-level tags give precise control at the cost of many tag sets; type-level tags are simpler but over-invalidate.
 
 ---
 

@@ -136,7 +136,7 @@ export async function getStaticPaths() {
     },
     ...errors.map(e => ({
       params: { path: `errors/${e.id}.png` },
-      props: { title: e.data.title, subtitle: `HTTP ${e.data.statusCode} — Category: ${e.data.category}. Standard error response pattern details.`, category: 'API Error' }
+      props: { title: e.data.title, subtitle: `HTTP ${e.data.statusCode}, category ${e.data.category}. Standard error response pattern details.`, category: 'API Error' }
     })),
     ...statusCodes.map(sc => ({
       params: { path: `status-codes/${sc.data.code}.png` },

@@ -28,8 +28,8 @@ TLS protects credentials and tokens in transit. Without it, bearer tokens can be
 
 These are distinct concerns and both are required.
 
-- **Authentication (authn)** answers "who are you?" — validating credentials, tokens, or API keys. See [authentication](/guides/authentication) and [OAuth & API keys](/guides/oauth-api-keys).
-- **Authorization (authz)** answers "what are you allowed to do?" — checking whether *this* identity may perform *this* action on *this* resource.
+- **Authentication (authn)** answers "who are you?", validating credentials, tokens, or API keys. See [authentication](/guides/authentication) and [OAuth & API keys](/guides/oauth-api-keys).
+- **Authorization (authz)** answers "what are you allowed to do?", checking whether *this* identity may perform *this* action on *this* resource.
 
 The most common and damaging failure is authenticating correctly but authorizing incompletely.
 

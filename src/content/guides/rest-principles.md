@@ -49,9 +49,9 @@ Application state (such as which page a client is viewing) lives with the client
 The uniform interface is what separates REST from arbitrary RPC over HTTP. It has four elements:
 
 - **Identification of resources** via URIs.
-- **Manipulation through representations** — clients change state by sending representations, not by calling remote procedures.
-- **Self-descriptive messages** — each message carries enough metadata (headers, media types) to be understood on its own.
-- **HATEOAS** — responses include links describing what the client can do next.
+- **Manipulation through representations**: clients change state by sending representations, not by calling remote procedures.
+- **Self-descriptive messages**: each message carries enough metadata (headers, media types) to be understood on its own.
+- **HATEOAS**: responses include links describing what the client can do next.
 
 Consistency here is the whole point: once a client understands how to interact with one resource, it understands them all.
 
@@ -90,9 +90,9 @@ See the [error handling guide](/guides/error-handling) for structured error bodi
 
 Leonard Richardson's model grades how thoroughly an API adopts REST constraints:
 
-- **Level 0** — A single URI, single verb (usually `POST`). Plain RPC over HTTP (e.g. SOAP).
-- **Level 1** — Multiple resources with distinct URIs, but still one verb.
-- **Level 2** — Proper use of HTTP verbs and status codes. Most production "REST" APIs live here.
-- **Level 3** — Hypermedia controls ([HATEOAS](/guides/hateoas)): responses tell clients what they can do next.
+- **Level 0**: A single URI, single verb (usually `POST`). Plain RPC over HTTP (e.g. SOAP).
+- **Level 1**: Multiple resources with distinct URIs, but still one verb.
+- **Level 2**: Proper use of HTTP verbs and status codes. Most production "REST" APIs live here.
+- **Level 3**: Hypermedia controls ([HATEOAS](/guides/hateoas)): responses tell clients what they can do next.
 
 Level 2 is a pragmatic, widely-adopted target. Level 3 unlocks discoverability and looser coupling but demands more from both server and client, which is why full adoption remains rare.

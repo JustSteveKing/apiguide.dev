@@ -12,7 +12,7 @@ Transferring files over HTTP introduces concerns that ordinary JSON exchange doe
 
 ## 1. Multipart Uploads
 
-For the common case — a file sent alongside metadata — **`multipart/form-data`** (RFC 7578, which obsoletes RFC 2388) is the standard. The body is split into parts, each with its own [`Content-Disposition`](/headers/content-disposition) header.
+For the common case, a file sent alongside metadata, **`multipart/form-data`** (RFC 7578, which obsoletes RFC 2388) is the standard. The body is split into parts, each with its own [`Content-Disposition`](/headers/content-disposition) header.
 
 ```http
 POST /v1/documents HTTP/1.1
@@ -31,7 +31,7 @@ Content-Type: application/pdf
 ------boundary123--
 ```
 
-Each part must carry a `form-data` disposition with a `name`; file parts should also supply a `filename`. A part's `Content-Type` defaults to `text/plain` if omitted. Multiple files for one field are sent as separate parts sharing the same `name`. This method suits files roughly in the 1MB–100MB range.
+Each part must carry a `form-data` disposition with a `name`; file parts should also supply a `filename`. A part's `Content-Type` defaults to `text/plain` if omitted. Multiple files for one field are sent as separate parts sharing the same `name`. This method suits files roughly in the 1MB-100MB range.
 
 ---
 
@@ -67,7 +67,7 @@ When large uploads may be interrupted, split the file into **chunks** and let th
 | `Upload-Length` | Total size of the representation in bytes |
 | `Upload-Limit` | Server constraints such as `max-size`, `min-size`, `max-append-size` |
 
-A server can send an interim `104 Upload Resumption Supported` status to signal support and report progress. Note that RFC 7231 forbids a `PUT` carrying a `Content-Range` header — a server must respond `400 Bad Request` — because `PUT` replaces a whole resource. Partial writes belong to [`PATCH`](/methods/patch) or purpose-built methods.
+A server can send an interim `104 Upload Resumption Supported` status to signal support and report progress. Note that RFC 7231 forbids a `PUT` carrying a `Content-Range` header, and that a server must respond `400 Bad Request`, because `PUT` replaces a whole resource. Partial writes belong to [`PATCH`](/methods/patch) or purpose-built methods.
 
 For very small files (under ~1MB), **Base64** embedding in a JSON body is an option, but it inflates the payload by about 33% and does not scale to larger files.
 
@@ -100,7 +100,7 @@ Content-Length: 1024
 
 ### Stream, do not buffer
 
-The most common download pitfall is loading an entire file into memory before sending it — this exhausts RAM and can crash the server under concurrency. Instead, read the file in small chunks and write them straight to the response, keeping memory usage flat regardless of file size. Use asynchronous streaming and, where possible, a production static-file middleware rather than a hand-rolled endpoint per file.
+The most common download pitfall is loading an entire file into memory before sending it. This exhausts RAM and can crash the server under concurrency. Instead, read the file in small chunks and write them straight to the response, keeping memory usage flat regardless of file size. Use asynchronous streaming and, where possible, a production static-file middleware rather than a hand-rolled endpoint per file.
 
 ### Content-Disposition
 
@@ -120,7 +120,7 @@ Content-Disposition: attachment; filename="report.pdf"; filename*=UTF-8''report.
 
 ### Security
 
-* **Validate by magic bytes**, not the client-supplied `Content-Type` — an executable can masquerade as an image.
+* **Validate by magic bytes**, not the client-supplied `Content-Type`, since an executable can masquerade as an image.
 * **Rate limit** upload endpoints to blunt denial-of-service and abuse.
 * **Scan uploads for malware** before serving them back.
 * **Sanitize filenames and paths** to prevent path traversal (for example `../../etc/passwd`); note that URL-encoded sequences like `..%2f` can slip past naive stripping.

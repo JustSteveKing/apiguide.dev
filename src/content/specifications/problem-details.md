@@ -50,7 +50,7 @@ The following describes a request that failed because the account has insufficie
 }
 ```
 
-Note that `balance` and `accounts` are not standard members — they are extension members, described next.
+Note that `balance` and `accounts` are not standard members. They are extension members, described next.
 
 ---
 
@@ -91,7 +91,7 @@ Here `pointer` is a JSON Pointer (RFC 6901) into the request body. Some APIs ins
 
 ## 5. Design Guidance
 
-* **Keep `type` stable.** Clients branch on the `type` URI, so treat it as part of your API contract — changing it is a breaking change.
+* **Keep `type` stable.** Clients branch on the `type` URI, so treat it as part of your API contract, so changing it is a breaking change.
 * **Do not leak internals.** `detail` is for the client, not a stack trace. Avoid exposing implementation specifics.
 * **Mirror the status code.** The `status` member should match the actual HTTP response status so intermediaries and logs agree.
 * **Document extensions.** Every extension member a `type` can emit should be documented at the `type` URI.

@@ -48,4 +48,4 @@ A client makes a conditional request by sending specific headers containing the 
 1. The client reads a resource and receives `ETag: "version_5"`.
 2. The client prepares a [PUT](/methods/put) update. To prevent overwriting concurrent updates, they send [**`If-Match: "version_5"`**](/headers/if-match).
 3. If the resource ETag on the server is still `"version_5"`, the update succeeds.
-4. If another process updated the resource first (updating its ETag to `"version_6"`), the check fails. The server aborts the update and returns [**`412 Precondition Failed`**](/status-codes/412) — this is the code the spec defines for a failed conditional check; don't substitute [`409 Conflict`](/status-codes/409), which signals a different kind of state conflict.
+4. If another process updated the resource first (updating its ETag to `"version_6"`), the check fails. The server aborts the update and returns [**`412 Precondition Failed`**](/status-codes/412), which is the code the spec defines for a failed conditional check; don't substitute [`409 Conflict`](/status-codes/409), which signals a different kind of state conflict.

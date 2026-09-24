@@ -6,7 +6,7 @@ category: "security"
 
 ## Introduction to Webhook Signatures
 
-A webhook endpoint is a public URL that accepts unsolicited HTTP requests. Because anyone who discovers the URL can POST to it, the receiver needs a way to confirm that a request genuinely came from the expected sender and that its body was not altered in transit. Signature verification solves this: the sender computes a cryptographic signature over the payload using a shared secret, transmits it in a header, and the receiver independently recomputes and compares it. This guide covers the dominant approach — HMAC-SHA256 — along with the replay and timing protections that make it safe in practice.
+A webhook endpoint is a public URL that accepts unsolicited HTTP requests. Because anyone who discovers the URL can POST to it, the receiver needs a way to confirm that a request genuinely came from the expected sender and that its body was not altered in transit. Signature verification solves this: the sender computes a cryptographic signature over the payload using a shared secret, transmits it in a header, and the receiver independently recomputes and compares it. This guide covers the dominant approach, HMAC-SHA256, along with the replay and timing protections that make it safe in practice.
 
 ---
 
@@ -21,7 +21,7 @@ The flow is symmetric:
 
 Because the secret never travels over the wire, an attacker who intercepts a request cannot produce valid signatures for modified payloads.
 
-Do not use MD5 or SHA-1 — both are considered cryptographically broken. HMAC is standardized in NIST FIPS 198-1, and SHA-256 (from FIPS 180-4) is the minimum recommended hash. Stripe explicitly forbids weaker hashes to prevent downgrade attacks.
+Do not use MD5 or SHA-1. Both are considered cryptographically broken. HMAC is standardized in NIST FIPS 198-1, and SHA-256 (from FIPS 180-4) is the minimum recommended hash. Stripe explicitly forbids weaker hashes to prevent downgrade attacks.
 
 ```
 signature = HMAC-SHA256(signing_secret, raw_request_body)
@@ -50,7 +50,7 @@ Signatures are transmitted in a provider-specific header and encoded as either l
 
 ## 3. Constant-Time Comparison
 
-Once you have recomputed the expected signature, do not compare it with an ordinary string equality operator. Most language-native comparisons return as soon as they hit the first differing byte, which leaks — through response timing — how many leading bytes were correct. Over many requests an attacker can use that signal to reconstruct a valid signature byte by byte.
+Once you have recomputed the expected signature, do not compare it with an ordinary string equality operator. Most language-native comparisons return as soon as they hit the first differing byte, which leaks, through response timing, how many leading bytes were correct. Over many requests an attacker can use that signal to reconstruct a valid signature byte by byte.
 
 Use a **constant-time comparison** function that always inspects the full length regardless of where a mismatch occurs:
 
@@ -67,7 +67,7 @@ if not constant_time_equal(expected, received):
     reject(400)
 ```
 
-The comparison inputs must be equal length, so decode both sides to bytes first. Remote timing attacks are noisy over a network, but the mitigation is cheap and unconditional — always use it.
+The comparison inputs must be equal length, so decode both sides to bytes first. Remote timing attacks are noisy over a network, but the mitigation is cheap and unconditional, so always use it.
 
 ---
 
@@ -78,7 +78,7 @@ A valid signed request that an attacker captures can be replayed verbatim, and t
 The sender includes a timestamp in the signed content and typically also in a header. The receiver checks that the timestamp is within a small tolerance window of the current server time before accepting the request.
 
 * Include the timestamp **inside the signed digest** so it cannot be tampered with.
-* Reject requests outside a tolerance window — commonly **3 to 5 minutes** (Stripe's SDK defaults to 5 minutes).
+* Reject requests outside a tolerance window, commonly **3 to 5 minutes** (Stripe's SDK defaults to 5 minutes).
 * Keep server clocks synchronized via NTP, or legitimate requests will be falsely rejected.
 * Use a Unix timestamp to avoid format ambiguity.
 
@@ -95,12 +95,12 @@ Note that a tolerance window can conflict with provider retries: if a sender ret
 
 ## 5. Nonces and Idempotency
 
-Timestamps narrow the replay window but do not close it — a request can still be replayed within the tolerance period. Two complementary techniques harden the endpoint further:
+Timestamps narrow the replay window but do not close it. A request can still be replayed within the tolerance period. Two complementary techniques harden the endpoint further:
 
 * **Nonces**: the sender attaches a unique one-time identifier per delivery; the receiver tracks seen nonces and rejects duplicates.
 * **Idempotency**: the receiver is designed to process each event exactly once, keyed on a stable event ID, regardless of how many times it arrives.
 
-Idempotency is the most robust solution because it neutralizes duplicates from any cause — replays, retries, or at-least-once delivery — not just malicious ones. If your handler is fully idempotent, replay protection becomes a defense-in-depth measure rather than the sole safeguard. See [webhooks](/guides/webhooks) for delivery and retry design.
+Idempotency is the most robust solution because it neutralizes duplicates from any cause (replays, retries, or at-least-once delivery), not just malicious ones. If your handler is fully idempotent, replay protection becomes a defense-in-depth measure rather than the sole safeguard. See [webhooks](/guides/webhooks) for delivery and retry design.
 
 ---
 
@@ -115,7 +115,7 @@ The signing secret is the root of trust, so treat it accordingly.
 | Rotate on a schedule and after incidents | Regular rotation caps the lifetime of any undetected leak. |
 | Use random secrets (24-64 bytes) | Long, high-entropy keys resist brute force. |
 
-Zero-downtime rotation means the sender signs each message with multiple active keys during the transition, letting receivers validate against either. This capability is rare in the wild — surveys suggest under 10% of implementations offer it — so build it in deliberately.
+Zero-downtime rotation means the sender signs each message with multiple active keys during the transition, letting receivers validate against either. This capability is rare in the wild, and surveys suggest under 10% of implementations offer it, so build it in deliberately.
 
 ---
 
@@ -123,7 +123,7 @@ Zero-downtime rotation means the sender signs each message with multiple active 
 
 HMAC uses one shared secret, which means the receiver also holds a key capable of *forging* signatures. When the sender wants receivers to verify but never sign, asymmetric signatures are used instead: the sender signs with a private key and publishes a public key for verification.
 
-The Standard Webhooks spec supports Ed25519 (identified as `v1a`) alongside symmetric HMAC (`v1`). Some providers issue signed JWTs — for example, using ES384 — with the public key exposed at a known endpoint. RFC 9421 "HTTP Message Signatures" generalizes this further, allowing signatures over selected headers and body components with algorithms including HMAC-SHA256, ECDSA, and EdDSA. For token-based schemes, see [JWT](/specifications/jwt).
+The Standard Webhooks spec supports Ed25519 (identified as `v1a`) alongside symmetric HMAC (`v1`). Some providers issue signed JWTs, for example using ES384, with the public key exposed at a known endpoint. RFC 9421 "HTTP Message Signatures" generalizes this further, allowing signatures over selected headers and body components with algorithms including HMAC-SHA256, ECDSA, and EdDSA. For token-based schemes, see [JWT](/specifications/jwt).
 
 ---
 
@@ -135,6 +135,6 @@ Signature verification is necessary but not sufficient on its own. Layer additio
 * Return **generic error responses** to callers while logging detailed diagnostics internally.
 * Log every request with timestamp, source, and verification outcome for auditing.
 * Apply **rate limiting** to blunt abuse, and consider **IP allowlisting** when the sender publishes static IP ranges.
-* Validate and sanitize all payload fields — a verified signature proves origin, not that the content is well-formed.
+* Validate and sanitize all payload fields. A verified signature proves origin, not that the content is well-formed.
 
 Avoid the recurring pitfalls: skipping constant-time comparison, omitting replay protection, using weak hashes, and signing anything other than the raw body. Getting these four right is the core of a secure webhook receiver. See [API security](/guides/api-security) for the broader picture.

@@ -12,7 +12,7 @@ Conditional requests let a client attach preconditions to an operation so the se
 
 ## 1. Validators: ETag and Last-Modified
 
-Conditional requests depend on **validators** — server-generated metadata describing a resource's current state.
+Conditional requests depend on **validators**, server-generated metadata describing a resource's current state.
 
 ### ETag (Entity Tag)
 An [`ETag`](/headers/etag) is an opaque identifier for a specific version of a representation, typically a hash of the content or a version number. Its value must be enclosed in double quotes.
@@ -87,7 +87,7 @@ HTTP/1.1 412 Precondition Failed
 
 A [`412 Precondition Failed`](/status-codes/412) tells the client its copy is stale; it should re-fetch and retry. Some APIs also return `428 Precondition Required` when a mutating request omits `If-Match` entirely, forcing clients to opt into safe updates.
 
-`If-Match: *` succeeds as long as any current representation exists — useful with PUT to prevent creating a resource that already exists.
+`If-Match: *` succeeds as long as any current representation exists, which is useful with PUT to prevent creating a resource that already exists.
 
 ---
 
@@ -104,9 +104,9 @@ Two headers mirror the ETag-based conditionals using dates instead of entity tag
 
 When several precondition headers appear in one request, RFC 7232 defines a fixed evaluation order:
 
-1. `If-Match` — if present, `If-Unmodified-Since` is ignored.
+1. `If-Match`: if present, `If-Unmodified-Since` is ignored.
 2. `If-Unmodified-Since`.
-3. `If-None-Match` — if present, `If-Modified-Since` is ignored.
+3. `If-None-Match`: if present, `If-Modified-Since` is ignored.
 4. `If-Modified-Since`.
 
 Because ETag-based conditionals take precedence over date-based ones, sending both a validator pair is safe: the stronger check wins.

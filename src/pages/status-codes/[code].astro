@@ -165,7 +165,7 @@ const scJsonLd = [
           {sortedRelatedCodes.map(code => (
             <RelatedCard
               href={`/status-codes/${code.data.code}/`}
-              title={`HTTP ${code.data.code} — ${code.data.title}`}
+              title={`HTTP ${code.data.code}: ${code.data.title}`}
               description={code.data.description}
               theme={getCodeTheme(code.data.category)}
             />

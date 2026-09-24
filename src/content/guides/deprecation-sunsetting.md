@@ -6,7 +6,7 @@ category: "core"
 
 ## Introduction to Deprecation and Sunsetting
 
-Every API changes over time, and retiring endpoints or versions is unavoidable. Doing it well preserves consumer trust; doing it badly breaks client applications without warning. Effective deprecation pairs **machine-readable signals** — standardized HTTP headers — with **human communication** through changelogs, email, and documentation, all on a predictable timeline. This guide covers the headers, the timelines, and the final removal.
+Every API changes over time, and retiring endpoints or versions is unavoidable. Doing it well preserves consumer trust; doing it badly breaks client applications without warning. Effective deprecation pairs **machine-readable signals**, meaning standardized HTTP headers, with **human communication** through changelogs, email, and documentation, all on a predictable timeline. This guide covers the headers, the timelines, and the final removal.
 
 ---
 
@@ -19,7 +19,7 @@ HTTP/1.1 200 OK
 Deprecation: @1735689600
 ```
 
-Here `@1735689600` corresponds to 2025-01-01 00:00:00 UTC. The date may be in the future (an early warning of upcoming deprecation) or in the past (deprecation already in effect). Crucially, a deprecated resource **still functions normally** — the header is a signal, not an error. See [`Deprecation`](/headers/deprecation) for the header reference.
+Here `@1735689600` corresponds to 2025-01-01 00:00:00 UTC. The date may be in the future (an early warning of upcoming deprecation) or in the past (deprecation already in effect). Crucially, a deprecated resource **still functions normally**. The header is a signal, not an error. See [`Deprecation`](/headers/deprecation) for the header reference.
 
 ---
 
@@ -35,7 +35,7 @@ Sunset: Wed, 31 Dec 2025 23:59:59 GMT
 
 Two rules matter:
 
-* The `Sunset` timestamp **must not be earlier** than the `Deprecation` date — the progression is always warning first, removal later.
+* The `Sunset` timestamp **must not be earlier** than the `Deprecation` date, because the progression is always warning first, removal later.
 * The two headers use different date formats (Structured Field Date vs. HTTP-date) for historical reasons; this is expected.
 
 `Sunset` should be treated as a hint about a resource's planned retirement. See the [`Sunset`](/headers/sunset) reference for details.
@@ -52,7 +52,7 @@ Sunset: Sun, 27 Sep 2026 00:00:00 GMT
 Link: <https://developer.apiguide.dev/deprecation>; rel="deprecation"; type="text/html"
 ```
 
-You can add a second `Link` with `rel="successor-version"` to point at the replacement endpoint. One real-world caution: keep these links maintained — a `rel="deprecation"` URL that 404s leaves consumers unable to find migration details, which defeats the purpose.
+You can add a second `Link` with `rel="successor-version"` to point at the replacement endpoint. One real-world caution: keep these links maintained, because a `rel="deprecation"` URL that 404s leaves consumers unable to find migration details, which defeats the purpose.
 
 ---
 
@@ -65,10 +65,10 @@ How much notice to give depends on the scope of the change. Longer is safer, esp
 | Minor field removal | 3 months | 6 months |
 | Endpoint removal | 6 months | 12 months |
 | Breaking change | 6 months | 12 months |
-| Major version sunset | 12 months | 18–24 months |
+| Major version sunset | 12 months | 18-24 months |
 | Security-related | 30 days | 90 days |
 
-Industry examples bracket this range: GitHub supports each API version for at least 24 months, while Twilio offers 12 months of prior-version support followed by a 12-month end-of-life period. General practice for a deprecation notice lands around 6–12 months. See the [versioning](/guides/versioning) guide for how deprecation ties into version strategy.
+Industry examples bracket this range: GitHub supports each API version for at least 24 months, while Twilio offers 12 months of prior-version support followed by a 12-month end-of-life period. General practice for a deprecation notice lands around 6-12 months. See the [versioning](/guides/versioning) guide for how deprecation ties into version strategy.
 
 ---
 
@@ -107,4 +107,4 @@ Content-Type: application/problem+json
 
 Push lifecycle information into your API definition so tooling and clients can react automatically. OpenAPI 3.x already supports `deprecated: true` on individual operations and fields. Proposed extensions would add `deprecationDate`, `sunsetDate`, and `migration` URLs at the API level, mapping directly to the `Deprecation`, `Sunset`, and `Link` headers so servers can emit them consistently.
 
-Embedding deprecation policy early — defining a reasonable maintenance window, obtaining consent from key consumers, and documenting the migration path — turns retirement into a predictable, well-signposted process rather than a disruption.
+Embedding deprecation policy early, by defining a reasonable maintenance window, obtaining consent from key consumers, and documenting the migration path, turns retirement into a predictable, well-signposted process rather than a disruption.

@@ -18,7 +18,7 @@ header.payload.signature
 
 ## 1. Structure
 
-A JWT is a claims set serialized into either a JWS (signed) or a JWE (encrypted) structure. The signed form — by far the most common for API credentials — consists of a JOSE header, a payload of claims, and a signature. (A JWE has five segments instead: protected header, encrypted key, initialization vector, ciphertext, and authentication tag.)
+A JWT is a claims set serialized into either a JWS (signed) or a JWE (encrypted) structure. The signed form, by far the most common for API credentials, consists of a JOSE header, a payload of claims, and a signature. (A JWE has five segments instead: protected header, encrypted key, initialization vector, ciphertext, and authentication tag.)
 
 ### Header (JOSE Header)
 Describes the token type and the cryptographic algorithm:
@@ -63,7 +63,7 @@ RFC 7519 reserves a set of claim names. All are optional but carry defined seman
 | `iat` | Issued At       | Numeric date the token was issued.                            |
 | `jti` | JWT ID          | Unique identifier, useful for replay prevention/revocation.   |
 
-Time-based claims are NumericDate values — seconds since the Unix epoch.
+Time-based claims are NumericDate values, meaning seconds since the Unix epoch.
 
 ---
 
@@ -87,9 +87,9 @@ A critical point: a signed JWT is **not** encrypted. Anyone can Base64URL-decode
 
 The `alg` header value selects the algorithm, defined in RFC 7518 (JWA):
 
-* **HS256** — HMAC with SHA-256. Symmetric: the same secret signs and verifies. Simple, but the secret must be shared with every verifier.
-* **RS256** — RSASSA-PKCS1-v1_5 with SHA-256. Asymmetric: a private key signs, and a widely distributable public key verifies.
-* **ES256** — ECDSA using P-256 and SHA-256. Asymmetric with smaller keys/signatures than RSA.
+* **HS256**: HMAC with SHA-256. Symmetric: the same secret signs and verifies. Simple, but the secret must be shared with every verifier.
+* **RS256**: RSASSA-PKCS1-v1_5 with SHA-256. Asymmetric: a private key signs, and a widely distributable public key verifies.
+* **ES256**: ECDSA using P-256 and SHA-256. Asymmetric with smaller keys/signatures than RSA.
 
 Asymmetric algorithms (RS256, ES256) are preferred for distributed systems because resource servers only ever need the public key.
 

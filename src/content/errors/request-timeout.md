@@ -9,7 +9,7 @@ publishedDate: 2026-07-09
 
 ## When to use it
 
-Use 408 Request Timeout when the server was prepared to receive a request but the client did not produce a complete one within the time the server was willing to wait. This is about the inbound half of the exchange: the connection opened, but the request line, headers, or body arrived too slowly — or never finished arriving — so the server gave up waiting and closed the idle connection.
+Use 408 Request Timeout when the server was prepared to receive a request but the client did not produce a complete one within the time the server was willing to wait. This is about the inbound half of the exchange: the connection opened, but the request line, headers, or body arrived too slowly, or never finished arriving, so the server gave up waiting and closed the idle connection.
 
 Typical triggers are a client that opens a socket and stalls before sending anything, a slow or interrupted upload that never reaches the declared `Content-Length`, or a keep-alive connection held open long past the server's idle threshold. Because the fault lies with the client's transmission rather than any server-side processing, 408 sits in the 4xx client-error range.
 

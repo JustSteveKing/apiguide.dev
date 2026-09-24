@@ -27,7 +27,7 @@ OData's core value is a shared vocabulary for the kinds of queries almost every 
 GET /Products?$filter=Price gt 20&$select=Name,Price&$orderby=Price desc&$top=10
 ```
 
-Because every OData service exposes these options with identical syntax and semantics, a generic OData client library can query any compliant service without custom integration code — something that isn't true of REST APIs with bespoke filtering schemes.
+Because every OData service exposes these options with identical syntax and semantics, a generic OData client library can query any compliant service without custom integration code, which isn't true of REST APIs with bespoke filtering schemes.
 
 ---
 
@@ -53,7 +53,7 @@ This is a meaningful difference from typical REST APIs, which usually describe t
 
 ## 3. How OData Differs from Ad-Hoc REST Filtering
 
-Most REST APIs invent their own filtering and pagination conventions — `?status=active&page=2&limit=25` in one API, `?filter[status]=active&page[number]=2` in another. Each variation is reasonable in isolation, but it means every client integration starts from scratch reading documentation to learn that particular API's dialect.
+Most REST APIs invent their own filtering and pagination conventions: `?status=active&page=2&limit=25` in one API, `?filter[status]=active&page[number]=2` in another. Each variation is reasonable in isolation, but it means every client integration starts from scratch reading documentation to learn that particular API's dialect.
 
 | Concern | Ad-hoc REST | OData |
 |---|---|---|
@@ -63,7 +63,7 @@ Most REST APIs invent their own filtering and pagination conventions — `?statu
 | Schema discovery | External docs (OpenAPI, README) | Built-in `$metadata` endpoint |
 | Client tooling | API-specific SDKs | Generic OData clients work against any compliant service |
 
-The trade-off is flexibility: OData's query language is powerful but verbose, and its metadata model assumes a fairly structured, entity-relationship view of your data — a good fit for CRUD-heavy business data, less natural for APIs built around actions or events rather than resources.
+The trade-off is flexibility: OData's query language is powerful but verbose, and its metadata model assumes a fairly structured, entity-relationship view of your data, a good fit for CRUD-heavy business data, less natural for APIs built around actions or events rather than resources.
 
 ---
 
@@ -79,5 +79,5 @@ If you're building a general-purpose public API, plain REST or GraphQL is usuall
 
 ## Best Practices
 
-* Don't adopt OData purely for its query syntax on a greenfield API — the standard makes the most sense when you also want the discovery and tooling benefits of the shared metadata model, not just `$filter`-style querying.
+* Don't adopt OData purely for its query syntax on a greenfield API. The standard makes the most sense when you also want the discovery and tooling benefits of the shared metadata model, not just `$filter`-style querying.
 * If you're consuming an existing OData service, use a generated client from the `$metadata` document rather than hand-rolling query strings; it keeps your code in sync when the service's model changes.

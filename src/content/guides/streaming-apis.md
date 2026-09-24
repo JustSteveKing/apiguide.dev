@@ -76,10 +76,10 @@ Connection: Upgrade
 Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 ```
 
-* **Strengths**: after the handshake, per-message overhead is tiny (roughly 2–14 bytes); ordering is guaranteed; both text and binary payloads are supported; latency is low.
+* **Strengths**: after the handshake, per-message overhead is tiny (roughly 2-14 bytes); ordering is guaranteed; both text and binary payloads are supported; latency is low.
 * **Weaknesses**: connections are stateful, so the server must manage each one. Production use demands reconnection logic with exponential backoff and jitter, heartbeats, message queuing during disconnects, and state recovery. Horizontal scaling needs load balancers (ideally with sticky sessions) and a broker such as Redis Pub/Sub to coordinate across instances.
 
-As a rough capacity guide, a single WebSocket server in 2026 handles on the order of 50,000–100,000 concurrent connections and 100K–500K messages per second at sub-50ms p99 latency; a clustered deployment with Redis and load balancing reaches 500K–2M connections and 5M–10M messages per second at under 100ms p99 globally. Memory per connection ranges from tens of KB when idle to several MB for video. See the [WebSocket specification](/specifications/websocket) for framing details.
+As a rough capacity guide, a single WebSocket server in 2026 handles on the order of 50,000-100,000 concurrent connections and 100K-500K messages per second at sub-50ms p99 latency; a clustered deployment with Redis and load balancing reaches 500K-2M connections and 5M-10M messages per second at under 100ms p99 globally. Memory per connection ranges from tens of KB when idle to several MB for video. See the [WebSocket specification](/specifications/websocket) for framing details.
 
 WebSocket suits chat, multiplayer games, collaborative editing, and trading platforms, anything needing frequent two-way exchange.
 

@@ -1,4 +1,16 @@
 ---
+// Self-hosted variable fonts. These replace three render-blocking requests to
+// fonts.googleapis.com: one for the stylesheet, then the font files it points
+// at on a second origin. Served from this origin they are one hop, they carry
+// the site's own cache headers, and no reader's IP reaches a third party.
+// Each entry point is subsetted by unicode-range, so a page downloads only the
+// ranges it actually uses, and the italic faces only load where italics appear.
+import "@fontsource-variable/inter";
+import "@fontsource-variable/inter/wght-italic.css";
+import "@fontsource-variable/lora";
+import "@fontsource-variable/lora/wght-italic.css";
+import "@fontsource-variable/fira-code";
+
 import "@/styles/main.css";
 import { ClientRouter } from 'astro:transitions';
 import Header from "@/components/Header.astro";
@@ -55,10 +67,10 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		<meta name="generator" content={Astro.generator} />
 		
 		<!-- Google Fonts -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-		
+		<!-- Match the browser chrome to the page in both themes. -->
+		<meta name="theme-color" content="#FAF6F0" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#1F1A12" media="(prefers-color-scheme: dark)">
+
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>
 		<meta name="description" content={description} />

@@ -6,7 +6,7 @@ category: "negotiation"
 
 ## Introduction to Media Types
 
-Media types — also called MIME types or content types — identify the format of data exchanged over HTTP. Registered by IANA and governed by RFC 6838, they underpin [content negotiation](/guides/content-negotiation), API versioning, and interoperability. A media type tells a recipient how to parse a body: `application/json` is JSON, `text/html; charset=utf-8` is UTF-8 HTML. Understanding their structure, the vendor tree, and structured suffixes lets you design content types that evolve without breaking clients.
+Media types, also called MIME types or content types, identify the format of data exchanged over HTTP. Registered by IANA and governed by RFC 6838, they underpin [content negotiation](/guides/content-negotiation), API versioning, and interoperability. A media type tells a recipient how to parse a body: `application/json` is JSON, `text/html; charset=utf-8` is UTF-8 HTML. Understanding their structure, the vendor tree, and structured suffixes lets you design content types that evolve without breaking clients.
 
 ---
 
@@ -77,7 +77,7 @@ Accept: application/vnd.status.v2+json
 Accept: application/vnd.status+json; version=2
 ```
 
-JSON:API uses `application/vnd.api+json` with `ext` and `profile` parameters to negotiate extensions and profiles — a form of semantic negotiation layered on the base type. When a request uses the JSON:API media type with any parameter other than `ext` or `profile`, servers must respond with [`415 Unsupported Media Type`](/status-codes/415). See the [versioning guide](/guides/versioning) for how this compares to path- and header-based schemes.
+JSON:API uses `application/vnd.api+json` with `ext` and `profile` parameters to negotiate extensions and profiles, a form of semantic negotiation layered on the base type. When a request uses the JSON:API media type with any parameter other than `ext` or `profile`, servers must respond with [`415 Unsupported Media Type`](/status-codes/415). See the [versioning guide](/guides/versioning) for how this compares to path- and header-based schemes.
 
 ---
 
@@ -94,7 +94,7 @@ JSON:API uses `application/vnd.api+json` with `ext` and `profile` parameters to 
 
 ## 5. Common Pitfalls
 
-* **Media type explosion.** Minting an overly specific type for every attribute or resource complicates the API and hurts interoperability. Favor "chunky" representations over fine-grained ones, and let a schema — not the media type — describe structure.
+* **Media type explosion.** Minting an overly specific type for every attribute or resource complicates the API and hurts interoperability. Favor "chunky" representations over fine-grained ones, and let a schema, rather than the media type, describe structure.
 * **Unsupported request bodies.** If a client sends a body the server cannot process, return [`415 Unsupported Media Type`](/status-codes/415).
 * **Ignored client preferences.** If no representation satisfies the `Accept` header, return [`406 Not Acceptable`](/status-codes/406), ideally listing supported formats.
 * **Missing or mismatched `Content-Type`.** An absent header, or one that disagrees with the actual body, commonly produces a `400 Bad Request`.
@@ -103,4 +103,4 @@ JSON:API uses `application/vnd.api+json` with `ext` and `profile` parameters to 
 
 ## Summary
 
-Media types are the vocabulary of HTTP content negotiation. Their `type/subtype` structure, the `vnd.` vendor tree, and the `+json` structured suffix together allow custom formats that generic tooling can still parse. Carry them with `Content-Type` and `Accept`, use them judiciously for versioning, default to standard types, and return `415` or `406` when negotiation fails — the result is an interoperable API that can evolve without breaking its clients.
+Media types are the vocabulary of HTTP content negotiation. Their `type/subtype` structure, the `vnd.` vendor tree, and the `+json` structured suffix together allow custom formats that generic tooling can still parse. Carry them with `Content-Type` and `Accept`, use them judiciously for versioning, default to standard types, and return `415` or `406` when negotiation fails. The result is an interoperable API that can evolve without breaking its clients.

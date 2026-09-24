@@ -19,7 +19,7 @@ When a client requests data from a GraphQL API, the engine processes the operati
 1. **Request POST**: The client sends a single HTTP `POST` request to the `/graphql` endpoint containing the query string (selection set) and variable parameters.
 2. **Parsing & Validation**: The GraphQL Engine parses the query and validates it against the strongly typed Schema to check for syntax errors, unknown fields, or security depth violations.
 3. **Resolver Invocation**: The execution engine invokes dedicated **Field Resolvers** for each requested node in the query selection tree.
-4. **Data Fetching**: Resolvers run concurrently to fetch information from underlying systems—performing SQL database reads, hitting key-value caches like Redis, or routing requests to external REST microservices.
+4. **Data Fetching**: Resolvers run concurrently to fetch information from underlying systems, performing SQL database reads, hitting key-value caches like Redis, or routing requests to external REST microservices.
 5. **Payload Serialization**: The engine packages the resolved values into a single JSON object matching the exact shape of the client's original query, returning it to the application.
 
 ---

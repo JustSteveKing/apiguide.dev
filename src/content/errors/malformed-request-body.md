@@ -9,7 +9,7 @@ publishedDate: 2025-11-17
 
 ## When to use it
 
-Use 400 with a Malformed Request Body error when the server cannot parse the payload sent in the HTTP request body. This occurs at the syntax level—for example, if the client sends invalid JSON (such as missing a closing brace, trailing commas, or unescaped characters).
+Use 400 with a Malformed Request Body error when the server cannot parse the payload sent in the HTTP request body. This occurs at the syntax level, for example if the client sends invalid JSON (such as missing a closing brace, trailing commas, or unescaped characters).
 
 Since the server cannot read the payload, it cannot run any validation or domain logic.
 

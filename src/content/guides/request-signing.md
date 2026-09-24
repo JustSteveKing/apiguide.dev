@@ -6,7 +6,7 @@ category: "security"
 
 ## Introduction to Request Signing
 
-Request signing lets a server prove that an incoming request came from a party holding a shared secret and that its contents were not modified in transit. Unlike a bearer token, which grants access to anyone who holds it, a signature is computed fresh for each request over the method, path, headers, and body — so a captured signature cannot be reused against a different request. This guide covers HMAC signing, AWS SigV4-style canonical requests, the newer RFC 9421 standard, and the practical concerns of body digests, clock skew, and replay protection.
+Request signing lets a server prove that an incoming request came from a party holding a shared secret and that its contents were not modified in transit. Unlike a bearer token, which grants access to anyone who holds it, a signature is computed fresh for each request over the method, path, headers, and body, so a captured signature cannot be reused against a different request. This guide covers HMAC signing, AWS SigV4-style canonical requests, the newer RFC 9421 standard, and the practical concerns of body digests, clock skew, and replay protection.
 
 ---
 
@@ -14,12 +14,12 @@ Request signing lets a server prove that an incoming request came from a party h
 
 Signing guarantees two properties:
 
-* **Authenticity** — the request originated from a party that knows the secret key.
-* **Integrity** — the signed components were not altered between signing and verification.
+* **Authenticity**: the request originated from a party that knows the secret key.
+* **Integrity**: the signed components were not altered between signing and verification.
 
 It does **not** provide confidentiality. Anyone observing the wire can still read the request unless it is encrypted. Request signing therefore always runs on top of **HTTPS (TLS 1.2 or higher)**, never as a replacement for it.
 
-Signing is well suited to server-to-server communication, webhook delivery, and high-security endpoints where both ends are controlled. For browser and mobile clients, or public APIs with many third-party integrations, token-based schemes such as OAuth are usually a better fit — see [OAuth & API keys](/guides/oauth-api-keys) and [authentication](/guides/authentication).
+Signing is well suited to server-to-server communication, webhook delivery, and high-security endpoints where both ends are controlled. For browser and mobile clients, or public APIs with many third-party integrations, token-based schemes such as OAuth are usually a better fit. See [OAuth & API keys](/guides/oauth-api-keys) and [authentication](/guides/authentication).
 
 ---
 
@@ -46,7 +46,7 @@ Use at least SHA-256. On the server, compare signatures with a **constant-time**
 
 ## 3. Canonicalization: Why Order Matters
 
-The signer and verifier must produce byte-identical strings from the same logical request, or every signature will fail. HTTP allows headers in any order, query parameters in any order, and variable whitespace — so both sides must **canonicalize** to a deterministic form first.
+The signer and verifier must produce byte-identical strings from the same logical request, or every signature will fail. HTTP allows headers in any order, query parameters in any order, and variable whitespace, so both sides must **canonicalize** to a deterministic form first.
 
 Canonicalization rules typically:
 
@@ -55,7 +55,7 @@ Canonicalization rules typically:
 * URI-encode query keys and values consistently,
 * fix an exact separator (usually a newline) between components.
 
-Any divergence — an extra line break, a capitalization difference, a re-encoded space — breaks verification. Keep the canonical form as simple as the scheme allows and avoid adding transformation steps that both ends must replicate exactly.
+Any divergence (an extra line break, a capitalization difference, a re-encoded space) breaks verification. Keep the canonical form as simple as the scheme allows and avoid adding transformation steps that both ends must replicate exactly.
 
 ---
 
@@ -73,9 +73,9 @@ CanonicalRequest =
   HexEncode(SHA256(RequestPayload))
 ```
 
-* **CanonicalHeaders** — the `Host` header, `Content-Type` if present, and any `x-amz-*` headers, all lowercased, trimmed, and sorted.
-* **SignedHeaders** — a semicolon-separated, alphabetically sorted list naming exactly which headers were included above.
-* **HashedPayload** — a SHA-256 hash of the body, lowercase hex.
+* **CanonicalHeaders**: the `Host` header, `Content-Type` if present, and any `x-amz-*` headers, all lowercased, trimmed, and sorted.
+* **SignedHeaders**: a semicolon-separated, alphabetically sorted list naming exactly which headers were included above.
+* **HashedPayload**: a SHA-256 hash of the body, lowercase hex.
 
 The canonical request is then hashed into a **string to sign** that adds the algorithm, timestamp, and credential scope:
 
@@ -105,8 +105,8 @@ The result goes in the `Authorization` header. Naming the signed headers explici
 
 The IETF standardized this space with **RFC 9421 "HTTP Message Signatures"** (Proposed Standard, February 2024). It replaces ad-hoc canonicalization with a defined signature base and two structured header fields:
 
-* `Signature-Input` — lists the **covered components** and metadata (`keyid`, `alg`, `created`, and optionally `nonce` and `expires`).
-* `Signature` — carries the signature value.
+* `Signature-Input`: lists the **covered components** and metadata (`keyid`, `alg`, `created`, and optionally `nonce` and `expires`).
+* `Signature`: carries the signature value.
 
 Covered components can be ordinary headers or **derived components** that abstract away HTTP version differences: `@method`, `@target-uri`, `@authority`, and `@path`. This lets the signer choose exactly which parts to protect, which is important when intermediaries may legitimately modify some headers.
 
@@ -124,7 +124,7 @@ RFC 9421 supports HMAC-SHA256, RSA (PKCS1-v1_5 and PSS), ECDSA (P-256, P-384), E
 
 ## 6. Body Digests
 
-For any request with a body — POST, PUT, PATCH — the body must be bound into the signature, or an attacker could swap the payload while leaving the signature valid. The standard approach is to compute a **digest** of the body (typically SHA-256) and include that digest in the signed components rather than hashing the raw body twice.
+For any request with a body (POST, PUT, PATCH), the body must be bound into the signature, or an attacker could swap the payload while leaving the signature valid. The standard approach is to compute a **digest** of the body (typically SHA-256) and include that digest in the signed components rather than hashing the raw body twice.
 
 SigV4 folds the payload hash directly into the canonical request. RFC 9421 works with the `Content-Digest` header, which is covered by the signature. Either way, the verifier recomputes the digest from the received body and confirms it matches the signed value before trusting the payload.
 
@@ -135,10 +135,10 @@ SigV4 folds the payload hash directly into the canonical request. RFC 9421 works
 A signed request that is captured can be replayed. The primary defense is a **timestamp** included in the signature: the server accepts a request only if its timestamp falls within an acceptable window of the current time.
 
 * A common tolerance is **5 minutes**; tighter windows (down to hundreds of milliseconds, as some gateways allow) reduce the replay window but demand well-synchronized clocks.
-* **Clock skew** — drift between client and server clocks — will cause legitimate requests to be rejected if the window is too tight. Synchronize clocks with NTP on both sides.
+* **Clock skew**: drift between client and server clocks, which will cause legitimate requests to be rejected if the window is too tight. Synchronize clocks with NTP on both sides.
 * Beware retry storms: SDKs that assume authentication failures are clock-skew related may repeatedly retry a request that is actually failing for another reason, degrading performance.
 
-For the highest-security endpoints, add a **nonce** — a unique single-use value per request that the server records and refuses to accept twice. This closes the replay window entirely, even inside the timestamp tolerance, at the cost of server-side state.
+For the highest-security endpoints, add a **nonce**, a unique single-use value per request that the server records and refuses to accept twice. This closes the replay window entirely, even inside the timestamp tolerance, at the cost of server-side state.
 
 ---
 

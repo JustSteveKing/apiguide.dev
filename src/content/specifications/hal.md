@@ -96,7 +96,7 @@ Here `acme:customer` expands to `https://docs.acme.com/rels/customer`, which sho
 }
 ```
 
-Embedded resources are, in principle, full or partial copies of what you would get by following the corresponding link — they are a performance optimization, not a separate data model.
+Embedded resources are, in principle, full or partial copies of what you would get by following the corresponding link. They are a performance optimization, not a separate data model.
 
 ---
 
