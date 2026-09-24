@@ -276,11 +276,53 @@ The `category` field on the errors content collection should drive colour direct
 
 This mapping should live in one place, for example a small lookup object imported wherever a category badge is rendered, so a future third category does not require hunting through every template that touches colour.
 
+## Dark theme
+
+Answered 2026-09-24, and the answer to the question this section used to ask is
+**the same scales, mirrored**.
+
+Every colour utility on the site resolves through a `var(--color-*)`, so the
+whole theme is one `@media (prefers-color-scheme: dark)` block in `main.css`
+that redefines the tokens. Nothing else changed: no `dark:` variant was added
+to any component.
+
+The scale is mirrored rather than replaced. 50 swaps with 950, 100 with 900,
+200 with 800, 300 with 700, 400 with 600, and 500 stays where it is.
+
+That is not laziness, it is what makes the inversion behave. In light mode a
+raised surface is one step *darker* than the page, paper 100 on paper 50.
+Mirrored, it becomes one step *lighter*, paper 900 on paper 950, which is the
+elevation convention dark interfaces already use. A link hover moves toward
+900: in light mode that deepens the blue, mirrored it brightens it. Both read
+as more emphasis, from one rule.
+
+The page lands on paper 950, `#1F1A12`, a warm near-black rather than a neutral
+one, so the paper identity survives the switch.
+
+Measured pairs on that background: body text 12.95:1, headings 16.06:1, links
+5.67:1, muted text 7.55:1, focus ring 8.73:1, code on its own surface 13.31:1.
+
+Three things do not come from the token swap and are handled explicitly:
+
+- **Code blocks.** Expressive Code was pinned to `github-light`, which would
+  have left a light code theme sitting inside a dark page. It now carries
+  `github-light` and `github-dark` and switches on the same media query.
+- **Shadows.** The card lift uses a warm low-alpha shadow that is invisible
+  against a dark page, so the dark block deepens it.
+- **The logo inverts, deliberately.** The mark is a gradient from chartres 500
+  to chartres 700 with paper 50 text. Mirrored, that becomes a light blue chip
+  with a dark glyph. Pinning it to the light-mode values was considered and
+  rejected: chartres 700 against paper 950 is 1.3:1, so the chip's dark corner
+  would sink into the page. Inverted it holds 3.77:1 at worst.
+
+Still to decide: whether to add a manual override. Today the site follows the
+operating system and offers no toggle, which needs no JavaScript and no stored
+preference, but it does mean a reader cannot choose per site.
+
 ## Open questions
 
 A few things not yet decided that are worth resolving before this palette is treated as final.
 
-- Whether dark mode is in scope for launch, and if so whether it reuses the same scales inverted, or needs its own tuned values, since some of these hues shift perceptually when placed on a dark background rather than paper 50
 - Whether the ochre and uranium accents need a higher contrast variant specifically for small text, to satisfy accessibility contrast ratios at the lighter end of each scale
 - Whether yinmn is distinct enough from chartres at a glance for colour blind users, given both are blues, or whether the informational callouts should lean on paper and iconography instead of colour alone
 
