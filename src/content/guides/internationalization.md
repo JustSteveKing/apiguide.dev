@@ -6,7 +6,7 @@ category: "negotiation"
 
 ## Introduction to Internationalization
 
-Internationalization (i18n) is the practice of designing an API so it can serve a global audience without re-engineering; localization (l10n) is adapting responses for a specific locale — translating text, formatting numbers and dates, and honoring regional conventions. For REST APIs the two concerns pull in different directions: human-readable text belongs to language negotiation, while values like timestamps and amounts are best delivered in a neutral, machine-friendly form and formatted by the client. Getting this separation right keeps an API adaptable and its consumers in control of presentation.
+Internationalization (i18n) is the practice of designing an API so it can serve a global audience without re-engineering; localization (l10n) is adapting responses for a specific locale: translating text, formatting numbers and dates, and honoring regional conventions. For REST APIs the two concerns pull in different directions: human-readable text belongs to language negotiation, while values like timestamps and amounts are best delivered in a neutral, machine-friendly form and formatted by the client. Getting this separation right keeps an API adaptable and its consumers in control of presentation.
 
 ---
 
@@ -36,7 +36,7 @@ HTTP allows a server to return [`406 Not Acceptable`](/status-codes/406) when it
 
 ### Limits of `Accept-Language`
 
-The header is a good signal but a weak contract. It can expose linguistic preferences (a privacy and fingerprinting concern), and it conflates translation with formatting and business rules. It cannot cleanly express "labels in French but prices in US dollars," so it should drive text translation only — not data formatting or geography-dependent logic.
+The header is a good signal but a weak contract. It can expose linguistic preferences (a privacy and fingerprinting concern), and it conflates translation with formatting and business rules. It cannot cleanly express "labels in French but prices in US dollars," so it should drive text translation only, not data formatting or geography-dependent logic.
 
 ---
 
@@ -50,7 +50,7 @@ For translated text, an API can either return fully translated strings keyed off
 
 ### Data
 
-`Accept-Language` is a poor fit for data formatting. Deliver values in a **universal, locale-independent form** — ISO 8601 timestamps, `.` as the decimal separator, ISO currency and country codes — and let the client format them for the user's locale. When business rules genuinely depend on location (pricing, availability), pass an **explicit parameter** rather than overloading the language header.
+`Accept-Language` is a poor fit for data formatting. Deliver values in a **universal, locale-independent form**: ISO 8601 timestamps, `.` as the decimal separator, ISO currency and country codes. Let the client format them for the user's locale. When business rules genuinely depend on location (pricing, availability), pass an **explicit parameter** rather than overloading the language header.
 
 ```http
 GET /products/9001?country=FR HTTP/1.1

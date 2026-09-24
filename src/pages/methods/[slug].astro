@@ -60,12 +60,12 @@ const methodJsonLd = [
       { name: `HTTP ${m.data.name}` }
     ]} />
 
-    <!-- Draft Notice (Always uses Yinmn theme — informational, not an error/warning) -->
+    <!-- Draft Notice (Always uses Yinmn theme: informational, not an error/warning) -->
     {m.data.draft && (
       <div class="bg-yinmn-100 border border-yinmn-200 text-yinmn-900 p-5 rounded-lg mb-8" role="note">
-        <h2 class="font-bold text-lg mb-1">Draft — Not Yet Standardized</h2>
+        <h2 class="font-bold text-lg mb-1">Draft: Not Yet Standardized</h2>
         <p class="text-sm">
-          This method is still an active IETF Internet-Draft, not a finished RFC. Its name, semantics, and status codes can still change before final publication. Do not rely on it in production APIs yet — treat this page as a preview, not a spec.
+          This method is still an active IETF Internet-Draft, not a finished RFC. Its name, semantics, and status codes can still change before final publication. Do not rely on it in production APIs yet. Treat this page as a preview rather than a spec.
         </p>
       </div>
     )}
@@ -135,7 +135,7 @@ const methodJsonLd = [
           {sortedRelatedCodes.map(code => (
             <RelatedCard 
               href={`/status-codes/${code.data.code}/`}
-              title={`HTTP ${code.data.code} — ${code.data.title}`}
+              title={`HTTP ${code.data.code}: ${code.data.title}`}
               description={code.data.description}
               theme={getCodeTheme(code.data.category)}
             />

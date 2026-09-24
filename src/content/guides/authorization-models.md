@@ -6,7 +6,7 @@ category: "security"
 
 ## Introduction to Authorization Models
 
-Authentication proves who a caller is; authorization decides what that caller may do. Getting authorization wrong is the most common way APIs get breached, and broken object-level checks sit at the very top of the OWASP API Security Top 10. This guide compares the three dominant access-control models — RBAC, ABAC, and ReBAC — and covers the standards and patterns that make them safe to deploy: OAuth scopes, least privilege, externalized policy engines, and object-level authorization.
+Authentication proves who a caller is; authorization decides what that caller may do. Getting authorization wrong is the most common way APIs get breached, and broken object-level checks sit at the very top of the OWASP API Security Top 10. This guide compares the three dominant access-control models (RBAC, ABAC, and ReBAC) and covers the standards and patterns that make them safe to deploy: OAuth scopes, least privilege, externalized policy engines, and object-level authorization.
 
 If you have not yet nailed down authentication, start with the [authentication guide](/guides/authentication) and [OAuth & API keys](/guides/oauth-api-keys). For the broader security picture, see [API security](/guides/api-security).
 
@@ -40,7 +40,7 @@ ABAC gives fine-grained, context-aware control, which suits cloud-native and mul
 
 ### Where attributes come from
 
-Trust matters more than flexibility. Signed OAuth access tokens and their claims are an excellent attribute source because their integrity is protected — even when delivered in the `Authorization` request header, the signature makes their claims safe to rely on *after* you verify it. You may supplement them with data from your own database or another trusted store. **Never** trust *unsigned or unverified* attributes taken from request headers, query strings, or the body — those are trivially spoofed. See [`Authorization`](/headers/authorization) and [JWT](/specifications/jwt).
+Trust matters more than flexibility. Signed OAuth access tokens and their claims are an excellent attribute source because their integrity is protected. Even when delivered in the `Authorization` request header, the signature makes their claims safe to rely on *after* you verify it. You may supplement them with data from your own database or another trusted store. **Never** trust *unsigned or unverified* attributes taken from request headers, query strings, or the body, because those are trivially spoofed. See [`Authorization`](/headers/authorization) and [JWT](/specifications/jwt).
 
 ---
 
@@ -73,13 +73,13 @@ A common composition: RBAC sets coarse access (a user is an `admin`), ABAC adds 
 **OAuth scopes** are permission strings defining what a client may do on a user's behalf, such as `read:documents`. Scopes define the *blast radius* if a client is compromised.
 
 * Request only the **minimal scopes** needed; avoid over-scoping "just in case."
-* Watch for **toxic combinations** — individually harmless scopes that together enable lateral movement.
+* Watch for **toxic combinations**, individually harmless scopes that together enable lateral movement.
 * Treat long-lived grants (for example refresh tokens via `offline_access`) as persistent risk and review them.
 
 The **principle of least privilege** applies across every model: grant the minimum access needed, for the minimum time. Overprivileged clients carry two kinds of excess permission:
 
-* **Unused permissions** — granted but never exercised (horizontal escalation risk).
-* **Reducible permissions** — a lower-privileged alternative would suffice, such as `User.Read.All` where read-only would do (vertical escalation risk).
+* **Unused permissions**: granted but never exercised (horizontal escalation risk).
+* **Reducible permissions**: a lower-privileged alternative would suffice, such as `User.Read.All` where read-only would do (vertical escalation risk).
 
 Default to deny, prefer short-lived scoped tokens, and audit granted permissions against what clients actually use.
 
@@ -89,7 +89,7 @@ Default to deny, prefer short-lived scoped tokens, and audit granted permissions
 
 A durable pattern separates authorization logic from application code using a **Policy Enforcement Point (PEP)** and a **Policy Decision Point (PDP)**.
 
-* The **PEP** sits at every entry point — API gateway, microservice, backend-for-frontend — intercepts the request and asks the PDP for a decision.
+* The **PEP** sits at every entry point (API gateway, microservice, backend-for-frontend) and intercepts the request and asks the PDP for a decision.
 * The **PDP** (for example Open Policy Agent evaluating Rego policies) returns permit or deny.
 
 ```http
@@ -118,11 +118,11 @@ Host: api.apiguide.dev
 Authorization: Bearer <token for user 456>
 ```
 
-If changing `123` to another account number returns someone else's data, that is BOLA — horizontal privilege escalation. By design the user is allowed to call the endpoint; the violation happens at the object level.
+If changing `123` to another account number returns someone else's data, that is BOLA, or horizontal privilege escalation. By design the user is allowed to call the endpoint; the violation happens at the object level.
 
 ### Preventing BOLA
 
-* Enforce an **object-level check on every action**, validating the authenticated identity's permission against the requested object — not just that the user is logged in.
+* Enforce an **object-level check on every action**, validating the authenticated identity's permission against the requested object, not only that the user is logged in.
 * Comparing the session user ID to the ID in the URL is **not** sufficient on its own; check the actual ownership or relationship.
 * Prefer random, unpredictable identifiers (GUIDs) over sequential integers to reduce enumeration, but treat this as defense in depth, not a fix.
 * Use scopes for coarse client permissions and layer object-level checks on top.
@@ -134,4 +134,4 @@ A closely related flaw, Broken Function Level Authorization (BFLA), is when a ca
 
 ## Summary
 
-Robust API authorization blends models to fit the problem: RBAC for coarse roles, ABAC for dynamic conditions, ReBAC for relationships and sharing. Anchor decisions on trusted, signed attributes, keep scopes and tokens minimal under least privilege, and externalize policy through PEP/PDP so enforcement stays consistent and auditable. Above all, check authorization at the object level on every request — the failure to do so is the most exploited weakness in modern APIs.
+Robust API authorization blends models to fit the problem: RBAC for coarse roles, ABAC for dynamic conditions, ReBAC for relationships and sharing. Anchor decisions on trusted, signed attributes, keep scopes and tokens minimal under least privilege, and externalize policy through PEP/PDP so enforcement stays consistent and auditable. Above all, check authorization at the object level on every request. The failure to do so is the most exploited weakness in modern APIs.

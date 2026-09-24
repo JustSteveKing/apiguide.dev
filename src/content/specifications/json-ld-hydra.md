@@ -9,7 +9,7 @@ officialUrl: "https://www.w3.org/TR/json-ld11/"
 
 JSON-LD (JSON for Linking Data) is a W3C standard for encoding Linked Data using ordinary JSON. It lets plain JSON documents carry unambiguous, machine-readable semantics by mapping their terms to IRIs, so that data from different sources can be merged and understood without prior agreement on property names.
 
-Hydra is a vocabulary built on top of JSON-LD that adds hypermedia controls — describing the operations a client may perform, how collections are structured, and how to discover an API's capabilities at runtime. Together, JSON-LD provides the data model and Hydra provides the affordances for a fully hypermedia-driven API.
+Hydra is a vocabulary built on top of JSON-LD that adds hypermedia controls, describing the operations a client may perform, how collections are structured, and how to discover an API's capabilities at runtime. Together, JSON-LD provides the data model and Hydra provides the affordances for a fully hypermedia-driven API.
 
 ---
 
@@ -66,10 +66,10 @@ The media type for JSON-LD is `application/ld+json`.
 
 Hydra extends JSON-LD with terms for describing interactions. Key concepts include:
 
-* **`hydra:Collection`** — a resource representing a set of members, exposed via `hydra:member`.
-* **`hydra:Operation`** — a supported operation (an HTTP request), described by `hydra:method`, expected input, and returned type.
-* **`hydra:supportedOperation`** — the operations a resource or class supports, enabling clients to discover affordances.
-* **`hydra:PartialCollectionView`** — pagination metadata (`hydra:first`, `hydra:next`, `hydra:last`).
+* **`hydra:Collection`**: a resource representing a set of members, exposed via `hydra:member`.
+* **`hydra:Operation`**: a supported operation (an HTTP request), described by `hydra:method`, expected input, and returned type.
+* **`hydra:supportedOperation`**: the operations a resource or class supports, enabling clients to discover affordances.
+* **`hydra:PartialCollectionView`**: pagination metadata (`hydra:first`, `hydra:next`, `hydra:last`).
 
 A Hydra collection with pagination:
 ```json

@@ -85,7 +85,7 @@ Content-Encoding: gzip
 Vary: Accept-Encoding
 ```
 
-Without `Vary: Accept-Encoding`, a shared cache (CDN or proxy) may store one representation and serve it to every client — handing compressed bytes to a client that cannot decode them, or an uncompressed copy to one that could have received a smaller one. Most servers automate this (for example NGINX `gzip_vary on`).
+Without `Vary: Accept-Encoding`, a shared cache (CDN or proxy) may store one representation and serve it to every client, handing compressed bytes to a client that cannot decode them, or an uncompressed copy to one that could have received a smaller one. Most servers automate this (for example NGINX `gzip_vary on`).
 
 Normalize the incoming `Accept-Encoding` value before varying on it. Storing a separate cache entry per raw header string fragments the cache; collapsing it to a small set of known encodings keeps hit rates high.
 

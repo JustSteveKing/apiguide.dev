@@ -6,7 +6,7 @@ category: "core"
 
 ## Introduction to Bulk Operations
 
-A bulk (or batch) endpoint accepts multiple operations in a single request — creating, updating, or deleting many resources at once — rather than requiring the client to issue one HTTP request per item. As integrations scale to syncing thousands of records, per-item requests stop being a reasonable default and a dedicated batch API becomes necessary.
+A bulk (or batch) endpoint accepts multiple operations in a single request, creating, updating, or deleting many resources at once, rather than requiring the client to issue one HTTP request per item. As integrations scale to syncing thousands of records, per-item requests stop being a reasonable default and a dedicated batch API becomes necessary.
 
 ---
 
@@ -33,11 +33,11 @@ Keep the shape of each item consistent with the single-resource endpoints it cor
 
 ## 2. Bulk vs. N Individual Requests
 
-Batching isn't free — it trades one set of costs for another, so it's worth being deliberate about when to reach for it:
+Batching isn't free. It trades one set of costs for another, so it's worth being deliberate about when to reach for it:
 
 * **Network overhead**: N individual requests each pay a full round trip of TCP/TLS negotiation and HTTP overhead; a single batch call pays that cost once no matter how many items it carries.
-* **Atomicity expectations**: Individual requests are naturally independent — one client's failure has no bearing on another's. A batch request needs an explicit policy for what happens when item 3 of 10 fails: does the whole batch roll back, or do the other 9 still commit? Most bulk APIs choose partial success (see below) specifically to avoid this ambiguity.
-* **Rate limiting and quotas**: A single batch endpoint counting as "one request" against a rate limit lets clients accomplish far more within the same quota than would be possible one item at a time — a real reason to prefer bulk endpoints for high-volume sync jobs.
+* **Atomicity expectations**: Individual requests are naturally independent, so one client's failure has no bearing on another's. A batch request needs an explicit policy for what happens when item 3 of 10 fails: does the whole batch roll back, or do the other 9 still commit? Most bulk APIs choose partial success (see below) specifically to avoid this ambiguity.
+* **Rate limiting and quotas**: A single batch endpoint counting as "one request" against a rate limit lets clients accomplish far more within the same quota than would be possible one item at a time, which is a real reason to prefer bulk endpoints for high-volume sync jobs.
 * **Debuggability**: A failure in one of a thousand individual requests is easy to isolate from server logs and status codes alone; a failure buried inside item 742 of a single batch call requires the response body itself to carry enough detail to pinpoint it, since the request itself won't tell you which item failed.
 * **Latency for the caller**: A large synchronous batch can take much longer to return than a single item would, which pushes larger batch jobs toward the asynchronous pattern described below rather than blocking the client's connection for the entire duration.
 
@@ -60,16 +60,16 @@ Content-Type: application/json
 }
 ```
 
-[`207 Multi-Status`](/status-codes/207) is the most semantically precise status code for this shape of response — it exists specifically to signal that the body contains several independent outcomes rather than one. That said, many production APIs pragmatically return a plain `200 OK` with the same per-item body instead, on the reasoning that many HTTP clients and monitoring tools don't have special handling for 207 and would otherwise treat it as an unexpected status. Either choice is defensible; what matters is that the response body always makes per-item success or failure explicit and never forces the client to infer it from a single top-level status code.
+[`207 Multi-Status`](/status-codes/207) is the most semantically precise status code for this shape of response, since it exists specifically to signal that the body contains several independent outcomes rather than one. Many production APIs still return a plain `200 OK` with the same per-item body instead, on the reasoning that many HTTP clients and monitoring tools don't have special handling for 207 and would otherwise treat it as an unexpected status. Either choice is defensible; what matters is that the response body always makes per-item success or failure explicit and never forces the client to infer it from a single top-level status code.
 
 ---
 
 ## 4. Idempotency for Bulk Writes
 
-Bulk writes are exposed to the same retry hazards as single writes — a client that times out waiting for a large batch to finish has no way to know whether the server actually processed some, all, or none of the items, and a naive retry risks creating duplicates for whichever items did succeed. The [Idempotency guide](/guides/idempotency) covers the general mechanism; for bulk endpoints it applies at two levels:
+Bulk writes are exposed to the same retry hazards as single writes. A client that times out waiting for a large batch to finish has no way to know whether the server actually processed some, all, or none of the items, and a naive retry risks creating duplicates for whichever items did succeed. The [Idempotency guide](/guides/idempotency) covers the general mechanism; for bulk endpoints it applies at two levels:
 
 * **Request-level idempotency key**: A single `Idempotency-Key` header covering the entire batch, so retrying the whole request after a timeout replays the cached per-item results rather than re-executing anything.
-* **Per-item idempotency keys**: For batches assembled from independent sources (e.g. syncing records from another system), letting the client attach an idempotency key to each item individually gives finer-grained protection — a retry of the batch can safely skip items that already succeeded and only reprocess the ones that didn't, rather than being all-or-nothing at the batch level.
+* **Per-item idempotency keys**: For batches assembled from independent sources (e.g. syncing records from another system), letting the client attach an idempotency key to each item individually gives finer-grained protection, because a retry of the batch can safely skip items that already succeeded and only reprocess the ones that didn't, rather than being all-or-nothing at the batch level.
 
 ---
 

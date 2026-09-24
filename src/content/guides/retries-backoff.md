@@ -12,7 +12,7 @@ Failures in distributed systems are inevitable, so resilient APIs are built to h
 
 ## 1. When to Retry
 
-Retries only help when the failure is **transient** — a temporary, self-correcting condition. Retrying a permanent error just wastes quota and adds load.
+Retries only help when the failure is **transient**, meaning a temporary, self-correcting condition. Retrying a permanent error just wastes quota and adds load.
 
 ### Generally safe to retry
 
@@ -25,11 +25,11 @@ Retries only help when the failure is **transient** — a temporary, self-correc
 | [`503 Service Unavailable`](/status-codes/503) | Temporary overload or maintenance |
 | `504 Gateway Timeout` | Gateway timed out waiting upstream |
 
-These codes are safe to retry **only when the request method is idempotent** — `GET`, `HEAD`, `PUT`, `DELETE`, `OPTIONS`, `TRACE`. Retrying a non-idempotent method (`POST`, `PATCH`) risks duplicate side effects if the original request was processed but its response was lost. To retry those safely, make them idempotent with an [`Idempotency-Key`](/headers/idempotency-key) first (see section 4).
+These codes are safe to retry **only when the request method is idempotent**: `GET`, `HEAD`, `PUT`, `DELETE`, `OPTIONS`, `TRACE`. Retrying a non-idempotent method (`POST`, `PATCH`) risks duplicate side effects if the original request was processed but its response was lost. To retry those safely, make them idempotent with an [`Idempotency-Key`](/headers/idempotency-key) first (see section 4).
 
 ### Do not retry
 
-Most `4xx` client errors — `400`, `401`, `403`, `404` — indicate a problem with the request itself that will not resolve on its own. Retrying them only burns resources.
+Most `4xx` client errors (`400`, `401`, `403`, `404`) indicate a problem with the request itself that will not resolve on its own. Retrying them only burns resources.
 
 ---
 
@@ -56,12 +56,12 @@ AWS SDKs widely default to exponential backoff with full jitter and cap the dela
 
 Always bound retries. A practical starting point:
 
-* Max attempts: 3–5 (including the initial request)
-* Per-attempt timeout: 1–5 seconds
-* Max backoff cap: 10–30 seconds
-* Total deadline: 10–60 seconds
+* Max attempts: 3-5 (including the initial request)
+* Per-attempt timeout: 1-5 seconds
+* Max backoff cap: 10-30 seconds
+* Total deadline: 10-60 seconds
 
-Without limits, retries stacked across multiple service layers compound quickly — three retries across three layers can multiply into a far larger load spike on a downstream dependency.
+Without limits, retries stacked across multiple service layers compound quickly. Three retries across three layers can multiply into a far larger load spike on a downstream dependency.
 
 ---
 
@@ -77,7 +77,7 @@ HTTP/1.1 429 Too Many Requests
 Retry-After: Wed, 21 Apr 2027 07:28:00 GMT
 ```
 
-The first is a delay in seconds; the second is an HTTP-date. Clients should always honor `Retry-After` when present — it overrides the client's own backoff calculation and prevents further overloading a struggling server. See the [rate limiting](/guides/rate-limiting) guide for how this fits into throttling.
+The first is a delay in seconds; the second is an HTTP-date. Clients should always honor `Retry-After` when present, since it overrides the client's own backoff calculation and prevents further overloading a struggling server. See the [rate limiting](/guides/rate-limiting) guide for how this fits into throttling.
 
 ---
 
@@ -96,7 +96,7 @@ Content-Type: application/json
 { "sku": "WIDGET-1", "qty": 2 }
 ```
 
-The server stores the key with the resulting status and body. If the same key arrives again, it returns the original result — including the original error — without re-processing. `GET`, [`PUT`](/methods/put), and `DELETE` are idempotent by definition, so they generally do not need a key; `POST` does. See the [idempotency](/guides/idempotency) guide for the full workflow.
+The server stores the key with the resulting status and body. If the same key arrives again, it returns the original result, including the original error, without re-processing. `GET`, [`PUT`](/methods/put), and `DELETE` are idempotent by definition, so they generally do not need a key; `POST` does. See the [idempotency](/guides/idempotency) guide for the full workflow.
 
 ---
 

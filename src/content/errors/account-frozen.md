@@ -15,7 +15,7 @@ Unlike a permissions failure, the block applies to the whole account rather than
 
 ## When not to use it
 
-Do not use this when the account is active and simply out of money — that is `insufficient-funds` and the client can resolve it themselves. Do not use this when the token is missing, malformed, or expired (use `unauthorized` or `expired-authentication-token`), or when an active account lacks the scope for one specific operation (use `insufficient-scope`).
+Do not use this when the account is active and simply out of money. That is `insufficient-funds` and the client can resolve it themselves. Do not use this when the token is missing, malformed, or expired (use `unauthorized` or `expired-authentication-token`), or when an active account lacks the scope for one specific operation (use `insufficient-scope`).
 
 ## Example response
 
@@ -32,4 +32,4 @@ Do not use this when the account is active and simply out of money — that is `
 }
 ```
 
-Keep the `reason` a stable machine-readable value so clients can branch on it, and put the human explanation in `detail`. Do not disclose fraud or compliance specifics that would help an attacker probe your review process — point them at a support channel instead.
+Keep the `reason` a stable machine-readable value so clients can branch on it, and put the human explanation in `detail`. Do not disclose fraud or compliance specifics that would help an attacker probe your review process. Point them at a support channel instead.

@@ -15,7 +15,7 @@ The typical flow is a read followed by a write. A `GET` returns the resource alo
 
 ## When not to use it
 
-Do not use 412 when the request carries no conditional headers — an unconditional write that hits a version mismatch should surface as `resource-conflict` (409) instead. Do not use 412 for missing `If-Match` on a resource that requires it; that is a 428 Precondition Required. Reserve 412 strictly for the case where a precondition was supplied and demonstrably did not hold. If you need to communicate that the client is holding an outdated snapshot, pair it with the guidance in `stale-resource-version`.
+Do not use 412 when the request carries no conditional headers. An unconditional write that hits a version mismatch should surface as `resource-conflict` (409) instead. Do not use 412 for missing `If-Match` on a resource that requires it; that is a 428 Precondition Required. Reserve 412 strictly for the case where a precondition was supplied and demonstrably did not hold. If you need to communicate that the client is holding an outdated snapshot, pair it with the guidance in `stale-resource-version`.
 
 ## Example response
 

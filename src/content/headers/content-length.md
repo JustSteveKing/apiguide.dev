@@ -13,7 +13,7 @@ The `Content-Length` header indicates the size of the payload body in decimal nu
 ## API Usage & Best Practices
 
 * **Validate request sizing**: Gateways check this header to immediately reject payloads exceeding limits with a `413 Payload Too Large`.
-* **Reject missing lengths when body is expected**: If a POST or PUT request expects a body but the header is omitted entirely (chunked or streamed without it), return a `411 Length Required`. An explicit `Content-Length: 0` is a valid, empty body — not a missing header — and shouldn't trigger 411.
+* **Reject missing lengths when body is expected**: If a POST or PUT request expects a body but the header is omitted entirely (chunked or streamed without it), return a `411 Length Required`. An explicit `Content-Length: 0` is a valid, empty body rather than a missing header, and shouldn't trigger 411.
 
 ## Examples
 

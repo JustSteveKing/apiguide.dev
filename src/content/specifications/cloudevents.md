@@ -7,7 +7,7 @@ officialUrl: "https://cloudevents.io/"
 
 ## What is CloudEvents?
 
-CloudEvents is a CNCF specification that defines a common envelope for describing event data, independent of the platform, protocol, or serialization format carrying it. It doesn't replace an event broker or a message queue — it standardizes the metadata wrapped around whatever payload that broker is transporting, so that producers, consumers, and tooling can agree on the basic shape of "what is this event, and where did it come from?" without needing to understand each vendor's proprietary event format first.
+CloudEvents is a CNCF specification that defines a common envelope for describing event data, independent of the platform, protocol, or serialization format carrying it. It doesn't replace an event broker or a message queue. It standardizes the metadata wrapped around whatever payload that broker is transporting, so that producers, consumers, and tooling can agree on the basic shape of "what is this event, and where did it come from?" without needing to understand each vendor's proprietary event format first.
 
 ---
 
@@ -68,4 +68,4 @@ In practice, an AsyncAPI document can declare that a message's payload conforms 
 ## Best Practices
 
 * Namespace your `type` attribute with a reverse-DNS-style prefix (e.g. `com.yourcompany.resource.action`) to avoid collisions as the number of event types grows.
-* Treat `data` as opaque to the envelope — validate its schema separately (with AsyncAPI, JSON Schema, or Avro) rather than trying to make CloudEvents itself enforce payload structure.
+* Treat `data` as opaque to the envelope, and validate its schema separately (with AsyncAPI, JSON Schema, or Avro) rather than trying to make CloudEvents itself enforce payload structure.

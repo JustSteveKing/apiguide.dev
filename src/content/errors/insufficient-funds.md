@@ -15,7 +15,7 @@ The request is well formed and would succeed if the account were funded, so the 
 
 ## When not to use it
 
-Do not use this when the account is suspended, closed, or under review — the client cannot fix those by paying, so use `account-frozen` instead. Do not use this for plan or quota limits that are not monetary, such as rate limits (use `rate-limit-exceeded`) or a feature missing from the caller's token scopes (use `insufficient-scope`).
+Do not use this when the account is suspended, closed, or under review. The client cannot fix those by paying, so use `account-frozen` instead. Do not use this for plan or quota limits that are not monetary, such as rate limits (use `rate-limit-exceeded`) or a feature missing from the caller's token scopes (use `insufficient-scope`).
 
 ## Example response
 

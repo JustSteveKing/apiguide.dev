@@ -7,7 +7,7 @@ officialUrl: "https://www.rfc-editor.org/rfc/rfc7644"
 
 ## What is SCIM?
 
-SCIM (System for Cross-domain Identity Management) is an open standard that automates the exchange of user identity information between identity domains. In practice, it is the protocol that lets an enterprise identity provider (such as Okta, Entra ID, or Google Workspace) create, update, deactivate, and delete user accounts in a downstream SaaS application — without manual administration.
+SCIM (System for Cross-domain Identity Management) is an open standard that automates the exchange of user identity information between identity domains. In practice, it is the protocol that lets an enterprise identity provider (such as Okta, Entra ID, or Google Workspace) create, update, deactivate, and delete user accounts in a downstream SaaS application, without manual administration.
 
 SCIM 2.0 is defined across two RFCs: the core schema (RFC 7643) and the protocol (RFC 7644). It uses REST over HTTP with JSON payloads identified by the media type `application/scim+json`.
 
@@ -40,7 +40,7 @@ A minimal User resource:
 }
 ```
 
-The `active` boolean is central to deprovisioning — setting it to `false` is the standard way to disable an account.
+The `active` boolean is central to deprovisioning, and setting it to `false` is the standard way to disable an account.
 
 ---
 

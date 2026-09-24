@@ -13,7 +13,7 @@ Use 422 Validation Failed when the request payload is syntactically correct and 
 
 Typical examples include a required field being missing, a string failing to meet a min/max length, or a field violating dependency rules (e.g. `start_date` must be before `end_date`).
 
-Type and format errors (a malformed email string, a number sent as a boolean) belong to 400 Bad Request, not 422 — see `unprocessable-query` for where that line sits.
+Type and format errors (a malformed email string, a number sent as a boolean) belong to 400 Bad Request, not 422. See `unprocessable-query` for where that line sits.
 
 ## When not to use it
 

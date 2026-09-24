@@ -6,7 +6,7 @@ category: "security"
 
 ## Introduction to Input Validation
 
-Input validation is the gatekeeper of API security: every value that crosses the boundary must be checked before it reaches business logic, queries, or the operating system. APIs are now a leading application attack vector, and injection is a long-standing risk tracked by OWASP — a standalone entry (API8) in the 2019 API Security Top 10, and folded into broader categories in the 2023 edition. This guide covers the foundational principles — server-side validation, schema enforcement, allowlisting, and canonicalization — then applies them to specific attacks: SQL, NoSQL, and command injection, plus mass assignment and size limits.
+Input validation is the gatekeeper of API security: every value that crosses the boundary must be checked before it reaches business logic, queries, or the operating system. APIs are now a leading application attack vector, and injection is a long-standing risk tracked by OWASP, with a standalone entry (API8) in the 2019 API Security Top 10, and folded into broader categories in the 2023 edition. This guide covers the foundational principles (server-side validation, schema enforcement, allowlisting, and canonicalization) and then applies them to specific attacks: SQL, NoSQL, and command injection, plus mass assignment and size limits.
 
 For the surrounding controls, see [API security](/guides/api-security), [authentication](/guides/authentication), and the [authorization models](/guides/authorization-models) guide.
 
@@ -78,7 +78,7 @@ SELECT id, email FROM users WHERE username = ? AND status = ?
 
 ### NoSQL injection
 
-NoSQL databases use varied query languages, so prevention is product-specific. Attackers inject operators to alter query logic — for example forcing a login check to evaluate true:
+NoSQL databases use varied query languages, so prevention is product-specific. Attackers inject operators to alter query logic, for example forcing a login check to evaluate true:
 
 ```json
 { "username": "admin", "password": { "$ne": null } }
@@ -97,9 +97,9 @@ Defenses:
 
 Command injection happens when external input is used to build a system command, letting an attacker run arbitrary commands with the application's privileges.
 
-* **Best defense**: avoid calling OS commands directly. Use built-in library functions instead — for example a native `mkdir()` call rather than `system("mkdir " + name)`.
+* **Best defense**: avoid calling OS commands directly. Use built-in library functions instead, for example a native `mkdir()` call rather than `system("mkdir " + name)`.
 * If a shell call is unavoidable, use **parameterization** that separates data from the command, and validate both the command (against an allowlist) and its arguments (allowlist or bounded regex).
-* In PHP, prefer `escapeshellarg()` — which forces input to a single argument — over `escapeshellcmd()`.
+* In PHP, prefer `escapeshellarg()`, which forces input to a single argument, over `escapeshellcmd()`.
 
 Argument injection is a subtler variant: even without a shell metacharacter, a crafted argument can change a command's behavior. Validate arguments, and use the `--` end-of-options delimiter where the tool supports it.
 
@@ -132,7 +132,7 @@ Prevention:
 
 Bounding request size prevents denial of service, buffer overflows, and resource exhaustion.
 
-* Set an explicit request size limit and reject oversized requests with `413`. Managed gateways enforce their own hard caps — AWS API Gateway, for example, limits payloads to 10MB; large uploads should use a pre-signed URL to object storage instead.
+* Set an explicit request size limit and reject oversized requests with `413`. Managed gateways enforce their own hard caps. AWS API Gateway, for example, limits payloads to 10MB; large uploads should use a pre-signed URL to object storage instead.
 * Cap array and collection sizes and pagination limits. Shopify's APIs, for instance, cap array arguments at 250 items and pagination at 25,000 objects.
 * Use a **secure parser**. For XML, choose a parser that is not vulnerable to XML External Entity (XXE) attacks.
 

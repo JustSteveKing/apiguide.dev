@@ -8,13 +8,13 @@ category: "security"
 
 Standard TLS authenticates the server to the client. Mutual TLS (mTLS) goes further: both parties present and verify X.509 certificates during the handshake, so each side cryptographically proves its identity before any application data flows. This makes mTLS a foundation for service-to-service communication and zero-trust architectures, where every service must authenticate regardless of network location.
 
-This guide covers how the mTLS handshake works, common implementation patterns, certificate rotation and validation, and how mTLS compares with — and complements — bearer tokens. For token-based approaches, see [authentication](/guides/authentication) and [OAuth & API keys](/guides/oauth-api-keys); for the wider picture, see [API security](/guides/api-security).
+This guide covers how the mTLS handshake works, common implementation patterns, certificate rotation and validation, and how mTLS compares with, and complements, bearer tokens. For token-based approaches, see [authentication](/guides/authentication) and [OAuth & API keys](/guides/oauth-api-keys); for the wider picture, see [API security](/guides/api-security).
 
 ---
 
 ## 1. What mTLS Adds Over Standard TLS
 
-In ordinary TLS the client verifies the server, but the server has no cryptographic assurance of the client — it relies on application-layer mechanisms like API keys or bearer tokens for that. mTLS shifts authentication from "prove you know a secret" to "prove you possess a private key."
+In ordinary TLS the client verifies the server, but the server has no cryptographic assurance of the client. It relies on application-layer mechanisms like API keys or bearer tokens for that. mTLS shifts authentication from "prove you know a secret" to "prove you possess a private key."
 
 * **Bidirectional authentication**: both client and server present X.509 certificates.
 * **Strong machine identity**: certificates are bound to infrastructure, unlike static keys that can be copied or leaked.
@@ -30,7 +30,7 @@ mTLS extends the standard TLS handshake with client certificate exchange.
 
 1. The server presents its certificate, then sends a `CertificateRequest` message.
 2. The client responds with its own X.509 certificate.
-3. The client sends a `CertificateVerify` message — a digital signature proving it holds the private key for that certificate.
+3. The client sends a `CertificateVerify` message, a digital signature proving it holds the private key for that certificate.
 4. The server validates the client certificate against its trusted CA store, checking the chain, expiry, and optionally revocation.
 
 This adds roughly 1-2 milliseconds of latency over standard TLS. That overhead can be amortized with connection pooling, keep-alives, and TLS session resumption.
@@ -53,7 +53,7 @@ Host: api.apiguide.dev
 X-Client-Cert-Subject: CN=payments-service,O=Example
 ```
 
-A frequent pitfall: a reverse proxy or load balancer terminates TLS and does not forward the client certificate to the backend. The usual workaround is to pass the certificate (or its verified attributes) in a custom HTTP header — but the backend must then trust that only the proxy can set it.
+A frequent pitfall: a reverse proxy or load balancer terminates TLS and does not forward the client certificate to the backend. The usual workaround is to pass the certificate (or its verified attributes) in a custom HTTP header, but the backend must then trust that only the proxy can set it.
 
 ### PKI management
 
@@ -65,7 +65,7 @@ mTLS depends on a Public Key Infrastructure that issues, distributes, and revoke
 
 Automated, short-lived certificates are a critical best practice. Long-lived certificates reduce operational churn but increase the blast radius if a private key is compromised.
 
-* Workload identities can use very short lifetimes — SPIFFE/SPIRE recommends around **1 hour**, with rotation handled by an agent.
+* Workload identities can use very short lifetimes. SPIFFE/SPIRE recommends around **1 hour**, with rotation handled by an agent.
 * External partner certificates are typically longer (days to months) but still rotated frequently.
 * Public TLS certificate maximum lifetimes are shrinking under CA/Browser Forum timelines, reinforcing the move to automation.
 
@@ -75,7 +75,7 @@ Use **overlapping validity periods**: issue and deploy the new certificate while
 
 ## 5. Certificate Validation
 
-Thorough validation is essential — a certificate that merely parses is not a trusted one.
+Thorough validation is essential, because a certificate that merely parses is not a trusted one.
 
 | Check | Purpose |
 | --- | --- |
@@ -98,7 +98,7 @@ Because handshake failures surface as opaque errors like "TLS handshake failed,"
 
 The two are not mutually exclusive; they solve different problems.
 
-**Bearer tokens** (such as OAuth 2.0 access tokens) are simple, scalable, and carry fine-grained scopes, but they are vulnerable to theft and replay — anyone holding a valid token can use it, because the resource server cannot verify the sender.
+**Bearer tokens** (such as OAuth 2.0 access tokens) are simple, scalable, and carry fine-grained scopes, but they are vulnerable to theft and replay, since anyone holding a valid token can use it, because the resource server cannot verify the sender.
 
 **mTLS** provides strong transport-layer machine identity but offers coarse, certificate-level access control and carries more operational complexity.
 

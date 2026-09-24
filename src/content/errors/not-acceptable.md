@@ -15,7 +15,7 @@ A common example is an API that only serializes JSON receiving `Accept: applicat
 
 ## When not to use it
 
-Do not confuse 406 with `unsupported-media-type` (415). The two sit on opposite sides of the exchange: 406 is about the response the client is willing to receive (the `Accept` header), while 415 is about the request body the server is unwilling to consume (the `Content-Type` header). If a client uploads a payload in a format the server cannot parse, that is 415, not 406. Do not use 406 for content that is negotiable but simply invalid — validation and query problems belong to `unprocessable-query` and 422.
+Do not confuse 406 with `unsupported-media-type` (415). The two sit on opposite sides of the exchange: 406 is about the response the client is willing to receive (the `Accept` header), while 415 is about the request body the server is unwilling to consume (the `Content-Type` header). If a client uploads a payload in a format the server cannot parse, that is 415, not 406. Do not use 406 for content that is negotiable but simply invalid. Validation and query problems belong to `unprocessable-query` and 422.
 
 ## Example response
 

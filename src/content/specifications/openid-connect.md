@@ -15,7 +15,7 @@ The central artifact OIDC adds to OAuth 2.0 is the **ID Token**, a signed JWT th
 
 ## 1. The ID Token
 
-The ID Token is always a JWT (JWS) and carries claims about the authentication event. Unlike an OAuth access token — which is opaque to the client — the ID Token is meant to be read and validated by the Relying Party.
+The ID Token is always a JWT (JWS) and carries claims about the authentication event. Unlike an OAuth access token, which is opaque to the client, the ID Token is meant to be read and validated by the Relying Party.
 
 ```json
 {
@@ -32,10 +32,10 @@ The ID Token is always a JWT (JWS) and carries claims about the authentication e
 ```
 
 Key OIDC-specific claims:
-* **`sub`** — a stable, unique identifier for the user within the issuer.
-* **`aud`** — must contain the client's `client_id`.
-* **`nonce`** — binds the token to the authorization request to prevent replay.
-* **`auth_time`** — when the user actually authenticated.
+* **`sub`**: a stable, unique identifier for the user within the issuer.
+* **`aud`**: must contain the client's `client_id`.
+* **`nonce`**: binds the token to the authorization request to prevent replay.
+* **`auth_time`**: when the user actually authenticated.
 
 ---
 
@@ -43,7 +43,7 @@ Key OIDC-specific claims:
 
 The recommended flow for nearly all clients is the authorization code flow, hardened with PKCE (Proof Key for Code Exchange). PKCE prevents authorization code interception attacks and is required for public clients such as SPAs and mobile apps.
 
-### Step 1 — Authorization Request
+### Step 1: Authorization Request
 The client redirects the user to the authorization endpoint:
 ```http
 GET /authorize?
@@ -58,7 +58,7 @@ GET /authorize?
 Host: accounts.example.com
 ```
 
-### Step 2 — Token Request
+### Step 2: Token Request
 After the user authenticates and consents, the client exchanges the returned `code` (plus the original `code_verifier`) at the token endpoint:
 ```json
 {
@@ -125,7 +125,7 @@ The `jwks_uri` provides the public keys used to verify ID Token signatures.
 
 ## 5. Standard Scopes
 
-Scopes control which claims are released. The `openid` scope is mandatory — its presence is what turns an OAuth request into an OIDC request.
+Scopes control which claims are released. The `openid` scope is mandatory, and its presence is what turns an OAuth request into an OIDC request.
 
 | Scope     | Grants access to claims such as                          |
 |-----------|---------------------------------------------------------|

@@ -14,7 +14,7 @@ It is the same model as a web browser. You do not memorise URLs for every page; 
 
 ## 1. Links in Responses
 
-A hypermedia response includes not just data, but the actions available on that data, expressed as links. The client discovers what it can do next from the response itself.
+A hypermedia response includes the data and the actions available on it, expressed as links. The client discovers what it can do next from the response itself.
 
 ```json
 {
@@ -101,9 +101,9 @@ Because it dictates so much structure, JSON:API reduces bikeshedding across team
 
 When done well, hypermedia delivers real advantages:
 
-- **Loose coupling** — clients follow links instead of constructing URLs, so servers can restructure URIs without breaking clients.
-- **Server-driven workflow** — available actions live in the response, so business rules about valid state transitions stay on the server.
-- **Explorability** — a developer can navigate the entire API starting from a single root document.
+- **Loose coupling**: clients follow links instead of constructing URLs, so servers can restructure URIs without breaking clients.
+- **Server-driven workflow**: available actions live in the response, so business rules about valid state transitions stay on the server.
+- **Explorability**: a developer can navigate the entire API starting from a single root document.
 
 ---
 
@@ -111,9 +111,9 @@ When done well, hypermedia delivers real advantages:
 
 Despite being core to Fielding's REST, full HATEOAS is uncommon. The reasons are practical:
 
-- **Client complexity** — few client libraries navigate hypermedia automatically, so developers often just extract the `href` and treat it like a hard-coded URL anyway, negating the benefit.
-- **Payload overhead** — link sections can dwarf the actual data.
-- **Tooling gap** — code generators, SDKs, and documentation tools are built around static endpoint lists, not runtime discovery.
-- **Diminishing returns** — many APIs serve a single first-party client where the coupling HATEOAS removes was never a real problem.
+- **Client complexity**: few client libraries navigate hypermedia automatically, so developers often just extract the `href` and treat it like a hard-coded URL anyway, negating the benefit.
+- **Payload overhead**: link sections can dwarf the actual data.
+- **Tooling gap**: code generators, SDKs, and documentation tools are built around static endpoint lists, not runtime discovery.
+- **Diminishing returns**: many APIs serve a single first-party client where the coupling HATEOAS removes was never a real problem.
 
 The pragmatic middle ground: include a few high-value links (`self`, pagination `next`/`prev`, key state transitions) without committing to full hypermedia-driven navigation. This captures much of the value at a fraction of the cost.

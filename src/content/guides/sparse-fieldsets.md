@@ -102,8 +102,8 @@ Guard expansion carefully. Deep or unbounded `include` chains can trigger the N+
 
 Trimming fields and folding in relations delivers concrete wins:
 
-- **Smaller payloads** — less to serialize, transfer, and parse.
-- **Fewer round trips** — expansion collapses several calls into one, which matters most on high-latency mobile links.
-- **Lower client complexity** — the client stops orchestrating dependent requests.
+- **Smaller payloads**: less to serialize, transfer, and parse.
+- **Fewer round trips**: expansion collapses several calls into one, which matters most on high-latency mobile links.
+- **Lower client complexity**: the client stops orchestrating dependent requests.
 
 Treat these as opt-in optimisations. Default responses should remain complete and predictable, with selection and expansion available to clients that need to tune for their context.

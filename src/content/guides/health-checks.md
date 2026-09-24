@@ -84,8 +84,8 @@ Host: api.apiguide.dev
 ```
 
 * **`status`**: the mandatory root field, one of `pass`, `warn`, or `fail`.
-  * `pass` or `warn` must use an HTTP status in the 2xx–3xx range.
-  * `fail` must use a 4xx–5xx range status.
+  * `pass` or `warn` must use an HTTP status in the 2xx-3xx range.
+  * `fail` must use a 4xx-5xx range status.
 * **Optional fields**: `version`, `releaseId`, `serviceId`, `description`, `notes`, and `output`.
 * **`checks`**: per-dependency detail keyed as `componentName:measurementName`, with values such as `componentType`, `observedValue`, `observedUnit`, `status`, `affectedEndpoints`, `time`, and `links`.
 

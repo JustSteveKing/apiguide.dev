@@ -35,7 +35,7 @@ export const GET: APIRoute = async () => {
 
   txt += `### API Errors\n`;
   for (const e of errors) {
-    txt += `- [${e.data.title}](/errors/${e.id}/): HTTP ${e.data.statusCode} — ${e.data.statusText}\n`;
+    txt += `- [${e.data.title}](/errors/${e.id}/): HTTP ${e.data.statusCode}: ${e.data.statusText}\n`;
   }
   txt += `\n`;
 
