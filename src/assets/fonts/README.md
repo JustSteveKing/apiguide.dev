@@ -14,7 +14,7 @@ files for the same typefaces: variable fonts for browsers, static instances at b
 ## Why they exist
 
 Social cards are rasterised with sharp, which renders SVG through librsvg. librsvg resolves
-text through the build machine's own fontconfig and ignores `@font-face` — including embedded
+text through the build machine's own fontconfig and ignores `@font-face`, including embedded
 `data:` URIs. Cards therefore used to render in whatever sans the build machine happened to
 have, rather than in the site's typefaces. Converting the text to vector paths removes font
 resolution from the pipeline entirely, so a card looks the same wherever it is built.
