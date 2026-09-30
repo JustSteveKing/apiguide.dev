@@ -103,3 +103,17 @@ fixed structure that every existing page follows, and it documents the shapes,
 the cross-linking conventions, the voice and the spelling. It is written for
 agents and is just as useful to a person. [`DESIGN.md`](DESIGN.md) covers the
 palette and why it is what it is.
+
+## Licence
+
+Two licences, because the code and the prose want different things.
+
+- **Code** is [MIT](LICENSE). Templates, components, styles, configuration
+  and the scripts in `scripts/`.
+- **Content** is [CC BY-SA 4.0](LICENSE-CONTENT). Everything under
+  `src/content/`: all 264 pages. Reuse it, translate it, build on it, with
+  credit and under the same terms.
+
+Linking to a page here is not use of the content and needs no licence. Using
+`https://apiguide.dev/errors/<name>` as the `type` member of an RFC 9457
+problem response is what those URLs exist for.

@@ -245,6 +245,13 @@ touch a template. The short version:
   template that defines its own copy will drift, which is how the guides
   index ended up with a category the schema had never allowed.
 
+## Licensing
+
+Code is MIT (`LICENSE`), content under `src/content/` is CC BY-SA 4.0
+(`LICENSE-CONTENT`). A new page inherits CC BY-SA; a new script inherits
+MIT. Do not paste text from a source whose licence does not permit it, and
+do not add a per-file licence header, because the split is by directory.
+
 ## Before you finish
 
 1. `bun run build` passes. It validates every schema and catches a bad
