@@ -37,6 +37,7 @@ The package manager is **bun**. Do not run `npm install`; it will produce a
 | `bun run build` | Production build to `./dist/` |
 | `bun run preview` | Preview the build with Astro |
 | `bun run pages:dev` | Preview the build under Cloudflare Pages emulation |
+| `bun run check:internal-links` | Verify every internal link in the build resolves |
 | `bun run check:links` | Verify external URLs in frontmatter still resolve |
 | `bun run check:gaps` | Diff the content against the canonical IANA registries |
 | `bun run factcheck` | Fact-check changed pages against the live web |
@@ -50,8 +51,10 @@ them when you touch content rather than treating them as optional.
 plenty of registry entries are omitted deliberately; read its output, do not
 just check its status.
 
-Known wart: `check:content` shells out to `npm run` internally rather than
-`bun run`. Run `check:links` and `check:gaps` separately, or fix it.
+`check:internal-links` needs no network and no Tabstack, only a build. It is
+the cheapest of the four and the one most likely to catch your mistake.
+
+`bun run check:content` runs all three checks in order.
 
 ## Deployment
 
@@ -189,9 +192,9 @@ Conventions, both universal across the existing 231 internal links:
 - **No trailing slash**: `/methods/get`, never `/methods/get/`.
 - **Code-formatted link text** for a code, header or method name.
 
-Never link to a page that does not exist. `bun run build` will not catch it;
-there is currently no internal link checker, which is a real gap and worth
-building.
+Never link to a page that does not exist. `bun run build` will not catch it.
+`bun run check:internal-links` will, against the build, and covers links in
+templates as well as in content.
 
 ## Voice
 
@@ -246,9 +249,12 @@ touch a template. The short version:
 
 1. `bun run build` passes. It validates every schema and catches a bad
    category or a missing required field.
-2. `bun run check:links` if you added or changed an external URL.
-3. `bun run factcheck` if you wrote or edited content.
-4. Internal links resolve. Check them by hand; nothing else will.
+2. `bun run check:internal-links` after the build. Astro does not check
+   internal links, so a link to a page that does not exist builds clean and
+   404s in production. It found one on the home page the day it was written,
+   pointing at `/guides/security/`, which has never existed.
+3. `bun run check:links` if you added or changed an external URL.
+4. `bun run factcheck` if you wrote or edited content.
 5. No stray characters from pasting. Four guide pages once shipped a visible
    box on the live site from a non-breaking space plus U+FFFC pasted into a
    heading, along with non-breaking hyphens and curly quotes. Grep for them.

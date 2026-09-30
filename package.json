@@ -12,9 +12,10 @@
     "astro": "astro",
     "deploy": "wrangler pages deploy",
     "pages:dev": "wrangler pages dev dist",
+    "check:internal-links": "node scripts/check-internal-links.mjs",
     "check:gaps": "node scripts/check-gaps.mjs",
     "check:links": "node scripts/check-links.mjs",
-    "check:content": "npm run check:gaps && npm run check:links",
+    "check:content": "bun run check:internal-links && bun run check:gaps && bun run check:links",
     "factcheck": "node scripts/factcheck.mjs",
     "enrich:tools": "node scripts/enrich-tools.mjs",
     "research:guides": "node scripts/research-guides.mjs"
