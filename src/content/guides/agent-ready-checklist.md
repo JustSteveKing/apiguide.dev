@@ -128,7 +128,7 @@ Everything above applies to the events you push, and this is the half most teams
 
 | Check | Why it matters |
 | --- | --- |
-| The payload is signed, and the signature covers the raw body | Signing a re-serialised payload is the most common implementation bug in the whole subject |
+| The payload is signed, and the signature covers the raw body | Signing a re-serialized payload is the most common implementation bug in the whole subject |
 | The signature scheme is documented well enough to implement without asking | Receivers get this wrong in ways that fail intermittently |
 | Every delivery carries a unique, stable event identifier | It is the key a receiver dedupes on, and dedupe is the only defence that neutralises retries, replays and at-least-once delivery at once |
 | Every payload carries an explicit event `type` | Two payloads that are otherwise just fields over the same object must not be interchangeable, because a caller must never be able to present one as the other |
@@ -151,7 +151,7 @@ The same rules, inverted. A webhook endpoint is a public URL that accepts unsoli
 | Check | Why it matters |
 | --- | --- |
 | **Verify before anything else touches the database** | Verification is a gate, not a step. Anything before it runs on unauthenticated input |
-| The signature is computed over raw bytes captured before body parsing | Re-serialising changes key order, whitespace and escaping |
+| The signature is computed over raw bytes captured before body parsing | Re-serializing changes key order, whitespace and escaping |
 | Comparison is constant-time | Ordinary string equality leaks how many leading bytes were correct |
 | The timestamp is checked against a tolerance window | A valid captured request replays perfectly otherwise |
 | The raw payload is stored before it is processed | If processing fails you still have the evidence, and you can reprocess without asking for a replay |
@@ -177,7 +177,7 @@ Recording the *current state* of a delivery is not the same as recording its *hi
 | Response bodies are not stored | A receiver's error page can contain anything; the status code answers the question |
 | Every outbound notification goes through one path that sends *and* records | Two jobs each doing their own HTTP call and their own bookkeeping is how one webhook ends up well-instrumented and the other invisible |
 | The history is visible to the customer, not only to you | Otherwise someone can configure an endpoint that has never once worked and have no way to discover it |
-| Delivery history is retained on its own schedule, separately from domain data | Retry noise is your behaviour, not the customer's history |
+| Delivery history is retained on its own schedule, separately from domain data | Retry noise is your behavior, not the customer's history |
 
 See [observability and tracing](/guides/observability-tracing).
 
