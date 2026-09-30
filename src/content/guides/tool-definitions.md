@@ -72,7 +72,7 @@ Flattened, there is one `username` argument for both. A converter has to choose:
         in: path
 ```
 
-`PUT /resource/{id}` with a body that repeats the identifier is the classic case, and it is common precisely because it reads fine to a human.
+`PUT /resource/{id}` with a body that repeats the identifier is the classic case, and it is common precisely because it reads fine to a human. It is also mechanically detectable, which is the useful part: [legible](/tools/design-documentation/legible) reports it as `argument-collision` without anyone having to notice.
 
 See [resource naming](/guides/resource-naming).
 

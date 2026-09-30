@@ -194,7 +194,7 @@ Every item above is a rule someone can agree with and then not apply. A conventi
 | Each rule reports why it fired, not only that it did | A report that does not explain itself is noise a team learns to skip |
 | New endpoints are checked against this list before they ship | Retrofitting consistency across fifty endpoints costs far more than applying it to one |
 
-Specification linting is a solved problem with several tools available; see [API tooling](/tools). Webhook contracts have no equivalent, so for now section 7 through section 9 remain a review rather than a gate. That is a good reason to do the review deliberately, and to write down what you decided.
+Specification linting is a solved problem with several tools available; see [API tooling](/tools). General linters such as [Spectral](/tools/design-documentation/spectral-stoplight) check whether a document is well formed; [legible](/tools/design-documentation/legible) scores it against the checks in this list specifically, and both are worth running because they disagree about what counts as a problem. Webhook contracts have no equivalent, so for now section 7 through section 9 remain a review rather than a gate. That is a good reason to do the review deliberately, and to write down what you decided.
 
 ---
 

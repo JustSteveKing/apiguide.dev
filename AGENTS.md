@@ -70,7 +70,7 @@ if your frontmatter is wrong you will find out from `bun run build`.
 | `src/content/status-codes/` | `statusCodes` | 63 | `code`, `title`, `description`, `category` |
 | `src/content/headers/` | `headers` | 46 | `name`, `description`, `category`, `standard` |
 | `src/content/guides/` | `guides` | 44 | `title`, `description`, `category` |
-| `src/content/tools/` | `tools` | 34 | `name`, `description`, `category`, `lifecycleStages`, `url`, `pricing` |
+| `src/content/tools/` | `tools` | 35 | `name`, `description`, `category`, `lifecycleStages`, `url`, `pricing` |
 | `src/content/errors/` | `errors` | 23 | `title`, `statusCode`, `statusText`, `category`, `publishedDate` |
 | `src/content/specifications/` | `specifications` | 21 | `title`, `description`, `currentVersion`, `officialUrl` |
 | `src/content/methods/` | `methods` | 18 | `name`, `description`, `safe`, `idempotent`, `cacheable` |
@@ -126,6 +126,18 @@ These are not suggestions. The conformance figures are current as of writing.
 ## API Usage & Best Practices
 ## Common Response Codes
 ```
+
+**Tools** (35/35 identical):
+
+```
+## What is <Name>?
+## Why use it in the API Lifecycle?
+## Best Practices
+```
+
+Tool pages live at `/tools/<category>/<slug>`, with the category in the path.
+That is the one collection whose URL is not `/<collection>/<slug>`, and it is
+easy to get wrong when linking to one.
 
 **Guides and specifications** (44/44) are the long form and take a different
 shape:
