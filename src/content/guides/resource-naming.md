@@ -1,7 +1,7 @@
 ---
 title: "Resource Naming & URI Design"
 description: "Conventions for naming resources and designing clean URIs: nouns over verbs, plural collections, sensible nesting, kebab-case, and path versus query parameters."
-category: "core"
+category: "design"
 ---
 
 ## Introduction to URI Design

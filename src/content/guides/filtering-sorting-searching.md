@@ -1,7 +1,7 @@
 ---
 title: "Filtering, Sorting & Searching"
 description: "Query parameter conventions for filtering, sorting, and full-text search, including operators, pagination interplay, and when to move complex queries to a request body."
-category: "core"
+category: "design"
 ---
 
 ## Introduction to Querying Collections

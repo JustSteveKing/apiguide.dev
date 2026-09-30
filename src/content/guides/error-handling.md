@@ -1,7 +1,7 @@
 ---
 title: "Standardized Error Handling"
 description: "Designing centralized error dictionaries, parsing field-level validation errors, and structure guidelines."
-category: "core"
+category: "reliability"
 ---
 
 ## Introduction to Error Design

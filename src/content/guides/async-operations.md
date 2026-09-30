@@ -1,7 +1,7 @@
 ---
 title: "Asynchronous & Long-Running Operations"
 description: "Handle long-running work in HTTP APIs with 202 Accepted, status polling endpoints, job resources, Retry-After, and the trade-off between polling and webhooks."
-category: "core"
+category: "events"
 ---
 
 ## Introduction to Asynchronous Operations

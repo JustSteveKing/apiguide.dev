@@ -1,7 +1,7 @@
 ---
 title: "HTTP Compression"
 description: "How APIs negotiate and apply gzip, Brotli, and Zstandard compression, and the caching and security considerations involved."
-category: "negotiation"
+category: "performance"
 ---
 
 ## Introduction to HTTP Compression

@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { guideCategories } from './config/themes';
 
 export const collections = {
     errors: defineCollection({
@@ -68,7 +69,7 @@ export const collections = {
         schema: z.object({
             title: z.string(),
             description: z.string(),
-            category: z.enum(['caching', 'security', 'negotiation', 'core']),
+            category: z.enum(guideCategories),
         }),
     }),
     tools: defineCollection({

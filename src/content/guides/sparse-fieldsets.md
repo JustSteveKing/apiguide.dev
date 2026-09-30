@@ -1,7 +1,7 @@
 ---
 title: "Sparse Fieldsets & Partial Responses"
 description: "Let clients request only the fields they need with sparse fieldsets, and expand related resources on demand to reduce payload size and round trips."
-category: "core"
+category: "design"
 ---
 
 ## Introduction to Partial Responses
@@ -106,4 +106,4 @@ Trimming fields and folding in relations delivers concrete wins:
 - **Fewer round trips**: expansion collapses several calls into one, which matters most on high-latency mobile links.
 - **Lower client complexity**: the client stops orchestrating dependent requests.
 
-Treat these as opt-in optimisations. Default responses should remain complete and predictable, with selection and expansion available to clients that need to tune for their context.
+Treat these as opt-in optimizations. Default responses should remain complete and predictable, with selection and expansion available to clients that need to tune for their context.

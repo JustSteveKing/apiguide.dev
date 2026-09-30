@@ -1,7 +1,7 @@
 ---
 title: "Media Types & Vendor Content Types"
 description: "How media types structure content, how the vendor tree and +json suffix work, and how to version APIs through the Accept header."
-category: "negotiation"
+category: "representation"
 ---
 
 ## Introduction to Media Types

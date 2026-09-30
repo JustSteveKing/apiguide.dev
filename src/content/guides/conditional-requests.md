@@ -1,7 +1,7 @@
 ---
 title: "Conditional Requests & Validation"
 description: "How to use ETag, Last-Modified, and precondition headers to enable 304 responses and prevent lost updates in HTTP APIs."
-category: "caching"
+category: "performance"
 ---
 
 ## Introduction to Conditional Requests

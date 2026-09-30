@@ -1,7 +1,7 @@
 ---
 title: "HTTP Caching & Conditional Requests"
 description: "A developer guide on HTTP caching headers (Cache-Control, ETag) and conditional requests (If-Match, If-None-Match)."
-category: "caching"
+category: "performance"
 ---
 
 ## Introduction to HTTP Caching

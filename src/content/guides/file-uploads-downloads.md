@@ -1,7 +1,7 @@
 ---
 title: "File Uploads & Downloads"
 description: "Multipart uploads, presigned and resumable uploads, Range requests, Content-Disposition, and streaming."
-category: "core"
+category: "representation"
 ---
 
 ## Introduction to File Uploads and Downloads

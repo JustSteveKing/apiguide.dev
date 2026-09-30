@@ -1,7 +1,7 @@
 ---
 title: "How an API Becomes Tool Definitions"
 description: "What an agent actually receives when your OpenAPI document is converted into tool definitions, which parts of the contract survive the conversion, and which are silently dropped."
-category: "core"
+category: "agents"
 ---
 
 ## The Document Is Not the Interface
@@ -72,7 +72,7 @@ Flattened, there is one `username` argument for both. A converter has to choose:
         in: path
 ```
 
-`PUT /resource/{id}` with a body that repeats the identifier is the classic case, and it is common precisely because it reads fine to a human.
+`PUT /resource/{id}` with a body that repeats the identifier is the classic case, and it is common precisely because it reads fine to a human. It is also mechanically detectable, which is the useful part: [legible](/tools/design-documentation/legible) reports it as `argument-collision` without anyone having to notice.
 
 See [resource naming](/guides/resource-naming).
 

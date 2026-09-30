@@ -54,24 +54,80 @@ export const headerCategoryThemes = {
   }
 } as const;
 
-export const guideCategoryThemes = {
-  'caching': {
+/**
+ * The eight guide categories, in reading order.
+ *
+ * The order is the order the guides index renders its sections in, and it is
+ * a progression rather than an alphabet: the shape of the API, how it puts
+ * data on the wire, how it changes, how it behaves when things go wrong, how
+ * it pushes rather than waits, how it goes fast, how it stays closed, and
+ * finally what a model makes of all of it.
+ *
+ * There are five pigments in the palette and eight categories, so four of
+ * them pair off and share a hue, solid against outline. The pairs are real
+ * kinship rather than a way of running out of colours: design and evolution
+ * are the contract and the contract over time, performance and
+ * representation are both what HTTP negotiates about a response, and
+ * reliability and events are the same delivery problem seen from each end.
+ */
+export const guideCategories = [
+  'design',
+  'representation',
+  'evolution',
+  'reliability',
+  'events',
+  'performance',
+  'security',
+  'agents'
+] as const;
+
+export type GuideCategory = (typeof guideCategories)[number];
+
+export const guideCategoryThemes: Record<
+  GuideCategory,
+  { badge: string; label: string; blurb: string }
+> = {
+  'design': {
+    badge: 'bg-chartres-100 text-chartres-900 border-chartres-200 border',
+    label: 'Design & Structure',
+    blurb: 'What the resource surface looks like before anything is sent over it.'
+  },
+  'representation': {
+    badge: 'text-ochre-800 border-ochre-400 border',
+    label: 'Representation',
+    blurb: 'Which bytes come back, in which format, in which language.'
+  },
+  'evolution': {
+    badge: 'text-chartres-800 border-chartres-400 border',
+    label: 'Versioning & Evolution',
+    blurb: 'Changing a published contract without breaking the clients on it.'
+  },
+  'reliability': {
+    badge: 'text-yinmn-800 border-yinmn-400 border',
+    label: 'Reliability & Operations',
+    blurb: 'How the API behaves when the network, the caller or the server misbehaves.'
+  },
+  'events': {
+    badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200 border',
+    label: 'Events & Async',
+    blurb: 'Work that outlives a request, and the contracts for pushing it back.'
+  },
+  'performance': {
     badge: 'bg-ochre-100 text-ochre-900 border-ochre-200 border',
-    label: 'API Caching'
+    label: 'Performance & Caching',
+    blurb: 'Not answering at all is faster than answering quickly.'
   },
   'security': {
     badge: 'bg-uranium-100 text-uranium-900 border-uranium-200 border',
-    label: 'API Security'
+    label: 'Security & Auth',
+    blurb: 'Proving who is calling, what they may do, and that nothing was tampered with.'
   },
-  'negotiation': {
-    badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200 border',
-    label: 'Content Negotiation'
-  },
-  'core': {
-    badge: 'bg-paper-200 text-paper-800 border-paper-300 border',
-    label: 'API Core'
+  'agents': {
+    badge: 'bg-emerald-100 text-emerald-900 border-emerald-200 border',
+    label: 'Agents & Tool Use',
+    blurb: 'What survives when your API is read by a model rather than a person.'
   }
-} as const;
+};
 
 export const toolCategoryThemes = {
   'design-documentation': {

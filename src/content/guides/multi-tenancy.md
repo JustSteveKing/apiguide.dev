@@ -1,7 +1,7 @@
 ---
 title: "Multi-Tenancy Patterns"
 description: "Design multi-tenant APIs with silo, pool, and bridge isolation, tenant routing, noisy-neighbor mitigation, and verified tenant claims."
-category: "core"
+category: "design"
 ---
 
 ## Introduction to Multi-Tenancy
