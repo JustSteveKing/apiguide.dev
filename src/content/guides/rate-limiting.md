@@ -1,7 +1,7 @@
 ---
 title: "API Rate Limiting"
 description: "How token bucket, sliding window, and fixed window algorithms work, and how to communicate limits with headers."
-category: "core"
+category: "reliability"
 ---
 
 ## Introduction to Rate Limiting

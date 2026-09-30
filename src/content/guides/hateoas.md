@@ -1,7 +1,7 @@
 ---
 title: "HATEOAS & Hypermedia APIs"
 description: "How hypermedia controls make REST APIs self-describing through links in responses, the HAL and JSON:API formats, and an honest look at why adoption is limited."
-category: "core"
+category: "design"
 ---
 
 ## Introduction to HATEOAS

@@ -1,7 +1,7 @@
 ---
 title: "How an API Becomes Tool Definitions"
 description: "What an agent actually receives when your OpenAPI document is converted into tool definitions, which parts of the contract survive the conversion, and which are silently dropped."
-category: "core"
+category: "agents"
 ---
 
 ## The Document Is Not the Interface

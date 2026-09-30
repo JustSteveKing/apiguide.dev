@@ -1,7 +1,7 @@
 ---
 title: "Sparse Fieldsets & Partial Responses"
 description: "Let clients request only the fields they need with sparse fieldsets, and expand related resources on demand to reduce payload size and round trips."
-category: "core"
+category: "design"
 ---
 
 ## Introduction to Partial Responses

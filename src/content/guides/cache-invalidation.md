@@ -1,7 +1,7 @@
 ---
 title: "Cache Invalidation Strategies"
 description: "A practical comparison of TTL, event-based, tag-based, and versioned invalidation, plus stale-while-revalidate and stale-if-error."
-category: "caching"
+category: "performance"
 ---
 
 ## Introduction to Cache Invalidation

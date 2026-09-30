@@ -1,7 +1,7 @@
 ---
 title: "Health Checks & Status Endpoints"
 description: "Design liveness, readiness, and startup checks with the health+json format, dependency probes, and status pages."
-category: "core"
+category: "reliability"
 ---
 
 ## Introduction to Health Checks

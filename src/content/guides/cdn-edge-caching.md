@@ -1,7 +1,7 @@
 ---
 title: "CDN & Edge Caching for APIs"
 description: "How to control shared caches with s-maxage, Vary, surrogate keys, and stale-while-revalidate to serve API responses from the edge."
-category: "caching"
+category: "performance"
 ---
 
 ## Introduction to Edge Caching

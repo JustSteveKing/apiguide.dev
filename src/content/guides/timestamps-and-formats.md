@@ -1,7 +1,7 @@
 ---
 title: "Timestamps & Data Formats"
 description: "Conventions for representing time, money, enums, and nullability in JSON APIs: RFC 3339, always UTC, integer money, and consistent, unambiguous formats."
-category: "core"
+category: "design"
 ---
 
 ## Introduction to Data Formats

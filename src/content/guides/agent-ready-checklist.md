@@ -1,7 +1,7 @@
 ---
 title: "Agent-Ready API Checklist"
 description: "A review checklist for an existing API and its webhooks, covering the contract, errors, idempotency, deprecation, delivery and enforcement. Written for consumers that cannot ask you a question."
-category: "core"
+category: "agents"
 ---
 
 ## Why This Checklist Exists
