@@ -1,0 +1,25 @@
+# Astro on this site and on apiguide.dev drifted two minors apart because
+# nothing was watching. Neither repo can pin the other, so the answer is that
+# both get told when a release lands and both take it.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # One PR for the whole Astro toolchain. They release together and a
+      # partial bump is the thing most likely to break a build.
+      astro:
+        patterns:
+          - astro
+          - '@astrojs/*'
+          - astro-*
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: deps
