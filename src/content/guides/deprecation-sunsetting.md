@@ -6,7 +6,7 @@ category: "evolution"
 
 ## Introduction to Deprecation and Sunsetting
 
-Every API changes over time, and retiring endpoints or versions is unavoidable. Doing it well preserves consumer trust; doing it badly breaks client applications without warning. Effective deprecation pairs **machine-readable signals**, meaning standardized HTTP headers, with **human communication** through changelogs, email, and documentation, all on a predictable timeline. This guide covers the headers, the timelines, and the final removal.
+Every API changes over time, and retiring endpoints or versions is unavoidable. Doing it well preserves consumer trust; doing it badly breaks client applications without warning. Effective deprecation pairs **machine-readable signals**, meaning standardized HTTP headers, with **human communication** through changelogs, email, and documentation, all on a predictable timeline. This guide covers the headers, the timelines, and the final removal. For deciding what needs this treatment in the first place, see [what counts as a breaking change](/guides/breaking-changes).
 
 ---
 

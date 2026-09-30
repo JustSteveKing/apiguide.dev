@@ -6,7 +6,7 @@ category: "evolution"
 
 ## Introduction to API Versioning
 
-API versioning is the practice of managing changes to an API to ensure that existing clients do not break when modifications are made. As your product evolves, database schemas and business logic will change, requiring a strategy to roll out updates safely.
+API versioning is the practice of managing changes to an API to ensure that existing clients do not break when modifications are made. As your product evolves, database schemas and business logic will change, requiring a strategy to roll out updates safely. Which changes actually require a new version is a separate question, and a less obvious one than it looks: see [what counts as a breaking change](/guides/breaking-changes).
 
 ---
 
