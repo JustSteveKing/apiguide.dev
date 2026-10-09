@@ -3,7 +3,7 @@ title: "Precondition Failed"
 statusCode: 412
 statusText: Precondition Failed
 category: client-error
-relatedCodes: ['stale-resource-version', 'resource-conflict']
+relatedCodes: ['precondition-required', 'stale-resource-version', 'resource-conflict']
 publishedDate: 2026-07-09
 ---
 
