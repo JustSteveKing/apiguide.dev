@@ -42,7 +42,7 @@ Which means these URLs are a contract. They do not get renamed.
 | [Headers](https://apiguide.dev/headers) | 46 | Request and response headers, standard and otherwise |
 | [Guides](https://apiguide.dev/guides) | 44 | Long-form patterns, in eight categories from resource design to agent readiness |
 | [Tools](https://apiguide.dev/tools) | 35 | Gateways, linters, clients, mocks and observability, by lifecycle stage |
-| [Errors](https://apiguide.dev/errors) | 23 | Resolvable problem types for RFC 9457 |
+| [Errors](https://apiguide.dev/errors) | 25 | Resolvable problem types for RFC 9457 |
 | [Specifications](https://apiguide.dev/specifications) | 21 | OpenAPI, AsyncAPI, JSON Schema, Arazzo, gRPC and the rest |
 | [Methods](https://apiguide.dev/methods) | 18 | Semantics, safety, idempotency, cacheability |
 
@@ -111,7 +111,7 @@ Two licences, because the code and the prose want different things.
 - **Code** is [MIT](LICENSE). Templates, components, styles, configuration
   and the scripts in `scripts/`.
 - **Content** is [CC BY-SA 4.0](LICENSE-CONTENT). Everything under
-  `src/content/`: all 264 pages. Reuse it, translate it, build on it, with
+  `src/content/`: all 254 pages. Reuse it, translate it, build on it, with
   credit and under the same terms.
 
 Linking to a page here is not use of the content and needs no licence. Using

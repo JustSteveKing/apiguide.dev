@@ -74,7 +74,7 @@ if your frontmatter is wrong you will find out from `bun run build`.
 | `src/content/headers/` | `headers` | 46 | `name`, `description`, `category`, `standard` |
 | `src/content/guides/` | `guides` | 44 | `title`, `description`, `category` |
 | `src/content/tools/` | `tools` | 35 | `name`, `description`, `category`, `lifecycleStages`, `url`, `pricing` |
-| `src/content/errors/` | `errors` | 23 | `title`, `statusCode`, `statusText`, `category`, `publishedDate` |
+| `src/content/errors/` | `errors` | 25 | `title`, `statusCode`, `statusText`, `category`, `publishedDate` |
 | `src/content/specifications/` | `specifications` | 21 | `title`, `description`, `currentVersion`, `officialUrl` |
 | `src/content/methods/` | `methods` | 18 | `name`, `description`, `safe`, `idempotent`, `cacheable` |
 | `src/content/sponsors/` | `sponsors` | 1 | `name`, `url` |
@@ -98,7 +98,7 @@ that has to survive the next design pass.
 
 These are not suggestions. The conformance figures are current as of writing.
 
-**Errors** (23/23 identical). Three `##` sections, in this order:
+**Errors** (25/25 identical). Three `##` sections, in this order:
 
 ```
 ## When to use it

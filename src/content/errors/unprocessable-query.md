@@ -3,7 +3,7 @@ title: Unprocessable Query
 statusCode: 422
 statusText: Unprocessable Entity
 category: client-error
-relatedCodes: ['invalid-pagination-cursor']
+relatedCodes: ['invalid-pagination-cursor', 'invalid-query-parameter']
 publishedDate: 2026-03-16
 ---
 
