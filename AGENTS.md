@@ -78,9 +78,15 @@ the current eight before using anything it produces.
 
 ## Deployment
 
-Cloudflare Pages, project `apiguidedev`, from `wrangler.json`. Output is
-`dist`. `bun run deploy` pushes a build directly, but the normal path is
-merging to `main`.
+Cloudflare, project `apiguidedev`, from `wrangler.json`. Production builds
+run on **Workers Builds** and serve `dist` as Workers static assets, so the
+`assets` block in `wrangler.json` is what decides URL behaviour:
+`html_handling: "drop-trailing-slash"` serves `/errors/x` and redirects
+`/errors/x/` to it, and `not_found_handling: "404-page"` serves `404.html`
+with a 404 (without it, a miss is an empty 404). Test those with `bunx
+wrangler dev`, which runs the Workers asset rules; `bun run pages:dev`
+emulates Pages, which behaves differently on misses. `bun run deploy`
+pushes a build directly, but the normal path is merging to `main`.
 
 **After changing `ec.config.mjs`, clear the Astro cache** (`rm -rf .astro
 node_modules/.astro`) before building. Rendered Markdown is cached with
