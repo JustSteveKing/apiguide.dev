@@ -24,12 +24,15 @@ interface Props {
 	title?: string;
 	description?: string;
 	jsonLd?: Record<string, any> | Record<string, any>[];
+	/** Keep the page out of search indexes and drop its canonical link. */
+	noindex?: boolean;
 }
 
 const { 
 	title = "apiguide.dev | API Reference & Design Patterns", 
 	description = "The flagship reference site for modern, authoritative API design patterns, Problem+JSON error schemas, and integration guides.",
-	jsonLd
+	jsonLd,
+	noindex = false
 } = Astro.props;
 
 // Compile a stable canonical URL
@@ -75,7 +78,7 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<link rel="canonical" href={canonicalURL.href} />
+		{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalURL.href} />}
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
