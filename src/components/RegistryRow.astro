@@ -14,9 +14,11 @@ interface Props {
   /** Width of the key column: `sm` for status codes, `lg` for header names. */
   codeWidth?: 'sm' | 'lg';
   note?: string;
+  /** Analytics hook, read by page scripts as data-track. */
+  track?: string;
 }
 
-const { href, name, description, code, codeWidth = 'sm', note } = Astro.props;
+const { href, name, description, code, codeWidth = 'sm', note, track } = Astro.props;
 
 // A long key (a header name) is the name, so it takes the name's column.
 const keyIsName = Boolean(code) && codeWidth === 'lg';
@@ -34,6 +36,7 @@ const columns = shortKey
 <li class="border-b border-paper-300">
   <a
     href={href}
+    data-track={track}
     class={`group grid ${columns} gap-x-6 gap-y-0.5 py-3 px-2 -mx-2 rounded-sm hover:bg-paper-100 transition-colors`}
   >
     {shortKey && <span class="font-mono text-paper-950 tabular-nums">{code}</span>}

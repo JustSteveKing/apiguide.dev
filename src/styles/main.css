@@ -413,6 +413,22 @@ html {
 .wire-lg { font-size: clamp(1.75rem, 1.1rem + 2.6vw, 3rem); }
 .wire-md { font-size: clamp(1.125rem, 0.9rem + 1.1vw, 1.625rem); }
 
+/* The home page exchange: a curl -v transcript at reading size. It wraps
+   rather than scrolls on a phone, because the point is to read all of it. */
+.exchange {
+  font-size: clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+/* A wrapped line hangs two characters in, so a continuation never looks
+   like a new line of the exchange. */
+.exchange-line {
+  display: block;
+  padding-left: 2ch;
+  text-indent: -2ch;
+}
+
 /* Any heading a link can jump to clears the sticky header. The prose rule
    above covers article headings; this covers index-page section headings. */
 :is(h2, h3)[id] {
