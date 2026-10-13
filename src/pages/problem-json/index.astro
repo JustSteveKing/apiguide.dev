@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
+import WireHero from '@/components/WireHero.astro';
 
 // This page is hand-authored rather than a content collection, so its headings are
 // declared here in the same shape `render()` would return.
@@ -17,14 +18,24 @@ const headings = [
   description="Comprehensive guide to the Problem+JSON error response format, URI types, self-documenting APIs, and standard implementation patterns."
 >
   <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
-    <!-- Breadcrumb -->
     <nav class="mb-8 text-sm" aria-label="Breadcrumb">
-      <a href="/errors" class="text-chartres-600 hover:text-chartres-800 hover:underline">API Errors Reference</a>
+      <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
       <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
-      <span class="text-paper-600">Problem+JSON Specification</span>
+      <a href="/errors" class="text-chartres-600 hover:text-chartres-800 hover:underline">Errors</a>
+      <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
+      <span class="text-paper-700">Problem+JSON</span>
     </nav>
 
-    <h1 class="text-4xl font-extrabold tracking-tight mb-8 text-paper-950">Problem+JSON (RFC 9457) Guide</h1>
+    <header class="mb-12">
+      <h1 class="text-4xl font-bold tracking-tight mb-6 text-paper-950">Problem+JSON</h1>
+      <WireHero
+        lead="Content-Type: "
+        identity="application/problem+json"
+        size="md"
+        copy="Content-Type: application/problem+json"
+        copyLabel="Copy header line"
+      />
+    </header>
 
     <!-- Semantic Content Body -->
     <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
@@ -35,7 +46,7 @@ const headings = [
 
       <h2 id="why-a-standard-error-format">Why a standard error format?</h2>
       <p>
-        In traditional APIs, error formats vary wildy. One API might return <code>{`{"error": "message"}`}</code>, another might return <code>{`{"status": "fail", "code": 4041}`}</code>, and another might just return plain HTML.
+        In traditional APIs, error formats vary wildly. One API might return <code>{`{"error": "message"}`}</code>, another might return <code>{`{"status": "fail", "code": 4041}`}</code>, and another might just return plain HTML.
       </p>
       <p>
         Problem+JSON provides a predictable structure that clients can parse programmatically, while remaining flexible enough to contain custom attributes for complex validation or debugging information.

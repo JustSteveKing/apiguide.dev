@@ -1,17 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import RegistryGroup from '@/components/RegistryGroup.astro';
+import RegistryRow from '@/components/RegistryRow.astro';
+import WireHero from '@/components/WireHero.astro';
 
 // Served by Cloudflare for any path the build did not emit. A static page
 // cannot see which path was asked for, so it says what most misses here are:
 // an /errors/<name> problem type that does not exist, or a mistyped slug.
 const sections = [
-  { name: 'Errors', href: '/errors', blurb: 'Problem types for RFC 9457 responses' },
-  { name: 'Status Codes', href: '/status-codes', blurb: 'Every code and when to send it' },
-  { name: 'Headers', href: '/headers', blurb: 'Request and response headers' },
-  { name: 'Methods', href: '/methods', blurb: 'Safety, idempotency, cacheability' },
-  { name: 'Guides', href: '/guides', blurb: 'Long-form API design patterns' },
-  { name: 'Specifications', href: '/specifications', blurb: 'OpenAPI, AsyncAPI and the rest' },
-  { name: 'Tooling', href: '/tools', blurb: 'Tools by lifecycle stage' },
+  { name: 'Errors', href: '/errors', description: 'Problem types for RFC 9457 responses.' },
+  { name: 'Status codes', href: '/status-codes', description: 'Every code and when to send it.' },
+  { name: 'Headers', href: '/headers', description: 'Request and response headers.' },
+  { name: 'Methods', href: '/methods', description: 'Safety, idempotency, cacheability.' },
+  { name: 'Guides', href: '/guides', description: 'Long-form API design guides.' },
+  { name: 'Specifications', href: '/specifications', description: 'OpenAPI, AsyncAPI and the rest.' },
+  { name: 'Tools', href: '/tools', description: 'Tools by what they do.' },
 ];
 ---
 
@@ -21,11 +24,11 @@ const sections = [
   noindex
 >
   <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
-    <header class="mb-12 border-b border-paper-300 pb-8">
-      <p class="text-sm font-semibold text-paper-700 mb-2">404 Not Found</p>
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">There is no page here</h1>
-      <p class="text-lg text-paper-700 max-w-2xl">
-        If you followed the <code>type</code> of a problem response, that problem type is not in
+    <header class="mb-12 max-w-2xl">
+      <WireHero lead="HTTP/1.1 " identity="404 Not Found" marker="border-ochre-500" />
+      <h1 class="mt-8 text-2xl font-bold tracking-tight text-paper-950">There is no page at this address</h1>
+      <p class="mt-3 text-lg text-paper-700">
+        If you followed the <code class="font-mono">type</code> of a problem response, that problem type is not in
         the <a href="/errors" class="text-chartres-600 hover:text-chartres-800 hover:underline">errors catalog</a>.
         Otherwise the address is mistyped or the page has moved. Search with
         <kbd class="px-1.5 py-0.5 rounded border border-paper-300 bg-paper-100 text-sm">⌘K</kbd>,
@@ -33,18 +36,8 @@ const sections = [
       </p>
     </header>
 
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {sections.map((s) => (
-        <li>
-          <a
-            href={s.href}
-            class="block h-full border border-paper-300 rounded-lg p-5 bg-paper-100/50 hover:border-chartres-400 hover:bg-chartres-50/50 transition-colors"
-          >
-            <span class="block text-lg font-bold text-chartres-600">{s.name}</span>
-            <span class="block text-sm text-paper-700 mt-1">{s.blurb}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <RegistryGroup id="sections" title="Sections" count={sections.length}>
+      {sections.map(s => <RegistryRow href={s.href} name={s.name} description={s.description} />)}
+    </RegistryGroup>
   </main>
 </Layout>
