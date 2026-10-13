@@ -1,28 +1,37 @@
+/**
+ * `marker` is the left rule beside a page's wire line (WireHero). It is a fill,
+ * not text, so step 500 is allowed; see DESIGN.md, "Contrast floors".
+ */
 export const statusCategoryThemes = {
   'informational': {
     badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200 border',
     label: 'Informational (1xx)',
-    cardHover: 'hover:border-yinmn-300 hover:bg-yinmn-50/10'
+    cardHover: 'hover:border-yinmn-300 hover:bg-yinmn-50/10',
+    marker: 'border-yinmn-500'
   },
   'success': {
     badge: 'bg-emerald-100 text-emerald-900 border-emerald-200 border',
     label: 'Success (2xx)',
-    cardHover: 'hover:border-emerald-300 hover:bg-emerald-50/10'
+    cardHover: 'hover:border-emerald-300 hover:bg-emerald-50/10',
+    marker: 'border-emerald-500'
   },
   'redirection': {
     badge: 'bg-chartres-100 text-chartres-900 border-chartres-200 border',
     label: 'Redirection (3xx)',
-    cardHover: 'hover:border-chartres-300 hover:bg-chartres-50/10'
+    cardHover: 'hover:border-chartres-300 hover:bg-chartres-50/10',
+    marker: 'border-chartres-500'
   },
   'client-error': {
     badge: 'bg-ochre-100 text-ochre-900 border-ochre-200 border',
     label: 'Client Error (4xx)',
-    cardHover: 'hover:border-ochre-300 hover:bg-ochre-50/10'
+    cardHover: 'hover:border-ochre-300 hover:bg-ochre-50/10',
+    marker: 'border-ochre-500'
   },
   'server-error': {
     badge: 'bg-uranium-100 text-uranium-900 border-uranium-200 border',
     label: 'Server Error (5xx)',
-    cardHover: 'hover:border-uranium-300 hover:bg-uranium-50/10'
+    cardHover: 'hover:border-uranium-300 hover:bg-uranium-50/10',
+    marker: 'border-uranium-500'
   }
 } as const;
 
@@ -30,27 +39,32 @@ export const errorCategoryThemes = {
   'client-error': {
     badge: 'bg-ochre-100 text-ochre-900 border-ochre-200 border',
     label: 'Client Error (4xx)',
-    cardHover: 'hover:border-ochre-300 hover:bg-ochre-50/10'
+    cardHover: 'hover:border-ochre-300 hover:bg-ochre-50/10',
+    marker: 'border-ochre-500'
   },
   'server-error': {
     badge: 'bg-uranium-100 text-uranium-900 border-uranium-200 border',
     label: 'Server Error (5xx)',
-    cardHover: 'hover:border-uranium-300 hover:bg-uranium-50/10'
+    cardHover: 'hover:border-uranium-300 hover:bg-uranium-50/10',
+    marker: 'border-uranium-500'
   }
 } as const;
 
 export const headerCategoryThemes = {
   'request': {
     badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200 border',
-    label: 'Request Header'
+    label: 'Request Header',
+    marker: 'border-yinmn-500'
   },
   'response': {
     badge: 'bg-chartres-100 text-chartres-900 border-chartres-200 border',
-    label: 'Response Header'
+    label: 'Response Header',
+    marker: 'border-chartres-500'
   },
   'both': {
     badge: 'bg-paper-200 text-paper-900 border-paper-300 border',
-    label: 'Bidirectional (Request/Response)'
+    label: 'Bidirectional (Request/Response)',
+    marker: 'border-paper-500'
   }
 } as const;
 

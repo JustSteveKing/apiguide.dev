@@ -46,6 +46,7 @@ import { statusCategoryThemes } from '../../config/themes';
 const activeTheme = statusCategoryThemes[sc.data.category];
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+import WireHero from '@/components/WireHero.astro';
 
 const scJsonLd = [
   getTechArticleSchema({
@@ -75,19 +76,19 @@ const scJsonLd = [
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
-        HTTP {sc.data.code} &mdash; {sc.data.title}
-      </h1>
-      <p class="text-lg text-paper-600 mb-6 italic">
+      <WireHero
+        lead="HTTP/1.1 "
+        identity={`${sc.data.code} ${sc.data.title}`}
+        heading
+        copy={`HTTP/1.1 ${sc.data.code} ${sc.data.title}`}
+        copyLabel="Copy status line"
+        marker={activeTheme.marker}
+      />
+      <p class="text-lg text-paper-700 mt-6 mb-8 max-w-2xl">
         {sc.data.description}
       </p>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] sm:gap-4 px-5 py-1 sm:py-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="Status code">
-          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
-            {sc.data.code} {sc.data.title}
-          </span>
-        </MetaItem>
+
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
         <MetaItem label="Category" value={activeTheme.label} />
         <MetaItem label="API error types" value={`${matchingErrors.length} ${matchingErrors.length === 1 ? 'error schema' : 'error schemas'}`} />
         <MetaItem label="Related headers" value={`${matchingHeaders.length} ${matchingHeaders.length === 1 ? 'header' : 'headers'}`} />

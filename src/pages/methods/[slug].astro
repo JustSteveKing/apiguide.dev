@@ -34,6 +34,7 @@ const getCodeTheme = (cat: string) => {
 };
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+import WireHero from '@/components/WireHero.astro';
 
 const methodJsonLd = [
   getTechArticleSchema({
@@ -73,47 +74,19 @@ const methodJsonLd = [
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
-        HTTP <code>{m.data.name}</code> Method
-      </h1>
-      <p class="text-lg text-paper-600 mb-6 italic">
+      <WireHero
+        identity={m.data.name}
+        heading
+        trail=" request-target HTTP/1.1"
+      />
+      <p class="text-lg text-paper-700 mt-6 mb-8 max-w-2xl">
         {m.data.description}
       </p>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] sm:gap-4 px-5 py-1 sm:py-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="Safety">
-          {m.data.safe ? (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-200">
-              Safe Method
-            </span>
-          ) : (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-paper-200 text-paper-700 border border-paper-300">
-              Unsafe (State-Mutating)
-            </span>
-          )}
-        </MetaItem>
-        <MetaItem label="Idempotency">
-          {m.data.idempotent ? (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-yinmn-100 text-yinmn-900 border border-yinmn-200">
-              Idempotent
-            </span>
-          ) : (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-ochre-100 text-ochre-900 border border-ochre-200">
-              Non-Idempotent (Replay Risk)
-            </span>
-          )}
-        </MetaItem>
-        <MetaItem label="Caching">
-          {m.data.cacheable ? (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-chartres-100 text-chartres-900 border border-chartres-200">
-              Cacheable by default
-            </span>
-          ) : (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-paper-200 text-paper-700 border border-paper-300">
-              Non-Cacheable
-            </span>
-          )}
-        </MetaItem>
+
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
+        <MetaItem label="Safe" value={m.data.safe ? 'Yes' : 'No, changes server state'} />
+        <MetaItem label="Idempotent" value={m.data.idempotent ? 'Yes' : 'No, a retry may repeat the effect'} />
+        <MetaItem label="Cacheable" value={m.data.cacheable ? 'Yes, by default' : 'No'} />
       </div>
     </header>
 

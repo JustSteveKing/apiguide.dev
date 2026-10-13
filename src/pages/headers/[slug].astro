@@ -28,6 +28,7 @@ const sortedRelatedCodes = relatedCodes.sort((a, b) => a.data.code - b.data.code
 import { headerCategoryThemes } from '../../config/themes';
 
 const activeTheme = headerCategoryThemes[h.data.category];
+const example = headerExampleValue(h.body, h.data.name);
 
 const getCodeTheme = (cat: string) => {
   if (cat === 'client-error') return 'ochre';
@@ -38,6 +39,8 @@ const getCodeTheme = (cat: string) => {
 };
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+import WireHero from '@/components/WireHero.astro';
+import { headerExampleValue } from '@/utils/wireExample';
 
 const headerJsonLd = [
   getTechArticleSchema({
@@ -67,31 +70,28 @@ const headerJsonLd = [
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
-        <code>{h.data.name}</code> Header
-      </h1>
-      <p class="text-lg text-paper-600 mb-6 italic">
+      <WireHero
+        identity={h.data.name}
+        heading
+        trail={example ? `: ${example}` : ':'}
+        copy={example ? `${h.data.name}: ${example}` : h.data.name}
+        copyLabel="Copy header line"
+        marker={activeTheme.marker}
+      />
+      <p class="text-lg text-paper-700 mt-6 mb-8 max-w-2xl">
         {h.data.description}
       </p>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] sm:gap-4 px-5 py-1 sm:py-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="Direction">
-          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
-            {activeTheme.label}
-          </span>
-        </MetaItem>
-        <MetaItem label="Specification">
-          {h.data.standard ? (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-200">
-              Standard RFC compliant
-            </span>
-          ) : (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-ochre-100 text-ochre-900 border border-ochre-200">
-              Custom / Draft Extension
-            </span>
-          )}
-        </MetaItem>
-        <MetaItem label="Associated codes" value={h.data.relatedCodes && h.data.relatedCodes.length > 0 ? h.data.relatedCodes.map(code => 'HTTP ' + code).join(',') : 'None'} />
+
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
+        <MetaItem label="Direction" value={activeTheme.label} />
+        <MetaItem label="Status" value={h.data.standard ? 'Standardized' : 'Not standardized'} />
+        {h.data.relatedCodes && h.data.relatedCodes.length > 0 && (
+          <MetaItem label="Seen with">
+            {h.data.relatedCodes.map((code, i) => (
+              <>{i > 0 && ', '}<a href={`/status-codes/${code}`} class="text-chartres-600 hover:text-chartres-800 hover:underline">{code}</a></>
+            ))}
+          </MetaItem>
+        )}
       </div>
     </header>
 

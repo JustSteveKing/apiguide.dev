@@ -91,19 +91,23 @@
   --font-mono: 'Fira Code Variable', 'Fira Code', ui-monospace, SFMono-Regular, monospace;
 }
 
-/* Global Typography Overrides */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  /* Inter at display sizes reads loose; tighten as size grows. */
-  letter-spacing: -0.02em;
-  /* Keep short headings from leaving one word stranded on its own line. */
-  text-wrap: balance;
-}
+/* Global typography. In the base layer so a utility class on an element
+   (font-mono on a heading, say) wins, as Tailwind expects; unlayered, these
+   rules beat every utility. */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    /* Inter at display sizes reads loose; tighten as size grows. */
+    letter-spacing: -0.02em;
+    /* Keep short headings from leaving one word stranded on its own line. */
+    text-wrap: balance;
+  }
 
-/* Avoid a single-word last line in running text. Cheap, and it only ever
-   improves the rag, so it is safe to apply broadly. */
-p, li, dd, figcaption, blockquote {
-  text-wrap: pretty;
+  /* Avoid a single-word last line in running text. Cheap, and it only ever
+     improves the rag, so it is safe to apply broadly. */
+  p, li, dd, figcaption, blockquote {
+    text-wrap: pretty;
+  }
 }
 
 @layer utilities {
@@ -397,6 +401,17 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-paper-400);
 }
+
+/* The wire line (WireHero): HTTP text as the page's display type. Mono at
+   display size needs tighter tracking than prose mono, and long values (URIs,
+   header values) must wrap anywhere rather than push the page sideways. */
+.wire-line {
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.wire-lg { font-size: clamp(1.75rem, 1.1rem + 2.6vw, 3rem); }
+.wire-md { font-size: clamp(1.125rem, 0.9rem + 1.1vw, 1.625rem); }
 
 /* Any heading a link can jump to clears the sticky header. The prose rule
    above covers article headings; this covers index-page section headings. */

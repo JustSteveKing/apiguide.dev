@@ -28,8 +28,11 @@ const relatedErrors = error.data.relatedCodes
 import { errorCategoryThemes } from '../../config/themes';
 
 const activeTheme = errorCategoryThemes[error.data.category];
+// The URI this page exists to be: the `type` member of an RFC 9457 response.
+const typeURI = `https://apiguide.dev/errors/${error.id}`;
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+import WireHero from '@/components/WireHero.astro';
 
 const errorJsonLd = [
   getTechArticleSchema({
@@ -71,11 +74,20 @@ const errorJsonLd = [
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-6 text-paper-950">{error.data.title}</h1>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] sm:gap-4 px-5 py-1 sm:py-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
+      <h1 class="text-4xl font-bold tracking-tight mb-6 text-paper-950">{error.data.title}</h1>
+      <WireHero
+        lead={'"type": "'}
+        identity={typeURI}
+        trail={'"'}
+        size="md"
+        copy={typeURI}
+        copyLabel="Copy problem type URI"
+        marker={activeTheme.marker}
+      />
+
+      <div class="mt-8 grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
         <MetaItem label="Status code">
-          <a href={`/status-codes/${error.data.statusCode}`} class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold hover:underline ${activeTheme.badge}`}>
+          <a href={`/status-codes/${error.data.statusCode}`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
             {error.data.statusCode} {error.data.statusText}
           </a>
         </MetaItem>
