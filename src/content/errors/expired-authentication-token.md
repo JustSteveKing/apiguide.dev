@@ -31,6 +31,6 @@ Do not use this if the client sent no token at all, or if the token is completel
 
 Include a `WWW-Authenticate` header describing exactly why the token was rejected, per RFC 6750:
 
-```
+```http
 WWW-Authenticate: Bearer error="invalid_token", error_description="The access token expired"
 ```

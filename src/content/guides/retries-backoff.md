@@ -46,7 +46,7 @@ Common jitter strategies:
 * **Equal jitter**: half the exponential delay plus a random portion of the other half.
 * **Decorrelated jitter**: grows the next maximum based on the previous delay, spreading retries out further.
 
-```
+```text
 delay = random(0, 1) * min(max_cap, base_delay * 2^attempt)
 ```
 

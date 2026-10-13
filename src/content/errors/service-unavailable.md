@@ -31,6 +31,6 @@ Do not use 503 if the server encountered a code bug or unhandled database issue 
 
 Include a header to notify the client when the service will be restored:
 
-```
+```http
 Retry-After: 300
 ```

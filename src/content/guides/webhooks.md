@@ -19,7 +19,7 @@ Since clients expose public endpoints to receive webhooks, they need a mechanism
 ### Implementation steps:
 1. Provide the user with a shared secret key (e.g., in their developer dashboard).
 2. Before sending the webhook, compute a hash signature of the raw request body using HMAC SHA-256 and the shared secret:
-   ```
+   ```text
    signature = HMAC-SHA256(secret, request_body)
    ```
 3. Send the signature in a custom header, along with a timestamp (to prevent replay attacks):

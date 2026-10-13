@@ -2,6 +2,17 @@
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import WireHero from '@/components/WireHero.astro';
+// Through Expressive Code like every fenced block in content, so this example
+// gets the same highlighting, frame and copy button.
+import { Code } from 'astro-expressive-code/components';
+
+const rateLimitExample = `{
+  "type": "https://apiguide.dev/errors/rate-limit-exceeded",
+  "title": "Rate Limit Exceeded",
+  "status": 429,
+  "detail": "Rate limit of 100 requests per minute exceeded for this API key.",
+  "instance": "/v1/leads"
+}`;
 
 // This page is hand-authored rather than a content collection, so its headings are
 // declared here in the same shape `render()` would return.
@@ -85,13 +96,7 @@ const headings = [
       <h2 id="example-implementation">Example Implementation</h2>
       <p>Here is how a rate limit exceeded error looks in Problem+JSON format:</p>
       
-      <pre class="bg-slate-100 border border-slate-300 rounded-lg p-5 overflow-x-auto font-mono text-sm text-slate-950"><code>{`{
-  "type": "https://apiguide.dev/errors/rate-limit-exceeded",
-  "title": "Rate Limit Exceeded",
-  "status": 429,
-  "detail": "Rate limit of 100 requests per minute exceeded for this API key.",
-  "instance": "/v1/leads"
-}`}</code></pre>
+      <Code lang="json" code={rateLimitExample} />
 
       <p>
         By pointing the <code>type</code> field to <code>https://apiguide.dev/errors/rate-limit-exceeded</code>, we ensure that both developers and automated client tooling have a single source of truth for understanding this HTTP response.

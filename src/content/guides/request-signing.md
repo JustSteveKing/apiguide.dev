@@ -35,7 +35,7 @@ A minimal HMAC signing scheme covers:
 * a digest of the body (for requests that have one),
 * any headers whose integrity matters.
 
-```
+```text
 canonical_string = METHOD + "\n" + PATH + "\n" + QUERY + "\n" + TIMESTAMP + "\n" + body_sha256
 signature        = hex(HMAC-SHA256(secret, canonical_string))
 ```
@@ -63,7 +63,7 @@ Any divergence (an extra line break, a capitalization difference, a re-encoded s
 
 AWS Signature Version 4 is the most widely referenced canonical-request design. It concatenates a fixed set of components, newline-separated, into a canonical request:
 
-```
+```text
 CanonicalRequest =
   HTTPRequestMethod + "\n" +
   CanonicalURI + "\n" +
@@ -79,7 +79,7 @@ CanonicalRequest =
 
 The canonical request is then hashed into a **string to sign** that adds the algorithm, timestamp, and credential scope:
 
-```
+```text
 StringToSign =
   "AWS4-HMAC-SHA256" + "\n" +
   RequestDateTime + "\n" +
@@ -89,7 +89,7 @@ StringToSign =
 
 The signing key is derived from the secret through a chain of HMAC operations, which scopes the key to a date, region, and service:
 
-```
+```text
 kDate    = HMAC("AWS4" + secret, Date)
 kRegion  = HMAC(kDate, Region)
 kService = HMAC(kRegion, Service)

@@ -31,7 +31,7 @@ Do not use this for general data conflicts like duplicate unique values (use `re
 
 Return the current `ETag` so the client can re-fetch, alongside the `If-Match` value it sent that was rejected:
 
-```
+```http
 ETag: "6"
 If-Match: "5"
 ```

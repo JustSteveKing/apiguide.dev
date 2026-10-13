@@ -160,19 +160,9 @@
       margin-bottom: 0.75rem;
     }
 
-    & pre {
-      background-color: var(--color-slate-100);
-      border: 1px solid var(--color-slate-300);
-      padding: 1.25rem;
-      border-radius: 0.75rem;
-      overflow-x: auto;
-      margin-top: 0.75rem;
-      margin-bottom: 1.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.875rem;
-      color: var(--color-slate-950);
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
-    }
+    /* No pre rule: every code block is rendered by Expressive Code
+       (ec.config.mjs), and a .prose pre rule outranks Typography's
+       zero-specificity defaults and lands on Expressive Code's own <pre>. */
 
     & code {
       font-family: var(--font-mono);
@@ -365,10 +355,6 @@
                 0 4px 8px -4px rgba(0, 0, 0, 0.4);
   }
 
-  /* Code blocks carry an inset highlight that only works on a light surface. */
-:root:not([data-theme="light"]) .prose pre {
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
-  }
 
 
 /* --- Modernization Pass styles --- */

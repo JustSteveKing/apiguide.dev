@@ -31,6 +31,6 @@ Do not use 405 if the URI itself does not exist in the routing table (use `resou
 
 Together with the response, send the `Allow` header:
 
-```
+```http
 Allow: GET, HEAD
 ```

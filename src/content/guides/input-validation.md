@@ -71,7 +71,7 @@ Canonicalization reduces the many possible encodings of a value to a single, una
 
 The primary defense is **parameterized queries** and **prepared statements**, which keep user input as data rather than executable SQL. Never assemble queries by string concatenation.
 
-```
+```sql
 -- Parameterized: input can never change the query structure
 SELECT id, email FROM users WHERE username = ? AND status = ?
 ```

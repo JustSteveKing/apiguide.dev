@@ -82,6 +82,13 @@ Cloudflare Pages, project `apiguidedev`, from `wrangler.json`. Output is
 `dist`. `bun run deploy` pushes a build directly, but the normal path is
 merging to `main`.
 
+**After changing `ec.config.mjs`, clear the Astro cache** (`rm -rf .astro
+node_modules/.astro`) before building. Rendered Markdown is cached with
+Expressive Code's stylesheet link in it, so a config change without a content
+change leaves every Markdown page pointing at a stylesheet the new build did
+not emit, and code blocks fall back to Typography's grey. The same applies to
+a Cloudflare Pages build if its build cache is enabled.
+
 ## How the site is built
 
 Astro, fully static, Tailwind v4 through its Vite plugin. `@/` is aliased to
@@ -201,9 +208,17 @@ shape:
 3. A `---` rule between every top-level section.
 4. `###` for subsections inside a numbered section.
 
-Tables for anything enumerable. Fenced code blocks with a language tag;
-`astro-expressive-code` renders them, on `github-light` and `github-dark`
-together, so they follow the page's colour scheme.
+Tables for anything enumerable. Every fenced code block carries a language
+tag: `http` for request and response lines and headers (the commonest),
+`json`, `yaml` and so on, and `text` for pseudocode or diagrams, never a bare
+fence. Expressive Code renders every block, with `github-dark` and
+`github-light` switched by the same `data-theme` attribute as the page. Its
+options live in `ec.config.mjs`, not `astro.config.mjs`.
+
+A code example in an `.astro` template uses the `<Code>` component from
+`astro-expressive-code/components`, never a hand-written `<pre>`, so it gets
+the same highlighting, frame and copy button. Do not add `.prose pre` styles:
+they outrank Typography's defaults and land on Expressive Code's own `<pre>`.
 
 ## Guide categories
 

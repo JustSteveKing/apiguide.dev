@@ -52,7 +52,7 @@ When an application needs to act on behalf of a specific user, reading their dat
 ### Flow:
 1. **Generate a code verifier and challenge**: The client creates a random `code_verifier` and derives a `code_challenge` from it (a SHA-256 hash, base64url-encoded).
 2. **Redirect the user to authorize**: The client sends the user's browser to the authorization server with the `code_challenge`; the user logs in and approves the requested scopes.
-   ```
+   ```http
    GET /oauth/authorize?response_type=code&client_id=abc123
      &redirect_uri=https://app.example.com/callback
      &code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&code_challenge_method=S256
@@ -90,7 +90,7 @@ Refresh tokens should be stored more securely than access tokens (they're rarely
 
 Scopes let a client (or a user authorizing that client) limit exactly what an access token can do, following the principle of least privilege. Rather than a token granting blanket access to an account, it's restricted to a declared subset of permissions.
 
-```
+```text
 scope=repos:read issues:write
 ```
 
