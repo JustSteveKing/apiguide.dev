@@ -174,9 +174,9 @@ Defined once via the theme directive, no config file required.
   --color-chartres-200: #CED7EE;
   --color-chartres-300: #A6B8E5;
   --color-chartres-400: #7392DD;
-  --color-chartres-500: #1F3F8E;
+  --color-chartres-500: #4D72CB;
   --color-chartres-600: #2852B8;
-  --color-chartres-700: #204193;
+  --color-chartres-700: #1F3F8E;
   --color-chartres-800: #1B336F;
   --color-chartres-900: #162750;
   --color-chartres-950: #0F1933;
@@ -186,9 +186,9 @@ Defined once via the theme directive, no config file required.
   --color-ochre-200: #F5EAC6;
   --color-ochre-300: #F4DE98;
   --color-ochre-400: #F6D25B;
-  --color-ochre-500: #CB9D06;
+  --color-ochre-500: #E8BD3C;
   --color-ochre-600: #DAA906;
-  --color-ochre-700: #AD8605;
+  --color-ochre-700: #CB9D06;
   --color-ochre-800: #836607;
   --color-ochre-900: #5E4A08;
   --color-ochre-950: #3C2F07;
@@ -222,9 +222,9 @@ Defined once via the theme directive, no config file required.
   --color-yinmn-200: #D1DAEB;
   --color-yinmn-300: #ACBEDF;
   --color-yinmn-400: #7E9BD3;
-  --color-yinmn-500: #2E5090;
+  --color-yinmn-500: #5A7CBF;
   --color-yinmn-600: #365EAA;
-  --color-yinmn-700: #2B4B87;
+  --color-yinmn-700: #2E5090;
   --color-yinmn-800: #233B67;
   --color-yinmn-900: #1B2C4B;
   --color-yinmn-950: #131D30;
@@ -338,7 +338,7 @@ The site uses a custom-designed logo based on a lightning bolt path. Below are t
 - `.dev`: **Paper-600** (`#71624A`) in regular font weight (`font-normal`)
 
 ### Colors & Gradients
-- **Logo Gradient background**: **Chartres-500** (`#1F3F8E`) to **Chartres-700** (`#204193`).
+- **Logo Gradient background**: **Chartres-500** (`#4D72CB`) to **Chartres-700** (`#1F3F8E`, the pigment).
 - **Lightning Bolt color**: **Paper-50** (`#FAF6F0`).
 
 ### Size Scale Mapping
