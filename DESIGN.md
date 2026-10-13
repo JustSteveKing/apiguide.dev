@@ -176,11 +176,13 @@ only.
 
 ## Themes
 
-Settled 2026-10-13, in the Linear-style pass. **Dark is the site's primary look
-and the default for every reader**, whatever their OS setting. Light is opt-in
-from the toggle in the header, stored in `localStorage` and applied before
-first paint by an inline script in `Layout.astro` (and again after each view
-transition, which replaces the `<html>` attributes).
+Settled 2026-10-13, in the Linear-style pass. **Dark is the site's primary
+look**: the one it is designed in first, and what a reader without JavaScript
+gets. Which theme a reader sees follows their OS setting until they use the
+toggle in the header; from then on their choice is stored in `localStorage`
+and wins. An inline script in `Layout.astro` applies it before first paint,
+again after each view transition (which replaces the `<html>` attributes), and
+live when the OS setting changes, as long as no choice is stored.
 
 The mechanism is one attribute: `data-theme="light"` on `<html>`. The light
 values are the `@theme` scales; `:root:not([data-theme="light"])` redefines
@@ -293,9 +295,6 @@ furniture rather than information:
 
 ## Open questions
 
-- Whether dark-by-default should yield to the OS for a first visit. Today
-  every reader starts dark and can switch; following the OS until the toggle
-  is used would be one line in the inline script.
 - Whether violet (3xx) and ultra (brand) are distinct enough at a glance for
   colour-blind readers. Both sit in the blue-violet range; 3xx is always
   labelled, so colour is never the only signal, but it is worth testing.

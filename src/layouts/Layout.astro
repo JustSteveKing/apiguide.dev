@@ -71,18 +71,25 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		<!-- Google Fonts -->
 		<!-- Match the browser chrome to the page in both themes. -->
 		<meta name="theme-color" content="#0A0C11">
-		<!-- Apply the stored theme before first paint, and again after every view
-		     transition (the swap replaces <html> attributes). Dark is the default. -->
+		<!-- Apply the theme before first paint, and again after every view
+		     transition (the swap replaces <html> attributes). A choice made with the
+		     header toggle wins; until then the OS setting decides, live. Without
+		     JavaScript the page stays dark. -->
 		<script is:inline>
 			(function () {
+				var os = window.matchMedia('(prefers-color-scheme: light)');
 				function apply() {
-					var theme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
+					var stored = localStorage.getItem('theme');
+					var theme = stored === 'light' || stored === 'dark' ? stored : (os.matches ? 'light' : 'dark');
 					document.documentElement.dataset.theme = theme;
 					var meta = document.querySelector('meta[name="theme-color"]');
 					if (meta) meta.setAttribute('content', theme === 'light' ? '#F7F8FA' : '#0A0C11');
 				}
 				apply();
 				document.addEventListener('astro:after-swap', apply);
+				os.addEventListener('change', function () {
+					if (!localStorage.getItem('theme')) apply();
+				});
 			})();
 		</script>
 

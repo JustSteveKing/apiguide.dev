@@ -296,8 +296,9 @@ touch a template. The short version:
   success. A category, a price or any other label that is not a status
   never uses them, because a security guide in the 5xx badge reads as a
   failure. Categories draw on ultra, violet and slate.
-- **Dark is the default theme**; light is opt-in via the header toggle
-  (`data-theme="light"` on `<html>`). Never use a `prefers-color-scheme`
+- **Dark is the primary theme**. Readers get their OS setting until they
+  use the header toggle, which stores their choice; either way the result is
+  `data-theme` on `<html>`. Never use a `prefers-color-scheme`
   query for colour: it disagrees with the toggle. Use the tokens, or
   `.only-dark` / `.only-light` for assets. Check every new pairing in both
   themes and keep text at 4.5:1 or better.

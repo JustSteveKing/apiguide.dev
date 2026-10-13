@@ -163,8 +163,9 @@ const nav = [
     });
   }
 
-  // Theme toggle. Dark is the default; the choice is stored and re-applied
-  // before paint by the inline script in Layout.astro.
+  // Theme toggle. Until it is used the OS setting decides; once used, the
+  // choice is stored and re-applied before paint by the inline script in
+  // Layout.astro.
   function initThemeToggle() {
     const button = document.getElementById('theme-toggle');
     if (!button) return;
