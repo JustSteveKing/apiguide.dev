@@ -9,20 +9,20 @@ pricing: "freemium"
 
 ## What is OpenAPI / Swagger?
 
-Swagger provides a toolset for API documentation and design, supporting the full API lifecycle from design and governance to testing. It caters to individuals, teams, and enterprises for developing APIs using OpenAPI and AsyncAPI specifications.
+Swagger is an enterprise API lifecycle management platform that unifies API design, documentation, testing, and governance. It helps teams build APIs that adhere to OpenAPI and AsyncAPI specifications, enforce design standards, and keep documentation synchronized. The platform supports interoperability across humans, machines, and large language models (LLMs).
 
 ## Why use it in the API Lifecycle?
 
-* **API Design Collaboration**: Facilitate collaborative API design processes with consistency across OpenAPI and AsyncAPI.
-* **API Documentation Delivery**: Generate and deliver up-to-date interactive API documentation for consumers.
-* **Automated Functional Testing**: Automate tests for API functionality to enhance development confidence.
-* **Contract Testing**: Implement contract testing to prevent breaking changes in APIs during deployment.
-* **In-browser API Editing**: Edit and design APIs directly in a browser environment, receiving real-time feedback and auto-completion.
-* **API Specification Visualization**: Render and interact with OpenAPI Specification definitions in a user-friendly interface.
+* **API Specifications**: Swagger places API specifications such as OpenAPI, AsyncAPI, and JSON Schema at the core of its architecture to guide teams through the API design and documentation lifecycle.
+* **API Design**: Swagger Editor allows crafting APIs directly in the browser with real-time feedback and syntax auto-completion.
+* **API Documentation**: Swagger UI visualizes and allows interaction with API resources without requiring implementation logic.
+* **Code Generation**: Swagger Codegen generates client libraries, server stubs, and API documentation from an OpenAPI Specification.
+* **Functional Testing**: The platform includes tools for automated API functional testing.
+* **Contract Testing**: Swagger offers contract testing capabilities to prevent API breaking changes.
 
 ## Best Practices
 
-* Utilize API specifications like OpenAPI and AsyncAPI as a central guide for design and documentation throughout the API lifecycle.
-* Implement consistent API design standards and governance policies across an organization to simplify development and ensure compliance.
-* Leverage role-based access controls and collaboration features to streamline team workflows in API development.
-* Integrate the tool with existing deployment pipelines including API gateways and version control systems.
+* Define API design rules once and apply them automatically to catch violations before code review.
+* Use a centralized API catalog as a single source of truth for all API definitions to facilitate reuse of shared components.
+* Integrate contract testing and validation at every stage of a CI/CD pipeline.
+* Leverage the MCP Server to create, validate, and publish APIs from an IDE using natural language prompts.

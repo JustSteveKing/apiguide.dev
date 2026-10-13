@@ -9,16 +9,19 @@ pricing: "freemium"
 
 ## What is Fiddler (Progress)?
 
-Fiddler is a web debugging proxy tool for Windows, macOS, and Linux that helps identify and resolve issues in web applications. It inspects and modifies HTTP/S traffic, allowing developers and QA professionals to troubleshoot problems, optimize performance, and ensure security and functionality. The tool offers a suite of debugging solutions including Fiddler Everywhere, Fiddler Classic, Fiddler Everywhere Reporter, and FiddlerCore.
+Fiddler is a web debugging proxy that allows users to capture, inspect, and modify HTTP/S traffic. It helps in identifying issues in web applications and optimizing performance. Fiddler offers different solutions for various debugging needs, including Fiddler Everywhere for modern web debugging, Fiddler Reporter for collecting network logs from end-users, and FiddlerCore for embedding traffic capture into applications.
 
 ## Why use it in the API Lifecycle?
 
-* **Traffic Capture**: Provides multiple options for capturing web and network traffic, including from remote devices.
-* **Protocol Support**: Supports the debugging of multiple network protocols.
-* **Traffic Modification Rules**: Offers extensive rules for modifying intercepted web traffic.
-* **Advanced Filtering**: Includes advanced filters for narrowing down and focusing on specific network traffic.
-* **Offline Mode Operation**: Functions in an offline mode for analysis without an active internet connection.
+* **Traffic Capture**: Capture HTTP/S traffic from various sources, including remote devices and in offline mode.
+* **Protocol Support**: Supports multiple protocols for traffic inspection.
+* **Traffic Modification**: Extensive rules for modifying web traffic.
+* **Advanced Filtering**: Provides advanced filters to narrow down captured traffic for analysis.
+* **AI-assisted Debugging**: Includes AI-assisted debugging capabilities with Fiddler MCP.
+* **Embeddable Library**: FiddlerCore is an embeddable .NET library for integrating traffic capture directly into application code.
 
 ## Best Practices
 
-* Use Fiddler Everywhere for cross-platform debugging across macOS, Windows, and Linux environments.
+* Try the Fiddler product that aligns with specific debugging and troubleshooting requirements.
+* Integrate Fiddler into the workflow for debugging and troubleshooting.
+* Utilize Fiddler to accelerate time and cost savings in development processes.

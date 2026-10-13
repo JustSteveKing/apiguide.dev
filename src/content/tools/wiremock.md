@@ -9,20 +9,20 @@ pricing: "freemium"
 
 ## What is WireMock?
 
-WireMock is a tool used to simulate APIs and software dependencies, allowing teams to build stable development environments. It enables testing applications without live dependencies, simulating edge cases, and developing dependent features concurrently.
+WireMock is a tool for simulating APIs and software dependencies, used for building stable development environments when APIs are unreliable or do not exist. It enables testing applications without dependencies, simulating edge cases, and developing dependent features in parallel.
 
 ## Why use it in the API Lifecycle?
 
-* **HTTP Mocking and Matching**: Stub HTTP responses and match incoming requests based on URL patterns, headers, query parameters, cookies, and request body content.
-* **Dynamic Response Templating**: Generate responses dynamically using Handlebars templates, incorporating request data, random values, and custom helpers.
-* **Record & Playback**: Capture interactions with actual services and replay them during testing to replicate realistic scenarios.
-* **Fault Simulation**: Introduce network faults, delays, and malformed responses to assess an application's resilience.
-* **Request Verification**: Confirm that the application sent expected requests with correct parameters and timing.
-* **Extensibility**: Extend the tool with custom request matchers, response transformers, and administrative API extensions.
+* **HTTP Mocking and Matching**: Stub HTTP responses and match requests using URL patterns, headers, query parameters, cookies, and request body content.
+* **Dynamic Response Templating**: Generate dynamic responses using Handlebars templating with request data, random values, and custom helpers.
+* **Record & Playback**: Record interactions with real services and play them back during testing for realistic scenarios.
+* **Fault Simulation**: Simulate network faults, delays, and malformed responses to test application resilience.
+* **Request Verification**: Verify that an application made expected requests with the correct parameters and timing.
+* **Extensible**: Extend WireMock with custom request matchers, response transformers, and admin API extensions.
 
 ## Best Practices
 
-* Test applications without relying on external dependencies.
-* Develop dependent features in parallel by mocking unavailable APIs.
-* Integrate WireMock with testing frameworks like JUnit for test automation.
-* Simulate edge cases to ensure application resilience.
+* Run WireMock as a standalone process, embedded in tests, or deployed as a service in any environment.
+* Integrate with JUnit and other testing frameworks for test automation.
+* Connect an AI coding agent to WireMock Cloud to build mock APIs, create stubs, and simulate failures.
+* Utilize WireMock Runner to run API simulations locally, on private cloud, or in a CI/CD pipeline.

@@ -9,19 +9,17 @@ pricing: "freemium"
 
 ## What is SoapUI?
 
-SoapUI is an automated testing tool designed for SOAP and REST APIs. It allows users to write, run, integrate, and automate API tests. This tool is widely used for getting started with API testing fundamentals.
+SoapUI is an open-source API testing tool for SOAP and REST APIs. It allows users to write, run, and automate API tests. SoapUI is utilized by many users for testing their APIs.
 
 ## Why use it in the API Lifecycle?
 
-* **Multi-Protocol Support**: Supports testing of REST, SOAP, GraphQL, and JMS protocols.
-* **Scripted Test Automation**: Enables running multiple API tests using Groovy or Javascript code via scripting.
-* **Basic Functional Testing**: Provides capabilities for fundamental functional testing of APIs.
-* **Basic Performance Testing**: Offers functionalities for basic performance testing.
-* **Test Log Analysis**: Allows users to manually compare test results through detailed test logs.
+* **Multi-Protocol Support**: Supports REST, SOAP, GraphQL, and JMS protocols.
+* **Basic Functional Testing**: Enables basic functional testing of APIs.
+* **Basic Performance Testing**: Provides basic performance testing capabilities for APIs.
+* **Scripting for Automation**: Allows running multiple API tests using Groovy or Javascript code via scripting.
+* **Manual Test Refactoring**: Test refactoring is performed manually within the tool.
 
 ## Best Practices
 
-* Develop custom scripts using Groovy or JavaScript to manage and automate intricate test sequences and logic within the tool.
-* Regularly analyze detailed test logs to manually identify trends, regressions, and areas for improvement across test runs.
-* Implement basic functional tests early in the development cycle to validate core API behavior.
-* Conduct basic performance tests to identify potential bottlenecks under expected load conditions.
+* For individuals and users working on a single machine in one environment.
+* Use test logs to manually compare results to identify issues or improvements.

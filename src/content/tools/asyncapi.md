@@ -9,15 +9,18 @@ pricing: "open-source"
 
 ## What is AsyncAPI Specification?
 
-AsyncAPI is an initiative that provides open-source tools for building and maintaining event-driven architectures. Its tooling is powered by the AsyncAPI specification, which serves as an industry standard for defining asynchronous APIs.
+The AsyncAPI Initiative provides open-source tools for building and maintaining event-driven architectures. These tools are based on the AsyncAPI specification, which serves as a standard for defining asynchronous APIs. The initiative focuses on supporting developers in creating and managing event-driven systems.
 
 ## Why use it in the API Lifecycle?
 
-* **API Definition using Standard Specification**: Enables users to define asynchronous APIs through the use of the AsyncAPI specification, an industry standard.
-* **Event-Driven Architecture Development Tools**: Provides open-source tools designed to facilitate the construction of event-driven architectures.
-* **Event-Driven Architecture Maintenance Tools**: Offers open-source tools that assist in the ongoing management and upkeep of event-driven architectures.
-* **Standardization for Asynchronous APIs**: Utilizes the AsyncAPI specification, which is recognized as an industry standard for defining asynchronous APIs.
+* **Event-driven architecture support**: Provides open-source tools to build and maintain event-driven architectures.
+* **Asynchronous API definition**: Utilizes the AsyncAPI specification, the industry standard for defining asynchronous APIs.
+* **Community engagement**: Offers resources for community interaction and collaboration, including social media channels and a Slack community.
+* **Documentation access**: Provides documentation for understanding and using AsyncAPI tools and specifications.
 
 ## Best Practices
 
-* Use AsyncAPI alongside OpenAPI to document hybrid architectures that combine REST interfaces with asynchronous event notifications.
+* Consult the official documentation for comprehensive guidance on using AsyncAPI tools.
+* Engage with the AsyncAPI community through provided social channels for support and collaboration.
+* Refer to case studies to understand real-world implementations of AsyncAPI.
+* Stay informed about project developments through the AsyncAPI blog and news updates.

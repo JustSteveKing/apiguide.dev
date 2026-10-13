@@ -9,19 +9,19 @@ pricing: "open-source"
 
 ## What is Prism (Stoplight)?
 
-Prism is an open-source HTTP mock and proxy server that emulates API behavior using OpenAPI v2/v3 documents. It generates realistic mock servers to accelerate API development.
+Prism is an open-source HTTP mock and proxy server that generates mock HTTP servers from OpenAPI v2/v3 documents. It allows for the emulation of API behavior, facilitating development and testing processes.
 
 ## Why use it in the API Lifecycle?
 
-* **Quick Iterations**: Allows for incorporating user feedback during the API design phase to refine the API before coding.
-* **Develop in Parallel**: Enables frontend and backend teams to work concurrently by providing mock servers for frontend development before backend completion.
-* **Dynamic Examples**: Generates valid and varied random examples from API descriptions, rather than static ones, to prevent bias in code and testing.
-* **Validation**: Performs validation of both request and response data against the API specification, flagging non-compliant inputs or invalid examples.
-* **Mocking Callbacks**: Supports OpenAPI v3.0 callback definitions, allowing for integration of callback functionality prior to API implementation.
-* **Validation Proxy**: Identifies discrepancies between an OpenAPI document and the target API, helping frontend developers during integration.
+* **Quick Iterations**: Incorporate user input during the design phase of an API to refine it based on insights and requirements, reducing the cost of change.
+* **Develop in Parallel**: Enable frontend and backend teams to work simultaneously by providing a mock server for frontend developers before the backend is complete.
+* **Dynamic Examples**: Generate dynamic, random examples based on API descriptions to ensure validity and versatility, avoiding biases from static examples.
+* **Validation**: Validate both request and response data against the API specification, flagging non-compliant requests or invalid examples.
+* **Mocking Callbacks**: Support OpenAPI v3.0 callback functionality, allowing API designers to define and integrate callbacks before the API is built.
+* **Validation Proxy**: Identify discrepancies between the OpenAPI document and the target API by enabling a proxy in pre-production environments to keep documentation and code synchronized.
 
 ## Best Practices
 
-* Incorporate user input during the API design phase to iterate and refine the API early, reducing change costs.
-* Utilize the mock server to enable simultaneous work for frontend and backend teams, allowing frontend development to proceed without waiting for backend completion.
-* Activate the proxy in pre-production environments to ensure the OpenAPI document and the API code remain consistent.
+* Integrate user feedback early in the API design phase to reduce rework.
+* Utilize the mock server to enable concurrent development between frontend and backend teams.
+* Employ the validation proxy in pre-production environments to maintain consistency between API specifications and implemented code.

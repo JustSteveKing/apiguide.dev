@@ -9,20 +9,18 @@ pricing: "freemium"
 
 ## What is Redoc (Redocly)?
 
-Redocly is an OpenAPI-generated documentation tool that assists companies in integrating APIs and fostering innovation. It provides a suite of products designed to accelerate API adoption and manage API ecosystems. The core Redoc tool is a popular API documentation renderer.
+Redocly is an OpenAPI-generated documentation tool. It helps companies with API documentation, collaboration, and governance. The tool assists in creating API references and managing API ecosystems.
 
 ## Why use it in the API Lifecycle?
 
-* **OpenAPI Documentation Generation**: Automatically creates production-ready reference documentation from OpenAPI definitions.
-* **Auto-generated Code Samples**: Provides code examples within the documentation for various languages.
-* **Mock Servers**: Offers mock server functionality for API testing and development.
-* **Schema Support**: Includes support for advanced schema features such as polymorphism and discriminators.
-* **API Governance**: Allows for the enforcement and management of API standards and quality across an organization.
-* **API Discovery**: Enables internal teams to discover and manage APIs within an organization's ecosystem.
+* **Auto-generated code samples**: Redoc automatically generates code samples from OpenAPI definitions.
+* **Polymorphism and discriminator support**: The tool supports polymorphism and discriminator schemas for complex API structures.
+* **Mock servers**: Redoc includes mock servers for API development and testing.
+* **Nested schemas with deep links**: It provides nested schemas with deep linking capabilities for detailed documentation.
 
 ## Best Practices
 
-* Integrate API building, testing, and documentation workflows directly within the development environment (IDE).
-* Establish and enforce API governance rules organization-wide to maintain consistency and quality.
-* Automate the documentation pipeline from source control to customer-facing platforms.
-* Utilize Markdown for creating single-source content, enabling flexible documentation generation.
+* Keep documentation in sync with code changes using a docs-as-code workflow.
+* Utilize visual reviews for API documentation to streamline stakeholder feedback.
+* Leverage remote content for single-sourcing to maintain consistency across documentation.
+* Build an automated pipeline from GitHub to customer-facing documentation to reduce friction.
