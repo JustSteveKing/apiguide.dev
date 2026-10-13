@@ -54,13 +54,62 @@ just check its status.
 `check:internal-links` needs no network and no Tabstack, only a build. It is
 the cheapest of the four and the one most likely to catch your mistake.
 
-`bun run check:content` runs all three checks in order.
+`bun run check:content` runs `check:internal-links`, `check:gaps` and
+`check:links` in that order. It does not run `factcheck`.
+
+`factcheck` defaults to files changed against `HEAD~1`. To check one page,
+which is the nearest thing this repo has to running a single test:
+
+```sh
+bun run factcheck -- methods/trace            # collection/slug shorthand
+bun run factcheck -- src/content/errors/x.md  # or a path
+FACTCHECK_BASE=origin/main bun run factcheck  # diff against another base
+```
+
+There is no test suite and no linter. `bun run build` (zod schemas, strict
+TypeScript) and the checks above are the whole of the safety net.
+
+Two further Tabstack scripts, `enrich:tools` and `research:guides`, write
+proposals to `scripts/out/`, which is gitignored. They never touch
+`src/content/`; their output is for a human to review and fold in by hand.
+`research:guides` still labels its planned guides with the old four
+categories (`caching`, `security`, `negotiation`, `core`), so map those onto
+the current eight before using anything it produces.
 
 ## Deployment
 
 Cloudflare Pages, project `apiguidedev`, from `wrangler.json`. Output is
 `dist`. `bun run deploy` pushes a build directly, but the normal path is
 merging to `main`.
+
+## How the site is built
+
+Astro, fully static, Tailwind v4 through its Vite plugin. `@/` is aliased to
+`src/`. One layout, `src/layouts/Layout.astro`.
+
+Each collection has an `index.astro` and a `[slug].astro` under
+`src/pages/<collection>/`, except status codes (`[code].astro`) and tools
+(`[category]/[slug].astro`). Beyond those, several routes read every
+collection at build time, so **a new collection, or a new field you want
+surfaced, has to be wired into each of them**:
+
+| Route | What it is |
+| :--- | :--- |
+| `src/pages/search-index.json.ts` | Index fetched by `CommandPalette.astro` for site search |
+| `src/pages/llms.txt.ts` | `/llms.txt`, a plain-text index of the catalogue |
+| `src/pages/og/[...path].ts` | Open Graph cards, rendered to PNG by sharp |
+
+The OG renderer converts text to vector paths with `fontkitten` from the
+static WOFF2 files in `src/assets/fonts/`, because librsvg ignores
+`@font-face` and would otherwise use whatever fonts the build machine has.
+See `src/assets/fonts/README.md` before changing a typeface.
+
+`/problem-json` is hand-written Astro, not a collection entry, so its table
+of contents is a `headings` array declared at the top of the file. Change a
+heading there and you must change the array to match.
+
+Structured data comes from `src/utils/jsonLd.ts`. The `scripts/` checks share
+`scripts/lib/` for Tabstack calls, content listing and frontmatter parsing.
 
 ## Where content goes
 
@@ -189,7 +238,12 @@ first mention of any status code, header or method:
 
 Conventions, both universal across the existing 231 internal links:
 
-- **No trailing slash**: `/methods/get`, never `/methods/get/`.
+- **No trailing slash**: `/methods/get`, never `/methods/get/`. This holds in
+  templates too, including template literals. The build emits
+  `methods/get.html` (`build.format: 'file'`), so the no-slash form is served
+  directly and the slash form redirects to it. Code that needs the current
+  page's own URL must use `src/utils/pagePath.ts`, because during a build
+  `Astro.url.pathname` ends in `.html`.
 - **Code-formatted link text** for a code, header or method name.
 
 Never link to a page that does not exist. `bun run build` will not catch it.
