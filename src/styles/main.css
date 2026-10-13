@@ -78,12 +78,6 @@
   --color-violet-900: #362861;
   --color-violet-950: #252135;
 
-  /* The home page band. Not mirrored for dark mode: a mirrored band would be
-     a pale periwinkle strip with dark type. */
-  --color-band: #2B2FD9;
-  --color-on-band: #F7F8FA;
-  --color-on-band-muted: #CCD9FD;
-
   --text-xxs: 0.625rem;
   --text-xxs--line-height: 1rem;
 
@@ -269,43 +263,37 @@
   }
 }
 
-/* --- Dark theme ---------------------------------------------------------
-   Every colour utility on this site resolves through a `var(--color-*)`, so
-   dark mode is done once here at the token layer rather than by adding a
-   `dark:` variant to several hundred class attributes.
+/* --- Themes ------------------------------------------------------------
+   Dark is the site's primary look and the default for every reader. Light is
+   opt-in: the header toggle sets data-theme="light" on <html> and remembers
+   it (see the inline script in Layout.astro). Every colour utility resolves
+   through var(--color-*), so each theme is one block of token values and no
+   component needs a dark: variant.
 
-   The scale is mirrored: 50 swaps with 950, 100 with 900, and so on, leaving
-   500 fixed. That is not a shortcut, it is what makes the inversion correct.
-   In light mode a raised surface is a step darker than the page (slate-100 on
-   slate-50); mirrored, it becomes a step lighter (slate-900 on slate-950),
-   which is exactly the elevation convention dark interfaces use. Link hover
-   moves toward 900, which in light mode deepens the blue and in dark mode
-   brightens it. Both read as "more emphasis" without a second rule.
-
-   The page lands on slate-950 #111827, the same blue-tinted ink the light
-   theme uses for text. Measured on it: body text (slate-800) 12.66:1, muted
-   text (slate-600) 6.27:1, links (ultra-600) 6.14:1. The home page band is
-   the one exception to mirroring; see --color-band above.
+   The light values are the @theme scales above. Dark redefines them below:
+   slate has its own deeper scale for the canvas (slate-50 #0A0C11), and the
+   hue families are the light scales mirrored, 50 with 950 and so on, so
+   bg-x-100 text-x-900 works in both. Measured on the dark canvas: body text
+   14.1:1, muted text 7.53:1, links 6.77:1.
 --------------------------------------------------------------------------- */
 
-:root {
+:root[data-theme="light"] {
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+:root:not([data-theme="light"]) {
     color-scheme: dark;
 
-    --color-slate-50: #111827;
-    --color-slate-100: #1F2636;
-    --color-slate-200: #2E3545;
-    --color-slate-300: #3C4455;
-    --color-slate-400: #4B5563;
+    --color-slate-50: #0A0C11;
+    --color-slate-100: #10131A;
+    --color-slate-200: #181C25;
+    --color-slate-300: #242A36;
+    --color-slate-400: #363E4D;
     --color-slate-500: #6D7688;
-    --color-slate-600: #919AAC;
-    --color-slate-700: #B9C0CF;
-    --color-slate-800: #D5DAE5;
-    --color-slate-900: #ECEEF3;
+    --color-slate-600: #98A1B3;
+    --color-slate-700: #B7BECB;
+    --color-slate-800: #D7DBE4;
+    --color-slate-900: #E9ECF2;
     --color-slate-950: #F7F8FA;
 
     --color-ultra-50: #1C233A;
@@ -368,24 +356,20 @@
     --color-violet-900: #EFEDFF;
     --color-violet-950: #F9F8FF;
 
-    --color-band: #1A1D8F;
-    --color-on-band: #F7F8FA;
-    --color-on-band-muted: #CCD9FD;
+}
 
-  }
-
-  /* A low-alpha shadow vanishes against a dark page. Deepen it so the
+/* A low-alpha shadow vanishes against a dark page. Deepen it so the
      card lift is still legible. */
-  .card:hover {
+:root:not([data-theme="light"]) .card:hover {
     box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.55),
                 0 4px 8px -4px rgba(0, 0, 0, 0.4);
   }
 
   /* Code blocks carry an inset highlight that only works on a light surface. */
-  .prose pre {
+:root:not([data-theme="light"]) .prose pre {
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
   }
-}
+
 
 /* --- Modernization Pass styles --- */
 
@@ -428,6 +412,132 @@ html {
 }
 .wire-lg { font-size: clamp(1.75rem, 1.1rem + 2.6vw, 3rem); }
 .wire-md { font-size: clamp(1.125rem, 0.9rem + 1.1vw, 1.625rem); }
+
+/* A glass panel for content that is not itself a link. */
+.surface {
+  border-radius: 0.875rem;
+  border: 1px solid color-mix(in oklab, var(--color-slate-950) 8%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--color-slate-950) 4%, transparent), transparent 70%),
+    color-mix(in oklab, var(--color-slate-100) 60%, transparent);
+}
+
+/* The glow in the corner of a wire-line panel. */
+.wire-hero-glow {
+  position: absolute;
+  inset: -40% -10% auto auto;
+  width: 60%;
+  height: 180%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--color-ultra-500) 22%, transparent), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.wire-hero > :not(.wire-hero-glow) { position: relative; z-index: 1; }
+
+/* --- Home hero ---------------------------------------------------------- */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(640px 460px at 50% -140px, color-mix(in oklab, var(--color-ultra-500) 60%, transparent), transparent 72%),
+    radial-gradient(360px 300px at calc(50% - 280px) -60px, color-mix(in oklab, var(--color-violet-500) 30%, transparent), transparent 72%),
+    radial-gradient(360px 300px at calc(50% + 280px) -60px, color-mix(in oklab, var(--color-ultra-400) 26%, transparent), transparent 72%);
+  pointer-events: none;
+}
+:root[data-theme="light"] .hero-glow { opacity: 0.45; }
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--color-slate-950) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--color-slate-950) 6%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(60% 55% at 50% 30%, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+.hero-title, .display-title {
+  background: linear-gradient(180deg, var(--color-slate-950) 30%, color-mix(in oklab, var(--color-slate-950) 55%, var(--color-ultra-400)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.04em;
+}
+.display-title { letter-spacing: -0.035em; padding-bottom: 0.05em; }
+.hero-search {
+  border: 1px solid color-mix(in oklab, var(--color-slate-950) 12%, transparent);
+  background: color-mix(in oklab, var(--color-slate-100) 70%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-ultra-500) 0%, transparent),
+    0 20px 50px -20px color-mix(in oklab, var(--color-ultra-600) 55%, transparent);
+  transition: border-color 200ms, box-shadow 200ms;
+}
+.hero-search:hover {
+  border-color: color-mix(in oklab, var(--color-ultra-500) 55%, transparent);
+  box-shadow:
+    0 0 0 4px color-mix(in oklab, var(--color-ultra-500) 15%, transparent),
+    0 24px 60px -20px color-mix(in oklab, var(--color-ultra-600) 70%, transparent);
+}
+/* The page's one orchestrated moment: the hero arrives in order. */
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(12px); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+.hero-in { animation: hero-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0ms); }
+@media (prefers-reduced-motion: reduce) {
+  .hero-in { animation: none; }
+}
+
+/* Registry cards: glass surface, 1px translucent border, a lift on hover and
+   a spotlight that follows the pointer (RegistryRow sets --mx and --my). */
+.registry-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem 1.125rem;
+  border-radius: 0.875rem;
+  border: 1px solid color-mix(in oklab, var(--color-slate-950) 8%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--color-slate-950) 4%, transparent), transparent 70%),
+    color-mix(in oklab, var(--color-slate-100) 60%, transparent);
+  transition: transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 180ms, box-shadow 180ms;
+  isolation: isolate;
+}
+.registry-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), color-mix(in oklab, var(--color-ultra-500) 14%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 200ms;
+  z-index: -1;
+}
+.registry-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--color-slate-950) 16%, transparent);
+  box-shadow: 0 12px 32px -16px color-mix(in oklab, var(--color-ultra-600) 45%, transparent);
+}
+.registry-card:hover::before { opacity: 1; }
+.registry-card-chevron { transition: transform 180ms, color 180ms; }
+.registry-card:hover .registry-card-chevron { transform: translateX(2px); color: var(--color-ultra-600); }
+
+@media (prefers-reduced-motion: reduce) {
+  .registry-card, .registry-card-chevron { transition: none; }
+  .registry-card:hover { transform: none; }
+}
+
+/* Theme-specific assets, such as a sponsor logo with a light and a dark file. */
+:root:not([data-theme="light"]) .only-light { display: none; }
+:root[data-theme="light"] .only-dark { display: none; }
+
+/* Theme toggle: show the icon for the theme you would switch to. */
+.theme-icon-moon { display: none; }
+:root[data-theme="light"] .theme-icon-sun { display: none; }
+:root[data-theme="light"] .theme-icon-moon { display: block; }
 
 /* Any heading a link can jump to clears the sticky header. The prose rule
    above covers article headings; this covers index-page section headings. */

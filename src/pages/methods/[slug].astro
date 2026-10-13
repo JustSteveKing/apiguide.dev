@@ -29,6 +29,7 @@ import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
 import WireHero from '@/components/WireHero.astro';
 import RegistryGroup from '@/components/RegistryGroup.astro';
 import RegistryRow from '@/components/RegistryRow.astro';
+import { statusCategoryThemes } from '@/config/themes';
 
 const methodJsonLd = [
   getTechArticleSchema({
@@ -96,7 +97,7 @@ const methodJsonLd = [
       <div class="mt-12">
         <RegistryGroup id="related-codes" title="Common response codes" count={sortedRelatedCodes.length}>
           {sortedRelatedCodes.map(c => (
-            <RegistryRow href={`/status-codes/${c.data.code}`} code={String(c.data.code)} name={c.data.title} description={c.data.description} />
+            <RegistryRow href={`/status-codes/${c.data.code}`} code={String(c.data.code)} tone={statusCategoryThemes[c.data.category].tone} name={c.data.title} description={c.data.description} />
           ))}
         </RegistryGroup>
       </div>

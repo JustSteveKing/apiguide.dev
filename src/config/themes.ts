@@ -1,37 +1,49 @@
 /**
- * `marker` is the left rule beside a page's wire line (WireHero). It is a fill,
- * not text, so step 500 is allowed; see DESIGN.md, "Contrast floors".
+ * `marker` is the left rule beside a page's wire line (WireHero) and `dot` the
+ * mark beside a group heading; both are fills, so step 500 is allowed. `tone`
+ * is the text colour for a code in its status hue: 700, or 800 for amber, which
+ * at 700 sits at 4.49:1 on a light card.
  */
 export const statusCategoryThemes = {
   'informational': {
     badge: 'bg-slate-100 text-slate-900 border-slate-200 border',
     label: 'Informational (1xx)',
     cardHover: 'hover:border-slate-300 hover:bg-slate-50/10',
-    marker: 'border-slate-500'
+    marker: 'border-slate-500',
+    dot: 'bg-slate-500',
+    tone: 'text-slate-700'
   },
   'success': {
     badge: 'bg-green-100 text-green-900 border-green-200 border',
     label: 'Success (2xx)',
     cardHover: 'hover:border-green-300 hover:bg-green-50/10',
-    marker: 'border-green-500'
+    marker: 'border-green-500',
+    dot: 'bg-green-500',
+    tone: 'text-green-700'
   },
   'redirection': {
     badge: 'bg-violet-100 text-violet-900 border-violet-200 border',
     label: 'Redirection (3xx)',
     cardHover: 'hover:border-violet-300 hover:bg-violet-50/10',
-    marker: 'border-violet-500'
+    marker: 'border-violet-500',
+    dot: 'bg-violet-500',
+    tone: 'text-violet-700'
   },
   'client-error': {
     badge: 'bg-amber-100 text-amber-900 border-amber-200 border',
     label: 'Client Error (4xx)',
     cardHover: 'hover:border-amber-300 hover:bg-amber-50/10',
-    marker: 'border-amber-500'
+    marker: 'border-amber-500',
+    dot: 'bg-amber-500',
+    tone: 'text-amber-800'
   },
   'server-error': {
     badge: 'bg-red-100 text-red-900 border-red-200 border',
     label: 'Server Error (5xx)',
     cardHover: 'hover:border-red-300 hover:bg-red-50/10',
-    marker: 'border-red-500'
+    marker: 'border-red-500',
+    dot: 'bg-red-500',
+    tone: 'text-red-700'
   }
 } as const;
 
@@ -40,13 +52,17 @@ export const errorCategoryThemes = {
     badge: 'bg-amber-100 text-amber-900 border-amber-200 border',
     label: 'Client Error (4xx)',
     cardHover: 'hover:border-amber-300 hover:bg-amber-50/10',
-    marker: 'border-amber-500'
+    marker: 'border-amber-500',
+    dot: 'bg-amber-500',
+    tone: 'text-amber-800'
   },
   'server-error': {
     badge: 'bg-red-100 text-red-900 border-red-200 border',
     label: 'Server Error (5xx)',
     cardHover: 'hover:border-red-300 hover:bg-red-50/10',
-    marker: 'border-red-500'
+    marker: 'border-red-500',
+    dot: 'bg-red-500',
+    tone: 'text-red-700'
   }
 } as const;
 
@@ -54,17 +70,23 @@ export const headerCategoryThemes = {
   'request': {
     badge: 'bg-violet-100 text-violet-900 border-violet-200 border',
     label: 'Request Header',
-    marker: 'border-violet-500'
+    marker: 'border-violet-500',
+    dot: 'bg-violet-500',
+    tone: 'text-violet-700'
   },
   'response': {
     badge: 'bg-ultra-100 text-ultra-900 border-ultra-200 border',
     label: 'Response Header',
-    marker: 'border-ultra-500'
+    marker: 'border-ultra-500',
+    dot: 'bg-ultra-500',
+    tone: 'text-ultra-700'
   },
   'both': {
     badge: 'bg-slate-200 text-slate-900 border-slate-300 border',
     label: 'Bidirectional (Request/Response)',
-    marker: 'border-slate-500'
+    marker: 'border-slate-500',
+    dot: 'bg-slate-500',
+    tone: 'text-slate-700'
   }
 } as const;
 

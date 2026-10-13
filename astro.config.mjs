@@ -8,10 +8,17 @@ import expressiveCode from "astro-expressive-code";
 export default defineConfig({
     integrations: [
         expressiveCode({
-            // Two themes, light first. Expressive Code switches between them on
-            // prefers-color-scheme, which keeps code blocks in step with the
-            // dark theme in main.css instead of staying light on a dark page.
-            themes: ['github-light', 'github-dark']
+            // Dark first, as the site is. Themes follow the data-theme attribute
+            // the header toggle sets, not the OS preference, so code blocks
+            // always match the page around them.
+            themes: ['github-dark', 'github-light'],
+            useDarkModeMediaQuery: false,
+            themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
+            styleOverrides: {
+                borderRadius: '0.75rem',
+                borderColor: 'color-mix(in oklab, var(--color-slate-950) 10%, transparent)',
+                codeBackground: ({ theme }) => (theme.type === 'dark' ? 'var(--color-slate-100)' : theme.bg),
+            },
         }),
         sitemap()
     ],

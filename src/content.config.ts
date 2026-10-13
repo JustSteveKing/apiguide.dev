@@ -108,7 +108,7 @@ export const collections = {
             url: z.string().url(),
             tier: z.enum(['premier', 'standard']).default('standard'),
             logo: z.string().optional(), // image src (path in /public or absolute URL)
-            logoDark: z.string().optional(), // shown under prefers-color-scheme: dark; set it when the logo is a dark mark
+            logoDark: z.string().optional(), // shown in the dark theme; set it when the logo is a dark mark
             blurb: z.string().optional(),
             order: z.number().optional(),
         }),

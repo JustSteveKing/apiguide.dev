@@ -1,7 +1,7 @@
 ---
-// One group of a registry-style index: a heading with its count, then rows.
-// The left rule carries the group's hue, as WireHero does on the detail page,
-// so a reader sees the same mark in both places.
+// One group of a registry index: a heading with its count, then a grid of
+// entry cards. The dot carries the group's status hue (a `dot` from
+// src/config/themes.ts); groups without one get a neutral dot.
 interface Props {
   id: string;
   title: string;
@@ -9,21 +9,24 @@ interface Props {
   code?: string;
   count: number;
   blurb?: string;
-  marker?: string;
+  dot?: string;
+  /** Columns at lg. Long-form entries (guides) read better two-up. */
+  columns?: 2 | 3;
 }
 
-const { id, title, code, count, blurb, marker = 'border-slate-400' } = Astro.props;
+const { id, title, code, count, blurb, dot = 'bg-slate-500', columns = 3 } = Astro.props;
 ---
 
-<section aria-labelledby={id} class="mb-14 last:mb-0">
-  <div class={`flex items-baseline gap-3 border-l-4 pl-4 ${marker}`}>
-    <h2 id={id} class="text-xl font-bold tracking-tight text-slate-950">
+<section aria-labelledby={id} class="mb-16 last:mb-0">
+  <div class="flex items-center gap-3">
+    <span class={`h-2 w-2 rounded-full ${dot}`} aria-hidden="true"></span>
+    <h2 id={id} class="text-lg font-semibold tracking-tight text-slate-950">
       {code && <span class="font-mono font-medium text-slate-700 mr-2">{code}</span>}{title}
     </h2>
-    <span class="text-sm text-slate-700 tabular-nums">{count}</span>
+    <span class="rounded-full border border-slate-950/[0.08] bg-slate-950/[0.04] px-2 py-0.5 text-xs text-slate-700 tabular-nums">{count}</span>
   </div>
-  {blurb && <p class="mt-1 pl-5 text-sm text-slate-700">{blurb}</p>}
-  <ul class="mt-4 border-t border-slate-300">
+  {blurb && <p class="mt-2 text-sm text-slate-700 max-w-2xl">{blurb}</p>}
+  <ul class={`mt-5 grid gap-3 sm:grid-cols-2 ${columns === 3 ? 'lg:grid-cols-3' : ''}`}>
     <slot />
   </ul>
 </section>

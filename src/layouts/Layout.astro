@@ -70,8 +70,21 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		
 		<!-- Google Fonts -->
 		<!-- Match the browser chrome to the page in both themes. -->
-		<meta name="theme-color" content="#F7F8FA" media="(prefers-color-scheme: light)">
-		<meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+		<meta name="theme-color" content="#0A0C11">
+		<!-- Apply the stored theme before first paint, and again after every view
+		     transition (the swap replaces <html> attributes). Dark is the default. -->
+		<script is:inline>
+			(function () {
+				function apply() {
+					var theme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
+					document.documentElement.dataset.theme = theme;
+					var meta = document.querySelector('meta[name="theme-color"]');
+					if (meta) meta.setAttribute('content', theme === 'light' ? '#F7F8FA' : '#0A0C11');
+				}
+				apply();
+				document.addEventListener('astro:after-swap', apply);
+			})();
+		</script>
 
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>

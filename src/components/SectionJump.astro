@@ -21,10 +21,10 @@ const { items } = Astro.props;
       <li>
         <a
           href={item.href}
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-slate-300 bg-slate-100/50 text-sm text-slate-800 hover:border-ultra-400 hover:text-ultra-700 transition-colors"
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-950/[0.1] bg-slate-950/[0.03] text-sm text-slate-800 hover:text-slate-950 hover:border-ultra-500/60 hover:bg-ultra-500/10 transition-colors"
         >
           {item.label}
-          <span class="text-xs text-slate-700">{item.count}</span>
+          <span class="text-xs text-slate-600 tabular-nums">{item.count}</span>
         </a>
       </li>
     ))}

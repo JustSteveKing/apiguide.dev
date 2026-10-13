@@ -219,24 +219,31 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
           <stop offset="0%" stop-color="#465FFB" />
           <stop offset="100%" stop-color="#26359C" />
         </linearGradient>
+        <!-- The glow from the top of the home page hero -->
+        <radialGradient id="glow" cx="50%" cy="0%" r="70%" fx="50%" fy="0%">
+          <stop offset="0%" stop-color="#465FFB" stop-opacity="0.55" />
+          <stop offset="60%" stop-color="#465FFB" stop-opacity="0.08" />
+          <stop offset="100%" stop-color="#465FFB" stop-opacity="0" />
+        </radialGradient>
       </defs>
 
-      <!-- slate-50, the site's page colour -->
-      <rect width="1200" height="630" fill="#F7F8FA" />
+      <!-- The dark canvas (slate-50 in the dark theme) -->
+      <rect width="1200" height="630" fill="#0A0C11" />
+      <rect width="1200" height="630" fill="url(#glow)" />
 
       <!-- Category rule, as beside the wire line on each page -->
       <rect x="100" y="126" width="8" height="${titleEndY - 126 + 18}" fill="${marker}" />
 
       <!-- Category label -->
-      <path fill="#4B5563" d="${textPath(faces.bodyBold, category, 22, 132, 150)}" />
+      <path fill="#98A1B3" d="${textPath(faces.bodyBold, category, 22, 132, 150)}" />
 
       <!-- Title block -->
-      <path fill="#111827" d="${titleLines
+      <path fill="#F7F8FA" d="${titleLines
         .map((line, idx) => textPath(faces.display, line, titleSize, 132, titleStartY + idx * titleLineHeight))
         .join(' ')}" />
 
       <!-- Subtitle description block -->
-      <path fill="#4B5563" d="${subtitleLines
+      <path fill="#98A1B3" d="${subtitleLines
         .map((line, idx) => textPath(faces.body, line, subtitleSize, 132, subtitleStartY + idx * subtitleLineHeight))
         .join(' ')}" />
 
@@ -267,9 +274,9 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
           const devX = guideX + measure(faces.wordmark, 'guide', size);
 
           return [
-            `<path fill="#1F2636" d="${textPath(faces.wordmark, 'api', size, apiX, 27)}" />`,
-            `<path fill="#2B2FD9" d="${textPath(faces.wordmark, 'guide', size, guideX, 27)}" />`,
-            `<path fill="#4B5563" d="${textPath(faces.body, '.dev', size, devX, 27)}" />`,
+            `<path fill="#F7F8FA" d="${textPath(faces.wordmark, 'api', size, apiX, 27)}" />`,
+            `<path fill="#7492FD" d="${textPath(faces.wordmark, 'guide', size, guideX, 27)}" />`,
+            `<path fill="#98A1B3" d="${textPath(faces.body, '.dev', size, devX, 27)}" />`,
           ].join('');
         })()}
         ${(() => {
@@ -277,7 +284,7 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
           const tagline = 'HTTP API reference';
           const size = 20;
           const x = 1000 - measure(faces.bodyBold, tagline, size);
-          return `<path fill="#4B5563" d="${textPath(faces.bodyBold, tagline, size, x, 27)}" />`;
+          return `<path fill="#98A1B3" d="${textPath(faces.bodyBold, tagline, size, x, 27)}" />`;
         })()}
       </g>
     </svg>

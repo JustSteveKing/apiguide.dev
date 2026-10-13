@@ -34,7 +34,7 @@ const filled = groups
     </IndexHeader>
 
     {filled.map(g => (
-      <RegistryGroup id={`dir-${g.key}`} title={g.title} count={g.entries.length} marker={headerCategoryThemes[g.key].marker}>
+      <RegistryGroup id={`dir-${g.key}`} title={g.title} count={g.entries.length} dot={headerCategoryThemes[g.key].dot}>
         {g.entries.map(h => (
           <RegistryRow href={`/headers/${h.id}`} code={h.data.name} codeWidth="lg" name={h.data.name} description={h.data.description} note={h.data.standard ? undefined : 'Not standardized'} />
         ))}

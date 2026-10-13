@@ -1,53 +1,55 @@
 ---
-// One entry in a registry-style index. The whole row is the link, because a
-// reader scanning a list of 63 codes is aiming at a row, not at a word in it.
+// One entry card in a registry index. The whole card is the link.
 //
-// Columns: an optional mono key (a code, a header name), the entry's name, its
-// one-line description, and an optional trailing note (a version, a price).
-// Below sm the description drops under the name.
+// A short `code` (a status code) sits above the name in its status hue
+// (`tone`); a long one (a header name) is the card's title, in mono.
 interface Props {
   href: string;
   name: string;
   description?: string;
-  /** Mono identifier shown first, such as `409` or `Retry-After`. */
+  /** Mono identifier, such as `409` or `Retry-After`. */
   code?: string;
-  /** Width of the key column: `sm` for status codes, `lg` for header names. */
+  /** `lg` when the code is the name (header names). */
   codeWidth?: 'sm' | 'lg';
+  /** Text colour for a short code, from a `tone` in src/config/themes.ts. */
+  tone?: string;
   note?: string;
   /** Analytics hook, read by page scripts as data-track. */
   track?: string;
 }
 
-const { href, name, description, code, codeWidth = 'sm', note, track } = Astro.props;
-
-// A long key (a header name) is the name, so it takes the name's column.
+const { href, name, description, code, codeWidth = 'sm', tone = 'text-slate-950', note, track } = Astro.props;
 const keyIsName = Boolean(code) && codeWidth === 'lg';
 const shortKey = Boolean(code) && !keyIsName;
-
-// A short key keeps its own column on a phone too, with the description
-// indented under the name, so a code and its name stay on one line.
-const columns = shortKey
-  ? 'grid-cols-[3.5rem_minmax(0,1fr)] sm:grid-cols-[3.5rem_minmax(0,14rem)_minmax(0,1fr)]'
-  : keyIsName
-    ? 'grid-cols-1 sm:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]'
-    : 'grid-cols-1 sm:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]';
 ---
 
-<li class="border-b border-slate-300">
-  <a
-    href={href}
-    data-track={track}
-    class={`group grid ${columns} gap-x-6 gap-y-0.5 py-3 px-2 -mx-2 rounded-sm hover:bg-slate-100 transition-colors`}
-  >
-    {shortKey && <span class="font-mono text-slate-950 tabular-nums">{code}</span>}
-    <span class={`${keyIsName ? 'font-mono text-ultra-600' : 'font-medium text-ultra-600'} group-hover:underline underline-offset-2 min-w-0 break-words`}>
-      {keyIsName ? code : name}
-    </span>
-    {(description || note) && (
-      <span class={`text-sm text-slate-700 sm:pt-0.5 min-w-0 flex gap-4 justify-between ${shortKey ? 'col-start-2 sm:col-start-auto' : ''}`}>
-        {description && <span class="line-clamp-2">{description}</span>}
-        {note && <span class="shrink-0 tabular-nums">{note}</span>}
+<li class="h-full">
+  <a href={href} data-track={track} class="registry-card group">
+    <span class="flex items-baseline justify-between gap-3">
+      <span class="min-w-0">
+        {shortKey && <span class={`block font-mono text-xl font-medium tabular-nums ${tone}`}>{code}</span>}
+        <span class={`block ${keyIsName ? 'font-mono' : ''} font-medium text-slate-950 break-words`}>{keyIsName ? code : name}</span>
       </span>
-    )}
+      <svg class="registry-card-chevron h-4 w-4 shrink-0 text-slate-600" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m6 4 4 4-4 4" /></svg>
+    </span>
+    {description && <span class="mt-2 block text-sm leading-relaxed text-slate-700 line-clamp-3">{description}</span>}
+    {note && <span class="mt-auto pt-3 block text-xs text-slate-600 tabular-nums">{note}</span>}
   </a>
 </li>
+
+<script>
+  // The spotlight: a soft highlight that follows the pointer across a card.
+  // It answers the reader's movement; nothing moves on its own.
+  function initSpotlight() {
+    for (const card of document.querySelectorAll<HTMLElement>('.registry-card')) {
+      if (card.dataset.spot) continue;
+      card.dataset.spot = 'true';
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        card.style.setProperty('--my', `${e.clientY - r.top}px`);
+      });
+    }
+  }
+  document.addEventListener('astro:page-load', initSpotlight);
+</script>

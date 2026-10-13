@@ -84,7 +84,8 @@ const errorJsonLd = [
         size="md"
         copy={typeURI}
         copyLabel="Copy problem type URI"
-        marker={activeTheme.marker}
+        dot={activeTheme.dot}
+        label={`Problem type, ${activeTheme.label.toLowerCase()}`}
       />
 
       <div class="mt-8 grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
@@ -113,7 +114,7 @@ const errorJsonLd = [
       <div class="mt-12">
         <RegistryGroup id="related-errors" title="Related problem types" count={relatedErrors.length}>
           {relatedErrors.map(r => (
-            <RegistryRow href={`/errors/${r.id}`} code={String(r.data.statusCode)} name={r.data.title} description={excerpt(r.body, 140)} />
+            <RegistryRow href={`/errors/${r.id}`} code={String(r.data.statusCode)} tone={errorCategoryThemes[r.data.category].tone} name={r.data.title} description={excerpt(r.body, 140)} />
           ))}
         </RegistryGroup>
       </div>

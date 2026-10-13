@@ -42,7 +42,7 @@ const sections = guideCategories
     </IndexHeader>
 
     {sections.map(section => (
-      <RegistryGroup id={`cat-${section.category}`} title={section.label} count={section.guides.length} blurb={section.blurb}>
+      <RegistryGroup id={`cat-${section.category}`} title={section.label} count={section.guides.length} blurb={section.blurb} columns={2}>
         {section.guides.map(g => (
           <RegistryRow href={`/guides/${g.id}`} name={g.data.title} description={g.data.description} />
         ))}

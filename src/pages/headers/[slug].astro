@@ -35,6 +35,7 @@ import WireHero from '@/components/WireHero.astro';
 import { headerExampleValue } from '@/utils/wireExample';
 import RegistryGroup from '@/components/RegistryGroup.astro';
 import RegistryRow from '@/components/RegistryRow.astro';
+import { statusCategoryThemes } from '@/config/themes';
 
 const headerJsonLd = [
   getTechArticleSchema({
@@ -70,7 +71,8 @@ const headerJsonLd = [
         trail={example ? `: ${example}` : ':'}
         copy={example ? `${h.data.name}: ${example}` : h.data.name}
         copyLabel="Copy header line"
-        marker={activeTheme.marker}
+        dot={activeTheme.dot}
+        label={activeTheme.label}
       />
       <p class="text-lg text-slate-700 mt-6 mb-8 max-w-2xl">
         {h.data.description}
@@ -101,7 +103,7 @@ const headerJsonLd = [
       <div class="mt-12">
         <RegistryGroup id="related-codes" title="Status codes seen with it" count={sortedRelatedCodes.length}>
           {sortedRelatedCodes.map(c => (
-            <RegistryRow href={`/status-codes/${c.data.code}`} code={String(c.data.code)} name={c.data.title} description={c.data.description} />
+            <RegistryRow href={`/status-codes/${c.data.code}`} code={String(c.data.code)} tone={statusCategoryThemes[c.data.category].tone} name={c.data.title} description={c.data.description} />
           ))}
         </RegistryGroup>
       </div>

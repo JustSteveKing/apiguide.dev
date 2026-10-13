@@ -32,29 +32,31 @@ const properties = [
       intro="The HTTP request methods, whether each is safe, idempotent and cacheable, and which status codes go with it."
     />
 
-    <table class="w-full text-left border-t border-slate-300">
+    <div class="surface overflow-x-auto">
+    <table class="w-full text-left">
       <caption class="sr-only">HTTP methods and their properties</caption>
       <thead>
-        <tr class="border-b border-slate-300 text-sm text-slate-700">
-          <th scope="col" class="py-3 pr-3 sm:pr-6 font-medium">Method</th>
+        <tr class="border-b border-slate-950/[0.08] text-sm text-slate-700">
+          <th scope="col" class="py-3 pl-4 sm:pl-5 pr-3 sm:pr-6 font-medium">Method</th>
           {properties.map(p => <th scope="col" class="py-3 pr-3 sm:pr-6 font-medium">{p.label}</th>)}
-          <th scope="col" class="py-3 font-medium hidden md:table-cell">What it does</th>
+          <th scope="col" class="py-3 pr-5 font-medium hidden md:table-cell">What it does</th>
         </tr>
       </thead>
       <tbody>
         {methods.map(m => (
-          <tr class="border-b border-slate-300 hover:bg-slate-100 transition-colors">
-            <th scope="row" class="py-3 pr-3 sm:pr-6 font-normal">
+          <tr class="border-b border-slate-950/[0.06] last:border-b-0 hover:bg-slate-950/[0.03] transition-colors">
+            <th scope="row" class="py-3 pl-4 sm:pl-5 pr-3 sm:pr-6 font-normal">
               <a href={`/methods/${m.id}`} class="font-mono text-ultra-600 hover:text-ultra-800 hover:underline underline-offset-2">{m.data.name}</a>
               {m.data.draft && <span class="ml-2 text-xs text-slate-700">Draft</span>}
             </th>
             {properties.map(p => (
               <td class={`py-3 pr-3 sm:pr-6 text-sm ${m.data[p.key] ? 'text-slate-950' : 'text-slate-700'}`}>{m.data[p.key] ? 'Yes' : 'No'}</td>
             ))}
-            <td class="py-3 text-sm text-slate-700 hidden md:table-cell">{m.data.description}</td>
+            <td class="py-3 pr-5 text-sm text-slate-700 hidden md:table-cell">{m.data.description}</td>
           </tr>
         ))}
       </tbody>
     </table>
+    </div>
   </main>
 </Layout>

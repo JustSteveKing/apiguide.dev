@@ -24,7 +24,7 @@ const { crumb, parent, title, intro } = Astro.props;
     )}
     <span class="text-slate-700">{crumb}</span>
   </nav>
-  <h1 class="text-4xl font-bold tracking-tight mb-4 text-slate-950">{title}</h1>
+  <h1 class="display-title text-4xl sm:text-5xl font-semibold mb-4">{title}</h1>
   <p class="text-lg text-slate-700 max-w-2xl">{intro}</p>
   <slot />
 </header>

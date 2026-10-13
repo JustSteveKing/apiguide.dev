@@ -83,53 +83,57 @@ const problems: { question: string; links: { text: string; href: string; mono?: 
   description="The flagship catalog for HTTP status codes, headers, request methods, and Problem+JSON error schemas for web APIs."
   jsonLd={homeJsonLd}
 >
-  <section class="bg-band text-on-band" aria-labelledby="hero-title">
-    <div class="max-w-6xl mx-auto px-6 py-20 sm:py-28">
-      <h1 id="hero-title" class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.02] max-w-4xl">
+  <section class="hero relative isolate overflow-hidden" aria-labelledby="hero-title">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="max-w-6xl mx-auto px-6 pt-20 pb-12 sm:pt-32 sm:pb-16 flex flex-col items-center text-center">
+      <h1 id="hero-title" class="hero-in hero-title text-5xl sm:text-7xl font-semibold tracking-tight leading-[1.02] max-w-4xl">
         Look up any part of an HTTP API
       </h1>
-      <p class="mt-6 text-lg sm:text-xl text-on-band-muted max-w-2xl leading-relaxed">
+      <p class="hero-in mt-6 text-lg sm:text-xl text-slate-700 max-w-2xl leading-relaxed" style="--d: 80ms">
         Status codes, headers, methods and RFC 9457 problem types, each on its own page that says when to use it and what to use instead.
       </p>
 
       <button
         id="hero-search-trigger"
         type="button"
-        class="mt-10 w-full max-w-2xl flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 rounded-xl bg-on-band text-band text-left text-lg sm:text-xl shadow-[0_10px_30px_-12px_rgba(0,0,0,0.45)] hover:shadow-[0_14px_36px_-12px_rgba(0,0,0,0.55)] transition-shadow focus-visible:outline-on-band"
+        style="--d: 160ms"
+        class="hero-in hero-search mt-10 w-full max-w-xl flex items-center gap-3 px-5 py-4 rounded-2xl text-left text-base sm:text-lg text-slate-700"
       >
-        <svg class="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <span class="flex-1 font-medium"><span class="sm:hidden">Search the reference</span><span class="hidden sm:inline">Search codes, headers, methods&hellip;</span></span>
-        <kbd class="hidden sm:inline-block px-2 py-0.5 rounded-md border border-band/30 text-sm font-sans">⌘K</kbd>
+        <svg class="w-5 h-5 shrink-0 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span class="flex-1"><span class="sm:hidden">Search the reference</span><span class="hidden sm:inline">Search codes, headers, methods&hellip;</span></span>
+        <kbd class="hidden sm:inline-block px-2 py-0.5 rounded-md border border-slate-950/[0.1] bg-slate-950/[0.04] text-xs font-sans text-slate-700">⌘K</kbd>
       </button>
 
-      <nav aria-label="Popular lookups" class="mt-6 flex flex-wrap items-center gap-2 max-w-2xl">
-        <span class="text-sm text-on-band-muted mr-1">Popular</span>
+      <nav aria-label="Popular lookups" class="hero-in mt-6 flex flex-wrap items-center justify-center gap-2 max-w-2xl" style="--d: 240ms">
+        <span class="text-sm text-slate-600 mr-1">Popular</span>
         {popular.map(item => (
           <a
             href={item.href}
             data-track="popular"
-            class="font-mono text-sm px-2.5 py-1 rounded-md border border-on-band/35 text-on-band hover:bg-on-band/10 hover:border-on-band/70 transition-colors focus-visible:outline-on-band"
+            class="font-mono text-sm px-3 py-1 rounded-full border border-slate-950/[0.1] bg-slate-950/[0.03] text-slate-800 hover:text-slate-950 hover:border-ultra-500/60 hover:bg-ultra-500/10 transition-colors"
           >{item.text}</a>
         ))}
       </nav>
     </div>
   </section>
 
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-6xl mx-auto px-6 pt-6 pb-16 font-sans">
     <div class="grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
-      <RegistryGroup id="sections" title="Sections" count={sections.length}>
+      <RegistryGroup id="sections" title="Sections" count={sections.length} dot="bg-ultra-500" columns={2}>
         {sections.map(s => (
           <RegistryRow href={s.href} name={s.name} description={s.description} note={s.count !== undefined ? String(s.count) : undefined} track="catalog" />
         ))}
       </RegistryGroup>
 
       <section aria-labelledby="problems">
-        <div class="flex items-baseline gap-3 border-l-4 border-slate-400 pl-4">
-          <h2 id="problems" class="text-xl font-bold tracking-tight text-slate-950">Start from the problem</h2>
+        <div class="flex items-center gap-3">
+          <span class="h-2 w-2 rounded-full bg-ultra-500" aria-hidden="true"></span>
+          <h2 id="problems" class="text-lg font-semibold tracking-tight text-slate-950">Start from the problem</h2>
         </div>
-        <dl class="mt-4 border-t border-slate-300">
+        <dl class="mt-5 grid gap-3">
           {problems.map(p => (
-            <div class="border-b border-slate-300 py-3">
+            <div class="surface px-4 py-3.5">
               <dt class="font-medium text-slate-950">{p.question}</dt>
               <dd class="mt-1 text-sm text-slate-700">
                 {p.links.map((link, i) => (

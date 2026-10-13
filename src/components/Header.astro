@@ -3,79 +3,57 @@ import Logo from "@/components/Logo.astro";
 import { pagePath } from "@/utils/pagePath";
 
 const pathname = pagePath(Astro.url);
+
 // Matches a section index and everything under it, with or without a trailing slash.
 const isActive = (path: string) => {
   const base = path.replace(/\/$/, '');
   return pathname === base || pathname.startsWith(base + '/');
 };
----
-<header class="sticky top-0 z-50 bg-slate-50/95 backdrop-blur-sm border-b border-slate-300 relative">
-  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
-    <!-- Logo & Wordmark -->
-    <a href="/" class="group shrink-0">
-      <Logo size="md" />
-    </a>
-    
-    <div class="flex items-center gap-4 lg:gap-6">
-      <!-- Global Nav Links (Desktop) -->
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
-        <a 
-          href="/errors" 
-          class={`transition-colors ${isActive('/errors/') ? 'text-ultra-600 font-semibold' : 'text-slate-700 hover:text-ultra-600'}`}
-        >
-          Errors
-        </a>
-        <a 
-          href="/status-codes" 
-          class={`transition-colors ${isActive('/status-codes/') ? 'text-ultra-600 font-semibold' : 'text-slate-700 hover:text-ultra-600'}`}
-        >
-          Status codes
-        </a>
-        <a 
-          href="/headers" 
-          class={`transition-colors ${isActive('/headers/') ? 'text-ultra-600 font-semibold' : 'text-slate-700 hover:text-ultra-600'}`}
-        >
-          Headers
-        </a>
-        <a 
-          href="/methods" 
-          class={`transition-colors ${isActive('/methods/') ? 'text-ultra-600 font-semibold' : 'text-slate-700 hover:text-ultra-600'}`}
-        >
-          Methods
-        </a>
-        <a 
-          href="/guides" 
-          class={`transition-colors ${isActive('/guides/') ? 'text-ultra-600 font-semibold' : 'text-slate-700 hover:text-ultra-600'}`}
-        >
-          Guides
-        </a>
-        <a 
-          href="/specifications" 
-          class={`transition-colors ${isActive('/specifications/') ? 'text-ultra-600 font-semibold' : 'text-slate-700 hover:text-ultra-600'}`}
-        >
-          Specs
-        </a>
-        <a 
-          href="/tools" 
-          class={`transition-colors ${isActive('/tools/') ? 'text-ultra-600 font-semibold' : 'text-slate-700 hover:text-ultra-600'}`}
-        >
-          Tools
-        </a>
-      </nav>
 
-      <!-- Search Button -->
-      <button id="search-trigger" class="flex items-center gap-2 px-3 py-2.5 text-xs text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg transition-all font-medium cursor-pointer shadow-xs" aria-label="Open command palette search">
+const nav = [
+  { href: '/errors', label: 'Errors' },
+  { href: '/status-codes', label: 'Status codes' },
+  { href: '/headers', label: 'Headers' },
+  { href: '/methods', label: 'Methods' },
+  { href: '/guides', label: 'Guides' },
+  { href: '/specifications', label: 'Specs' },
+  { href: '/tools', label: 'Tools' },
+];
+---
+<header class="site-header sticky top-0 z-50 border-b border-slate-950/[0.08] bg-slate-50/70 backdrop-blur-xl backdrop-saturate-150">
+  <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-4">
+    <a href="/" class="group shrink-0">
+      <Logo size="sm" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-0.5 text-sm" aria-label="Sections">
+      {nav.map(item => (
+        <a
+          href={item.href}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+          class={`px-3 py-1.5 rounded-full transition-colors ${isActive(item.href) ? 'text-slate-950 bg-slate-950/[0.08]' : 'text-slate-700 hover:text-slate-950 hover:bg-slate-950/[0.05]'}`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <button id="search-trigger" class="flex items-center gap-2 h-8 pl-3 pr-1.5 text-xs text-slate-700 hover:text-slate-950 bg-slate-950/[0.04] hover:bg-slate-950/[0.07] border border-slate-950/[0.08] rounded-full transition-colors cursor-pointer" aria-label="Open command palette search">
         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <span>Search <span class="hidden sm:inline">reference</span>...</span>
-        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-xxs font-sans bg-slate-50 border border-slate-300 rounded text-slate-700">⌘K</kbd>
+        <span class="pr-1">Search</span>
+        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-xxs font-sans rounded-full bg-slate-950/[0.06] text-slate-700">⌘K</kbd>
       </button>
 
+      <button id="theme-toggle" type="button" class="flex items-center justify-center w-8 h-8 rounded-full text-slate-700 hover:text-slate-950 hover:bg-slate-950/[0.06] border border-slate-950/[0.08] transition-colors cursor-pointer" aria-label="Switch to light theme" aria-pressed="false">
+        <!-- Sun shows in dark (to switch to light), moon in light. -->
+        <svg class="theme-icon-sun w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg>
+        <svg class="theme-icon-moon w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+      </button>
 
-
-      <!-- Responsive Mobile Hamburger Trigger -->
-      <button 
-        id="mobile-menu-trigger" 
-        class="lg:hidden flex items-center justify-center p-2.5 rounded-lg text-slate-700 hover:text-ultra-600 hover:bg-slate-100 transition-all cursor-pointer border border-slate-300 bg-slate-100/50"
+      <button
+        id="mobile-menu-trigger"
+        class="lg:hidden flex items-center justify-center w-8 h-8 rounded-full text-slate-700 hover:text-slate-950 hover:bg-slate-950/[0.06] border border-slate-950/[0.08] transition-colors cursor-pointer"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Toggle navigation menu"
@@ -90,54 +68,22 @@ const isActive = (path: string) => {
     </div>
   </div>
 
-  <!-- Mobile Nav Dropdown (Absolute below header border) -->
-  <div 
-    id="mobile-menu" 
-    class="hidden absolute top-full left-0 right-0 bg-slate-50 border-b border-slate-300 shadow-lg px-6 py-6 transition-all duration-200 transform -translate-y-2 opacity-0 z-40"
+  <!-- Opaque, and no blur of its own: a translucent menu inside a blurred
+       header let the page show through (see the review-fixes branch). -->
+  <div
+    id="mobile-menu"
+    class="hidden absolute top-full left-0 right-0 bg-slate-50 border-b border-slate-950/[0.08] shadow-2xl px-4 py-4 transition-all duration-200 transform -translate-y-2 opacity-0 z-40"
   >
-    <nav class="flex flex-col gap-2 text-sm font-semibold">
-      <a 
-        href="/errors" 
-        class={`py-2 px-3 rounded-lg border-b border-slate-100/50 transition-colors ${isActive('/errors/') ? 'text-ultra-600 bg-slate-100/40' : 'text-slate-700 hover:text-ultra-600 hover:bg-slate-100/40'}`}
-      >
-        Errors
-      </a>
-      <a 
-        href="/status-codes" 
-        class={`py-2 px-3 rounded-lg border-b border-slate-100/50 transition-colors ${isActive('/status-codes/') ? 'text-ultra-600 bg-slate-100/40' : 'text-slate-700 hover:text-ultra-600 hover:bg-slate-100/40'}`}
-      >
-        Status codes
-      </a>
-      <a 
-        href="/headers" 
-        class={`py-2 px-3 rounded-lg border-b border-slate-100/50 transition-colors ${isActive('/headers/') ? 'text-ultra-600 bg-slate-100/40' : 'text-slate-700 hover:text-ultra-600 hover:bg-slate-100/40'}`}
-      >
-        Headers
-      </a>
-      <a 
-        href="/methods" 
-        class={`py-2 px-3 rounded-lg border-b border-slate-100/50 transition-colors ${isActive('/methods/') ? 'text-ultra-600 bg-slate-100/40' : 'text-slate-700 hover:text-ultra-600 hover:bg-slate-100/40'}`}
-      >
-        Methods
-      </a>
-      <a 
-        href="/guides" 
-        class={`py-2 px-3 rounded-lg border-b border-slate-100/50 transition-colors ${isActive('/guides/') ? 'text-ultra-600 bg-slate-100/40' : 'text-slate-700 hover:text-ultra-600 hover:bg-slate-100/40'}`}
-      >
-        Guides
-      </a>
-      <a 
-        href="/specifications" 
-        class={`py-2 px-3 rounded-lg border-b border-slate-100/50 transition-colors ${isActive('/specifications/') ? 'text-ultra-600 bg-slate-100/40' : 'text-slate-700 hover:text-ultra-600 hover:bg-slate-100/40'}`}
-      >
-        Specs
-      </a>
-      <a 
-        href="/tools" 
-        class={`py-2 px-3 rounded-lg transition-colors ${isActive('/tools/') ? 'text-ultra-600 bg-slate-100/40' : 'text-slate-700 hover:text-ultra-600 hover:bg-slate-100/40'}`}
-      >
-        Tools
-      </a>
+    <nav class="flex flex-col gap-1 text-sm font-medium" aria-label="Sections">
+      {nav.map(item => (
+        <a
+          href={item.href}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+          class={`py-2.5 px-3 rounded-lg transition-colors ${isActive(item.href) ? 'text-slate-950 bg-slate-950/[0.07]' : 'text-slate-700 hover:text-slate-950 hover:bg-slate-950/[0.05]'}`}
+        >
+          {item.label}
+        </a>
+      ))}
     </nav>
   </div>
 </header>
@@ -217,8 +163,29 @@ const isActive = (path: string) => {
     });
   }
 
+  // Theme toggle. Dark is the default; the choice is stored and re-applied
+  // before paint by the inline script in Layout.astro.
+  function initThemeToggle() {
+    const button = document.getElementById('theme-toggle');
+    if (!button) return;
+    const sync = () => {
+      const light = document.documentElement.dataset.theme === 'light';
+      button.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+      button.setAttribute('aria-pressed', light ? 'true' : 'false');
+    };
+    sync();
+    button.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem('theme', next);
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'light' ? '#F7F8FA' : '#0A0C11');
+      sync();
+    });
+  }
+
   // Hook into Astro page load for View Transitions compatibility
   document.addEventListener('astro:page-load', () => {
     initMobileMenu();
+    initThemeToggle();
   });
 </script>

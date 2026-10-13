@@ -30,9 +30,9 @@ const groups = [
     {groups.map(g => {
       const entries = errors.filter(e => e.data.category === g.key);
       return entries.length > 0 && (
-        <RegistryGroup id={`class-${g.code}`} code={g.code} title={g.title} count={entries.length} marker={errorCategoryThemes[g.key].marker}>
+        <RegistryGroup id={`class-${g.code}`} code={g.code} title={g.title} count={entries.length} dot={errorCategoryThemes[g.key].dot}>
           {entries.map(e => (
-            <RegistryRow href={`/errors/${e.id}`} code={String(e.data.statusCode)} name={e.data.title} description={excerpt(e.body, 140)} />
+            <RegistryRow href={`/errors/${e.id}`} code={String(e.data.statusCode)} tone={errorCategoryThemes[g.key].tone} name={e.data.title} description={excerpt(e.body, 140)} />
           ))}
         </RegistryGroup>
       );

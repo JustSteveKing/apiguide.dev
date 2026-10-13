@@ -36,9 +36,9 @@ const groups = classes
     </IndexHeader>
 
     {groups.map(g => (
-      <RegistryGroup id={`class-${g.code}`} code={g.code} title={g.title} count={g.codes.length} marker={statusCategoryThemes[g.key].marker}>
+      <RegistryGroup id={`class-${g.code}`} code={g.code} title={g.title} count={g.codes.length} dot={statusCategoryThemes[g.key].dot}>
         {g.codes.map(sc => (
-          <RegistryRow href={`/status-codes/${sc.data.code}`} code={String(sc.data.code)} name={sc.data.title} description={sc.data.description} />
+          <RegistryRow href={`/status-codes/${sc.data.code}`} code={String(sc.data.code)} tone={statusCategoryThemes[g.key].tone} name={sc.data.title} description={sc.data.description} />
         ))}
       </RegistryGroup>
     ))}
