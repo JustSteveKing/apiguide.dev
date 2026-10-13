@@ -1,0 +1,29 @@
+---
+// One group of a registry-style index: a heading with its count, then rows.
+// The left rule carries the group's hue, as WireHero does on the detail page,
+// so a reader sees the same mark in both places.
+interface Props {
+  id: string;
+  title: string;
+  /** Short mono prefix for the heading, such as `4xx`. */
+  code?: string;
+  count: number;
+  blurb?: string;
+  marker?: string;
+}
+
+const { id, title, code, count, blurb, marker = 'border-paper-400' } = Astro.props;
+---
+
+<section aria-labelledby={id} class="mb-14 last:mb-0">
+  <div class={`flex items-baseline gap-3 border-l-4 pl-4 ${marker}`}>
+    <h2 id={id} class="text-xl font-bold tracking-tight text-paper-950">
+      {code && <span class="font-mono font-medium text-paper-700 mr-2">{code}</span>}{title}
+    </h2>
+    <span class="text-sm text-paper-700 tabular-nums">{count}</span>
+  </div>
+  {blurb && <p class="mt-1 pl-5 text-sm text-paper-700">{blurb}</p>}
+  <ul class="mt-4 border-t border-paper-300">
+    <slot />
+  </ul>
+</section>

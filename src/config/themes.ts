@@ -154,26 +154,34 @@ export const guideCategoryThemes: Record<
  * hue pairs, solid against outline, for the build-time and run-time halves
  * of the lifecycle, and Paper for observability, which watches both.
  */
+/** Reading order for tool categories: build-time first, then run-time. */
+export const toolCategories = ['design-documentation', 'testing-mocking', 'clients-debugging', 'gateways-management', 'observability'] as const;
+
 export const toolCategoryThemes = {
   'design-documentation': {
     badge: 'bg-yinmn-100 text-yinmn-900 border-yinmn-200 border',
-    label: 'Design & Documentation'
+    label: 'Design & Documentation',
+    blurb: 'Write, lint and publish API descriptions such as OpenAPI and AsyncAPI.'
   },
   'testing-mocking': {
     badge: 'text-yinmn-800 border-yinmn-400 border',
-    label: 'Testing & Mocking'
+    label: 'Testing & Mocking',
+    blurb: 'Mock servers, contract tests and load tests.'
   },
   'clients-debugging': {
     badge: 'bg-chartres-100 text-chartres-900 border-chartres-200 border',
-    label: 'Clients & Debugging'
+    label: 'Clients & Debugging',
+    blurb: 'Send requests, inspect traffic and see exactly what came back.'
   },
   'gateways-management': {
     badge: 'text-chartres-800 border-chartres-400 border',
-    label: 'Gateways & Management'
+    label: 'Gateways & Management',
+    blurb: 'Sit in front of an API to route, authenticate and rate-limit its traffic.'
   },
   'observability': {
     badge: 'bg-paper-200 text-paper-900 border-paper-300 border',
-    label: 'Observability & Monitoring'
+    label: 'Observability & Monitoring',
+    blurb: 'Trace, log and measure an API in production.'
   }
 } as const;
 
