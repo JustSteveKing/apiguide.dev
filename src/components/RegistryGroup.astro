@@ -12,18 +12,18 @@ interface Props {
   marker?: string;
 }
 
-const { id, title, code, count, blurb, marker = 'border-paper-400' } = Astro.props;
+const { id, title, code, count, blurb, marker = 'border-slate-400' } = Astro.props;
 ---
 
 <section aria-labelledby={id} class="mb-14 last:mb-0">
   <div class={`flex items-baseline gap-3 border-l-4 pl-4 ${marker}`}>
-    <h2 id={id} class="text-xl font-bold tracking-tight text-paper-950">
-      {code && <span class="font-mono font-medium text-paper-700 mr-2">{code}</span>}{title}
+    <h2 id={id} class="text-xl font-bold tracking-tight text-slate-950">
+      {code && <span class="font-mono font-medium text-slate-700 mr-2">{code}</span>}{title}
     </h2>
-    <span class="text-sm text-paper-700 tabular-nums">{count}</span>
+    <span class="text-sm text-slate-700 tabular-nums">{count}</span>
   </div>
-  {blurb && <p class="mt-1 pl-5 text-sm text-paper-700">{blurb}</p>}
-  <ul class="mt-4 border-t border-paper-300">
+  {blurb && <p class="mt-1 pl-5 text-sm text-slate-700">{blurb}</p>}
+  <ul class="mt-4 border-t border-slate-300">
     <slot />
   </ul>
 </section>

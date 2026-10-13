@@ -36,7 +36,7 @@ const currentSize = sizeClasses[size] || sizeClasses.md;
 
 <div class={`flex items-center gap-2.5 ${className}`}>
   <!-- Logo Icon Container with Brand Gradient & Hover Lift -->
-  <div class={`flex items-center justify-center bg-gradient-to-br from-chartres-500 to-chartres-700 text-paper-50 shadow-md shadow-chartres-600/10 transition-transform duration-300 group-hover:scale-105 ${currentSize.container}`}>
+  <div class={`flex items-center justify-center bg-gradient-to-br from-ultra-500 to-ultra-700 text-slate-50 shadow-md shadow-ultra-600/10 transition-transform duration-300 group-hover:scale-105 ${currentSize.container}`}>
     <svg 
       fill="currentColor" 
       viewBox="0 0 24 24" 
@@ -56,8 +56,8 @@ const currentSize = sizeClasses[size] || sizeClasses.md;
   
   <!-- Logo Wordmark -->
   {!iconOnly && (
-    <span class={`font-sans ${currentSize.text} text-paper-900 transition-colors duration-200`}>
-      api<span class="text-chartres-600 group-hover:text-chartres-700">guide</span><span class="text-paper-600 font-normal">.dev</span>
+    <span class={`font-sans ${currentSize.text} text-slate-900 transition-colors duration-200`}>
+      api<span class="text-ultra-600 group-hover:text-ultra-700">guide</span><span class="text-slate-600 font-normal">.dev</span>
     </span>
   )}
 </div>

@@ -7,8 +7,8 @@ export const GET: APIRoute = () => {
     description: "The flagship reference site for modern, authoritative API design patterns.",
     start_url: "/",
     display: "standalone",
-    background_color: "#FAF6F0", // paper-50
-    theme_color: "#1F3F8E", // chartres-500
+    background_color: "#F7F8FA", // slate-50
+    theme_color: "#2B2FD9", // ultra-600, the band colour
     icons: [
       {
         src: "/favicon-32x32.png",

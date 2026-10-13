@@ -56,14 +56,14 @@ const toolJsonLd = [
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950 font-display">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-slate-950 font-display">
         {t.data.name}
       </h1>
-      <p class="text-lg text-paper-600 mb-6 italic">
+      <p class="text-lg text-slate-600 mb-6 italic">
         {t.data.description}
       </p>
       
-      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
         <MetaItem label="Category">
           <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
             {activeTheme.label}
@@ -77,14 +77,14 @@ const toolJsonLd = [
         <MetaItem label="Lifecycle stages">
           <div class="flex flex-wrap gap-1">
             {t.data.lifecycleStages.map(stage => (
-              <span class="inline-flex items-center px-1.5 py-px rounded bg-paper-200 text-paper-700 border border-paper-300 text-xxs font-semibold">
+              <span class="inline-flex items-center px-1.5 py-px rounded bg-slate-200 text-slate-700 border border-slate-300 text-xxs font-semibold">
                 {lifecycleStageLabels[stage]}
               </span>
             ))}
           </div>
         </MetaItem>
         <MetaItem label="Website">
-          <a href={t.data.url} target="_blank" rel="noopener noreferrer" class="text-chartres-600 hover:text-chartres-800 hover:underline break-all">
+          <a href={t.data.url} target="_blank" rel="noopener noreferrer" class="text-ultra-600 hover:text-ultra-800 hover:underline break-all">
             {new URL(t.data.url).host.replace(/^www\./, '')}
           </a>
         </MetaItem>

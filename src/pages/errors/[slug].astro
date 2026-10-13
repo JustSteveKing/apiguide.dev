@@ -64,9 +64,9 @@ const errorJsonLd = [
       { name: error.data.title }
     ]} />
 
-    <!-- Deprecation Notice (Always uses Uranium theme) -->
+    <!-- Deprecation notice: always red, since a deprecated type is a warning -->
     {error.data.deprecated && (
-      <div class="bg-uranium-100 border border-uranium-200 text-uranium-900 p-5 rounded-lg mb-8" role="alert">
+      <div class="bg-red-100 border border-red-200 text-red-900 p-5 rounded-lg mb-8" role="alert">
         <h2 class="font-bold text-lg mb-1">Deprecated</h2>
         <p class="text-sm">
           This error type has been deprecated. If you are designing new API endpoints, avoid throwing this error and consult the related errors listed below.
@@ -76,7 +76,7 @@ const errorJsonLd = [
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-bold tracking-tight mb-6 text-paper-950">{error.data.title}</h1>
+      <h1 class="text-4xl font-bold tracking-tight mb-6 text-slate-950">{error.data.title}</h1>
       <WireHero
         lead={'"type": "'}
         identity={typeURI}
@@ -87,9 +87,9 @@ const errorJsonLd = [
         marker={activeTheme.marker}
       />
 
-      <div class="mt-8 grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
+      <div class="mt-8 grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
         <MetaItem label="Status code">
-          <a href={`/status-codes/${error.data.statusCode}`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+          <a href={`/status-codes/${error.data.statusCode}`} class="text-ultra-600 hover:text-ultra-800 hover:underline">
             {error.data.statusCode} {error.data.statusText}
           </a>
         </MetaItem>
@@ -102,7 +102,7 @@ const errorJsonLd = [
     </header>
 
     <!-- Markdown Content Body -->
-    <div class="border-b border-paper-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="border-b border-slate-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
         <Content />
       </article>

@@ -57,7 +57,7 @@ const jsonLdPayload = Array.isArray(jsonLd)
 ---
 
 <!doctype html>
-<html lang="en" class="h-full bg-paper-50 text-paper-900 scroll-smooth">
+<html lang="en" class="h-full bg-slate-50 text-slate-900 scroll-smooth">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -70,8 +70,8 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		
 		<!-- Google Fonts -->
 		<!-- Match the browser chrome to the page in both themes. -->
-		<meta name="theme-color" content="#FAF6F0" media="(prefers-color-scheme: light)">
-		<meta name="theme-color" content="#1F1A12" media="(prefers-color-scheme: dark)">
+		<meta name="theme-color" content="#F7F8FA" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
 
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>
@@ -103,10 +103,10 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		<!-- PostHog Analytics -->
 		<PostHog />
 	</head>
-	<body class="flex flex-col min-h-screen bg-paper-50 text-paper-900 selection:bg-chartres-200 selection:text-chartres-950 font-sans antialiased">
+	<body class="flex flex-col min-h-screen bg-slate-50 text-slate-900 selection:bg-ultra-200 selection:text-ultra-950 font-sans antialiased">
 		<a
 			href="#main-content"
-			class="sr-only focus:not-sr-only focus:whitespace-nowrap focus:fixed focus:top-3 focus:left-3 focus:z-100 focus:rounded-lg focus:border focus:border-paper-300 focus:bg-paper-50 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-chartres-700 focus:shadow-lg"
+			class="sr-only focus:not-sr-only focus:whitespace-nowrap focus:fixed focus:top-3 focus:left-3 focus:z-100 focus:rounded-lg focus:border focus:border-slate-300 focus:bg-slate-50 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-ultra-700 focus:shadow-lg"
 		>Skip to main content</a>
 		<!-- Persistent Sticky Header -->
 		<Header />

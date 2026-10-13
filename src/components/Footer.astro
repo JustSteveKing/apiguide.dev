@@ -1,27 +1,26 @@
 ---
 import Logo from "@/components/Logo.astro";
 ---
-<footer class="bg-paper-100 border-t border-paper-300 py-12 text-sm text-paper-700">
+<footer class="bg-slate-100 border-t border-slate-300 py-12 text-sm text-slate-700">
   <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
     <div>
       <a href="/" class="group inline-block mb-1">
         <Logo size="sm" />
       </a>
-      <p class="text-xs text-paper-700">A language-agnostic reference for HTTP API design.</p>
+      <p class="text-xs text-slate-700">A language-agnostic reference for HTTP API design.</p>
     </div>
     
     <div class="flex flex-wrap gap-6 text-xs font-medium">
-      <a href="/llms.txt" class="hover:text-chartres-600 transition-colors">llms.txt</a>
-      <a href="/problem-json" class="hover:text-chartres-600 transition-colors">Problem+JSON</a>
-      <a href="/sitemap-index.xml" class="hover:text-chartres-600 transition-colors" target="_blank">Sitemap</a>
-      <a href="https://datatracker.ietf.org/doc/html/rfc9457" class="hover:text-chartres-600 transition-colors" target="_blank" rel="noopener noreferrer">RFC 9457</a>
+      <a href="/llms.txt" class="hover:text-ultra-600 transition-colors">llms.txt</a>
+      <a href="/problem-json" class="hover:text-ultra-600 transition-colors">Problem+JSON</a>
+      <a href="/sitemap-index.xml" class="hover:text-ultra-600 transition-colors" target="_blank">Sitemap</a>
+      <a href="https://datatracker.ietf.org/doc/html/rfc9457" class="hover:text-ultra-600 transition-colors" target="_blank" rel="noopener noreferrer">RFC 9457</a>
     </div>
   </div>
   
   <div class="max-w-6xl mx-auto px-6 mt-8">
-    <div class="pt-6 border-t border-paper-300 text-xxs text-paper-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="pt-6 border-t border-slate-300 text-xxs text-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
       <span>&copy; {new Date().getFullYear()} apiguide.dev. Built as an open, language-agnostic reference catalog.</span>
-      <span>Pigment palettes derived from storied hues.</span>
     </div>
   </div>
 </footer>

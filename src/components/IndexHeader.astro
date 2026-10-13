@@ -14,17 +14,17 @@ const { crumb, parent, title, intro } = Astro.props;
 
 <header class="mb-12">
   <nav class="mb-4 text-sm" aria-label="Breadcrumb">
-    <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
-    <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
+    <a href="/" class="text-ultra-600 hover:text-ultra-800 hover:underline">Home</a>
+    <span class="mx-2 text-slate-400" aria-hidden="true">/</span>
     {parent && (
       <>
-        <a href={parent.href} class="text-chartres-600 hover:text-chartres-800 hover:underline">{parent.name}</a>
-        <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
+        <a href={parent.href} class="text-ultra-600 hover:text-ultra-800 hover:underline">{parent.name}</a>
+        <span class="mx-2 text-slate-400" aria-hidden="true">/</span>
       </>
     )}
-    <span class="text-paper-700">{crumb}</span>
+    <span class="text-slate-700">{crumb}</span>
   </nav>
-  <h1 class="text-4xl font-bold tracking-tight mb-4 text-paper-950">{title}</h1>
-  <p class="text-lg text-paper-700 max-w-2xl">{intro}</p>
+  <h1 class="text-4xl font-bold tracking-tight mb-4 text-slate-950">{title}</h1>
+  <p class="text-lg text-slate-700 max-w-2xl">{intro}</p>
   <slot />
 </header>

@@ -32,10 +32,10 @@ const properties = [
       intro="The HTTP request methods, whether each is safe, idempotent and cacheable, and which status codes go with it."
     />
 
-    <table class="w-full text-left border-t border-paper-300">
+    <table class="w-full text-left border-t border-slate-300">
       <caption class="sr-only">HTTP methods and their properties</caption>
       <thead>
-        <tr class="border-b border-paper-300 text-sm text-paper-700">
+        <tr class="border-b border-slate-300 text-sm text-slate-700">
           <th scope="col" class="py-3 pr-3 sm:pr-6 font-medium">Method</th>
           {properties.map(p => <th scope="col" class="py-3 pr-3 sm:pr-6 font-medium">{p.label}</th>)}
           <th scope="col" class="py-3 font-medium hidden md:table-cell">What it does</th>
@@ -43,15 +43,15 @@ const properties = [
       </thead>
       <tbody>
         {methods.map(m => (
-          <tr class="border-b border-paper-300 hover:bg-paper-100 transition-colors">
+          <tr class="border-b border-slate-300 hover:bg-slate-100 transition-colors">
             <th scope="row" class="py-3 pr-3 sm:pr-6 font-normal">
-              <a href={`/methods/${m.id}`} class="font-mono text-chartres-600 hover:text-chartres-800 hover:underline underline-offset-2">{m.data.name}</a>
-              {m.data.draft && <span class="ml-2 text-xs text-paper-700">Draft</span>}
+              <a href={`/methods/${m.id}`} class="font-mono text-ultra-600 hover:text-ultra-800 hover:underline underline-offset-2">{m.data.name}</a>
+              {m.data.draft && <span class="ml-2 text-xs text-slate-700">Draft</span>}
             </th>
             {properties.map(p => (
-              <td class={`py-3 pr-3 sm:pr-6 text-sm ${m.data[p.key] ? 'text-paper-950' : 'text-paper-700'}`}>{m.data[p.key] ? 'Yes' : 'No'}</td>
+              <td class={`py-3 pr-3 sm:pr-6 text-sm ${m.data[p.key] ? 'text-slate-950' : 'text-slate-700'}`}>{m.data[p.key] ? 'Yes' : 'No'}</td>
             ))}
-            <td class="py-3 text-sm text-paper-700 hidden md:table-cell">{m.data.description}</td>
+            <td class="py-3 text-sm text-slate-700 hidden md:table-cell">{m.data.description}</td>
           </tr>
         ))}
       </tbody>

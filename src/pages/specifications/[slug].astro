@@ -49,19 +49,19 @@ const specJsonLd = [
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950 font-display">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-slate-950 font-display">
         {spec.data.title}
       </h1>
-      <p class="text-lg text-paper-600 mb-6">
+      <p class="text-lg text-slate-600 mb-6">
         {spec.data.description}
       </p>
       
-      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
         <MetaItem label="Current version">
           {spec.data.currentVersion}
         </MetaItem>
         <MetaItem label="Specification">
-          <a href={spec.data.officialUrl} target="_blank" rel="noopener noreferrer" class="text-chartres-600 hover:text-chartres-800 hover:underline break-all">
+          <a href={spec.data.officialUrl} target="_blank" rel="noopener noreferrer" class="text-ultra-600 hover:text-ultra-800 hover:underline break-all">
             {new URL(spec.data.officialUrl).host.replace(/^www\./, '')}
           </a>
         </MetaItem>

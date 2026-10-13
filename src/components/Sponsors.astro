@@ -15,17 +15,17 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => {
 ---
 
 {sponsors.length > 0 && (
-  <section aria-labelledby="sponsors-heading" class="border-t border-paper-300 bg-paper-50">
+  <section aria-labelledby="sponsors-heading" class="border-t border-slate-300 bg-slate-50">
     <div class="max-w-6xl mx-auto px-6 py-12">
       <div class="flex items-center justify-between mb-8">
-        <p id="sponsors-heading" class="text-xs font-semibold text-paper-700">
+        <p id="sponsors-heading" class="text-xs font-semibold text-slate-700">
           Sponsors
         </p>
         <a
           href={supportUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-xs font-semibold text-chartres-600 hover:text-chartres-800 hover:underline"
+          class="text-xs font-semibold text-ultra-600 hover:text-ultra-800 hover:underline"
         >
           Support the project
         </a>
@@ -53,7 +53,7 @@ const sponsors = (await getCollection('sponsors')).sort((a, b) => {
                 </picture>
               ) : (
                 <span
-                  class={`font-bold text-paper-700 group-hover:text-paper-900 ${
+                  class={`font-bold text-slate-700 group-hover:text-slate-900 ${
                     s.data.tier === 'premier' ? 'text-2xl' : 'text-lg'
                   }`}
                 >

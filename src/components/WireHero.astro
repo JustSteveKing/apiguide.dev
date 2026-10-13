@@ -24,7 +24,7 @@ interface Props {
   size?: 'lg' | 'md';
 }
 
-const { identity, lead, trail, heading = false, copy, copyLabel = 'Copy', marker = 'border-paper-400', size = 'lg' } = Astro.props;
+const { identity, lead, trail, heading = false, copy, copyLabel = 'Copy', marker = 'border-slate-400', size = 'lg' } = Astro.props;
 const Identity = heading ? 'h1' : 'span';
 const sizeClass = size === 'lg' ? 'wire-lg' : 'wire-md';
 // Let URIs and paths break after a slash rather than mid-segment.
@@ -32,13 +32,13 @@ const parts = identity.split(/(?<=\/)/);
 ---
 
 <div class={`wire-hero flex items-start justify-between gap-4 border-l-4 pl-5 ${marker}`}>
-  <div class={`wire-line ${sizeClass} font-mono text-paper-950 min-w-0`}>
-    {lead && <span class="text-paper-600">{lead}</span>}<Identity class="inline font-mono font-medium">{parts.map((part, i) => <>{i > 0 && <wbr />}{part}</>)}</Identity>{trail && <span class="text-paper-600">{trail}</span>}
+  <div class={`wire-line ${sizeClass} font-mono text-slate-950 min-w-0`}>
+    {lead && <span class="text-slate-600">{lead}</span>}<Identity class="inline font-mono font-medium">{parts.map((part, i) => <>{i > 0 && <wbr />}{part}</>)}</Identity>{trail && <span class="text-slate-600">{trail}</span>}
   </div>
   {copy && (
     <button
       type="button"
-      class="wire-copy shrink-0 mt-1 px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100 text-xs font-medium text-paper-800 hover:border-chartres-400 hover:text-chartres-700 transition-colors data-[copied]:border-emerald-600 data-[copied]:text-emerald-800"
+      class="wire-copy shrink-0 mt-1 px-2.5 py-1 rounded-md border border-slate-300 bg-slate-100 text-xs font-medium text-slate-800 hover:border-ultra-400 hover:text-ultra-700 transition-colors data-[copied]:border-green-600 data-[copied]:text-green-800"
       data-copy={copy}
       aria-label={`${copyLabel}: ${copy}`}
     >

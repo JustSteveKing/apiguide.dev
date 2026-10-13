@@ -79,11 +79,11 @@ const scJsonLd = [
         copyLabel="Copy status line"
         marker={activeTheme.marker}
       />
-      <p class="text-lg text-paper-700 mt-6 mb-8 max-w-2xl">
+      <p class="text-lg text-slate-700 mt-6 mb-8 max-w-2xl">
         {sc.data.description}
       </p>
 
-      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
         <MetaItem label="Category" value={activeTheme.label} />
         <MetaItem label="API error types" value={`${matchingErrors.length} ${matchingErrors.length === 1 ? 'error schema' : 'error schemas'}`} />
         <MetaItem label="Related headers" value={`${matchingHeaders.length} ${matchingHeaders.length === 1 ? 'header' : 'headers'}`} />
@@ -91,7 +91,7 @@ const scJsonLd = [
     </header>
 
     <!-- Markdown Content Body -->
-    <div class="border-b border-paper-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="border-b border-slate-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
         <Content />
       </article>

@@ -1,325 +1,197 @@
 # DESIGN.md
 
-Design reference for apiguide.dev. This covers the colour palette and how it should be applied across the site. Structure and content take priority over visual polish at this stage, so treat this as the agreed foundation to build on rather than a finished design system.
+Design reference for apiguide.dev: the colour palette, how it is applied, and
+(further down) the typography and page structure.
 
-## Source and rationale
+## The palette
 
-The palette is derived from real pigment colours documented on Storied Colors, a catalogue of named colours with historical provenance. Rather than picking arbitrary brand colours, each accent in this palette traces back to a specific, real hue with its own history. This fits an errors reference site that is meant to feel authoritative and permanent rather than trendy.
+Replaced 2026-10-13. The site used to draw on Storied Colors pigments (Chartres
+Blue, Yellow Ochre, Uranium Red, Emerald Green, YInMn Blue) over a warm cream
+neutral called Paper. That read as warm and archival, close to the look many
+generated sites share, and it was not what the site wanted to say.
 
-Five accent families were pulled from the source:
+The palette now is **Ultramarine field**: cool white and blue-grey slate
+neutrals, and one saturated ultramarine used boldly as the brand. Status
+classes each get their own hue, kept strong and flat.
 
-- Chartres Blue, hex 1F3F8E, at step **700**
-- Yellow Ochre, hex CB9D06, at step **700**
-- Uranium Red, hex D7350F, at step 500
-- Emerald Green, hex 50C878, at step 500
-- YInMn Blue, hex 2E5090, at step **700**
+| Role | Anchor |
+| --- | --- |
+| Page | `#F7F8FA` (slate-50) |
+| Raised surface | `#ECEEF3` (slate-100) |
+| Ink | `#111827` (slate-950) |
+| Muted text | `#4B5563` (slate-600) |
+| Brand | `#2B2FD9` (ultra-600) |
+| Brand, deep | `#1A1D8F` (ultra-800) |
+| 1xx | slate |
+| 2xx | `#0B7A4B` (green-700) |
+| 3xx | `#6D3FD1` (violet-600) |
+| 4xx | `#B45309` (amber-700) |
+| 5xx | `#C2261A` (red-600) |
 
-### Why three pigments sit at 700 rather than 500
+Six families, each 50 (lightest) to 950 (darkest), defined once in
+`src/styles/main.css`. Tailwind's default colours are switched off
+(`--color-*: initial`), so a class naming any other colour fails rather than
+inventing one.
 
-Corrected 2026-09-24. Every pigment was originally pinned at step 500, which is
-the conventional home for a brand hue. For Uranium and Emerald that works,
-because those two happen to sit at roughly the lightness a 500 wants.
+### How the scales were built
 
-Chartres, Ochre and YInMn are darker than that. Pinning them at 500 while the
-rest of each ramp was generated independently left all three scales
-**non-monotonic**: step 600 came out lighter than step 500 before darkening
-again at 700, which contradicts the rule stated above that each family runs
-from 50 lightest to 950 darkest. Anything reaching for 600 as "one step darker
-than 500" got a lighter colour instead, and a conventional 500 to 600 hover
-would have brightened rather than deepened.
+Each ramp was generated in OKLCH so lightness falls evenly from 50 to 950 and
+every family is monotonic. The anchors above are pinned exactly at their steps
+and the steps between are interpolated through them. Two families are
+adjusted by hand, for reasons worth keeping:
 
-Each of those three pigments is now at step 700, which is where its lightness
-actually falls, and step 500 is the OKLab midpoint of 400 and 600. All six
-families are monotonic.
-
-The change is close to invisible on screen, which is the point: the old 700s
-were already within a few thousandths of the pigment in relative luminance, so
-the swap preserved the rendering while making the scale honest. It also fixed
-something that was quietly broken. The logo is a gradient from chartres-500 to
-chartres-700, and those two used to differ in luminance by 0.004, so it barely
-read as a gradient at all. It now spans 0.12.
-
-One consequence worth knowing: **the blue most people see is not Chartres
-Blue.** `chartres-600` carries the links and the bulk of the interface, and it
-is its own value rather than the pigment. The pigment now carries the focus
-ring, the blockquote rule, the homepage card headings and the dark end of the
-logo gradient.
-
-A sixth family, Paper, is a warm neutral scale built for this project rather than pulled directly from a single pigment. It replaces standard grey throughout the site, since a clinical grey works against the archival, catalogued feel the rest of the palette is going for.
+- **Amber shifts toward yellow as it lightens**, as real amber does. Held at
+  one hue, its light steps went peach, which reads as terracotta.
+- **Slate keeps the hue of its ink** (`#111827`) at every step, with low,
+  even chroma, so dark surfaces stay blue-grey instead of drifting warm.
 
 ## The scales
 
-Each family runs from 50 (lightest) to 950 (darkest), following the Tailwind v4 convention of a numeric scale defined via the theme directive.
-
-### Paper (warm neutral)
+### Slate (neutrals, 1xx)
 
 | Step | Hex |
 | --- | --- |
-| 50 | FAF6F0 |
-| 100 | F2ECE0 |
-| 200 | E7DECD |
-| 300 | D6C8AF |
-| 400 | BBA98D |
-| 500 | 9C896C |
-| 600 | 71624A |
-| 700 | 665842 |
-| 800 | 4B402F |
-| 900 | 31291D |
-| 950 | 1F1A12 |
+| 50 | #F7F8FA (anchor) |
+| 100 | #ECEEF3 (anchor) |
+| 200 | #D5DAE5 |
+| 300 | #B9C0CF |
+| 400 | #919AAC |
+| 500 | #6D7688 |
+| 600 | #4B5563 (anchor) |
+| 700 | #3C4455 |
+| 800 | #2E3545 |
+| 900 | #1F2636 |
+| 950 | #111827 (anchor) |
 
-Paper 600 is the lightest step that clears 4.5:1 for small text on paper 50 and 100, so it is the floor for body and label text. On paper 200 it reaches 4.43:1, marginally short, so avoid small text on that background. Paper 400 and 500 are for borders, dividers and decorative separators only, never for text.
-
-### Chartres (brand)
+### Ultra (brand, links)
 
 | Step | Hex |
 | --- | --- |
-| 50 | F7F8FB |
-| 100 | ECEFF6 |
-| 200 | CED7EE |
-| 300 | A6B8E5 |
-| 400 | 7392DD |
-| 500 | 4D72CB |
-| 600 | 2852B8 |
-| 700 | 1F3F8E |
-| 800 | 1B336F |
-| 900 | 162750 |
-| 950 | 0F1933 |
+| 50 | #F7F9FF |
+| 100 | #E7EEFF |
+| 200 | #CCD9FD |
+| 300 | #A8BDFD |
+| 400 | #7492FD |
+| 500 | #465FFB |
+| 600 | #2B2FD9 (anchor) |
+| 700 | #26359C |
+| 800 | #1A1D8F (anchor) |
+| 900 | #1D2857 |
+| 950 | #1C233A |
 
-### Ochre (client error)
-
-| Step | Hex |
-| --- | --- |
-| 50 | FCFAF6 |
-| 100 | F9F5E9 |
-| 200 | F5EAC6 |
-| 300 | F4DE98 |
-| 400 | F6D25B |
-| 500 | E8BD3C |
-| 600 | DAA906 |
-| 700 | CB9D06 |
-| 800 | 836607 |
-| 900 | 5E4A08 |
-| 950 | 3C2F07 |
-
-### Uranium (server error)
+### Amber (4xx, client error)
 
 | Step | Hex |
 | --- | --- |
-| 50 | FBF7F6 |
-| 100 | F8ECEA |
-| 200 | F3D0C8 |
-| 300 | F0AB9B |
-| 400 | F07C61 |
-| 500 | D7350F |
-| 600 | D2340F |
-| 700 | A7290C |
-| 800 | 7E220C |
-| 900 | 5B1A0B |
-| 950 | 3A1209 |
+| 50 | #FDF9EE |
+| 100 | #FAF1DE |
+| 200 | #F6E2BB |
+| 300 | #EECE97 |
+| 400 | #E3AE65 |
+| 500 | #D78D37 |
+| 600 | #C66F0A |
+| 700 | #B45309 (anchor) |
+| 800 | #8A3F08 |
+| 900 | #612D0C |
+| 950 | #2F2119 |
 
-### Emerald (success)
-
-| Step | Hex |
-| --- | --- |
-| 50 | F7FAF8 |
-| 100 | EDF5F0 |
-| 200 | D1EBDA |
-| 300 | ACDFBD |
-| 400 | 7DD39A |
-| 500 | 50C878 |
-| 600 | 36AB5D |
-| 700 | 2B884A |
-| 800 | 236739 |
-| 900 | 1B4B2B |
-| 950 | 12301C |
-
-### Yinmn (secondary blue, informational)
+### Red (5xx, server error, deprecation)
 
 | Step | Hex |
 | --- | --- |
-| 50 | F7F8FA |
-| 100 | EDF0F5 |
-| 200 | D1DAEB |
-| 300 | ACBEDF |
-| 400 | 7E9BD3 |
-| 500 | 5A7CBF |
-| 600 | 365EAA |
-| 700 | 2E5090 |
-| 800 | 233B67 |
-| 900 | 1B2C4B |
-| 950 | 131D30 |
+| 50 | #FFF7F6 |
+| 100 | #FFEAE7 |
+| 200 | #FED3CC |
+| 300 | #FEB3A6 |
+| 400 | #FC7C6A |
+| 500 | #E54D3C |
+| 600 | #C2261A (anchor) |
+| 700 | #A21F15 |
+| 800 | #801D14 |
+| 900 | #5C1E17 |
+| 950 | #341E1B |
 
-## Tailwind v4 setup
+### Green (2xx, success, confirmation)
 
-Defined once via the theme directive, no config file required.
+| Step | Hex |
+| --- | --- |
+| 50 | #F3FCF6 |
+| 100 | #E6F6EB |
+| 200 | #C9ECD6 |
+| 300 | #AADDBE |
+| 400 | #7DC59B |
+| 500 | #54AC7C |
+| 600 | #319261 |
+| 700 | #0B7A4B (anchor) |
+| 800 | #125F3B |
+| 900 | #17442C |
+| 950 | #1C2820 |
 
-```css
-@import "tailwindcss";
+### Violet (3xx, secondary categories)
 
-@theme {
-  --color-paper-50: #FAF6F0;
-  --color-paper-100: #F2ECE0;
-  --color-paper-200: #E7DECD;
-  --color-paper-300: #D6C8AF;
-  --color-paper-400: #BBA98D;
-  --color-paper-500: #9C896C;
-  --color-paper-600: #71624A;
-  --color-paper-700: #665842;
-  --color-paper-800: #4B402F;
-  --color-paper-900: #31291D;
-  --color-paper-950: #1F1A12;
-
-  --color-chartres-50: #F7F8FB;
-  --color-chartres-100: #ECEFF6;
-  --color-chartres-200: #CED7EE;
-  --color-chartres-300: #A6B8E5;
-  --color-chartres-400: #7392DD;
-  --color-chartres-500: #4D72CB;
-  --color-chartres-600: #2852B8;
-  --color-chartres-700: #1F3F8E;
-  --color-chartres-800: #1B336F;
-  --color-chartres-900: #162750;
-  --color-chartres-950: #0F1933;
-
-  --color-ochre-50: #FCFAF6;
-  --color-ochre-100: #F9F5E9;
-  --color-ochre-200: #F5EAC6;
-  --color-ochre-300: #F4DE98;
-  --color-ochre-400: #F6D25B;
-  --color-ochre-500: #E8BD3C;
-  --color-ochre-600: #DAA906;
-  --color-ochre-700: #CB9D06;
-  --color-ochre-800: #836607;
-  --color-ochre-900: #5E4A08;
-  --color-ochre-950: #3C2F07;
-
-  --color-uranium-50: #FBF7F6;
-  --color-uranium-100: #F8ECEA;
-  --color-uranium-200: #F3D0C8;
-  --color-uranium-300: #F0AB9B;
-  --color-uranium-400: #F07C61;
-  --color-uranium-500: #D7350F;
-  --color-uranium-600: #D2340F;
-  --color-uranium-700: #A7290C;
-  --color-uranium-800: #7E220C;
-  --color-uranium-900: #5B1A0B;
-  --color-uranium-950: #3A1209;
-
-  --color-emerald-50: #F7FAF8;
-  --color-emerald-100: #EDF5F0;
-  --color-emerald-200: #D1EBDA;
-  --color-emerald-300: #ACDFBD;
-  --color-emerald-400: #7DD39A;
-  --color-emerald-500: #50C878;
-  --color-emerald-600: #36AB5D;
-  --color-emerald-700: #2B884A;
-  --color-emerald-800: #236739;
-  --color-emerald-900: #1B4B2B;
-  --color-emerald-950: #12301C;
-
-  --color-yinmn-50: #F7F8FA;
-  --color-yinmn-100: #EDF0F5;
-  --color-yinmn-200: #D1DAEB;
-  --color-yinmn-300: #ACBEDF;
-  --color-yinmn-400: #7E9BD3;
-  --color-yinmn-500: #5A7CBF;
-  --color-yinmn-600: #365EAA;
-  --color-yinmn-700: #2E5090;
-  --color-yinmn-800: #233B67;
-  --color-yinmn-900: #1B2C4B;
-  --color-yinmn-950: #131D30;
-}
-```
+| Step | Hex |
+| --- | --- |
+| 50 | #F9F8FF |
+| 100 | #EFEDFF |
+| 200 | #DDD8FF |
+| 300 | #C7BCFE |
+| 400 | #A791FC |
+| 500 | #8A62F5 |
+| 600 | #6D3FD1 (anchor) |
+| 700 | #5A37AC |
+| 800 | #482E88 |
+| 900 | #362861 |
+| 950 | #252135 |
 
 ## Semantic usage rules
 
-These are the rules to follow when building components and templates, so colour choice stays consistent and predictable rather than picked per page.
+### Slate
 
-### Paper
+Backgrounds, borders and text. slate-50 to 200 for backgrounds, 300 to 400 for
+borders and dividers, 600 to 950 for text. **slate-600 is the floor for small
+text**: 7.11:1 on slate-50 and 6.51:1 on slate-100. 400 and 500 are never text.
 
-Use in place of grey for all backgrounds, borders and body text. Paper 50 to 200 for backgrounds, paper 600 to 900 for text, paper 300 to 400 for borders and dividers.
+### Ultra
 
-### Contrast floors
+The brand. Links (ultra-600, 7.87:1 on slate-50), the active nav item, the logo,
+the focus ring, and the home page band. It is the default interactive colour.
 
-Accent 500 and 600 steps are fill and border colours, not text colours. Ochre 600 sits at 2.0:1 and emerald 600 at 2.7:1 on paper 50, so small text uses the 800 or 900 step of any accent family. This resolves the second open question below.
+### Status colours
 
-Navigation and index cards that do not represent a category use paper and chartres only. Hue is reserved for pages and badges where it maps to a real category, so a colour carries the same meaning everywhere it appears.
+Amber (4xx), red (5xx), green (2xx), violet (3xx) and slate (1xx) mean their
+status class everywhere. Small text in any of them uses the 800 or 900 step;
+badges are `bg-x-100 text-x-900 border-x-200`; the 500 step is for fills and
+rules only (the `marker` beside a wire line).
 
-Ochre, Uranium and Emerald are status colours: client error, server error, success. Guide categories, tool categories and pricing never use them, however short of hues a scheme is, because a badge in one of those three reads as a status wherever it appears. Those labels draw on Chartres, YInMn and Paper, in three treatments: solid (`bg-x-100 text-x-900`), outline (`text-x-800 border-x-400`) and inverted (`bg-x-700 text-x-50`, or `bg-paper-800 text-paper-50`). The live mapping is in `src/config/themes.ts`.
+**Amber, red and green are reserved for status.** A guide category, a tool
+category or a price never uses them, because a badge in one of those reads as
+a client error, a server error or a success wherever it appears. Red also marks
+a deprecated error definition; green also confirms an action, such as a copy.
+Categories draw on ultra, violet and slate in three treatments: solid
+(`bg-x-100 text-x-900`), outline (`text-x-800 border-x-400`) and inverted
+(`bg-x-700 text-x-50`). The live mapping is in `src/config/themes.ts`.
 
-### Chartres
-
-The brand colour. Use for the site logo or wordmark, primary navigation, all inline links, and heading accents. This is the default interactive colour whenever nothing more specific applies.
-
-### Ochre
-
-Reserved for anything tied to the `client-error` category, meaning 4xx status codes. Use on the error index page to badge and group client error entries, and on individual error pages where `category` is `client-error`, for the status code badge and any related visual accent.
-
-### Uranium
-
-Reserved for anything tied to the `server-error` category, meaning 5xx status codes, following the same pattern as ochre. Also use for the deprecated notice banner on any page where `deprecated` is true, since a deprecated error definition is functionally a warning regardless of its actual status code.
-
-### Emerald
-
-Reserved for success and confirmation states only. This does not correspond to any error category, since every page on the errors section is documenting a failure by definition. Use emerald for things like a successful copy to clipboard action on a code sample, a confirmation after submitting a correction, or a working example callout distinguished from a failing one.
-
-### Yinmn
-
-A secondary informational blue, distinct from chartres so it does not compete with brand and link colour. Use for the Problem and JSON explainer section, metadata callouts such as published and updated dates, and any note that is informational rather than a warning or an error.
-
-## Category to colour mapping
-
-The `category` field on the errors content collection should drive colour directly, rather than colour being hardcoded per page.
-
-| Category value | Colour family |
-| --- | --- |
-| client-error | ochre |
-| server-error | uranium |
-
-This mapping should live in one place, for example a small lookup object imported wherever a category badge is rendered, so a future third category does not require hunting through every template that touches colour.
+Navigation and index rows that do not represent a category use slate and ultra
+only.
 
 ## Dark theme
 
-Answered 2026-09-24, and the answer to the question this section used to ask is
-**the same scales, mirrored**.
+The same scales, mirrored: 50 swaps with 950, 100 with 900, and so on, 500
+fixed, in one `@media (prefers-color-scheme: dark)` block. A raised surface is
+then a step lighter than the page, which is the dark-interface convention, and
+a link hover still moves toward more emphasis.
 
-Every colour utility on the site resolves through a `var(--color-*)`, so the
-whole theme is one `@media (prefers-color-scheme: dark)` block in `main.css`
-that redefines the tokens. Nothing else changed: no `dark:` variant was added
-to any component.
+The page lands on `#111827`, the light theme's ink. Measured on it: body text
+12.66:1, muted text 6.27:1, links 6.14:1; every status badge pairing is above
+9.8:1.
 
-The scale is mirrored rather than replaced. 50 swaps with 950, 100 with 900,
-200 with 800, 300 with 700, 400 with 600, and 500 stays where it is.
+**The home page band is not mirrored.** Mirrored, ultra-600 becomes a pale
+periwinkle with dark type. The band has its own tokens, `--color-band`,
+`--color-on-band` and `--color-on-band-muted`: ultra-600 with slate-50 type in
+light mode, ultra-800 with the same type in dark mode (12.23:1).
 
-That is not laziness, it is what makes the inversion behave. In light mode a
-raised surface is one step *darker* than the page, paper 100 on paper 50.
-Mirrored, it becomes one step *lighter*, paper 900 on paper 950, which is the
-elevation convention dark interfaces already use. A link hover moves toward
-900: in light mode that deepens the blue, mirrored it brightens it. Both read
-as more emphasis, from one rule.
-
-The page lands on paper 950, `#1F1A12`, a warm near-black rather than a neutral
-one, so the paper identity survives the switch.
-
-Measured pairs on that background: body text 12.95:1, headings 16.06:1, links
-5.67:1, muted text 7.55:1, focus ring 8.73:1, code on its own surface 13.31:1.
-
-Three things do not come from the token swap and are handled explicitly:
-
-- **Code blocks.** Expressive Code was pinned to `github-light`, which would
-  have left a light code theme sitting inside a dark page. It now carries
-  `github-light` and `github-dark` and switches on the same media query.
-- **Shadows.** The card lift uses a warm low-alpha shadow that is invisible
-  against a dark page, so the dark block deepens it.
-- **The logo inverts, deliberately.** The mark is a gradient from chartres 500
-  to chartres 700 with paper 50 text. Mirrored, that becomes a light blue chip
-  with a dark glyph. Pinning it to the light-mode values was considered and
-  rejected: chartres 700 against paper 950 is 1.3:1, so the chip's dark corner
-  would sink into the page. Inverted it holds 3.77:1 at worst.
-
-Still to decide: whether to add a manual override. Today the site follows the
-operating system and offers no toggle, which needs no JavaScript and no stored
-preference, but it does mean a reader cannot choose per site.
+Code blocks switch between `github-light` and `github-dark` on the same media
+query.
 
 ## Typography and structure
 
@@ -334,7 +206,7 @@ Two families. **Inter** for everything a person reads, headings included, with
 tracking tightened at display sizes (`letter-spacing: -0.02em` on headings).
 **Fira Code** only for text that is literally on the wire or in code: status
 lines, header names and values, methods, URIs, JSON. Lora was dropped: a serif
-display on a Paper background is the look generated reference sites arrive at,
+display on a cream background is the look generated reference sites arrive at,
 and it said nothing about the subject.
 
 ### The wire line
@@ -350,9 +222,9 @@ Code by `src/components/WireHero.astro`:
 | Error | `"type": "https://apiguide.dev/errors/account-frozen"` |
 | Problem+JSON | `Content-Type: application/problem+json` |
 
-Protocol grammar is Paper 600; the page's identity is full ink and is the `h1`
+Protocol grammar is slate-600; the page's identity is full ink and is the `h1`
 where that reads naturally. A 4px left rule carries the status hue (the
-`marker` entries in `themes.ts`), and a copy button confirms in Emerald. The
+`marker` entries in `themes.ts`), and a copy button confirms in green. The
 home page's version of the same idea is a full `curl -v` transcript with each
 part linked to its page.
 
@@ -379,25 +251,27 @@ furniture rather than information:
 - Title-case field names, and raw enum values dressed up by CSS `uppercase`.
 - Gradient washes and glows, including on the social cards.
 
+## Open questions
 
-
-A few things not yet decided that are worth resolving before this palette is treated as final.
-
-- Whether the ochre and uranium accents need a higher contrast variant specifically for small text, to satisfy accessibility contrast ratios at the lighter end of each scale
-- Whether yinmn is distinct enough from chartres at a glance for colour blind users, given both are blues, or whether the informational callouts should lean on paper and iconography instead of colour alone
+- Whether to add a manual light/dark override. Today the site follows the
+  operating system and offers no toggle, which needs no JavaScript or stored
+  preference, but a reader cannot choose per site.
+- Whether violet (3xx) and ultra (brand) are distinct enough at a glance for
+  colour-blind readers. Both sit in the blue-violet range; 3xx is always
+  labelled, so colour is never the only signal, but it is worth testing.
 
 ## Branding & Logo Specifications
 
 The site uses a custom-designed logo based on a lightning bolt path. Below are the design specifications:
 
 ### Wordmark
-- `api`: **Paper-900** (`#31291D`)
-- `guide`: **Chartres-600** (`#2852B8`)
-- `.dev`: **Paper-600** (`#71624A`) in regular font weight (`font-normal`)
+- `api`: **slate-900** (`#1F2636`)
+- `guide`: **ultra-600** (`#2B2FD9`)
+- `.dev`: **slate-600** (`#4B5563`) in regular font weight (`font-normal`)
 
 ### Colors & Gradients
-- **Logo Gradient background**: **Chartres-500** (`#4D72CB`) to **Chartres-700** (`#1F3F8E`, the pigment).
-- **Lightning Bolt color**: **Paper-50** (`#FAF6F0`).
+- **Logo Gradient background**: **ultra-500** (`#465FFB`) to **ultra-700** (`#26359C`).
+- **Lightning Bolt color**: **slate-50** (`#F7F8FA`).
 
 ### Size Scale Mapping
 | Size | Container Size | Icon Size | Typography Style |

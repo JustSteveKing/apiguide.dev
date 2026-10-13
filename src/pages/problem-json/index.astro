@@ -19,15 +19,15 @@ const headings = [
 >
   <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <nav class="mb-8 text-sm" aria-label="Breadcrumb">
-      <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
-      <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
-      <a href="/errors" class="text-chartres-600 hover:text-chartres-800 hover:underline">Errors</a>
-      <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
-      <span class="text-paper-700">Problem+JSON</span>
+      <a href="/" class="text-ultra-600 hover:text-ultra-800 hover:underline">Home</a>
+      <span class="mx-2 text-slate-400" aria-hidden="true">/</span>
+      <a href="/errors" class="text-ultra-600 hover:text-ultra-800 hover:underline">Errors</a>
+      <span class="mx-2 text-slate-400" aria-hidden="true">/</span>
+      <span class="text-slate-700">Problem+JSON</span>
     </nav>
 
     <header class="mb-12">
-      <h1 class="text-4xl font-bold tracking-tight mb-6 text-paper-950">Problem+JSON</h1>
+      <h1 class="text-4xl font-bold tracking-tight mb-6 text-slate-950">Problem+JSON</h1>
       <WireHero
         lead="Content-Type: "
         identity="application/problem+json"
@@ -40,8 +40,8 @@ const headings = [
     <!-- Semantic Content Body -->
     <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
-      <p class="text-lg leading-relaxed text-paper-800">
-        <strong>Problem+JSON</strong> (defined in <a href="https://datatracker.ietf.org/doc/html/rfc9457" class="text-chartres-600 hover:text-chartres-800 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9457</a>, which obsoletes RFC 7807) is a standardized format for carrying machine-readable details of errors in HTTP response payloads. It avoids the need to invent custom error formats for every API.
+      <p class="text-lg leading-relaxed text-slate-800">
+        <strong>Problem+JSON</strong> (defined in <a href="https://datatracker.ietf.org/doc/html/rfc9457" class="text-ultra-600 hover:text-ultra-800 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9457</a>, which obsoletes RFC 7807) is a standardized format for carrying machine-readable details of errors in HTTP response payloads. It avoids the need to invent custom error formats for every API.
       </p>
 
       <h2 id="why-a-standard-error-format">Why a standard error format?</h2>
@@ -64,8 +64,8 @@ const headings = [
 
       <h2 id="why-is-type-a-uri">Why is <code>type</code> a URI?</h2>
       
-      <!-- Yinmn informational semantic note -->
-      <aside class="bg-yinmn-100 border-l-4 border-yinmn-500 p-5 text-yinmn-950 rounded-r-lg shadow-sm my-6" role="note">
+      <!-- Informational note -->
+      <aside class="bg-violet-100 border-l-4 border-violet-500 p-5 text-violet-950 rounded-r-lg shadow-sm my-6" role="note">
         <strong class="font-bold block mb-1">Key Concept</strong>
         The <code>type</code> field is the single most important aspect of RFC 9457. It MUST be a URI (such as <code>https://apiguide.dev/errors/rate-limit-exceeded</code>).
       </aside>
@@ -85,7 +85,7 @@ const headings = [
       <h2 id="example-implementation">Example Implementation</h2>
       <p>Here is how a rate limit exceeded error looks in Problem+JSON format:</p>
       
-      <pre class="bg-paper-100 border border-paper-300 rounded-lg p-5 overflow-x-auto font-mono text-sm text-paper-950"><code>{`{
+      <pre class="bg-slate-100 border border-slate-300 rounded-lg p-5 overflow-x-auto font-mono text-sm text-slate-950"><code>{`{
   "type": "https://apiguide.dev/errors/rate-limit-exceeded",
   "title": "Rate Limit Exceeded",
   "status": 429,

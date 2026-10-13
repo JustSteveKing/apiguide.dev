@@ -33,18 +33,18 @@ const columns = shortKey
     : 'grid-cols-1 sm:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]';
 ---
 
-<li class="border-b border-paper-300">
+<li class="border-b border-slate-300">
   <a
     href={href}
     data-track={track}
-    class={`group grid ${columns} gap-x-6 gap-y-0.5 py-3 px-2 -mx-2 rounded-sm hover:bg-paper-100 transition-colors`}
+    class={`group grid ${columns} gap-x-6 gap-y-0.5 py-3 px-2 -mx-2 rounded-sm hover:bg-slate-100 transition-colors`}
   >
-    {shortKey && <span class="font-mono text-paper-950 tabular-nums">{code}</span>}
-    <span class={`${keyIsName ? 'font-mono text-chartres-600' : 'font-medium text-chartres-600'} group-hover:underline underline-offset-2 min-w-0 break-words`}>
+    {shortKey && <span class="font-mono text-slate-950 tabular-nums">{code}</span>}
+    <span class={`${keyIsName ? 'font-mono text-ultra-600' : 'font-medium text-ultra-600'} group-hover:underline underline-offset-2 min-w-0 break-words`}>
       {keyIsName ? code : name}
     </span>
     {(description || note) && (
-      <span class={`text-sm text-paper-700 sm:pt-0.5 min-w-0 flex gap-4 justify-between ${shortKey ? 'col-start-2 sm:col-start-auto' : ''}`}>
+      <span class={`text-sm text-slate-700 sm:pt-0.5 min-w-0 flex gap-4 justify-between ${shortKey ? 'col-start-2 sm:col-start-auto' : ''}`}>
         {description && <span class="line-clamp-2">{description}</span>}
         {note && <span class="shrink-0 tabular-nums">{note}</span>}
       </span>

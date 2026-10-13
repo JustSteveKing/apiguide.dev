@@ -56,9 +56,9 @@ const methodJsonLd = [
       { name: m.data.name }
     ]} />
 
-    <!-- Draft Notice (Always uses Yinmn theme: informational, not an error/warning) -->
+    <!-- Draft notice: informational, so violet, not a status colour -->
     {m.data.draft && (
-      <div class="bg-yinmn-100 border border-yinmn-200 text-yinmn-900 p-5 rounded-lg mb-8" role="note">
+      <div class="bg-violet-100 border border-violet-200 text-violet-900 p-5 rounded-lg mb-8" role="note">
         <h2 class="font-bold text-lg mb-1">Draft: Not Yet Standardized</h2>
         <p class="text-sm">
           This method is still an active IETF Internet-Draft, not a finished RFC. Its name, semantics, and status codes can still change before final publication. Do not rely on it in production APIs yet. Treat this page as a preview rather than a spec.
@@ -73,11 +73,11 @@ const methodJsonLd = [
         heading
         trail=" request-target HTTP/1.1"
       />
-      <p class="text-lg text-paper-700 mt-6 mb-8 max-w-2xl">
+      <p class="text-lg text-slate-700 mt-6 mb-8 max-w-2xl">
         {m.data.description}
       </p>
 
-      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-paper-300 text-sm">
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
         <MetaItem label="Safe" value={m.data.safe ? 'Yes' : 'No, changes server state'} />
         <MetaItem label="Idempotent" value={m.data.idempotent ? 'Yes' : 'No, a retry may repeat the effect'} />
         <MetaItem label="Cacheable" value={m.data.cacheable ? 'Yes, by default' : 'No'} />
@@ -85,7 +85,7 @@ const methodJsonLd = [
     </header>
 
     <!-- Markdown Content Body -->
-    <div class="border-b border-paper-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="border-b border-slate-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
         <Content />
       </article>

@@ -68,13 +68,13 @@ const textPath = (face: Face, text: string, size: number, x: number, y: number, 
 };
 
 // Left rule colour per status category: the 500 step of each hue, as on the
-// pages (src/config/themes.ts, `marker`). Everything else gets Paper 400.
+// pages (src/config/themes.ts, `marker`). Everything else gets slate-400.
 const statusMarker: Record<string, string> = {
-  'informational': '#5A7CBF', // yinmn-500
-  'success': '#50C878', // emerald-500
-  'redirection': '#4D72CB', // chartres-500
-  'client-error': '#E8BD3C', // ochre-500
-  'server-error': '#D7350F', // uranium-500
+  'informational': '#6D7688', // slate-500
+  'success': '#54AC7C', // green-500
+  'redirection': '#8A62F5', // violet-500
+  'client-error': '#D78D37', // amber-500
+  'server-error': '#E54D3C', // red-500
 };
 
 export async function getStaticPaths() {
@@ -163,7 +163,7 @@ export async function getStaticPaths() {
 }
 
 export async function GET({ props }: { props: { title: string; subtitle: string; category: string; marker?: string } }) {
-  const { title, subtitle, category, marker = '#BBA98D' } = props;
+  const { title, subtitle, category, marker = '#919AAC' } = props;
 
   // Escape text fields to prevent malformed SVG XML tag parsing errors
 
@@ -214,29 +214,29 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
   const svg = `
     <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Logo gradient, chartres-500 to chartres-700 as on the site -->
+        <!-- Logo gradient, ultra-500 to ultra-700 as on the site -->
         <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#4D72CB" />
-          <stop offset="100%" stop-color="#1F3F8E" />
+          <stop offset="0%" stop-color="#465FFB" />
+          <stop offset="100%" stop-color="#26359C" />
         </linearGradient>
       </defs>
 
-      <!-- Paper 50, the site's page colour -->
-      <rect width="1200" height="630" fill="#FAF6F0" />
+      <!-- slate-50, the site's page colour -->
+      <rect width="1200" height="630" fill="#F7F8FA" />
 
       <!-- Category rule, as beside the wire line on each page -->
       <rect x="100" y="126" width="8" height="${titleEndY - 126 + 18}" fill="${marker}" />
 
       <!-- Category label -->
-      <path fill="#665842" d="${textPath(faces.bodyBold, category, 22, 132, 150)}" />
+      <path fill="#4B5563" d="${textPath(faces.bodyBold, category, 22, 132, 150)}" />
 
       <!-- Title block -->
-      <path fill="#1F1A12" d="${titleLines
+      <path fill="#111827" d="${titleLines
         .map((line, idx) => textPath(faces.display, line, titleSize, 132, titleStartY + idx * titleLineHeight))
         .join(' ')}" />
 
       <!-- Subtitle description block -->
-      <path fill="#665842" d="${subtitleLines
+      <path fill="#4B5563" d="${subtitleLines
         .map((line, idx) => textPath(faces.body, line, subtitleSize, 132, subtitleStartY + idx * subtitleLineHeight))
         .join(' ')}" />
 
@@ -251,8 +251,8 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
               stroke-linecap="round" 
               stroke-linejoin="round" 
               stroke-width="0.75"
-              stroke="#FAF6F0"
-              fill="#FAF6F0"
+              stroke="#F7F8FA"
+              fill="#F7F8FA"
               d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
             />
           </svg>
@@ -267,9 +267,9 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
           const devX = guideX + measure(faces.wordmark, 'guide', size);
 
           return [
-            `<path fill="#31291D" d="${textPath(faces.wordmark, 'api', size, apiX, 27)}" />`,
-            `<path fill="#2852B8" d="${textPath(faces.wordmark, 'guide', size, guideX, 27)}" />`,
-            `<path fill="#71624A" d="${textPath(faces.body, '.dev', size, devX, 27)}" />`,
+            `<path fill="#1F2636" d="${textPath(faces.wordmark, 'api', size, apiX, 27)}" />`,
+            `<path fill="#2B2FD9" d="${textPath(faces.wordmark, 'guide', size, guideX, 27)}" />`,
+            `<path fill="#4B5563" d="${textPath(faces.body, '.dev', size, devX, 27)}" />`,
           ].join('');
         })()}
         ${(() => {
@@ -277,7 +277,7 @@ export async function GET({ props }: { props: { title: string; subtitle: string;
           const tagline = 'HTTP API reference';
           const size = 20;
           const x = 1000 - measure(faces.bodyBold, tagline, size);
-          return `<path fill="#665842" d="${textPath(faces.bodyBold, tagline, size, x, 27)}" />`;
+          return `<path fill="#4B5563" d="${textPath(faces.bodyBold, tagline, size, x, 27)}" />`;
         })()}
       </g>
     </svg>
