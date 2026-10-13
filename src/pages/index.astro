@@ -28,6 +28,7 @@ const httpVerbs = methods
   });
 
 import { getWebSiteSchema } from '../utils/jsonLd';
+import { excerpt } from '@/utils/excerpt';
 
 const homeJsonLd = getWebSiteSchema();
 ---
@@ -56,17 +57,6 @@ const homeJsonLd = getWebSiteSchema();
           <span class="hidden sm:inline">Search HTTP status codes, headers, errors&hellip;</span>
           <kbd class="ml-auto hidden sm:inline-block px-2 py-0.5 text-xs font-sans bg-paper-50 border border-paper-300 rounded text-paper-700">⌘K</kbd>
         </button>
-        
-        <!-- Index counts -->
-        <div class="mt-4 flex flex-wrap gap-2 text-xs" aria-label="Reference index counts">
-          <a href="/errors" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{errors.length}</strong> Errors</a>
-          <a href="/status-codes" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{statusCodes.length}</strong> Status Codes</a>
-          <a href="/headers" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{headers.length}</strong> Headers</a>
-          <a href="/methods" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{methods.length}</strong> Methods</a>
-          <a href="/guides" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{guides.length}</strong> Guides</a>
-          <a href="/specifications" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{specifications.length}</strong> Specs</a>
-          <a href="/tools" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{tools.length}</strong> Tools</a>
-        </div>
       </div>
     </header>
 
@@ -141,7 +131,7 @@ const homeJsonLd = getWebSiteSchema();
               Curated directory of industry tools covering documentation, mock testing, gateways, and observability.
             </p>
           </div>
-          <span class="text-xs text-paper-700 mt-4 font-semibold block">{tools.length} tools review cataloged</span>
+          <span class="text-xs text-paper-700 mt-4 font-semibold block">{tools.length} tools cataloged</span>
         </a>
 
         <a href="/problem-json" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
@@ -227,7 +217,7 @@ const homeJsonLd = getWebSiteSchema();
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
               <a href="/headers/idempotency-key" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Idempotency-Key Header</a>
               <a href="/methods/post" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">POST Request Verb</a>
-              <a href="/guides/api-security" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">API Security Guide</a>
+              <a href="/guides/idempotency" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Idempotency Guide</a>
             </div>
           </div>
         </div>
@@ -293,7 +283,7 @@ const homeJsonLd = getWebSiteSchema();
                   </span>
                 </div>
                 <p class="text-xs text-paper-700 line-clamp-2 leading-relaxed">
-                  {error.data.statusText}: A standardized definition for this error code.
+                  {excerpt(error.body, 120)}
                 </p>
               </div>
             ))}

@@ -1,25 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { excerpt } from '@/utils/excerpt';
+import { errorCategoryThemes } from '@/config/themes';
 
 const errors = await getCollection('errors');
 
-// Helper to extract a short excerpt from the markdown body
-function getExcerpt(body?: string) {
-  if (!body) return '';
-  const clean = body
-    .replace(/^##\s+.*$/gm, '')
-    .replace(/```[\s\S]*?```/g, '')
-    .trim();
-  
-  const paragraphs = clean.split(/\n{2,}/);
-  const firstParagraph = paragraphs.find(p => p.trim().length > 0) || '';
-  
-  if (firstParagraph.length > 160) {
-    return firstParagraph.substring(0, 160).trim() + '...';
-  }
-  return firstParagraph;
-}
 
 // Group errors by category
 const clientErrors = errors
@@ -30,19 +16,14 @@ const serverErrors = errors
   .filter(error => error.data.category === 'server-error')
   .sort((a, b) => a.data.statusCode - b.data.statusCode || a.data.title.localeCompare(b.data.title));
 
-// Category theme mapping to satisfy accessibility and Tailwind detection
-const categoryThemes = {
-  'client-error': {
-    badge: 'bg-ochre-100 text-ochre-900 border-ochre-200 border',
-    card: 'border-paper-300 hover:border-ochre-400 bg-paper-100/50 hover:bg-ochre-50/50 hover:shadow-xs transition-all',
-    status: 'text-ochre-800'
-  },
-  'server-error': {
-    badge: 'bg-uranium-100 text-uranium-900 border-uranium-200 border',
-    card: 'border-paper-300 hover:border-uranium-400 bg-paper-100/50 hover:bg-uranium-50/50 hover:shadow-xs transition-all',
-    status: 'text-uranium-800'
-  }
-} as const;
+// Badge and hover come from themes.ts, so this page cannot drift from the
+// rest of the site's status colours.
+const categoryThemes = Object.fromEntries(
+  Object.entries(errorCategoryThemes).map(([key, t]) => [key, {
+    badge: t.badge,
+    card: `border-paper-300 bg-paper-100/50 hover:shadow-xs transition-all ${t.cardHover}`
+  }])
+) as Record<keyof typeof errorCategoryThemes, { badge: string; card: string }>;
 ---
 
 <Layout 
@@ -51,19 +32,24 @@ const categoryThemes = {
 >
   <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <header class="mb-12 border-b border-paper-300 pb-8">
+      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
+        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
+        <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
+        <span class="text-paper-600">API Errors</span>
+      </nav>
       <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">API Errors Reference</h1>
       <p class="text-lg text-paper-600 max-w-2xl">
         This catalog provides dereferenceable error definitions to link to directly from Problem+JSON responses in production APIs.
       </p>
     </header>
     
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <div class="space-y-16">
       <!-- Client Errors Section -->
       <section aria-labelledby="client-errors-title">
         <h2 id="client-errors-title" class="text-2xl font-bold mb-6 text-paper-800 border-b border-paper-300 pb-2">
           Client Errors (4xx)
         </h2>
-        <div class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {clientErrors.map(error => {
             const theme = categoryThemes[error.data.category];
             return (
@@ -79,7 +65,7 @@ const categoryThemes = {
                   </span>
                 </div>
                 <p class="text-sm text-paper-700 mb-3 line-clamp-3 leading-relaxed">
-                  {getExcerpt(error.body)}
+                  {excerpt(error.body)}
                 </p>
                 <div class="flex items-center gap-2">
                   <span class="text-xs text-paper-600 font-medium">
@@ -102,7 +88,7 @@ const categoryThemes = {
         <h2 id="server-errors-title" class="text-2xl font-bold mb-6 text-paper-800 border-b border-paper-300 pb-2">
           Server Errors (5xx)
         </h2>
-        <div class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {serverErrors.map(error => {
             const theme = categoryThemes[error.data.category];
             return (
@@ -118,7 +104,7 @@ const categoryThemes = {
                   </span>
                 </div>
                 <p class="text-sm text-paper-700 mb-3 line-clamp-3 leading-relaxed">
-                  {getExcerpt(error.body)}
+                  {excerpt(error.body)}
                 </p>
                 <div class="flex items-center gap-2">
                   <span class="text-xs text-paper-600 font-medium">
