@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { guideCategories, guideCategoryThemes } from '../../config/themes';
+import SectionJump from '@/components/SectionJump.astro';
 
 const allGuides = await getCollection('guides');
 
@@ -40,6 +41,7 @@ const sections = guideCategories
       <p class="text-lg text-paper-600 max-w-2xl">
         Authoritative guides mapping complex HTTP specifications to concrete web API design patterns, in eight sections from the shape of a resource to what a model makes of it.
       </p>
+      <SectionJump items={sections.map(section => ({ href: `#cat-${section.category}`, label: section.label, count: section.guides.length }))} />
     </header>
 
     <!-- Guides List -->

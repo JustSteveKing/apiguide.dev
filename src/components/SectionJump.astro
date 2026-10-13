@@ -1,0 +1,32 @@
+---
+// A row of links to the sections of a long index page, for readers who know
+// which section they want. Neutral on purpose: these are navigation, not
+// categories, so they carry no hue (see DESIGN.md, "Contrast floors").
+interface Item {
+  href: string;
+  label: string;
+  count: number;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav aria-label="Sections on this page" class="mt-6">
+  <ul class="flex flex-wrap gap-2">
+    {items.map(item => (
+      <li>
+        <a
+          href={item.href}
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-paper-300 bg-paper-100/50 text-sm text-paper-800 hover:border-chartres-400 hover:text-chartres-700 transition-colors"
+        >
+          {item.label}
+          <span class="text-xs text-paper-700">{item.count}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

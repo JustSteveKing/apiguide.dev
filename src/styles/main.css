@@ -387,6 +387,12 @@ html {
   background: var(--color-paper-400);
 }
 
+/* Any heading a link can jump to clears the sticky header. The prose rule
+   above covers article headings; this covers index-page section headings. */
+:is(h2, h3)[id] {
+  scroll-margin-top: 6rem;
+}
+
 /* 3. Smooth focus rings */
 *:focus-visible {
   outline: 2px solid var(--color-chartres-700);
