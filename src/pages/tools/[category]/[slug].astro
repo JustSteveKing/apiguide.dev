@@ -34,9 +34,9 @@ const toolJsonLd = [
     category: t.data.category
   }),
   getBreadcrumbSchema([
-    { name: "API Tooling", path: "/tools/" },
-    { name: activeTheme.label, path: `/tools/${t.data.category}/` },
-    { name: t.data.name, path: `/tools/${t.data.category}/${t.id}/` }
+    { name: "API Tooling", path: "/tools" },
+    { name: activeTheme.label, path: `/tools/${t.data.category}` },
+    { name: t.data.name, path: `/tools/${t.data.category}/${t.id}` }
   ])
 ];
 ---
@@ -49,8 +49,8 @@ const toolJsonLd = [
   <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "API Tooling Reference", href: "/tools/" },
-      { name: activeTheme.label, href: `/tools/${t.data.category}/` },
+      { name: "API Tooling Reference", href: "/tools" },
+      { name: activeTheme.label, href: `/tools/${t.data.category}` },
       { name: t.data.name }
     ]} />
 

@@ -59,13 +59,13 @@ const homeJsonLd = getWebSiteSchema();
         
         <!-- Index counts -->
         <div class="mt-4 flex flex-wrap gap-2 text-xs" aria-label="Reference index counts">
-          <a href="/errors/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{errors.length}</strong> Errors</a>
-          <a href="/status-codes/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{statusCodes.length}</strong> Status Codes</a>
-          <a href="/headers/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{headers.length}</strong> Headers</a>
-          <a href="/methods/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{methods.length}</strong> Methods</a>
-          <a href="/guides/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{guides.length}</strong> Guides</a>
-          <a href="/specifications/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{specifications.length}</strong> Specs</a>
-          <a href="/tools/" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{tools.length}</strong> Tools</a>
+          <a href="/errors" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{errors.length}</strong> Errors</a>
+          <a href="/status-codes" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{statusCodes.length}</strong> Status Codes</a>
+          <a href="/headers" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{headers.length}</strong> Headers</a>
+          <a href="/methods" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{methods.length}</strong> Methods</a>
+          <a href="/guides" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{guides.length}</strong> Guides</a>
+          <a href="/specifications" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{specifications.length}</strong> Specs</a>
+          <a href="/tools" class="px-2.5 py-1 rounded-md border border-paper-300 bg-paper-100/60 text-paper-700 hover:border-chartres-400 hover:text-chartres-800 transition-colors"><strong class="font-semibold text-paper-900">{tools.length}</strong> Tools</a>
         </div>
       </div>
     </header>
@@ -74,7 +74,7 @@ const homeJsonLd = getWebSiteSchema();
     <section class="mb-16">
       <h2 class="text-2xl font-bold text-paper-900 mb-8 border-b border-paper-300 pb-2">Reference Directories</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <a href="/errors/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
+        <a href="/errors" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
             <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">API Errors &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
@@ -84,7 +84,7 @@ const homeJsonLd = getWebSiteSchema();
           <span class="text-xs text-paper-700 mt-4 font-semibold block">{errors.length} schemas defined</span>
         </a>
 
-        <a href="/status-codes/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
+        <a href="/status-codes" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
             <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">Status Codes &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
@@ -94,7 +94,7 @@ const homeJsonLd = getWebSiteSchema();
           <span class="text-xs text-paper-700 mt-4 font-semibold block">{statusCodes.length} codes cataloged</span>
         </a>
 
-        <a href="/headers/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
+        <a href="/headers" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
             <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">HTTP Headers &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
@@ -104,7 +104,7 @@ const homeJsonLd = getWebSiteSchema();
           <span class="text-xs text-paper-700 mt-4 font-semibold block">{headers.length} headers cataloged</span>
         </a>
 
-        <a href="/methods/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
+        <a href="/methods" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
             <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">Request Methods &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
@@ -114,7 +114,7 @@ const homeJsonLd = getWebSiteSchema();
           <span class="text-xs text-paper-700 mt-4 font-semibold block">{methods.length} request verbs</span>
         </a>
 
-        <a href="/guides/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
+        <a href="/guides" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
             <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">Developer Guides &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
@@ -124,7 +124,7 @@ const homeJsonLd = getWebSiteSchema();
           <span class="text-xs text-paper-700 mt-4 font-semibold block">{guides.length} guides available</span>
         </a>
 
-        <a href="/specifications/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
+        <a href="/specifications" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
             <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">API Specifications &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
@@ -134,7 +134,7 @@ const homeJsonLd = getWebSiteSchema();
           <span class="text-xs text-paper-700 mt-4 font-semibold block">{specifications.length} standards cataloged</span>
         </a>
 
-        <a href="/tools/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
+        <a href="/tools" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
             <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">API Tooling &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
@@ -144,7 +144,7 @@ const homeJsonLd = getWebSiteSchema();
           <span class="text-xs text-paper-700 mt-4 font-semibold block">{tools.length} tools review cataloged</span>
         </a>
 
-        <a href="/problem-json/" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
+        <a href="/problem-json" class="card p-6 border border-paper-300 rounded-xl hover:border-chartres-400 hover:shadow-md transition-all bg-paper-100/40 flex flex-col justify-between group">
           <div>
             <h3 class="text-xl font-bold text-chartres-700 group-hover:text-chartres-900 mb-2">Problem+JSON Guide &rarr;</h3>
             <p class="text-paper-700 text-sm leading-relaxed">
@@ -171,9 +171,9 @@ const homeJsonLd = getWebSiteSchema();
               Protect your servers from abuse by implementing uniform rate-limiting responses. Learn which headers to write and when to drop client requests.
             </p>
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
-              <a href="/status-codes/429/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 429 Status</a>
-              <a href="/headers/retry-after/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Retry-After Header</a>
-              <a href="/errors/rate-limit-exceeded/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">RateLimit Error Schema</a>
+              <a href="/status-codes/429" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 429 Status</a>
+              <a href="/headers/retry-after" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Retry-After Header</a>
+              <a href="/errors/rate-limit-exceeded" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">RateLimit Error Schema</a>
             </div>
           </div>
         </div>
@@ -189,9 +189,9 @@ const homeJsonLd = getWebSiteSchema();
               Prevent "mid-air collisions" and race conditions where multiple clients update the same database entity concurrently using optimistic locking.
             </p>
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
-              <a href="/headers/etag/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">ETag Header</a>
-              <a href="/headers/if-match/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">If-Match Header</a>
-              <a href="/status-codes/412/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 412 Precondition Failed</a>
+              <a href="/headers/etag" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">ETag Header</a>
+              <a href="/headers/if-match" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">If-Match Header</a>
+              <a href="/status-codes/412" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 412 Precondition Failed</a>
             </div>
           </div>
         </div>
@@ -207,9 +207,9 @@ const homeJsonLd = getWebSiteSchema();
               Return clear, nested parameter-level validation errors to clients when form submissions fail, using RFC 9457 standard patterns.
             </p>
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
-              <a href="/status-codes/422/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 422 Status</a>
-              <a href="/errors/validation-failed/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Validation Error Schema</a>
-              <a href="/problem-json/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Problem+JSON Standard</a>
+              <a href="/status-codes/422" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">HTTP 422 Status</a>
+              <a href="/errors/validation-failed" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Validation Error Schema</a>
+              <a href="/problem-json" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Problem+JSON Standard</a>
             </div>
           </div>
         </div>
@@ -225,9 +225,9 @@ const homeJsonLd = getWebSiteSchema();
               Ensure safe retries for state-mutating requests (like payment actions) without duplicate charge processing by utilizing unique header keys.
             </p>
             <div class="flex flex-wrap gap-2 text-xs font-semibold">
-              <a href="/headers/idempotency-key/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Idempotency-Key Header</a>
-              <a href="/methods/post/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">POST Request Verb</a>
-              <a href="/guides/api-security/" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">API Security Guide</a>
+              <a href="/headers/idempotency-key" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">Idempotency-Key Header</a>
+              <a href="/methods/post" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">POST Request Verb</a>
+              <a href="/guides/api-security" class="px-2.5 py-1 rounded bg-chartres-50 text-chartres-800 border border-chartres-200 hover:bg-chartres-100 hover:underline">API Security Guide</a>
             </div>
           </div>
         </div>
@@ -285,7 +285,7 @@ const homeJsonLd = getWebSiteSchema();
             {highlightedErrors.map(error => (
               <div class="card p-4 border border-ochre-200/50 rounded-lg bg-ochre-50/20 hover:bg-ochre-50/50 hover:shadow-xs transition-all">
                 <div class="flex items-center justify-between gap-2 mb-1">
-                  <a href={`/errors/${error.id}/`} class="font-bold text-sm text-ochre-900 hover:underline line-clamp-1">
+                  <a href={`/errors/${error.id}`} class="font-bold text-sm text-ochre-900 hover:underline line-clamp-1">
                     {error.data.title}
                   </a>
                   <span class="text-xxs font-semibold bg-ochre-100 text-ochre-900 border border-ochre-200 px-1.5 py-px rounded whitespace-nowrap">
@@ -298,7 +298,7 @@ const homeJsonLd = getWebSiteSchema();
               </div>
             ))}
           </div>
-          <a href="/errors/" class="inline-block mt-4 text-xs font-bold text-ochre-900 hover:underline">
+          <a href="/errors" class="inline-block mt-4 text-xs font-bold text-ochre-900 hover:underline">
             View all error schemas &rarr;
           </a>
         </div>
@@ -310,7 +310,7 @@ const homeJsonLd = getWebSiteSchema();
             {highlightedHeaders.map(h => (
               <div class="card p-4 border border-yinmn-200/50 rounded-lg bg-yinmn-50/20 hover:bg-yinmn-50/50 hover:shadow-xs transition-all">
                 <div class="flex items-center justify-between gap-2 mb-1">
-                  <a href={`/headers/${h.id}/`} class="font-bold text-sm text-yinmn-700 hover:underline font-mono">
+                  <a href={`/headers/${h.id}`} class="font-bold text-sm text-yinmn-700 hover:underline font-mono">
                     {h.data.name}
                   </a>
                   <span class="text-xxs font-semibold bg-yinmn-100 text-yinmn-900 border border-yinmn-200 px-1.5 py-px rounded uppercase">
@@ -323,7 +323,7 @@ const homeJsonLd = getWebSiteSchema();
               </div>
             ))}
           </div>
-          <a href="/headers/" class="inline-block mt-4 text-xs font-bold text-yinmn-700 hover:underline">
+          <a href="/headers" class="inline-block mt-4 text-xs font-bold text-yinmn-700 hover:underline">
             View all headers &rarr;
           </a>
         </div>
@@ -344,7 +344,7 @@ const homeJsonLd = getWebSiteSchema();
                 {httpVerbs.map(verb => (
                   <tr class="border-b border-chartres-200/20 last:border-0 hover:bg-chartres-50/40">
                     <td class="p-2.5 font-bold">
-                      <a href={`/methods/${verb.id}/`} class="text-chartres-600 hover:underline">
+                      <a href={`/methods/${verb.id}`} class="text-chartres-600 hover:underline">
                         {verb.data.name}
                       </a>
                     </td>
@@ -367,7 +367,7 @@ const homeJsonLd = getWebSiteSchema();
               </tbody>
             </table>
           </div>
-          <a href="/methods/" class="inline-block mt-4 text-xs font-bold text-chartres-600 hover:underline">
+          <a href="/methods" class="inline-block mt-4 text-xs font-bold text-chartres-600 hover:underline">
             View all request verbs &rarr;
           </a>
         </div>

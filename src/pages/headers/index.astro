@@ -62,7 +62,7 @@ const categoryThemes = {
                   <div>
                     <div class="flex items-start justify-between gap-4 mb-3">
                       <h3 class="text-lg font-bold">
-                        <a href={`/headers/${h.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                        <a href={`/headers/${h.id}`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
                           {h.data.name}
                         </a>
                       </h3>
@@ -90,7 +90,7 @@ const categoryThemes = {
                   </div>
                   
                   <div class="text-xs text-paper-600 font-medium border-t border-paper-300 pt-3 flex items-center justify-between">
-                    <a href={`/headers/${h.id}/`} class="text-chartres-600 hover:underline">
+                    <a href={`/headers/${h.id}`} class="text-chartres-600 hover:underline">
                       View reference &rarr;
                     </a>
                     {h.data.relatedCodes && h.data.relatedCodes.length > 0 && (

@@ -1,4 +1,5 @@
 ---
+import { pageURL } from "@/utils/pagePath";
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
@@ -34,14 +35,14 @@ const errorJsonLd = [
   getTechArticleSchema({
     headline: `${error.data.statusCode} ${error.data.title} Error Schema`,
     description: error.data.statusText,
-    url: Astro.url.href,
+    url: pageURL(Astro.url, Astro.site).href,
     category: activeTheme.label,
     publishedDate: error.data.publishedDate,
     updatedDate: error.data.updatedDate
   }),
   getBreadcrumbSchema([
-    { name: "API Errors", path: "/errors/" },
-    { name: error.data.title, path: `/errors/${error.id}/` }
+    { name: "API Errors", path: "/errors" },
+    { name: error.data.title, path: `/errors/${error.id}` }
   ])
 ];
 ---
@@ -54,7 +55,7 @@ const errorJsonLd = [
   <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "API Errors Reference", href: "/errors/" },
+      { name: "API Errors Reference", href: "/errors" },
       { name: error.data.title }
     ]} />
 
@@ -74,7 +75,7 @@ const errorJsonLd = [
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
         <MetaItem label="HTTP Status">
-          <a href={`/status-codes/${error.data.statusCode}/`} class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold hover:underline ${activeTheme.badge}`}>
+          <a href={`/status-codes/${error.data.statusCode}`} class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold hover:underline ${activeTheme.badge}`}>
             {error.data.statusCode} {error.data.statusText}
           </a>
         </MetaItem>
@@ -103,7 +104,7 @@ const errorJsonLd = [
             const relatedTheme = errorCategoryThemes[related.data.category];
             return (
               <RelatedCard 
-                href={`/errors/${related.id}/`}
+                href={`/errors/${related.id}`}
                 title={related.data.title}
                 description={`HTTP ${related.data.statusCode} • ${related.data.statusText}`}
                 theme={related.data.category === 'client-error' ? 'ochre' : 'uranium'}

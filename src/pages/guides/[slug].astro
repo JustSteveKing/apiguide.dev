@@ -1,4 +1,5 @@
 ---
+import { pageURL } from "@/utils/pagePath";
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
@@ -25,12 +26,12 @@ const guideJsonLd = [
   getTechArticleSchema({
     headline: g.data.title,
     description: g.data.description,
-    url: Astro.url.href,
+    url: pageURL(Astro.url, Astro.site).href,
     category: activeTheme.label
   }),
   getBreadcrumbSchema([
-    { name: "Guides", path: "/guides/" },
-    { name: g.data.title, path: `/guides/${g.id}/` }
+    { name: "Guides", path: "/guides" },
+    { name: g.data.title, path: `/guides/${g.id}` }
   ])
 ];
 ---
@@ -43,7 +44,7 @@ const guideJsonLd = [
   <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "Guides", href: "/guides/" },
+      { name: "Guides", href: "/guides" },
       { name: g.data.title }
     ]} />
 

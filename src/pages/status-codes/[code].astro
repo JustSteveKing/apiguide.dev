@@ -1,4 +1,5 @@
 ---
+import { pageURL } from "@/utils/pagePath";
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
@@ -50,12 +51,12 @@ const scJsonLd = [
   getTechArticleSchema({
     headline: `HTTP ${sc.data.code} ${sc.data.title} Reference`,
     description: sc.data.description,
-    url: Astro.url.href,
+    url: pageURL(Astro.url, Astro.site).href,
     category: activeTheme.label
   }),
   getBreadcrumbSchema([
-    { name: "HTTP Status Codes", path: "/status-codes/" },
-    { name: `HTTP ${sc.data.code}`, path: `/status-codes/${sc.data.code}/` }
+    { name: "HTTP Status Codes", path: "/status-codes" },
+    { name: `HTTP ${sc.data.code}`, path: `/status-codes/${sc.data.code}` }
   ])
 ];
 ---
@@ -68,7 +69,7 @@ const scJsonLd = [
   <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "HTTP Status Codes Reference", href: "/status-codes/" },
+      { name: "HTTP Status Codes Reference", href: "/status-codes" },
       { name: `HTTP ${sc.data.code}` }
     ]} />
 
@@ -111,7 +112,7 @@ const scJsonLd = [
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {matchingErrors.map(error => (
             <RelatedCard 
-              href={`/errors/${error.id}/`}
+              href={`/errors/${error.id}`}
               title={error.data.title}
               description={`Custom error schema (Slug: ${error.id})`}
               badge={error.data.deprecated ? "Deprecated" : undefined}
@@ -138,7 +139,7 @@ const scJsonLd = [
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {matchingHeaders.map(h => (
             <RelatedCard 
-              href={`/headers/${h.id}/`}
+              href={`/headers/${h.id}`}
               title={h.data.name}
               description={h.data.description}
               theme="yinmn"
@@ -164,7 +165,7 @@ const scJsonLd = [
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {sortedRelatedCodes.map(code => (
             <RelatedCard
-              href={`/status-codes/${code.data.code}/`}
+              href={`/status-codes/${code.data.code}`}
               title={`HTTP ${code.data.code}: ${code.data.title}`}
               description={code.data.description}
               theme={getCodeTheme(code.data.category)}

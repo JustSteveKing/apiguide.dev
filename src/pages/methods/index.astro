@@ -39,7 +39,7 @@ const sortedMethods = allMethods.sort((a, b) => {
           <div>
             <div class="flex items-start justify-between gap-4 mb-4">
               <h2 class="text-2xl font-bold">
-                <a href={`/methods/${m.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
+                <a href={`/methods/${m.id}`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
                   {m.data.name}
                 </a>
               </h2>
@@ -85,7 +85,7 @@ const sortedMethods = allMethods.sort((a, b) => {
           </div>
           
           <div class="text-xs text-paper-600 font-medium border-t border-paper-300 pt-4 flex items-center justify-between">
-            <a href={`/methods/${m.id}/`} class="text-chartres-600 hover:underline">
+            <a href={`/methods/${m.id}`} class="text-chartres-600 hover:underline">
               Read semantic usage &rarr;
             </a>
             {m.data.relatedCodes && m.data.relatedCodes.length > 0 && (

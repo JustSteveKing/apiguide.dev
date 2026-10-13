@@ -1,4 +1,5 @@
 ---
+import { pageURL } from "@/utils/pagePath";
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
@@ -42,12 +43,12 @@ const headerJsonLd = [
   getTechArticleSchema({
     headline: `${h.data.name} HTTP Header Reference`,
     description: h.data.description,
-    url: Astro.url.href,
+    url: pageURL(Astro.url, Astro.site).href,
     category: activeTheme.label
   }),
   getBreadcrumbSchema([
-    { name: "HTTP Headers", path: "/headers/" },
-    { name: h.data.name, path: `/headers/${h.id}/` }
+    { name: "HTTP Headers", path: "/headers" },
+    { name: h.data.name, path: `/headers/${h.id}` }
   ])
 ];
 ---
@@ -60,7 +61,7 @@ const headerJsonLd = [
   <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "HTTP Headers Reference", href: "/headers/" },
+      { name: "HTTP Headers Reference", href: "/headers" },
       { name: h.data.name }
     ]} />
 
@@ -112,7 +113,7 @@ const headerJsonLd = [
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {sortedRelatedCodes.map(code => (
             <RelatedCard 
-              href={`/status-codes/${code.data.code}/`}
+              href={`/status-codes/${code.data.code}`}
               title={`HTTP ${code.data.code}: ${code.data.title}`}
               description={code.data.description}
               theme={getCodeTheme(code.data.category)}

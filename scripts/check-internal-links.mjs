@@ -42,17 +42,16 @@ function isExternal(href) {
 /**
  * Does this path exist in the build?
  *
- * Astro emits a directory with an index.html for a page route, so /guides/
- * and /guides are the same page. A file route such as /llms.txt is emitted
- * at its own name. Both count.
+ * The build uses `format: 'file'`, so /guides is emitted as guides.html and
+ * can sit beside a guides/ directory holding the pages under it. A file
+ * route such as /llms.txt is emitted at its own name. A directory with an
+ * index.html still counts, so the check survives a change of format.
  */
 function resolves(urlPath) {
-  const clean = decodeURIComponent(urlPath.split('#')[0].split('?')[0]);
+  const clean = decodeURIComponent(urlPath.split('#')[0].split('?')[0]).replace(/\/$/, '');
   const base = join(DIST, clean);
-  if (existsSync(base)) {
-    return statSync(base).isDirectory() ? existsSync(join(base, 'index.html')) : true;
-  }
-  return existsSync(`${base}.html`) || existsSync(join(base, 'index.html'));
+  if (existsSync(`${base}.html`) || existsSync(join(base, 'index.html'))) return true;
+  return existsSync(base) && !statSync(base).isDirectory();
 }
 
 const pages = walk(DIST);

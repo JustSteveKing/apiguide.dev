@@ -1,4 +1,5 @@
 ---
+import { pagePath, pageURL } from "@/utils/pagePath";
 // Self-hosted variable fonts. These replace three render-blocking requests to
 // fonts.googleapis.com: one for the stylesheet, then the font files it points
 // at on a second origin. Served from this origin they are one hop, they carry
@@ -32,11 +33,11 @@ const {
 } = Astro.props;
 
 // Compile a stable canonical URL
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://apiguide.dev");
+const canonicalURL = pageURL(Astro.url, Astro.site);
 
 // Compile the Open Graph PNG preview image path dynamically
 let ogImagePath = "index.png";
-const pathParts = Astro.url.pathname.replace(/^\/|\/$/g, ""); // strip leading/trailing slashes
+const pathParts = pagePath(Astro.url).replace(/^\/|\/$/g, ""); // strip leading/trailing slashes
 if (pathParts) {
 	ogImagePath = `${pathParts}.png`;
 }

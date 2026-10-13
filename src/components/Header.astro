@@ -1,9 +1,12 @@
 ---
 import Logo from "@/components/Logo.astro";
+import { pagePath } from "@/utils/pagePath";
 
-const pathname = Astro.url.pathname;
+const pathname = pagePath(Astro.url);
+// Matches a section index and everything under it, with or without a trailing slash.
 const isActive = (path: string) => {
-  return pathname.startsWith(path);
+  const base = path.replace(/\/$/, '');
+  return pathname === base || pathname.startsWith(base + '/');
 };
 ---
 <header class="sticky top-0 z-50 bg-paper-50/95 backdrop-blur-sm border-b border-paper-300 relative">
@@ -17,43 +20,43 @@ const isActive = (path: string) => {
       <!-- Global Nav Links (Desktop) -->
       <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
         <a 
-          href="/errors/" 
+          href="/errors" 
           class={`transition-colors ${isActive('/errors/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
         >
           Errors
         </a>
         <a 
-          href="/status-codes/" 
+          href="/status-codes" 
           class={`transition-colors ${isActive('/status-codes/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
         >
           Status Codes
         </a>
         <a 
-          href="/headers/" 
+          href="/headers" 
           class={`transition-colors ${isActive('/headers/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
         >
           Headers
         </a>
         <a 
-          href="/methods/" 
+          href="/methods" 
           class={`transition-colors ${isActive('/methods/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
         >
           Methods
         </a>
         <a 
-          href="/guides/" 
+          href="/guides" 
           class={`transition-colors ${isActive('/guides/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
         >
           Guides
         </a>
         <a 
-          href="/specifications/" 
+          href="/specifications" 
           class={`transition-colors ${isActive('/specifications/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
         >
           Specs
         </a>
         <a 
-          href="/tools/" 
+          href="/tools" 
           class={`transition-colors ${isActive('/tools/') ? 'text-chartres-600 font-semibold' : 'text-paper-700 hover:text-chartres-600'}`}
         >
           Tooling
@@ -94,43 +97,43 @@ const isActive = (path: string) => {
   >
     <nav class="flex flex-col gap-2 text-sm font-semibold">
       <a 
-        href="/errors/" 
+        href="/errors" 
         class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/errors/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
       >
         Errors
       </a>
       <a 
-        href="/status-codes/" 
+        href="/status-codes" 
         class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/status-codes/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
       >
         Status Codes
       </a>
       <a 
-        href="/headers/" 
+        href="/headers" 
         class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/headers/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
       >
         Headers
       </a>
       <a 
-        href="/methods/" 
+        href="/methods" 
         class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/methods/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
       >
         Methods
       </a>
       <a 
-        href="/guides/" 
+        href="/guides" 
         class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/guides/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
       >
         Guides
       </a>
       <a 
-        href="/specifications/" 
+        href="/specifications" 
         class={`py-2 px-3 rounded-lg border-b border-paper-100/50 transition-colors ${isActive('/specifications/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
       >
         Specs
       </a>
       <a 
-        href="/tools/" 
+        href="/tools" 
         class={`py-2 px-3 rounded-lg transition-colors ${isActive('/tools/') ? 'text-chartres-600 bg-paper-100/40' : 'text-paper-700 hover:text-chartres-600 hover:bg-paper-100/40'}`}
       >
         Tooling

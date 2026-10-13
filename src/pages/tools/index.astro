@@ -76,7 +76,7 @@ const categories: Array<{
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {categories.map(cat => (
         <a 
-          href={`/tools/${cat.id}/`} 
+          href={`/tools/${cat.id}`} 
           class={`card p-8 border rounded-xl transition-all hover:shadow-md flex flex-col justify-between group ${categoryThemes[cat.id]}`}
         >
           <div>
