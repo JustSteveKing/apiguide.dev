@@ -16,7 +16,7 @@ const fontFile = (name: string) =>
 // Static instances rather than variable files: fontkitten cannot instance a variation
 // out of a WOFF2, so each weight is its own file.
 const faces = {
-  display: create(fontFile('lora-latin-700-normal.woff2')) as any,
+  display: create(fontFile('inter-latin-700-normal.woff2')) as any,
   body: create(fontFile('inter-latin-400-normal.woff2')) as any,
   bodyBold: create(fontFile('inter-latin-600-normal.woff2')) as any,
   wordmark: create(fontFile('inter-latin-700-normal.woff2')) as any,

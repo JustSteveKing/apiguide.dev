@@ -85,13 +85,17 @@
   --text-5xl: clamp(2rem, 1.6rem + 2vw, 3rem);
 
   --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Lora Variable', 'Lora', Georgia, 'Times New Roman', serif;
+  /* Headings share the body family. A serif display on Paper was the look of
+     every generated reference site; weight and tracking carry the hierarchy. */
+  --font-display: var(--font-sans);
   --font-mono: 'Fira Code Variable', 'Fira Code', ui-monospace, SFMono-Regular, monospace;
 }
 
 /* Global Typography Overrides */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
+  /* Inter at display sizes reads loose; tighten as size grows. */
+  letter-spacing: -0.02em;
   /* Keep short headings from leaving one word stranded on its own line. */
   text-wrap: balance;
 }
