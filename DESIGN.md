@@ -321,7 +321,65 @@ Still to decide: whether to add a manual override. Today the site follows the
 operating system and offers no toggle, which needs no JavaScript and no stored
 preference, but it does mean a reader cannot choose per site.
 
-## Open questions
+## Typography and structure
+
+Settled 2026-10-13, in the pass that replaced the card grids.
+
+The site is a reference for HTTP, so its one bold element is HTTP itself.
+Everything else is kept quiet so that one element can carry the page.
+
+### Typefaces
+
+Two families. **Inter** for everything a person reads, headings included, with
+tracking tightened at display sizes (`letter-spacing: -0.02em` on headings).
+**Fira Code** only for text that is literally on the wire or in code: status
+lines, header names and values, methods, URIs, JSON. Lora was dropped: a serif
+display on a Paper background is the look generated reference sites arrive at,
+and it said nothing about the subject.
+
+### The wire line
+
+Every reference page opens on the HTTP text it documents, set large in Fira
+Code by `src/components/WireHero.astro`:
+
+| Page | Wire line |
+| --- | --- |
+| Status code | `HTTP/1.1 409 Conflict` |
+| Header | `Retry-After: 60`, the value taken from the page's own code blocks |
+| Method | `GET request-target HTTP/1.1`, the RFC 9112 grammar term |
+| Error | `"type": "https://apiguide.dev/errors/account-frozen"` |
+| Problem+JSON | `Content-Type: application/problem+json` |
+
+Protocol grammar is Paper 600; the page's identity is full ink and is the `h1`
+where that reads naturally. A 4px left rule carries the status hue (the
+`marker` entries in `themes.ts`), and a copy button confirms in Emerald. The
+home page's version of the same idea is a full `curl -v` transcript with each
+part linked to its page.
+
+### Registries, not cards
+
+Indexes and related-entry lists are rows, not cards: `RegistryGroup` (heading,
+count, hue rule) around `RegistryRow` (one link per row; mono key column for
+codes and header names; description below the name on a phone). Methods are a
+`<table>` because their properties are boolean columns. A reader scanning 63
+status codes is aiming at a row, so the row is the target.
+
+Metadata under a hero is a ruled record line, not a boxed panel, and its values
+are plain text: a property such as "not idempotent" is not a status and does
+not get a status hue.
+
+### Chrome to leave out
+
+These were removed and should not come back, because they are template
+furniture rather than information:
+
+- Tracked all-caps labels. Labels are sentence case.
+- `->` or `→` appended to links. A link says where it goes.
+- A card per item, and boxes nested inside boxes.
+- Title-case field names, and raw enum values dressed up by CSS `uppercase`.
+- Gradient washes and glows, including on the social cards.
+
+
 
 A few things not yet decided that are worth resolving before this palette is treated as final.
 
@@ -332,7 +390,7 @@ A few things not yet decided that are worth resolving before this palette is tre
 
 The site uses a custom-designed logo based on a lightning bolt path. Below are the design specifications:
 
-### Typography
+### Wordmark
 - `api`: **Paper-900** (`#31291D`)
 - `guide`: **Chartres-600** (`#2852B8`)
 - `.dev`: **Paper-600** (`#71624A`) in regular font weight (`font-normal`)

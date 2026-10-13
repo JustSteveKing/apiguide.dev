@@ -303,6 +303,11 @@ touch a template. The short version:
 - Badge and label styles live in `src/config/themes.ts`. Import them. A
   template that defines its own copy will drift, which is how the guides
   index ended up with a category the schema had never allowed.
+- Type is Inter for prose and headings, Fira Code only for wire text. Each
+  reference page opens on a `WireHero`; indexes and related lists are
+  `RegistryGroup` and `RegistryRow`, never a card grid. Read "Typography and
+  structure" in DESIGN.md before adding a template, including the list of
+  chrome to leave out (caps labels, arrows on links, card per item).
 
 ## Licensing
 
