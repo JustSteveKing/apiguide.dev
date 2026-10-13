@@ -296,18 +296,20 @@ touch a template. The short version:
   success. A category, a price or any other label that is not a status
   never uses them, because a security guide in the 5xx badge reads as a
   failure. Categories draw on ultra, violet and slate.
-- Every scale is redefined for dark mode in `src/styles/main.css`, inverted,
-  so `bg-x-100 text-x-900` works in both. The one exception is the home page
-  band, which has its own `band` tokens. Check any new pairing at both
-  schemes and keep text at 4.5:1 or better.
+- **Dark is the default theme**; light is opt-in via the header toggle
+  (`data-theme="light"` on `<html>`). Never use a `prefers-color-scheme`
+  query for colour: it disagrees with the toggle. Use the tokens, or
+  `.only-dark` / `.only-light` for assets. Check every new pairing in both
+  themes and keep text at 4.5:1 or better.
 - Badge and label styles live in `src/config/themes.ts`. Import them. A
   template that defines its own copy will drift, which is how the guides
   index ended up with a category the schema had never allowed.
 - Type is Inter for prose and headings, Fira Code only for wire text. Each
   reference page opens on a `WireHero`; indexes and related lists are
-  `RegistryGroup` and `RegistryRow`, never a card grid. Read "Typography and
-  structure" in DESIGN.md before adding a template, including the list of
-  chrome to leave out (caps labels, arrows on links, card per item).
+  `RegistryGroup` and `RegistryRow` cards. Borders are hairlines
+  (`border-slate-950/[0.08]`), panels are `.surface`. Read "Surfaces, depth
+  and motion" and "Typography and structure" in DESIGN.md before adding a
+  template: glow and motion are allowed in the listed places only.
 
 ## Licensing
 

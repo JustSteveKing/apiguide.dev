@@ -154,7 +154,7 @@ text**: 7.11:1 on slate-50 and 6.51:1 on slate-100. 400 and 500 are never text.
 ### Ultra
 
 The brand. Links (ultra-600, 7.87:1 on slate-50), the active nav item, the logo,
-the focus ring, and the home page band. It is the default interactive colour.
+the focus ring, and the glows. It is the default interactive colour.
 
 ### Status colours
 
@@ -174,24 +174,63 @@ Categories draw on ultra, violet and slate in three treatments: solid
 Navigation and index rows that do not represent a category use slate and ultra
 only.
 
-## Dark theme
+## Themes
 
-The same scales, mirrored: 50 swaps with 950, 100 with 900, and so on, 500
-fixed, in one `@media (prefers-color-scheme: dark)` block. A raised surface is
-then a step lighter than the page, which is the dark-interface convention, and
-a link hover still moves toward more emphasis.
+Settled 2026-10-13, in the Linear-style pass. **Dark is the site's primary look
+and the default for every reader**, whatever their OS setting. Light is opt-in
+from the toggle in the header, stored in `localStorage` and applied before
+first paint by an inline script in `Layout.astro` (and again after each view
+transition, which replaces the `<html>` attributes).
 
-The page lands on `#111827`, the light theme's ink. Measured on it: body text
-12.66:1, muted text 6.27:1, links 6.14:1; every status badge pairing is above
-9.8:1.
+The mechanism is one attribute: `data-theme="light"` on `<html>`. The light
+values are the `@theme` scales; `:root:not([data-theme="light"])` redefines
+them for dark. Code blocks follow the same attribute (`themeCssSelector` in
+`astro.config.mjs`), not the OS.
 
-**The home page band is not mirrored.** Mirrored, ultra-600 becomes a pale
-periwinkle with dark type. The band has its own tokens, `--color-band`,
-`--color-on-band` and `--color-on-band-muted`: ultra-600 with slate-50 type in
-light mode, ultra-800 with the same type in dark mode (12.23:1).
+Dark slate is its own scale, deeper than a mirror of the light one, so the
+canvas is a true near-black:
 
-Code blocks switch between `github-light` and `github-dark` on the same media
-query.
+| Step | Dark value |
+| --- | --- |
+| 50 | `#0A0C11` (canvas) |
+| 100 | `#10131A` (surface) |
+| 200 | `#181C25` |
+| 300 | `#242A36` (borders) |
+| 400 | `#363E4D` |
+| 500 | `#6D7688` |
+| 600 | `#98A1B3` (muted text) |
+| 700 | `#B7BECB` |
+| 800 | `#D7DBE4` (body text) |
+| 900 | `#E9ECF2` |
+| 950 | `#F7F8FA` (ink) |
+
+The hue families are their light scales mirrored (50 with 950, 500 fixed), so
+`bg-x-100 text-x-900` works in both. Measured on the dark canvas: body 14.1:1,
+muted 7.53:1, links 6.77:1, every status hue above 6.7:1.
+
+Anything that must differ by theme beyond tokens uses `.only-dark` /
+`.only-light` (the sponsor wordmark does); never a `prefers-color-scheme` media
+query, which would disagree with the toggle.
+
+## Surfaces, depth and motion
+
+The site's surfaces follow the Linear and Vercel vernacular, by request:
+
+- **Hairlines, not solid borders**: `border-slate-950/[0.08]`, which is ink at
+  8% in light mode and white at 8% in dark.
+- **Glass**: `.surface` (a panel) and `.registry-card` (a linked card) share a
+  faint top-lit gradient over a translucent surface. The header is frosted
+  (`bg-slate-50/70 backdrop-blur-xl`); the mobile menu under it is opaque on
+  purpose, because a translucent layer inside a blurred one let the page show
+  through.
+- **Glow**: ultramarine, used in three places only: the home hero (a beam from
+  the top centre over a faint masked grid), the corner of each wire-line panel,
+  and the hover shadow of a card. Glows are fills, never behind text that has
+  to be read.
+- **Motion**: one orchestrated entrance on the home hero (headline, intro,
+  search, popular lookups, staggered 80ms). Everything else moves only in
+  answer to the reader: card lift and pointer-following spotlight, chevron
+  nudge, pill hovers. `prefers-reduced-motion` turns all of it off.
 
 ## Typography and structure
 
@@ -223,22 +262,22 @@ Code by `src/components/WireHero.astro`:
 | Problem+JSON | `Content-Type: application/problem+json` |
 
 Protocol grammar is slate-600; the page's identity is full ink and is the `h1`
-where that reads naturally. A 4px left rule carries the status hue (the
-`marker` entries in `themes.ts`), and a copy button confirms in green. The
-home page's version of the same idea is a full `curl -v` transcript with each
-part linked to its page.
+where that reads naturally. The line sits in a glass panel with the status dot
+and label above it (the `dot` entries in `themes.ts`), an ultramarine glow in
+its corner, and a copy button that confirms in green. The home page leads with
+search instead: the headline, one oversized field, and popular lookups.
 
-### Registries, not cards
+### Cards for entries
 
-Indexes and related-entry lists are rows, not cards: `RegistryGroup` (heading,
-count, hue rule) around `RegistryRow` (one link per row; mono key column for
-codes and header names; description below the name on a phone). Methods are a
-`<table>` because their properties are boolean columns. A reader scanning 63
-status codes is aiming at a row, so the row is the target.
+Indexes and related-entry lists are grids of linked cards: `RegistryGroup`
+(status dot, heading, count pill) around `RegistryRow` (one card per entry, the
+whole card the link; a status code in its hue above the name, or a header name
+in mono as the title). Guides go two-up, everything else three-up. Methods are
+a `<table>` in a glass panel, because their properties are boolean columns.
 
-Metadata under a hero is a ruled record line, not a boxed panel, and its values
-are plain text: a property such as "not idempotent" is not a status and does
-not get a status hue.
+Metadata under a hero is a ruled record line, and its values are plain text: a
+property such as "not idempotent" is not a status and does not get a status
+hue.
 
 ### Chrome to leave out
 
@@ -247,15 +286,16 @@ furniture rather than information:
 
 - Tracked all-caps labels. Labels are sentence case.
 - `->` or `→` appended to links. A link says where it goes.
-- A card per item, and boxes nested inside boxes.
+- Boxes nested inside boxes. A card is one entry and one link.
 - Title-case field names, and raw enum values dressed up by CSS `uppercase`.
-- Gradient washes and glows, including on the social cards.
+- Decoration that is not one of the uses listed under "Surfaces, depth and
+  motion". Glow and glass are allowed in those places, not sprinkled.
 
 ## Open questions
 
-- Whether to add a manual light/dark override. Today the site follows the
-  operating system and offers no toggle, which needs no JavaScript or stored
-  preference, but a reader cannot choose per site.
+- Whether dark-by-default should yield to the OS for a first visit. Today
+  every reader starts dark and can switch; following the OS until the toggle
+  is used would be one line in the inline script.
 - Whether violet (3xx) and ultra (brand) are distinct enough at a glance for
   colour-blind readers. Both sit in the blue-violet range; 3xx is always
   labelled, so colour is never the only signal, but it is worth testing.
