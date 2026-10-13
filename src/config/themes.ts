@@ -174,6 +174,22 @@ export const pricingThemes = {
   'paid': 'text-paper-800 border-paper-400 border'
 } as const;
 
+/** Display names for enum values that used to rely on CSS uppercase to look like labels. */
+export const pricingLabels = {
+  'free': 'Free',
+  'open-source': 'Open source',
+  'freemium': 'Freemium',
+  'paid': 'Paid'
+} as const;
+
+export const lifecycleStageLabels = {
+  'design': 'Design',
+  'development': 'Development',
+  'testing': 'Testing',
+  'deployment': 'Deployment',
+  'monitoring': 'Monitoring'
+} as const;
+
 export const toolCategoryHoverThemes = {
   'design-documentation': 'hover:border-yinmn-400 bg-paper-100/50 hover:bg-yinmn-50/10',
   'testing-mocking': 'hover:border-yinmn-400 bg-paper-100/50 hover:bg-yinmn-50/10',

@@ -75,7 +75,7 @@ const headerJsonLd = [
       </p>
       
       <div class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] sm:gap-4 px-5 py-1 sm:py-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="Header Type">
+        <MetaItem label="Direction">
           <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
             {activeTheme.label}
           </span>
@@ -91,7 +91,7 @@ const headerJsonLd = [
             </span>
           )}
         </MetaItem>
-        <MetaItem label="Associated Codes" value={h.data.relatedCodes && h.data.relatedCodes.length > 0 ? h.data.relatedCodes.map(code => 'HTTP ' + code).join(',') : 'None'} />
+        <MetaItem label="Associated codes" value={h.data.relatedCodes && h.data.relatedCodes.length > 0 ? h.data.relatedCodes.map(code => 'HTTP ' + code).join(',') : 'None'} />
       </div>
     </header>
 

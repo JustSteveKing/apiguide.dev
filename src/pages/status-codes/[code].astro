@@ -83,14 +83,14 @@ const scJsonLd = [
       </p>
       
       <div class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] sm:gap-4 px-5 py-1 sm:py-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="Status Code">
+        <MetaItem label="Status code">
           <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
             {sc.data.code} {sc.data.title}
           </span>
         </MetaItem>
         <MetaItem label="Category" value={activeTheme.label} />
-        <MetaItem label="API Error Subtypes" value={`${matchingErrors.length} ${matchingErrors.length === 1 ? 'error schema' : 'error schemas'}`} />
-        <MetaItem label="HTTP Headers" value={`${matchingHeaders.length} ${matchingHeaders.length === 1 ? 'header' : 'headers'}`} />
+        <MetaItem label="API error types" value={`${matchingErrors.length} ${matchingErrors.length === 1 ? 'error schema' : 'error schemas'}`} />
+        <MetaItem label="Related headers" value={`${matchingHeaders.length} ${matchingHeaders.length === 1 ? 'header' : 'headers'}`} />
       </div>
     </header>
 

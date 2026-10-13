@@ -74,7 +74,7 @@ const errorJsonLd = [
       <h1 class="text-4xl font-extrabold tracking-tight mb-6 text-paper-950">{error.data.title}</h1>
       
       <div class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] sm:gap-4 px-5 py-1 sm:py-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="Status Code">
+        <MetaItem label="Status code">
           <a href={`/status-codes/${error.data.statusCode}`} class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold hover:underline ${activeTheme.badge}`}>
             {error.data.statusCode} {error.data.statusText}
           </a>
@@ -82,7 +82,7 @@ const errorJsonLd = [
         <MetaItem label="Category" value={activeTheme.label} />
         <MetaItem label="Published" value={error.data.publishedDate.toISOString().split('T')[0]} />
         {error.data.updatedDate && (
-          <MetaItem label="Last Updated" value={error.data.updatedDate.toISOString().split('T')[0]} />
+          <MetaItem label="Updated" value={error.data.updatedDate.toISOString().split('T')[0]} />
         )}
       </div>
     </header>
