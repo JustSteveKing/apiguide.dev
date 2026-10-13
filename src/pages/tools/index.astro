@@ -1,16 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { toolCategoryHoverThemes } from '@/config/themes';
 
 const allTools = await getCollection('tools');
 
-const categoryThemes = {
-  'design-documentation': 'border-paper-300 hover:border-yinmn-400 bg-paper-100/50 hover:bg-yinmn-50/10 text-yinmn-900',
-  'testing-mocking': 'border-paper-300 hover:border-emerald-400 bg-paper-100/50 hover:bg-emerald-50/10 text-emerald-900',
-  'clients-debugging': 'border-paper-300 hover:border-chartres-400 bg-paper-100/50 hover:bg-chartres-50/10 text-chartres-900',
-  'gateways-management': 'border-paper-300 hover:border-ochre-400 bg-paper-100 hover:bg-ochre-50 text-ochre-900',
-  'observability': 'border-paper-300 hover:border-uranium-400 bg-paper-100/50 hover:bg-uranium-50/10 text-uranium-900'
-} as const;
+// Hover treatment comes from themes.ts; the card text stays neutral.
+const categoryThemes = Object.fromEntries(
+  Object.entries(toolCategoryHoverThemes).map(([id, hover]) => [id, `border-paper-300 text-paper-900 ${hover}`])
+) as Record<keyof typeof toolCategoryHoverThemes, string>;
 
 type CategoryId = keyof typeof categoryThemes;
 

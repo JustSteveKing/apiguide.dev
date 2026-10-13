@@ -245,6 +245,8 @@ Accent 500 and 600 steps are fill and border colours, not text colours. Ochre 60
 
 Navigation and index cards that do not represent a category use paper and chartres only. Hue is reserved for pages and badges where it maps to a real category, so a colour carries the same meaning everywhere it appears.
 
+Ochre, Uranium and Emerald are status colours: client error, server error, success. Guide categories, tool categories and pricing never use them, however short of hues a scheme is, because a badge in one of those three reads as a status wherever it appears. Those labels draw on Chartres, YInMn and Paper, in three treatments: solid (`bg-x-100 text-x-900`), outline (`text-x-800 border-x-400`) and inverted (`bg-x-700 text-x-50`, or `bg-paper-800 text-paper-50`). The live mapping is in `src/config/themes.ts`.
+
 ### Chartres
 
 The brand colour. Use for the site logo or wordmark, primary navigation, all inline links, and heading accents. This is the default interactive colour whenever nothing more specific applies.

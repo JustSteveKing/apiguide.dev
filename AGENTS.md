@@ -289,9 +289,14 @@ touch a template. The short version:
   Emerald Green, YInMn Blue, plus a warm neutral scale called Paper that
   replaces grey throughout.
 - **Do not invent a colour.** There are five pigments. If you need more
-  distinctions than that, reuse a hue with a different treatment, which is
-  what the guide categories do: four pairs share a hue, solid against
-  outline, and each pair is a real kinship rather than a workaround.
+  distinctions than that, reuse a hue with a different treatment (solid,
+  outline, inverted), which is what the guide categories do: three pairs
+  share a hue, solid against outline, and each pair is a real kinship rather
+  than a workaround.
+- **Ochre, Uranium and Emerald are status colours**: client error, server
+  error, success. A category, a price or any other label that is not a
+  status never uses them, because a security guide in the 5xx badge reads
+  as a failure. Categories draw on Chartres, YInMn and Paper.
 - Every scale is redefined for dark mode in `src/styles/main.css`, inverted,
   so `bg-x-100 text-x-900` works in both. Check any new pairing at both
   schemes and keep text at 4.5:1 or better.
