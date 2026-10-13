@@ -28,3 +28,6 @@ posthog-setup-report.md
 
 # Tabstack enrichment review output (not committed)
 scripts/out/
+
+# Wrangler local state (pages dev)
+.wrangler/
