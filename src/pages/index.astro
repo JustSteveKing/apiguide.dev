@@ -17,39 +17,16 @@ const [errors, statusCodes, headers, methods, guides, specifications, tools] = a
 
 const homeJsonLd = getWebSiteSchema();
 
-/**
- * The hero: one real exchange, printed the way `curl -v` prints it, with
- * every part that has a page here linked to it. It is the example from
- * /errors/validation-failed, so following the type URI lands on a page that
- * shows the same response.
- */
-type Segment = { text: string; href?: string; muted?: boolean };
-const m = (text: string): Segment => ({ text, muted: true });
-const t = (text: string): Segment => ({ text });
-const l = (text: string, href: string): Segment => ({ text, href });
-
-// Break long values after a slash, not mid-word, when the transcript wraps.
-const pieces = (text: string) => text.split(/(?<=\/)/);
-
-const transcript: Segment[][] = [
-  [m('> '), l('POST', '/methods/post'), t(' /v1/leads HTTP/1.1')],
-  [m('> '), l('Content-Type', '/headers/content-type'), t(': application/json')],
-  [m('>')],
-  [m('> '), t('{"start_date": "2026-10-01", "end_date": "2026-09-01"}')],
-  [t(' ')],
-  [m('< '), t('HTTP/1.1 '), l('422 Unprocessable Entity', '/status-codes/422')],
-  [m('< '), l('Content-Type', '/headers/content-type'), t(': '), l('application/problem+json', '/problem-json')],
-  [m('<')],
-  [t('{')],
-  [t('  "type": "'), l('https://apiguide.dev/errors/validation-failed', '/errors/validation-failed'), t('",')],
-  [t('  "title": "Validation Failed",')],
-  [t('  "status": 422,')],
-  [t('  "detail": "The end_date must be a date after start_date.",')],
-  [t('  "errors": {')],
-  [t('    "end_date": ["The end_date must be a date after start_date."]')],
-  [t('  },')],
-  [t('  "instance": "/v1/leads"')],
-  [t('}')],
+// The lookups people arrive with most, as the hero offers them. Codes,
+// headers and methods are wire text, so they are set in mono.
+const popular = [
+  { text: '429', href: '/status-codes/429' },
+  { text: '422', href: '/status-codes/422' },
+  { text: '409', href: '/status-codes/409' },
+  { text: 'ETag', href: '/headers/etag' },
+  { text: 'Retry-After', href: '/headers/retry-after' },
+  { text: 'Idempotency-Key', href: '/headers/idempotency-key' },
+  { text: 'PATCH', href: '/methods/patch' },
 ];
 
 const sections = [
@@ -106,40 +83,39 @@ const problems: { question: string; links: { text: string; href: string; mono?: 
   description="The flagship catalog for HTTP status codes, headers, request methods, and Problem+JSON error schemas for web APIs."
   jsonLd={homeJsonLd}
 >
-  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
-
-    <div class="mb-20 grid gap-10 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-12 lg:items-start">
-    <header class="max-w-2xl lg:pt-4">
-      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-4 text-slate-950">
+  <section class="bg-band text-on-band" aria-labelledby="hero-title">
+    <div class="max-w-6xl mx-auto px-6 py-20 sm:py-28">
+      <h1 id="hero-title" class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.02] max-w-4xl">
         Look up any part of an HTTP API
       </h1>
-      <p class="text-lg text-slate-700 leading-relaxed mb-6">
+      <p class="mt-6 text-lg sm:text-xl text-on-band-muted max-w-2xl leading-relaxed">
         Status codes, headers, methods and RFC 9457 problem types, each on its own page that says when to use it and what to use instead.
       </p>
+
       <button
         id="hero-search-trigger"
         type="button"
-        class="inline-flex items-center gap-3 px-4 py-2.5 text-slate-700 bg-slate-100 hover:border-ultra-400 border border-slate-300 rounded-lg transition-colors"
+        class="mt-10 w-full max-w-2xl flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 rounded-xl bg-on-band text-band text-left text-lg sm:text-xl shadow-[0_10px_30px_-12px_rgba(0,0,0,0.45)] hover:shadow-[0_14px_36px_-12px_rgba(0,0,0,0.55)] transition-shadow focus-visible:outline-on-band"
       >
-        <svg class="w-4 h-4 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <span>Search the reference</span>
-        <kbd class="hidden sm:inline-block ml-4 px-1.5 py-0.5 text-xs font-sans bg-slate-50 border border-slate-300 rounded text-slate-700">⌘K</kbd>
+        <svg class="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span class="flex-1 font-medium"><span class="sm:hidden">Search the reference</span><span class="hidden sm:inline">Search codes, headers, methods&hellip;</span></span>
+        <kbd class="hidden sm:inline-block px-2 py-0.5 rounded-md border border-band/30 text-sm font-sans">⌘K</kbd>
       </button>
-    </header>
 
-    <figure>
-      <pre class="exchange font-mono text-slate-950 bg-slate-100 border border-slate-300 rounded-lg px-5 py-5 sm:px-8 sm:py-7"><code>{transcript.map(line => (
-        <span class="exchange-line">{line.map(seg => seg.href
-          ? <a href={seg.href} data-track="exchange" class="text-ultra-700 underline decoration-ultra-300 decoration-1 underline-offset-4 hover:decoration-ultra-700 hover:decoration-2">{pieces(seg.text).map((piece, i) => <>{i > 0 && <wbr />}{piece}</>)}</a>
-          : <span class={seg.muted ? 'text-slate-600' : undefined}>{pieces(seg.text).map((piece, i) => <>{i > 0 && <wbr />}{piece}</>)}</span>
-        )}</span>
-      ))}</code></pre>
-      <figcaption class="mt-3 text-sm text-slate-700">
-        A request that fails validation, as <code class="font-mono">curl -v</code> shows it. Every underlined part has a page here.
-      </figcaption>
-    </figure>
+      <nav aria-label="Popular lookups" class="mt-6 flex flex-wrap items-center gap-2 max-w-2xl">
+        <span class="text-sm text-on-band-muted mr-1">Popular</span>
+        {popular.map(item => (
+          <a
+            href={item.href}
+            data-track="popular"
+            class="font-mono text-sm px-2.5 py-1 rounded-md border border-on-band/35 text-on-band hover:bg-on-band/10 hover:border-on-band/70 transition-colors focus-visible:outline-on-band"
+          >{item.text}</a>
+        ))}
+      </nav>
     </div>
+  </section>
 
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <div class="grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
       <RegistryGroup id="sections" title="Sections" count={sections.length}>
         {sections.map(s => (
