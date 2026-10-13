@@ -129,6 +129,13 @@ p, li, dd, figcaption, blockquote {
       padding-bottom: 0.5rem;
     }
 
+    /* Long-form pages put a --- between sections, which already draws the
+       rule; underlining the heading as well stacked two rules 60px apart. */
+    & hr + h2 {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
     & :is(h2, h3) {
       scroll-margin-top: 6rem;
     }
