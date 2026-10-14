@@ -1,15 +1,17 @@
 ---
 title: "Arazzo Specification"
 description: "A comprehensive, multi-section breakdown of the Arazzo specification, explaining workflows orchestration, input-output expressions, and state assertions."
-currentVersion: "1.0.1"
-officialUrl: "https://spec.openapis.org/arazzo/v1.0.1.html"
+currentVersion: "1.1.0"
+officialUrl: "https://spec.openapis.org/arazzo/v1.1.0.html"
 ---
 
 ## Introduction to Arazzo
 
-The Arazzo Specification describes workflows and state transitions across multiple API operations. While the OpenAPI Specification (OAS) defines individual endpoints, it lacks the context of how those endpoints are executed sequentially to achieve business tasks. 
+The Arazzo Specification describes workflows and state transitions across multiple API operations. While the [OpenAPI Specification](/specifications/openapi) (OAS) defines individual endpoints, it lacks the context of how those endpoints are executed sequentially to achieve business tasks. 
 
 Arazzo connects these dots by acting as a client workflow orchestrator.
+
+The current version, 1.1.0, was published in May 2026. It adds [AsyncAPI](/specifications/asyncapi) source descriptions, so one workflow can mix HTTP calls with messages it sends and receives, support for the OpenAPI 3.2 `querystring` parameter location, a `$self` field for identifying the document, and JSONPath and XPath selectors wherever 1.0 accepted only [JSON Pointer](/specifications/json-pointer).
 
 ### The Workflow Orchestration Flow
 
@@ -40,7 +42,7 @@ steps:
         client_id: $inputs.clientId
         client_secret: $inputs.clientSecret
     outputs:
-      accessToken: $response.body.token
+      accessToken: $response.body#/token
 ```
 
 ---
@@ -51,8 +53,9 @@ Arazzo uses a structured runtime expression syntax to dynamically resolve values
 
 | Expression Namespace | Source Description | Example |
 | :--- | :--- | :--- |
+| **`$statusCode`** | HTTP status code of the current step's response | `$statusCode == 201` |
 | **`$inputs.*`** | Input parameters declared at workflow start | `$inputs.username` |
-| **`$response.body.*`** | JSON body fields returned in the current step | `$response.body.id` |
+| **`$response.body#/*`** | Body fields returned in the current step, addressed by JSON Pointer | `$response.body#/id` |
 | **`$response.header.*`** | HTTP response headers returned in the current step | `$response.header.Location` |
 | **`$steps.<stepId>.outputs.*`**| Saved outputs from a previously executed step | `$steps.generateToken.outputs.accessToken` |
 
@@ -60,7 +63,7 @@ Arazzo uses a structured runtime expression syntax to dynamically resolve values
 
 ## 3. State Assertions (`successCriteria`)
 
-To ensure that a workflow is progressing successfully, steps can define assertions. If the response does not satisfy the criteria, the workflow aborts.
+To ensure that a workflow is progressing successfully, steps can define assertions. If the response does not satisfy the criteria, the step fails, and what happens next is decided by its `onFailure` actions (retry, go to another step, or end). With no `onFailure` defined, the default is to break and return.
 
 * **`successCriteria`**: An array of logical checks. Every check must evaluate to true.
 
@@ -69,7 +72,7 @@ steps:
   - stepId: checkInventory
     operationId: getInventory
     successCriteria:
-      - condition: $response.status == 200
-      - condition: $response.body.quantity > 0
+      - condition: $statusCode == 200
+      - condition: $response.body#/quantity > 0
 ```
 

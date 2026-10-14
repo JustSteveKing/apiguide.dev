@@ -3,7 +3,7 @@ title: Insufficient Scope
 statusCode: 403
 statusText: Forbidden
 category: client-error
-relatedCodes: ['unauthorized', 'expired-authentication-token']
+relatedCodes: ['unauthorized', 'expired-authentication-token', 'forbidden']
 publishedDate: 2026-03-02
 ---
 
@@ -15,7 +15,7 @@ A common example is a token generated with a `read` scope attempting to perform 
 
 ## When not to use it
 
-Do not use this if the client is unauthenticated (use `unauthorized` or 401). Do not use this if the token is expired (use `expired-authentication-token` / 401).
+Do not use this if the client is unauthenticated (use `unauthorized` or 401). Do not use this if the token is expired (use `expired-authentication-token` / 401). If the token's scopes are sufficient but your own permission rules deny the action, such as a non-owner deleting a project, use `forbidden`.
 
 ## Example response
 

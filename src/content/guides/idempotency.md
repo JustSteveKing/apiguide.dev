@@ -18,10 +18,13 @@ Clients send a unique identifier (usually a UUID) in the [`Idempotency-Key`](/he
 
 ### Server Execution Flow:
 1. **Receive Request**: Check if the `Idempotency-Key` exists in cache (e.g., Redis).
-2. **First Time Seeing Key**: Save a lock record `processing` in Redis and execute the database transaction.
-3. **Locking Concurrent Calls**: If a second request arrives with the same key while the first is running, return a [`409 Conflict`](/status-codes/409).
+2. **First Time Seeing Key**: Save a lock record `processing` in Redis, together with a fingerprint (a hash) of the request payload, and execute the database transaction.
+3. **Locking Concurrent Calls**: If a second request arrives with the same key while the first is running, return a [`409 Conflict`](/status-codes/409) with a short [`Retry-After`](/headers/retry-after).
 4. **Cache the Result**: Once the transaction completes, save the HTTP status code and response body in Redis alongside the key, setting a TTL (e.g. 24 hours).
 5. **Replays**: If the client calls again with the same key after completion, bypass the database, load the cached response from Redis, and return it instantly.
+6. **Reject a Reused Key**: Before replaying, compare the new payload's fingerprint with the stored one. If they differ, the client has reused a key for a different request: return [`422 Unprocessable Content`](/status-codes/422) with an [idempotency key conflict](/errors/idempotency-key-conflict) error, and never replay the stored response or execute the new request.
+
+These status codes follow the IETF Internet-Draft `draft-ietf-httpapi-idempotency-key-header` (revision -07, now expired and not an RFC), which also recommends [`400 Bad Request`](/status-codes/400) when an operation documented as requiring the header receives a request without it.
 
 ---
 

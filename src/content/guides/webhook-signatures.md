@@ -21,7 +21,7 @@ The flow is symmetric:
 
 Because the secret never travels over the wire, an attacker who intercepts a request cannot produce valid signatures for modified payloads.
 
-Do not use MD5 or SHA-1. Both are considered cryptographically broken. HMAC is standardized in NIST FIPS 198-1, and SHA-256 (from FIPS 180-4) is the minimum recommended hash. Stripe explicitly forbids weaker hashes to prevent downgrade attacks.
+Do not use MD5 or SHA-1. Both are considered cryptographically broken. HMAC is standardized in NIST FIPS 198-1, and SHA-256 (from FIPS 180-4) is the minimum recommended hash. The same logic applies to the signature header itself: Stripe's documentation tells receivers to ignore every signature scheme other than `v1`, to prevent downgrade attacks. Accept only the schemes you have chosen, never whatever the header offers.
 
 ```text
 signature = HMAC-SHA256(signing_secret, raw_request_body)
@@ -44,7 +44,7 @@ X-Hub-Signature-256: sha256=7d38c... (hex-encoded HMAC)
 {"id":"evt_123","type":"order.created","data":{"amount":4200}}
 ```
 
-Signatures are transmitted in a provider-specific header and encoded as either lowercase hex or base64. Common conventions include `X-Hub-Signature-256` (GitHub), `X-Shopify-Hmac-SHA256` (Shopify), `Qlik-Signature` (Qlik Cloud), and `webhook-signature` (Standard Webhooks). The algorithm is often prefixed to the value (`sha256=`) so the scheme is unambiguous.
+Signatures are transmitted in a provider-specific header and encoded as either lowercase hex or base64. Common conventions include `X-Hub-Signature-256` (GitHub), `X-Shopify-Hmac-SHA256` (Shopify), `Qlik-Signature` (Qlik Cloud), and `webhook-signature` ([Standard Webhooks](/specifications/standard-webhooks)). The algorithm is often prefixed to the value (`sha256=`) so the scheme is unambiguous.
 
 ---
 
@@ -115,7 +115,7 @@ The signing secret is the root of trust, so treat it accordingly.
 | Rotate on a schedule and after incidents | Regular rotation caps the lifetime of any undetected leak. |
 | Use random secrets (24-64 bytes) | Long, high-entropy keys resist brute force. |
 
-Zero-downtime rotation means the sender signs each message with multiple active keys during the transition, letting receivers validate against either. This capability is rare in the wild, and surveys suggest under 10% of implementations offer it, so build it in deliberately.
+Zero-downtime rotation means the sender signs each message with multiple active keys during the transition, letting receivers validate against either. Standard Webhooks builds this in: `webhook-signature` is a space-delimited list, and the sender includes one entry per active secret. Stripe does the same, sending one `v1` signature per secret while a rolled secret is still active. If you design your own scheme, allow for more than one signature in the header from the start, because a receiver written to parse exactly one value will reject the second.
 
 ---
 
@@ -123,7 +123,7 @@ Zero-downtime rotation means the sender signs each message with multiple active 
 
 HMAC uses one shared secret, which means the receiver also holds a key capable of *forging* signatures. When the sender wants receivers to verify but never sign, asymmetric signatures are used instead: the sender signs with a private key and publishes a public key for verification.
 
-The Standard Webhooks spec supports Ed25519 (identified as `v1a`) alongside symmetric HMAC (`v1`). Some providers issue signed JWTs, for example using ES384, with the public key exposed at a known endpoint. RFC 9421 "HTTP Message Signatures" generalizes this further, allowing signatures over selected headers and body components with algorithms including HMAC-SHA256, ECDSA, and EdDSA. For token-based schemes, see [JWT](/specifications/jwt).
+The Standard Webhooks spec supports Ed25519 (identified as `v1a`) alongside symmetric HMAC (`v1`). Some providers issue signed JWTs, for example using ES384, with the public key exposed at a known endpoint. RFC 9421 [HTTP Message Signatures](/specifications/http-message-signatures) generalizes this further, allowing signatures over selected headers and body components with algorithms including HMAC-SHA256, ECDSA, and EdDSA. For token-based schemes, see [JWT](/specifications/jwt).
 
 ### The signature outlives the request
 

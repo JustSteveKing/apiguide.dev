@@ -15,7 +15,7 @@ HTTP/3 keeps the concepts introduced by HTTP/2, multiplexed streams, binary fram
 
 ---
 
-## Running over QUIC
+## 1. Running over QUIC
 
 QUIC, defined in RFC 9000, is a transport protocol that runs over UDP and integrates several features that TCP handles separately or not at all.
 
@@ -31,7 +31,7 @@ Because QUIC provides independent streams natively, HTTP/3 does not suffer the t
 
 ---
 
-## QPACK header compression
+## 2. QPACK header compression
 
 HTTP/2's HPACK relies on headers arriving in order, an assumption that holds on a single ordered TCP stream but not on QUIC's independently delivered streams. HTTP/3 therefore uses QPACK, defined in RFC 9204, a header compression scheme designed for out-of-order delivery.
 
@@ -39,7 +39,7 @@ QPACK keeps HPACK's core ideas, a static table, a dynamic table, and Huffman cod
 
 ---
 
-## Faster connection setup and 0-RTT
+## 3. Faster connection setup and 0-RTT
 
 QUIC combines the transport and cryptographic handshakes, so a new connection is established in fewer round trips than TCP followed by a separate TLS handshake. This reduces the latency cost of opening a connection.
 
@@ -56,7 +56,7 @@ The tradeoff is that 0-RTT data is vulnerable to replay attacks, so it should on
 
 ---
 
-## Connection migration
+## 4. Connection migration
 
 A TCP connection is bound to the four-tuple of source and destination IP addresses and ports. If a client's network path changes, for example a phone switching from Wi-Fi to cellular, the TCP connection breaks and must be reestablished.
 
@@ -64,7 +64,7 @@ QUIC identifies a connection by a Connection ID rather than by the network path.
 
 ---
 
-## Discovery with Alt-Svc
+## 5. Discovery with Alt-Svc
 
 A client cannot assume a server speaks HTTP/3, and QUIC uses UDP, which some networks block. HTTP/3 is therefore typically discovered rather than requested directly. A server advertises HTTP/3 support using the `Alt-Svc` header field on an HTTP/1.1 or HTTP/2 response.
 
@@ -78,7 +78,7 @@ The `h3` token indicates HTTP/3 availability, the value gives the port, and `ma`
 
 ---
 
-## Comparison with HTTP/2
+## 6. Comparison with HTTP/2
 
 | Aspect                     | HTTP/2 (RFC 9113)         | HTTP/3 (RFC 9114)             |
 | -------------------------- | ------------------------- | ---------------------------- |

@@ -13,7 +13,7 @@ The `Last-Modified` response header, defined in RFC 9110, carries an HTTP-date i
 ## API Usage & Best Practices
 
 * **Conditional requests**: Clients send the stored value back in `If-Modified-Since`; if the resource has not changed, the server replies with `304 Not Modified` and no body, saving bandwidth.
-* **Guarding writes**: Sending the value in `If-Unmodified-Since` lets the server reject a request with `412 Precondition Failed` if the resource changed in the meantime.
+* **Guarding writes**: Sending the value in [`If-Unmodified-Since`](/headers/if-unmodified-since) lets the server reject a request with `412 Precondition Failed` if the resource changed in the meantime.
 * **Weaker than ETag**: Its one-second resolution can miss rapid updates, so `ETag` is preferred when available and takes priority when both are present.
 
 ## Examples

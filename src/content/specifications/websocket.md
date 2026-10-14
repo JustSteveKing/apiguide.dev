@@ -15,7 +15,7 @@ It is a good fit for interactive, low-latency applications such as chat, collabo
 
 ---
 
-## The opening handshake
+## 1. The opening handshake
 
 A WebSocket connection starts with an HTTP/1.1 `GET` request that asks the server to switch protocols. The client includes an `Upgrade: websocket` header and a randomly generated `Sec-WebSocket-Key`.
 
@@ -44,7 +44,7 @@ After the handshake completes, the TCP connection stays open and both sides comm
 
 ---
 
-## Data framing
+## 2. Data framing
 
 WebSocket transmits data in frames rather than as a continuous byte stream. Each frame carries a small header describing its type and length. The protocol defines an opcode for each frame:
 
@@ -66,7 +66,7 @@ Key framing rules from RFC 6455:
 
 ---
 
-## Subprotocols and extensions
+## 3. Subprotocols and extensions
 
 WebSocket itself only defines how to move frames. The meaning of the payload is left to an application-level subprotocol. The client advertises the subprotocols it supports with `Sec-WebSocket-Protocol` during the handshake, and the server selects one by echoing it in its response.
 
@@ -82,7 +82,7 @@ socket.onclose = (event) => console.log("closed:", event.code, event.reason);
 
 ---
 
-## Comparison with SSE and HTTP polling
+## 4. Comparison with SSE and HTTP polling
 
 | Aspect             | WebSocket                  | Server-Sent Events        | HTTP polling               |
 | ------------------ | -------------------------- | ------------------------- | -------------------------- |
@@ -97,7 +97,7 @@ Choose WebSocket when both sides need to send data frequently or when binary tra
 
 ---
 
-## Scaling considerations
+## 5. Scaling considerations
 
 WebSocket connections are stateful and long-lived, which changes how you operate a service:
 

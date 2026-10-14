@@ -3,7 +3,7 @@ title: Service Unavailable
 statusCode: 503
 statusText: Service Unavailable
 category: server-error
-relatedCodes: ['internal-server-error', 'gateway-timeout']
+relatedCodes: ['internal-server-error', 'gateway-timeout', 'bad-gateway']
 publishedDate: 2026-01-13
 ---
 

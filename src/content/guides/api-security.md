@@ -14,7 +14,7 @@ This guide covers the controls that matter most in practice, anchored to the OWA
 
 ## 1. Encrypt Everything with TLS
 
-Serve every endpoint over HTTPS, with no plaintext fallback. Redirect HTTP to HTTPS, and enforce it with HSTS so browsers refuse to downgrade.
+Serve every endpoint over HTTPS, with no plaintext fallback. On API-only hostnames, refuse plaintext rather than redirecting it: by the time a client receives a redirect, its token or API key has already crossed the network in cleartext, and a `301` may turn a [`POST`](/methods/post) into a `GET`. Redirecting HTTP to HTTPS is fine on browser-facing hostnames, where you should also send [`Strict-Transport-Security`](/headers/strict-transport-security) so browsers refuse to downgrade on later visits. HSTS is enforced by browsers; most server-side HTTP clients ignore it, so it is no substitute for shipping `https` base URLs in your SDKs.
 
 ```http
 Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
@@ -37,7 +37,7 @@ The most common and damaging failure is authenticating correctly but authorizing
 
 ## 3. The OWASP API Security Top 10
 
-The current OWASP list captures the risks responsible for most real breaches. The top entries are all authorization failures.
+The current OWASP list captures the risks responsible for most real breaches. Three of the top five, API1, API3 and API5, are authorization failures.
 
 | Rank | Risk |
 | --- | --- |
@@ -62,7 +62,7 @@ If any authenticated user can fetch *any* order 42 simply by changing the number
 Treat every input as hostile. Validate type, length, format, and range against an explicit schema, and reject anything that does not conform with a [`400 Bad Request`](/status-codes/400) or [`422`](/status-codes/422).
 
 - Prefer allowlists (what is permitted) over denylists (what is blocked).
-- Use parameterised queries to prevent injection; never build SQL by string concatenation.
+- Use parameterized queries to prevent injection; never build SQL by string concatenation.
 - Guard against mass assignment: bind only the fields a client is allowed to set, not the whole payload.
 
 ---
@@ -74,10 +74,11 @@ Unbounded consumption (API4) enables both denial-of-service and brute-force atta
 ```http
 HTTP/1.1 429 Too Many Requests
 Retry-After: 30
-RateLimit-Remaining: 0
+RateLimit-Policy: "default";q=100;w=60
+RateLimit: "default";r=0;t=30
 ```
 
-Return [`429`](/status-codes/429) with a `Retry-After` header when limits are exceeded. See the [rate limiting guide](/guides/rate-limiting) for algorithms and header conventions.
+Return [`429`](/status-codes/429) with a [`Retry-After`](/headers/retry-after) header when limits are exceeded, and describe the limits with [`RateLimit-Policy`](/headers/ratelimit-policy) and [`RateLimit`](/headers/ratelimit). See the [rate limiting guide](/guides/rate-limiting) for algorithms and header conventions.
 
 ---
 

@@ -13,7 +13,7 @@ The `Link` header (RFC 8288) allows servers to express relationships between the
 ## API Usage & Best Practices
 
 * **Best Practice for Pagination**: Instead of packing pagination URLs inside your JSON envelope, serialize pagination links (next, prev, first, last) in the Link header. This keeps your payload focused purely on resource data.
-* **Early Hints integration**: Use to push early hints (like preloading critical assets) during connection startup.
+* **Early Hints integration**: A server can send `Link` headers in a [`103 Early Hints`](/status-codes/103) interim response, before the final response is ready, so the client can start preloading or preconnecting while the server is still working. The links in a 103 are hints; the final response carries its own headers. The underlying model of link relations is described under [Web Linking](/specifications/web-linking).
 
 ## Examples
 

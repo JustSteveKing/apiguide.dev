@@ -9,7 +9,7 @@ officialUrl: "https://www.rfc-editor.org/rfc/rfc7644"
 
 SCIM (System for Cross-domain Identity Management) is an open standard that automates the exchange of user identity information between identity domains. In practice, it is the protocol that lets an enterprise identity provider (such as Okta, Entra ID, or Google Workspace) create, update, deactivate, and delete user accounts in a downstream SaaS application, without manual administration.
 
-SCIM 2.0 is defined across two RFCs: the core schema (RFC 7643) and the protocol (RFC 7644). It uses REST over HTTP with JSON payloads identified by the media type `application/scim+json`.
+SCIM 2.0 is defined across two RFCs: the core schema (RFC 7643) and the protocol (RFC 7644). Both are still current, but read them with their updates: RFC 9865 (October 2025) adds cursor-based pagination, and RFC 9967 (May 2026) defines SCIM security events carried as Security Event Tokens (RFC 8417) for asynchronous change notification. It uses REST over HTTP with JSON payloads identified by the media type `application/scim+json`.
 
 ---
 
@@ -116,7 +116,7 @@ List responses are wrapped in a ListResponse envelope:
 }
 ```
 
-Pagination uses the `startIndex` (1-based) and `count` query parameters.
+Pagination in RFC 7644 uses the `startIndex` (1-based) and `count` query parameters. RFC 9865 adds a cursor alternative for backends that cannot page by offset: the client sends `cursor` (empty for the first page) with `count`, and follows the `nextCursor` (and optional `previousCursor`) values in the list response. A service provider advertises support in its `ServiceProviderConfig` (`pagination.cursor`) and rejects a bad cursor with [`400 Bad Request`](/status-codes/400) and `scimType` `invalidCursor`.
 
 ---
 

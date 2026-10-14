@@ -56,7 +56,7 @@ Define a clear status enum and treat it as part of your contract: `queued`, `run
 
 ## 3. Polling for Completion
 
-The client polls the job resource until it reaches a terminal status. Honour `Retry-After` to avoid hammering the server, and use [caching](/guides/caching) headers so unchanged status responses stay cheap.
+The client polls the job resource until it reaches a terminal status. Honor `Retry-After` to avoid hammering the server, and use [caching](/guides/caching) headers so unchanged status responses stay cheap.
 
 When the job succeeds, point the client to the result rather than inlining it. A [`303 See Other`](/status-codes/303) redirect to the finished resource is idiomatic:
 

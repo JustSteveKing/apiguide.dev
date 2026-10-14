@@ -14,8 +14,8 @@ The `SEARCH` method is a WebDAV extension (RFC 5323) used by clients to send a q
 ## API Usage & Best Practices
 
 * **Query in the body**: Unlike GET, SEARCH carries its query in the request body, allowing rich, structured criteria.
-* **Read-only and repeatable**: SEARCH is safe and idempotent, so the same query returns consistent results and can be retried freely.
-* **Know the overlap**: SEARCH conceptually overlaps with the newer QUERY method, which aims to standardise body-bearing reads more broadly.
+* **Read-only and repeatable**: SEARCH is safe and idempotent, so repeating a query has no side effects on the server and it can be retried freely. The results can still change between calls as the underlying data changes.
+* **Know the overlap**: SEARCH overlaps with the [`QUERY`](/methods/query) method, standardized in RFC 10008 as the general-purpose safe, idempotent read with a body. Outside WebDAV, use `QUERY` rather than SEARCH.
 
 ## Common Response Codes
 

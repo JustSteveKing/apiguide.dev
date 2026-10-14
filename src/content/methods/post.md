@@ -24,4 +24,4 @@ The `POST` method submits data to the server to create a new resource, execute a
 * **202 Accepted**: The request was accepted and queued for async background processing.
 * **400 Bad Request**: The request body is structurally malformed (invalid JSON).
 * **409 Conflict**: The resource being created collides with an existing one (e.g. a unique constraint violation).
-* **422 Unprocessable Entity**: The request body was parsed but failed input validation.
+* **422 Unprocessable Content**: The request body was parsed but failed input validation.

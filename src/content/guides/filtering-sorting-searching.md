@@ -20,7 +20,7 @@ Filtering restricts a collection to items matching criteria. Two common styles e
 GET /orders?status=shipped&currency=USD
 ```
 
-For richer needs, a bracketed `filter` namespace (popularised by JSON:API) keeps filter parameters clearly separated from control parameters like `sort` and `page`:
+For richer needs, a bracketed `filter` namespace (popularized by JSON:API) keeps filter parameters clearly separated from control parameters like `sort` and `page`:
 
 ```http
 GET /orders?filter[status]=shipped&filter[currency]=USD
@@ -101,4 +101,4 @@ Content-Type: application/json
 }
 ```
 
-A search sub-resource (`/orders/search`) is the pragmatic choice today. The newer **`QUERY`** HTTP method, currently an IETF draft, aims to standardise safe, cacheable requests that carry a body, combining the semantics of `GET` with the flexibility of a payload. Until it is broadly supported, a documented `POST` search endpoint is the reliable option.
+A search sub-resource (`/orders/search`) works with every client, proxy and gateway. The [`QUERY`](/methods/query) method, standardized in RFC 10008, is the purpose-built alternative: safe, idempotent and cacheable like `GET`, with the query in the body. Prefer `QUERY` where every hop between client and origin supports it, and keep a documented `POST` search endpoint as the fallback for those that do not.

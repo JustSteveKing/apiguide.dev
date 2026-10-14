@@ -103,12 +103,12 @@ The result goes in the `Authorization` header. Naming the signed headers explici
 
 ## 5. RFC 9421: HTTP Message Signatures
 
-The IETF standardized this space with **RFC 9421 "HTTP Message Signatures"** (Proposed Standard, February 2024). It replaces ad-hoc canonicalization with a defined signature base and two structured header fields:
+The IETF standardized this space with **RFC 9421 "[HTTP Message Signatures](/specifications/http-message-signatures)"** (Proposed Standard, February 2024). It replaces ad-hoc canonicalization with a defined signature base and two structured header fields:
 
-* `Signature-Input`: lists the **covered components** and metadata (`keyid`, `alg`, `created`, and optionally `nonce` and `expires`).
-* `Signature`: carries the signature value.
+* [`Signature-Input`](/headers/signature-input): lists the **covered components** and metadata (`keyid`, `alg`, `created`, and optionally `nonce` and `expires`).
+* [`Signature`](/headers/signature): carries the signature value.
 
-Covered components can be ordinary headers or **derived components** that abstract away HTTP version differences: `@method`, `@target-uri`, `@authority`, and `@path`. This lets the signer choose exactly which parts to protect, which is important when intermediaries may legitimately modify some headers.
+Covered components can be ordinary headers or **derived components** that abstract away HTTP version differences: `@method`, `@target-uri`, `@authority`, `@scheme`, `@request-target`, `@path`, `@query`, `@query-param` (one named parameter), and `@status` (responses only). `@path` excludes the query string, so a signature over `@method` and `@path` alone leaves `?amount=10` free to be changed to `?amount=1000`: cover `@query` or `@target-uri` whenever the query carries meaning. This lets the signer choose exactly which parts to protect, which is important when intermediaries may legitimately modify some headers.
 
 ```http
 POST /transfers HTTP/1.1
@@ -118,7 +118,7 @@ Signature-Input: sig1=("@method" "@path" "content-digest");keyid="key-1";alg="hm
 Signature: sig1=:K2qGT5srn2OGbOIDzQ6kYT+ruaycnDAAUpKv+ePFfD0=:
 ```
 
-RFC 9421 supports HMAC-SHA256, RSA (PKCS1-v1_5 and PSS), ECDSA (P-256, P-384), EdDSA, and JWS algorithms, and permits multiple independent signatures on one message.
+The RFC 9421 algorithm registry defines `hmac-sha256`, `rsa-v1_5-sha256`, `rsa-pss-sha512`, `ecdsa-p256-sha256`, `ecdsa-p384-sha384` and `ed25519`. Section 3.3.7 also allows JOSE (JWS) algorithms, but they are not registry entries and never go in the `alg` parameter; they are identified through the key, typically a JWK. The standard permits multiple independent signatures on one message.
 
 ---
 
@@ -126,7 +126,7 @@ RFC 9421 supports HMAC-SHA256, RSA (PKCS1-v1_5 and PSS), ECDSA (P-256, P-384), E
 
 For any request with a body (POST, PUT, PATCH), the body must be bound into the signature, or an attacker could swap the payload while leaving the signature valid. The standard approach is to compute a **digest** of the body (typically SHA-256) and include that digest in the signed components rather than hashing the raw body twice.
 
-SigV4 folds the payload hash directly into the canonical request. RFC 9421 works with the `Content-Digest` header, which is covered by the signature. Either way, the verifier recomputes the digest from the received body and confirms it matches the signed value before trusting the payload.
+SigV4 folds the payload hash directly into the canonical request. RFC 9421 works with the [`Content-Digest`](/headers/content-digest) header ([RFC 9530](/specifications/digest-fields)), which is covered by the signature. Either way, the verifier recomputes the digest from the received body and confirms it matches the signed value before trusting the payload.
 
 ---
 
@@ -152,7 +152,7 @@ Request signing is one control in a defense-in-depth strategy, not a complete se
 | Confidentiality | HTTPS (TLS 1.2+) |
 | Replay | Signed timestamp + optional nonce |
 | Timing attacks | Constant-time signature comparison |
-| Authorization | OAuth 2.0 scopes / claims |
+| Authorization | [OAuth 2.0](/specifications/oauth2) scopes / claims |
 | Mutual authentication | mTLS for server-to-server |
 
 Combine signing with a standardized framework, transport encryption, disciplined clock management, and anti-replay protection. For broader guidance see [API security](/guides/api-security), and for signature algorithm details relevant to token-based schemes, [JWT](/specifications/jwt).

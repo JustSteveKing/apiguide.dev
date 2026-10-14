@@ -104,7 +104,7 @@ Place it in a dedicated `meta` or `pagination` object beside the data.
 
 ### In Link headers
 
-Following **RFC 8288** (which updates RFC 5988), the `Link` header carries navigation URLs and keeps the body focused purely on data. GitHub's API uses this approach.
+Following **RFC 8288** ([Web Linking](/specifications/web-linking), which obsoletes RFC 5988), the [`Link`](/headers/link) header carries navigation URLs and keeps the body focused purely on data. GitHub's API uses this approach.
 
 ```http
 HTTP/1.1 200 OK

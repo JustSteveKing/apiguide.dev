@@ -11,11 +11,11 @@ RFC 9110, HTTP Semantics, defines the core, version-independent meaning of the H
 
 This separation is deliberate. The semantics, what a `GET` request means, what a `404` status conveys, how content negotiation works, are defined once here. The wire formats and connection management for each version are defined in their own documents. Understanding RFC 9110 is the foundation for understanding every other part of HTTP.
 
-Published in June 2022, it obsoletes the earlier RFC 723x series (RFC 7230 through 7235) and consolidates and clarifies the semantics that were previously spread across those documents.
+Published in June 2022 as Internet Standard STD 97, it obsoletes RFCs 2818, 7231, 7232, 7233, 7235, 7538, 7615 and 7694, and the portions of RFC 7230 that are independent of HTTP/1.1 message syntax and connection management, consolidating material that was previously spread across those documents. It does not replace the whole RFC 723x series on its own: the rest of RFC 7230, the HTTP/1.1 message syntax and connection management, is obsoleted by [HTTP/1.1 (RFC 9112)](/specifications/http1-1), and RFC 7234 is obsoleted by [HTTP Caching (RFC 9111)](/specifications/http-caching).
 
 ---
 
-## Methods
+## 1. Methods
 
 A request method tells the server what action to perform on the target resource. RFC 9110 defines the following methods and two important properties: whether a method is *safe* (read-only, no expectation of side effects) and *idempotent* (repeating it has the same effect as making it once).
 
@@ -34,7 +34,7 @@ PATCH is not defined in RFC 9110; it is specified separately in RFC 5789.
 
 ---
 
-## Status codes
+## 2. Status codes
 
 A three-digit status code communicates the result of a request. The first digit places the response in one of five classes.
 
@@ -62,7 +62,7 @@ Codes are extensible, but clients are expected to understand the class of any co
 
 ---
 
-## Representations and content negotiation
+## 3. Representations and content negotiation
 
 RFC 9110 formalizes the idea of a *representation*: a resource can have multiple representations differing in format, language, or encoding. The message body carries a representation, described by representation header fields such as `Content-Type`, `Content-Language`, and `Content-Encoding`.
 
@@ -80,7 +80,7 @@ The `q` parameter expresses relative preference from 0 to 1. The server should r
 
 ---
 
-## Conditional requests
+## 4. Conditional requests
 
 Conditional requests make an operation depend on the current state of a resource, using validators. RFC 9110 defines two kinds: the strong or weak entity-tag (`ETag`) and the modification date (`Last-Modified`).
 
@@ -91,7 +91,7 @@ Precondition header fields test these validators before the server acts:
 | `If-Match`            | `ETag`        | Optimistic concurrency on updates   |
 | `If-None-Match`       | `ETag`        | Cache revalidation; conditional GET |
 | `If-Modified-Since`   | `Last-Modified` | Cache revalidation                |
-| `If-Unmodified-Since` | `Last-Modified` | Guard against lost updates         |
+| [`If-Unmodified-Since`](/headers/if-unmodified-since) | `Last-Modified` | Guard against lost updates         |
 
 ```http
 PUT /articles/42 HTTP/1.1
@@ -106,7 +106,7 @@ If the entity-tag no longer matches, the server responds `412 Precondition Faile
 
 ---
 
-## Range requests
+## 5. Range requests
 
 Range requests let a client ask for one or more portions of a representation rather than the whole thing, which supports resumable downloads and media seeking. A server that supports ranges advertises `Accept-Ranges: bytes`.
 
@@ -121,11 +121,11 @@ Content-Length: 1024
 Accept-Ranges: bytes
 ```
 
-A successful partial response uses `206 Partial Content`. A range that cannot be satisfied yields `416 Range Not Satisfiable`. The `If-Range` header lets a client resume only if the resource has not changed.
+A successful partial response uses `206 Partial Content`. A range that cannot be satisfied yields `416 Range Not Satisfiable`. The [`If-Range`](/headers/if-range) header lets a client resume only if the resource has not changed.
 
 ---
 
-## Authentication framework
+## 6. Authentication framework
 
 RFC 9110 defines a general, extensible framework for access authentication rather than any single scheme. When a resource requires credentials, the server responds `401 Unauthorized` with a `WWW-Authenticate` header naming one or more challenges, each identifying an authentication scheme and its parameters, including a `realm`.
 
@@ -134,10 +134,10 @@ HTTP/1.1 401 Unauthorized
 WWW-Authenticate: Bearer realm="api", error="invalid_token"
 ```
 
-The client retries with an `Authorization` header carrying credentials for a chosen scheme. For access through a proxy, the parallel `407 Proxy Authentication Required`, `Proxy-Authenticate`, and `Proxy-Authorization` fields apply. Specific schemes such as Basic, Digest, and Bearer are defined in their own documents.
+The client retries with an `Authorization` header carrying credentials for a chosen scheme. For access through a proxy, the parallel `407 Proxy Authentication Required`, [`Proxy-Authenticate`](/headers/proxy-authenticate), and [`Proxy-Authorization`](/headers/proxy-authorization) fields apply. Specific schemes such as Basic, Digest, and Bearer are defined in their own documents.
 
 ---
 
-## Why this specification matters
+## 7. Why this specification matters
 
 RFC 9110 is the anchor for the entire HTTP ecosystem. Caching (RFC 9111), and the wire formats HTTP/1.1 (RFC 9112), HTTP/2 (RFC 9113), and HTTP/3 (RFC 9114) all build on the semantics defined here. When two specifications appear to disagree about what a method or header means, RFC 9110 is the authority.

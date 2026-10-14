@@ -14,7 +14,7 @@ The `Prefer` request header, defined in RFC 7240, lets a client indicate prefere
 
 * **Control the response body**: `return=minimal` asks the server to return little or no body, while `return=representation` asks for the full resource state.
 * **Request asynchronous processing**: `respond-async` asks the server to process the request asynchronously, often answered with `202 Accepted`; `wait=` bounds how long the client will wait.
-* **Confirm what was applied**: When the server acts on a preference, it echoes it back in the `Preference-Applied` response header.
+* **Confirm what was applied**: When the server acts on a preference, it can echo it back in the [`Preference-Applied`](/headers/preference-applied) response header. RFC 7240 says this is only needed when the response does not already make it obvious, but `return=minimal` and `return=representation` are exactly the cases where a client cannot always tell, so send it for those.
 
 ## Examples
 

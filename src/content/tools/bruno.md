@@ -3,27 +3,28 @@ name: "Bruno"
 description: "A fast, git-friendly open-source API client that stores collections directly as folder structures."
 category: "clients-debugging"
 lifecycleStages: ["development"]
-url: "https://usebruno.com"
+url: "https://www.usebruno.com"
 pricing: "freemium"
 ---
 
 ## What is Bruno?
 
-Bruno is an open-source, Git-native API client that supports REST, GraphQL, gRPC, and Websocket protocols. It is a local-first solution designed to operate without cloud syncing or account requirements, storing API collections as plain-text files. The tool emphasizes developer control and integration with existing development workflows.
+Bruno is an offline-only desktop API client for REST, GraphQL, gRPC and WebSocket APIs. Collections are stored as plain-text files in a folder on disk, written in Bruno's own Bru markup or in OpenCollection YAML, so they live in the same Git repository as the code they exercise. There is no cloud sync and no account requirement. The core application is MIT-licensed open source; paid Pro and Ultimate plans add private Git provider integration, OpenAPI sync, SSO and other team features. The `@usebruno/cli` package provides the `bru` command for running collections in CI.
 
 ## Why use it in the API Lifecycle?
 
-* **Git-native API Collections**: Stores API collections as plain-text files within a repository, allowing version control, diffing, and merging using standard Git workflows.
-* **Multi-protocol Support**: Supports interaction with various API types including REST, GraphQL, gRPC, and Websocket.
-* **Local-first Operation**: Operates entirely on the local machine, ensuring data privacy and preventing cloud syncing or external data exposure.
-* **Extensibility**: Offers an open-source architecture that allows for customization and integration with existing developer toolchains.
-* **Environment Management**: Supports separate .env files and environments for managing variables and configurations.
-* **Request Grouping**: Allows users to organize multiple requests into folders and execute them sequentially.
+* **Collections in Git**: Each request is a file, so changes to an API collection are reviewed, diffed and merged in the same pull request as the endpoint change.
+* **Local-only data**: Requests, responses and credentials never pass through a vendor's servers, which matters when the API carries regulated data.
+* **Secrets kept out of the repository**: Variables marked secret are encrypted locally and never written to the environment file, so environment files can be committed safely.
+* **Scripting and tests**: Pre-request and post-response scripts and test assertions run in the app and in the CLI.
+* **CLI runs**: `bru run` executes a collection or folder with `--env`, `--env-var` overrides, CSV or JSON data files, tag filters, and JSON, JUnit or HTML reports.
 
 ## Best Practices
 
-* Store API collections alongside related code in Git to leverage version control for collaboration and change tracking.
-* Utilize the local-first nature of the tool to maintain data privacy and security, as no data is synced to the cloud.
-* Integrate Bruno into existing IDEs and terminals for a cohesive development experience.
-* Use the plain-text file storage for collections to enable easy review and diffing of API definitions in pull requests.
-* Employ the variable handling capabilities to manage different environments (development, sandbox) effectively.
+* Keep the collection in a `bruno/` (or similar) directory in the service's repository and update it in the same pull request that changes the endpoint. A collection maintained in a separate repository drifts from the API, because nothing forces the two to change together.
+* Mark tokens, API keys and passwords as secret variables, or read them from a `.env` file that is in `.gitignore`. Never commit a real credential to an environment file; once it is in Git history it has to be rotated. See [Token Lifecycle](/guides/token-lifecycle).
+* Run the collection in CI with `bru run --env ci --reporter-junit results.xml` so failures show up as test results, and inject per-pipeline values with `--env-var` rather than editing files.
+* Write assertions against the contract: the status code, the [`Content-Type`](/headers/content-type) and the fields clients use. Asserting whole response bodies makes tests fail on every timestamp and generated ID.
+* Chain requests by capturing values in post-response scripts (for example the `id` from a [`201 Created`](/status-codes/201) or the [`Location`](/headers/location) header) instead of hard-coding IDs that only exist in one environment.
+* Tag requests (`smoke`, `destructive`) and use `--tags` and `--exclude-tags`, so a smoke run against production never executes a request that deletes data.
+* The CLI runs scripts in a restricted sandbox by default; pass `--sandbox=developer` only for collections you trust, because it allows scripts broader access to the machine.

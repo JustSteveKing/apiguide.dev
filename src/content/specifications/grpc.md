@@ -1,15 +1,21 @@
 ---
-title: gRPC & Protocol Buffers
-description: A high-performance, open-source universal RPC framework using Protocol Buffers as its interface definition and serialization language.
-currentVersion: "proto3 (IDL) / HTTP/2"
+title: gRPC
+description: A high-performance, open-source RPC framework that carries Protocol Buffers messages over HTTP/2, with generated clients and servers, four streaming patterns and its own status codes.
+currentVersion: "gRPC over HTTP/2 (PROTOCOL-HTTP2)"
 officialUrl: https://grpc.io/
 ---
 
+## What is gRPC?
+
 gRPC is a modern open-source high-performance Remote Procedure Call (RPC) framework developed by Google in 2015. It can run in any environment, connecting services in and across data centers with pluggable support for load balancing, tracing, health checking, and authentication.
 
-By default, gRPC uses **Protocol Buffers (Protobuf)** as its Interface Definition Language (IDL) and underlying message serialization format. It operates over **HTTP/2** as its transport protocol, offering significant latency improvements over traditional HTTP/1.1 JSON-based communication.
+By default, gRPC uses **[Protocol Buffers](/specifications/protocol-buffers)** as its Interface Definition Language (IDL) and underlying message serialization format. It operates over **[HTTP/2](/specifications/http2)** as its transport protocol, offering significant latency improvements over traditional HTTP/1.1 JSON-based communication.
 
-## Architecture & Transport Flow
+The wire protocol is defined in the gRPC project's own "gRPC over HTTP2" document (`PROTOCOL-HTTP2.md` in the grpc/grpc repository), which carries no version number. Each language implementation is released and versioned separately, so the protocol document, not a release number, is the thing to pin to.
+
+---
+
+## 1. Architecture & Transport Flow
 
 Unlike REST, where communication centers around CRUD operations on resources over resource URLs, gRPC models communication as direct function invocations on remote servers. 
 
@@ -24,9 +30,9 @@ Communication between a gRPC client and server follows a low-latency, binary tra
 
 ---
 
-## Protocol Buffers Schema Definition
+## 2. Service Definition
 
-In gRPC, the service interface and payload structures are defined inside a `.proto` text file. The gRPC compiler (`protoc`) uses this file to generate client stubs and server handlers in various languages.
+In gRPC, the service interface and payload structures are defined inside a `.proto` text file. The Protocol Buffers compiler, `protoc`, does not generate gRPC code by itself: it generates message types, and a gRPC plugin for each language generates the client stubs and server handlers (for Go, `protoc-gen-go` for messages and `protoc-gen-go-grpc` for the service). The [Protocol Buffers](/specifications/protocol-buffers) page covers the IDL itself, Editions, the wire format and the rules for evolving a schema.
 
 ### Schema Grammar (`service.proto`)
 
@@ -78,7 +84,7 @@ message Post {
 
 ---
 
-## gRPC Communication Patterns
+## 3. gRPC Communication Patterns
 
 gRPC natively supports four distinct streaming styles over HTTP/2 connections:
 
@@ -96,7 +102,7 @@ Both sides send a sequence of messages using an active read-write stream. The tw
 
 ---
 
-## Comparison: REST (OpenAPI) vs. gRPC
+## 4. Comparison: REST (OpenAPI) vs. gRPC
 
 | Feature | HTTP REST (OpenAPI) | gRPC (Protocol Buffers) |
 | :--- | :--- | :--- |
@@ -105,13 +111,13 @@ Both sides send a sequence of messages using an active read-write stream. The tw
 | **Contract** | Optional (OpenAPI schemas). | Mandatory interface definition (`.proto` file). |
 | **Streaming** | Limited (SSE or WebSockets fallback). | Native bidirectional streaming support. |
 | **Payload Size** | Larger (verbose text formatting). | Extremely small (packed binary compilation). |
-| **Code Generation** | Optional (via OpenAPI generators). | Built-in via `protoc` compiler integration. |
+| **Code Generation** | Optional (via OpenAPI generators). | Standard workflow: `protoc` plus a per-language gRPC plugin. |
 
 ---
 
 ## Best Practices in gRPC Design
 
-1. **Maintain Backwards Compatibility**: Never change the field tag numbers (e.g., `string name = 2;`) of existing properties. Renaming fields is safe for wire compatibility as long as type signatures and field tags remain intact, but it still breaks anything that depends on the field name directly: proto reflection, JSON transcoding, and generated code call sites all need updating too.
+1. **Maintain Backwards Compatibility**: Never change the field numbers (e.g., `string name = 2;`) of existing properties. Renaming fields is safe for wire compatibility as long as type signatures and field tags remain intact, but it still breaks anything that depends on the field name directly: proto reflection, JSON transcoding, and generated code call sites all need updating too. The full rules are on the [Protocol Buffers](/specifications/protocol-buffers) page.
 2. **Utilize Standard Status Codes**: gRPC does not use HTTP status codes directly. It uses a specific set of **17 gRPC codes** (e.g. `OK`, `NOT_FOUND`, `ALREADY_EXISTS`, `UNAUTHENTICATED`) returned in HTTP/2 trailers.
 3. **Use Keepalives for Long-Lived Streams**: Configure keepalive pings to detect half-closed TCP connections and keep load balancers from tearing down idle HTTP/2 multiplexed connections.
-4. **Design for Idempotency**: Use `option idempotency_level = IDEMPOTENT;` metadata annotation inside the method definition to signal safe auto-retry behaviors to client libraries.
+4. **Configure Retries Explicitly**: gRPC retries are configured per method in the service config (`retryPolicy`, with maximum attempts, backoff and the status codes that trigger a retry such as `UNAVAILABLE`). Retries are enabled by default but there is no default retry policy, so without one gRPC only retries transparently, for RPCs that failed in low-level races. Protobuf's `idempotency_level` method option records intent, but it is not how gRPC retries are switched on: only add a retry policy to methods that are actually safe to repeat.

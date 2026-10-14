@@ -14,6 +14,8 @@ The JSON variant uses the media type:
 Content-Type: application/hal+json
 ```
 
+HAL has never become a standard. Its specification is an individual Internet-Draft, draft-kelly-json-hal-11, published on 19 October 2023 with an intended status of Informational. It expired on 21 April 2024 without being replaced, and the IETF datatracker lists it as an expired draft. `application/hal+json` is not in the IANA media types registry either; the registry has the vendor-tree `application/vnd.hal+json` instead. Treat the draft as a stable description of a convention, not an RFC you can cite as a standard, and pick one of the two media types and document it.
+
 HAL models two things on top of an ordinary resource: **links** (via the `_links` property) and **embedded resources** (via the `_embedded` property).
 
 ---

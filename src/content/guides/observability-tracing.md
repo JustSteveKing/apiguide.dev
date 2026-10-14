@@ -20,11 +20,11 @@ Log in a machine-parseable format (JSON), not free text. Structured logs can be 
 {
   "timestamp": "2026-07-10T09:00:00.123Z",
   "level": "error",
-  "message": "payment declined",
+  "message": "upstream payment provider timed out",
   "request_id": "b7e2c1",
   "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
   "user_id": 7,
-  "status": 402,
+  "status": 504,
   "duration_ms": 43
 }
 ```
@@ -55,14 +55,14 @@ RED tells you the API is slow; USE tells you the database CPU is the reason.
 
 ## 3. W3C Trace Context
 
-To trace a request across service boundaries, context must propagate with it. The W3C Trace Context standard defines two headers so tracing works across vendors and languages.
+To trace a request across service boundaries, context must propagate with it. The [W3C Trace Context](/specifications/trace-context) standard defines two headers so tracing works across vendors and languages.
 
 ```http
 traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
-tracestate: vendorA=t61rcWkgMzE,vendorB=xyz
+tracestate: rojo=00f067aa0ba902b7,congo=t61rcWkgMzE
 ```
 
-The `traceparent` header carries four dash-separated fields: version, a 16-byte **trace-id** (constant for the whole request), an 8-byte **parent-id** (the calling span), and trace flags (such as the sampled bit). `tracestate` carries optional vendor-specific data. Every service must read these headers, create its own child span, and pass an updated `traceparent` downstream.
+The [`traceparent`](/headers/traceparent) header carries four dash-separated fields: version, a 16-byte **trace-id** (constant for the whole request), an 8-byte **parent-id** (the calling span), and trace flags (such as the sampled bit). [`tracestate`](/headers/tracestate) carries optional vendor-specific data as a list of `key=value` entries, with keys in lowercase. Every service must read these headers, create its own child span, and pass an updated `traceparent` downstream.
 
 ---
 
@@ -75,7 +75,7 @@ HTTP/1.1 200 OK
 X-Request-Id: b7e2c1
 ```
 
-If a client supplies a request ID, honour it; otherwise generate one at the edge. Propagate the same ID (and the `trace_id`) into every log line and downstream call. This is the thread that stitches disparate logs into a single story.
+If a client supplies a request ID, honor it; otherwise generate one at the edge. Propagate the same ID (and the `trace_id`) into every log line and downstream call. This is the thread that stitches disparate logs into a single story.
 
 ---
 
@@ -89,12 +89,12 @@ Traces answer questions metrics cannot: not just "the p99 is 800ms" but "the p99
 
 ## 6. OpenTelemetry
 
-OpenTelemetry (OTel) is the vendor-neutral CNCF standard for generating and exporting logs, metrics, and traces. It provides SDKs for most languages and a Collector that receives, processes, and forwards telemetry to any backend.
+[OpenTelemetry](/specifications/opentelemetry) (OTel) is the vendor-neutral CNCF standard for generating and exporting logs, metrics, and traces. It provides SDKs for most languages and a Collector that receives, processes, and forwards telemetry to any backend over its wire protocol, OTLP.
 
 Adopting OTel means:
 
 - **No vendor lock-in**: instrument once, switch backends by reconfiguring the exporter.
 - **Automatic propagation**: its instrumentation handles W3C Trace Context for you.
-- **Unified signals**: logs, metrics, and traces share consistent attributes, so a `trace_id` in a log links straight to the trace.
+- **Unified signals**: logs, metrics, and traces share consistent attributes (the semantic conventions name them, such as `http.request.method` and `http.response.status_code`), so a `trace_id` in a log links straight to the trace.
 
 Instrument at the framework layer for broad coverage, add manual spans around business-critical operations, and sample intelligently so trace volume stays affordable at scale.

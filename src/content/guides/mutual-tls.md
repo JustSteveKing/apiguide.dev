@@ -33,7 +33,7 @@ mTLS extends the standard TLS handshake with client certificate exchange.
 3. The client sends a `CertificateVerify` message, a digital signature proving it holds the private key for that certificate.
 4. The server validates the client certificate against its trusted CA store, checking the chain, expiry, and optionally revocation.
 
-This adds roughly 1-2 milliseconds of latency over standard TLS. That overhead can be amortized with connection pooling, keep-alives, and TLS session resumption.
+The extra messages and the certificate validation add cost to every full handshake. That overhead can be amortized with connection pooling, keep-alives, and TLS session resumption.
 
 ---
 
@@ -98,7 +98,7 @@ Because handshake failures surface as opaque errors like "TLS handshake failed,"
 
 The two are not mutually exclusive; they solve different problems.
 
-**Bearer tokens** (such as OAuth 2.0 access tokens) are simple, scalable, and carry fine-grained scopes, but they are vulnerable to theft and replay, since anyone holding a valid token can use it, because the resource server cannot verify the sender.
+**Bearer tokens** (such as [OAuth 2.0](/specifications/oauth2) access tokens) are simple, scalable, and carry fine-grained scopes, but they are vulnerable to theft and replay, since anyone holding a valid token can use it, because the resource server cannot verify the sender.
 
 **mTLS** provides strong transport-layer machine identity but offers coarse, certificate-level access control and carries more operational complexity.
 

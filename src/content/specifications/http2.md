@@ -15,7 +15,7 @@ Because it keeps the same semantics, an application generally does not need to c
 
 ---
 
-## Binary framing
+## 1. Binary framing
 
 The foundation of HTTP/2 is the binary framing layer. Instead of the newline-delimited text of HTTP/1.1, everything is encoded into binary frames with a fixed nine-octet header describing the frame's length, type, flags, and the stream it belongs to.
 
@@ -29,13 +29,13 @@ Key frame types include:
 | WINDOW_UPDATE  | Implements flow control                             |
 | RST_STREAM     | Abruptly terminates a single stream                 |
 | GOAWAY         | Initiates connection shutdown                        |
-| PRIORITY       | Signals the relative priority of a stream           |
+| PRIORITY       | Deprecated by RFC 9113; formerly stream priority    |
 
 An HTTP request or response becomes a sequence of frames on a stream, which the peer reassembles into a complete message.
 
 ---
 
-## Multiplexed streams
+## 2. Multiplexed streams
 
 A *stream* is an independent, bidirectional sequence of frames within one connection, identified by a numeric stream identifier. Because each frame is tagged with its stream ID, frames from many streams can be interleaved on a single connection and demultiplexed at the other end.
 
@@ -53,7 +53,7 @@ HTTP/2 uses pseudo-header fields, prefixed with a colon, to convey request and r
 
 ---
 
-## HPACK header compression
+## 3. HPACK header compression
 
 HTTP requests carry many repetitive headers, cookies, user agents, and accept lists that change little between requests. HTTP/2 compresses them with HPACK, defined in RFC 7541.
 
@@ -61,15 +61,17 @@ HPACK combines a static table of common header fields, a dynamic table that both
 
 ---
 
-## Server push and prioritization
+## 4. Server push and prioritization
 
-HTTP/2 introduced *server push*, which let a server proactively send responses it anticipated the client would need, using PUSH_PROMISE frames. In practice push proved difficult to use effectively, often sending resources the client already had cached, and it has been largely deprecated and disabled by major browsers and servers. RFC 9113 documents it while noting these deployment realities.
+HTTP/2 introduced *server push*, which lets a server send a response, paired with a synthetic "promised" request in a PUSH_PROMISE frame, before the client asks for it. RFC 9113 still specifies push (Section 8.4), but says plainly that "in practice, server push is difficult to use effectively", because the server has to predict what the client will request while accounting for caching, content negotiation and user behavior. A client opts out by sending `SETTINGS_ENABLE_PUSH` set to 0; after that is acknowledged, a PUSH_PROMISE is a connection error. Browsers have opted out: Chrome disabled push by default in Chrome 106, with other Chromium-based browsers following.
+
+Do not build on server push. To get the client fetching critical resources early, send [`103 Early Hints`](/status-codes/103) with [`Link`](/headers/link) `rel=preload` headers instead: the client keeps the decision, so it skips anything it already has cached.
 
 *Stream prioritization* allowed a client to express the relative importance of streams so a server could allocate bandwidth accordingly. The original dependency-tree priority scheme was complex and inconsistently implemented; RFC 9113 deprecates it in favor of the simpler scheme in RFC 9218 (Extensible Prioritization).
 
 ---
 
-## Head-of-line blocking at the TCP layer
+## 5. Head-of-line blocking at the TCP layer
 
 HTTP/2 solves head-of-line blocking at the HTTP layer, but a subtler problem remains at the transport layer. All streams share one TCP connection, and TCP guarantees in-order delivery of its byte stream. If a single TCP segment is lost, TCP holds back all subsequent data until the loss is retransmitted, even data belonging to other, unaffected streams.
 
@@ -77,7 +79,7 @@ The result is that on lossy networks, one dropped packet can stall every multipl
 
 ---
 
-## Comparing HTTP/1.1, HTTP/2, and HTTP/3
+## 6. Comparing HTTP/1.1, HTTP/2, and HTTP/3
 
 | Aspect                  | HTTP/1.1              | HTTP/2                     | HTTP/3                        |
 | ----------------------- | -------------------- | ------------------------- | ---------------------------- |

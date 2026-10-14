@@ -3,7 +3,7 @@ title: Method Not Allowed
 statusCode: 405
 statusText: Method Not Allowed
 category: client-error
-relatedCodes: ['resource-not-found']
+relatedCodes: ['resource-not-found', 'not-implemented']
 publishedDate: 2025-12-22
 ---
 
@@ -15,7 +15,7 @@ HTTP specifications require that a 405 response must include an `Allow` header l
 
 ## When not to use it
 
-Do not use 405 if the URI itself does not exist in the routing table (use `resource-not-found` / 404 instead).
+Do not use 405 if the URI itself does not exist in the routing table (use `resource-not-found` / 404 instead). If the server does not recognize or implement the method for any resource at all, use `not-implemented` (501).
 
 ## Example response
 

@@ -33,27 +33,26 @@ Each client (or key) has a bucket that holds a fixed number of tokens. Tokens ar
 
 ## 2. Communicating Limits with Headers
 
-Clients should never have to guess how close they are to a limit. The `RateLimit` header fields (from the IETF draft standard) expose the current state of the limit on every response, not just when it's exceeded:
+Clients should never have to guess how close they are to a limit. The IETF Internet-Draft `draft-ietf-httpapi-ratelimit-headers` defines two fields that expose the limit on every response, not just when it's exceeded. It is still a draft, so check the current revision before you depend on details:
 
-* **[`RateLimit-Limit`](/headers/ratelimit-limit)**: The maximum number of requests allowed in the current window.
-* **[`RateLimit-Remaining`](/headers/ratelimit-remaining)**: How many requests the client has left before hitting the limit.
-* **[`RateLimit-Reset`](/headers/ratelimit-reset)**: Seconds until the window resets and the count returns to full.
+* **[`RateLimit-Policy`](/headers/ratelimit-policy)**: The policies that apply, each named and given a quota (`q`) and a window in seconds (`w`). This describes the rules and should stay stable across responses.
+* **[`RateLimit`](/headers/ratelimit)**: The live state per policy: the remaining quota (`r`) and the seconds within which it applies (`t`).
 
 ```http
 HTTP/1.1 200 OK
-RateLimit-Limit: 100
-RateLimit-Remaining: 42
-RateLimit-Reset: 37
+RateLimit-Policy: "default";q=100;w=60
+RateLimit: "default";r=42;t=37
 ```
 
-When a client does exceed the limit, the response should also include [`Retry-After`](/headers/retry-after), telling the client exactly how long to wait before trying again rather than leaving it to guess and retry immediately:
+Earlier revisions of the draft used three separate fields, [`RateLimit-Limit`](/headers/ratelimit-limit), [`RateLimit-Remaining`](/headers/ratelimit-remaining) and [`RateLimit-Reset`](/headers/ratelimit-reset), modeled on the older `X-RateLimit-*` convention. Use `RateLimit` and `RateLimit-Policy` for new APIs; keep the legacy names only while existing clients still read them.
+
+When a client does exceed the limit, the response should also include [`Retry-After`](/headers/retry-after), telling the client exactly how long to wait before trying again rather than leaving it to guess and retry immediately. Clients give `Retry-After` precedence, so keep it no earlier than the end of the `t` window:
 
 ```http
 HTTP/1.1 429 Too Many Requests
 Retry-After: 37
-RateLimit-Limit: 100
-RateLimit-Remaining: 0
-RateLimit-Reset: 37
+RateLimit-Policy: "default";q=100;w=60
+RateLimit: "default";r=0;t=37
 ```
 
 ---
@@ -78,3 +77,5 @@ It's worth being precise about which status code a rate limiter should return, b
 * **[`503 Service Unavailable`](/status-codes/503)**: The system as a whole is overloaded or shedding load, independent of any individual client's behavior. This applies when a server is protecting itself from aggregate load, for instance admission control during a traffic spike, rather than enforcing a per-client quota.
 
 Both responses should include `Retry-After` so the client knows how long to back off, but conflating the two makes it harder for clients to distinguish "you personally need to slow down" from "the whole system is struggling right now," which matters when they're deciding whether to retry the same client differently than others.
+
+A short window that protects capacity and a plan allowance that runs for a whole billing period are both `429`, but the client must react to them differently: back off and retry in seconds, or stop and tell a human. Tell them apart with the problem `type`, using [rate limit exceeded](/errors/rate-limit-exceeded) for the first and [quota exceeded](/errors/quota-exceeded) for the second. [Quotas and metering](/guides/quotas-metering) covers the billing-period side.

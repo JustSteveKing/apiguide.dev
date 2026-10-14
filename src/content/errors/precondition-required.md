@@ -9,7 +9,7 @@ publishedDate: 2026-10-08
 
 ## When to use it
 
-Use 428 Precondition Required, defined in RFC 6585, when the server requires a state-changing request to be conditional and the client sent it without any precondition. In practice that means a `PUT`, `PATCH` or `DELETE` that arrives with neither `If-Match` nor `If-Unmodified-Since` on a resource where the server enforces optimistic concurrency control.
+Use 428 Precondition Required, defined in RFC 6585, when the server requires a state-changing request to be conditional and the client sent it without any precondition. In practice that means a `PUT`, `PATCH` or `DELETE` that arrives with neither `If-Match` nor [`If-Unmodified-Since`](/headers/if-unmodified-since) on a resource where the server enforces optimistic concurrency control.
 
 The point is to prevent lost updates. Without a precondition the server has no way to tell whether the client saw the current state before writing, so an unconditional write would silently overwrite whatever another actor changed in the meantime. Rejecting it with 428 forces the client to read the resource, take its `ETag`, and state which version it intends to replace. RFC 6585 asks that the response explain how to resubmit the request successfully, which is what the `detail` member is for.
 

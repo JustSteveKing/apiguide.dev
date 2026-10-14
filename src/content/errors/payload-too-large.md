@@ -1,15 +1,15 @@
 ---
 title: Payload Too Large
 statusCode: 413
-statusText: Payload Too Large
+statusText: Content Too Large
 category: client-error
-relatedCodes: ['malformed-request-body', 'unsupported-media-type']
+relatedCodes: ['malformed-request-body', 'unsupported-media-type', 'uri-too-long', 'request-header-fields-too-large', 'length-required']
 publishedDate: 2026-01-27
 ---
 
 ## When to use it
 
-Use 413 Payload Too Large when the client sends a request body (often a file upload or bulk records batch) that exceeds the maximum size limit configured on the server or application.
+Use 413 Content Too Large (formerly "Payload Too Large") when the client sends a request body (often a file upload or bulk records batch) that exceeds the maximum size limit configured on the server or application.
 
 This informs the client that their request was rejected solely because of its size, and that they should slice the request into smaller chunks or compress the payload.
 

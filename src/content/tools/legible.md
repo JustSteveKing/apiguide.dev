@@ -30,7 +30,7 @@ legible  petstore.json, OpenAPI 3.0.4, 19 operations
   score             65  agents will struggle
 ```
 
-Disclosure: legible is written by the maintainer of this site. It is listed here because it occupies a category nothing else on this page covers, and the comparison below is meant to be read sceptically on that basis.
+Disclosure: legible is written by the maintainer of this site. It is listed here because it occupies a category nothing else on this page covers, and what follows should be read skeptically on that basis.
 
 ---
 
@@ -58,7 +58,7 @@ Disclosure: legible is written by the maintainer of this site. It is listed here
 
 ## Best Practices
 
-* **Run a validator as well.** legible is not one. Pair it with a general OpenAPI linter such as [Spectral](/tools/design-documentation/spectral-stoplight) or vacuum, which check different things.
+* **Run a validator as well.** legible is not one. Pair it with a general OpenAPI linter such as [Spectral](/tools/design-documentation/spectral-stoplight) or [vacuum](/tools/design-documentation/vacuum), which check different things.
 * **Gate on the score, not on zero findings.** `fail-under` on a number you are already above stops regressions without demanding a clean sheet on day one. Raise it as the score climbs.
 * **Record why a rule is ignored.** The config takes a `reason` per ignore. An ignore without one is indistinguishable from an oversight six months later.
 * **Read the score by category.** A document can score well overall and still be unusable because `descriptions` is low, which is the category a model depends on most when choosing between operations.

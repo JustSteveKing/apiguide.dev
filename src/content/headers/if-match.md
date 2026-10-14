@@ -14,10 +14,11 @@ The `If-Match` request header makes the request conditional. The server will per
 
 * **Prevents lost updates**: Forces clients to check if the resource has been modified since they last read it.
 * **Handle failures**: If the ETags do not match, abort the update and return a `412 Precondition Failed`.
+* **Strong comparison only**: RFC 9110 requires the origin to compare `If-Match` values with the strong comparison function, so a weak tag such as `W/"3a84e27f01"` never matches. Use strong ETags on any resource that accepts conditional writes.
 
 ## Examples
 
 ```http
 PATCH /v1/leads/lead_123 HTTP/1.1
-If-Match: "w/3a84e27f01"
+If-Match: "3a84e27f01"
 ```

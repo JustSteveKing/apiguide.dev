@@ -8,7 +8,7 @@ category: "agents"
 
 Every API has two kinds of consumer. One is a person, who reads your documentation, infers what you meant, tries something, gets confused, and eventually asks. The other is an autonomous agent, which receives your specification flattened into a set of tool definitions and then acts on it. The difference that matters is not intelligence. Only one of them can ask a follow-up question.
 
-That makes an agent the strictest consumer your API will ever have, and a useful one to design for. A human reads endpoint one, meets an inconsistency at endpoint fifty, and adapts. An agent reads endpoint one and *generalises*, so an inconsistency is no longer an aesthetic complaint. It produces a confidently wrong call. A description that is vague becomes a wrong parameter. An error returned as `200 OK` becomes a success. A retry with no idempotency guarantee becomes a duplicate charge.
+That makes an agent the strictest consumer your API will ever have, and a useful one to design for. A human reads endpoint one, meets an inconsistency at endpoint fifty, and adapts. An agent reads endpoint one and *generalizes*, so an inconsistency is no longer an aesthetic complaint. It produces a confidently wrong call. A description that is vague becomes a wrong parameter. An error returned as `200 OK` becomes a success. A retry with no idempotency guarantee becomes a duplicate charge.
 
 The useful consequence is that almost nothing here is new. These are the same practices that make an API pleasant for people; agents simply remove the tolerance that let you skip them. Work through the checklist against an API you already have. Each row states what to check, why it matters to a caller that cannot ask, and where the full treatment lives.
 
@@ -45,7 +45,7 @@ The fastest way to make an API hard to call is to expose the schema. Table-shape
 | One canonical path per resource, with aliases removed or documented as aliases | Two paths with identical descriptions force an arbitrary choice, and half of those choices will be wrong |
 | Nesting stops at one level | `/orders/{id}/refunds` is navigable; three levels deep is a guess about hierarchy |
 | Identifiers are opaque and stable | An identifier a caller can construct is one it will construct incorrectly |
-| Naming, casing and pluralisation are uniform across every endpoint | This is the whole of it: consistency is what lets a caller generalise from the first endpoint to the fiftieth. It is also why a slightly imperfect convention applied everywhere beats a perfect one applied in places |
+| Naming, casing and pluralization are uniform across every endpoint | This is the whole of it: consistency is what lets a caller generalize from the first endpoint to the fiftieth. It is also why a slightly imperfect convention applied everywhere beats a perfect one applied in places |
 | A multi-step operation is exposed as one operation where it is really one intention | Otherwise the caller orchestrates a transaction it cannot roll back |
 
 See [resource naming](/guides/resource-naming).
@@ -66,7 +66,7 @@ An error is not the absence of a response. It is a documented outcome, and for a
 | The response says what to do next, not only what went wrong | "Retry after 30 seconds" and "this will never succeed" are different instructions |
 | Internals never leak: no stack traces, no SQL, no internal hostnames | A verified caller is still not a trusted one |
 
-The resolvable `type` is the item most often skipped, and the cheapest to fix. Either point at a published catalogue, where every error in [the error reference](/errors) has a stable URI such as [idempotency key conflict](/errors/idempotency-key-conflict) or [validation failed](/errors/validation-failed), or host your own under a path like `/problems/{type}` and keep a page per type. What matters is that the URI resolves to something that explains the error, rather than being a namespaced string that 404s.
+The resolvable `type` is the item most often skipped, and the cheapest to fix. Either point at a published catalog, where every error in [the error reference](/errors) has a stable URI such as [idempotency key conflict](/errors/idempotency-key-conflict) or [validation failed](/errors/validation-failed), or host your own under a path like `/problems/{type}` and keep a page per type. What matters is that the URI resolves to something that explains the error, rather than being a namespaced string that 404s.
 
 See [error handling](/guides/error-handling) and [input validation](/guides/input-validation).
 
@@ -80,9 +80,9 @@ A caller that does not get a response does not know whether the write happened. 
 | --- | --- |
 | Unsafe writes accept an `Idempotency-Key` | Without one, "retry" and "duplicate" are the same request |
 | The stored key is fingerprinted against the request body | Otherwise the same key with different contents silently returns the first result, which is a harder bug than a duplicate |
-| A reused key with a different body returns a conflict, not a success | See [idempotency key conflict](/errors/idempotency-key-conflict) |
+| A reused key with a different body is rejected, not treated as a success | See [idempotency key conflict](/errors/idempotency-key-conflict) |
 | The retention window for keys is documented | A caller cannot reason about a window it does not know |
-| `GET`, `PUT` and `DELETE` are genuinely safe or idempotent as HTTP specifies | Free interoperability, and callers assume it whether or not you honoured it |
+| `GET`, `PUT` and `DELETE` are genuinely safe or idempotent as HTTP specifies | Free interoperability, and callers assume it whether or not you honored it |
 | Conditional requests are available for read-modify-write | `ETag` and `If-Match` beat inventing an optimistic-concurrency scheme |
 
 One caveat worth stating, because the rule is often applied mechanically: an endpoint whose `POST` is a pure function (validate this document, convert this payload, look up this identifier) has nothing to make idempotent, because calling it twice already produces the same result and changes no state. Adding a key there is ceremony. The check is not "does every write have a key" but "do you know which of your writes have effects".
@@ -130,7 +130,7 @@ Everything above applies to the events you push, and this is the half most teams
 | --- | --- |
 | The payload is signed, and the signature covers the raw body | Signing a re-serialized payload is the most common implementation bug in the whole subject |
 | The signature scheme is documented well enough to implement without asking | Receivers get this wrong in ways that fail intermittently |
-| Every delivery carries a unique, stable event identifier | It is the key a receiver dedupes on, and dedupe is the only defence that neutralises retries, replays and at-least-once delivery at once |
+| Every delivery carries a unique, stable event identifier | It is the key a receiver dedupes on, and dedupe is the only defense that neutralizes retries, replays and at-least-once delivery at once |
 | Every payload carries an explicit event `type` | Two payloads that are otherwise just fields over the same object must not be interchangeable, because a caller must never be able to present one as the other |
 | A change to a payload is a new event type, not a quiet mutation | Receivers parse these; a silently added meaning is a silently broken receiver |
 | The retry schedule is published: how many attempts, what backoff, when you give up | Without it a receiver cannot distinguish "still coming" from "lost", and cannot size its own replay window |
@@ -189,7 +189,7 @@ Every item above is a rule someone can agree with and then not apply. A conventi
 
 | Check | Why it matters |
 | --- | --- |
-| The specification is linted in CI, and the build fails on regression | The specification is the artefact the caller consumes, so it is the artefact to gate |
+| The specification is linted in CI, and the build fails on regression | The specification is the artifact the caller consumes, so it is the artifact to gate |
 | The lint covers descriptions, naming, examples and error shapes, not only schema validity | A document can be valid OpenAPI and still be unusable. Validators already exist; this is a different check |
 | Each rule reports why it fired, not only that it did | A report that does not explain itself is noise a team learns to skip |
 | New endpoints are checked against this list before they ship | Retrofitting consistency across fifty endpoints costs far more than applying it to one |

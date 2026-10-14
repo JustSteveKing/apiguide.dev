@@ -12,12 +12,12 @@ A token grants access, so its greatest risk is the window between issuance and e
 
 ## 1. Access and Refresh Tokens
 
-Modern API security rests on a dual-token strategy defined by OAuth 2.0 (RFC 6749):
+Modern API security rests on a dual-token strategy defined by [OAuth 2.0](/specifications/oauth2) (RFC 6749):
 
-* **Access tokens** are short-lived credentials presented on every request to a protected resource. Recommended lifetimes are short, roughly **5 to 60 minutes**, with 5-15 minutes preferred for sensitive systems and a 24-hour ceiling for single-page apps.
-* **Refresh tokens** are longer-lived credentials whose only job is to obtain new access tokens without forcing the user to re-authenticate. Sensitive applications typically cap these at **7 to 30 days**.
+* **Access tokens** are short-lived credentials presented on every request to a protected resource. No RFC fixes a lifetime; RFC 9700 leaves it to the authorization server. Set it in minutes, not hours or days: the access token is usually checked locally without a call back to the server, so its lifetime is how long a stolen or revoked token keeps working.
+* **Refresh tokens** are longer-lived credentials whose only job is to obtain new access tokens without forcing the user to re-authenticate. Expire them after a period of client inactivity, as RFC 9700 recommends, and set an absolute maximum after which the user must sign in again. The more sensitive the data, the shorter both limits should be.
 
-The separation limits damage: a stolen access token is useless once it expires minutes later, while the refresh token stays protected server-side. RFC 9700 (January 2025) provides updated guidance on choosing these lifetimes.
+The separation limits damage: a stolen access token is useless once it expires minutes later, while the refresh token is only ever sent to the authorization server, never to resource servers (RFC 6749 Section 1.5). RFC 9700 (January 2025), the OAuth 2.0 security best current practice, also requires refresh tokens issued to public clients to be sender-constrained or rotated.
 
 Access tokens are frequently **JSON Web Tokens** (JWT, RFC 7519), carrying claims such as `exp` (expiration), `iat` (issued-at), and `jti` (a unique ID that helps prevent replay). See [JWT](/specifications/jwt) for the token format itself.
 
@@ -124,7 +124,7 @@ Zero-downtime rotation follows a phased overlap:
 3. Wait out a grace period until all tokens signed with the old key have expired.
 4. Remove the old public key from the JWKS.
 
-Because both keys are published during the transition, verifiers accept tokens signed with either, so there is no service disruption. Cache the JWKS with a short TTL (10-15 minutes), refresh on verification failure, and warm the cache on startup. For signing, EdDSA and ES256 are preferred over RS256; symmetric HS256 is discouraged for multi-party verification.
+Because both keys are published during the transition, verifiers accept tokens signed with either, so there is no service disruption. Cache the JWKS with a short TTL, refresh on verification failure, and warm the cache on startup. For signing, EdDSA and ES256 are preferred over RS256; symmetric HS256 is discouraged for multi-party verification.
 
 ---
 
@@ -141,7 +141,7 @@ Either mechanism means an intercepted token alone is insufficient. The attacker 
 
 ## 8. PKCE and Behavioral Monitoring
 
-**Proof Key for Code Exchange (PKCE, RFC 7636)** prevents authorization-code interception, a common precursor to token theft, by requiring a secret `code_verifier` at the token-exchange step that only the legitimate client holds. Once an extension for public clients, PKCE is **mandatory for all client types in OAuth 2.1**, which also removes the implicit and password grants and forbids bearer tokens in URLs.
+**Proof Key for Code Exchange (PKCE, RFC 7636)** prevents authorization-code interception, a common precursor to token theft, by requiring a secret `code_verifier` at the token-exchange step that only the legitimate client holds. Once an extension for public clients, PKCE is **required by default for every client in OAuth 2.1**, which also removes the implicit and password grants and forbids bearer tokens in URLs. OAuth 2.1 is still an Internet-Draft (`draft-ietf-oauth-v2-1-16` at the time of writing), and it keeps one narrow exception: an authorization server may skip enforcing PKCE for a confidential client when it has reasonable assurance that the client implements the OpenID Connect `nonce` mechanism properly. Even then the draft recommends PKCE, so use it for every client and do not build on the exception.
 
 No cryptographic control detects a token being *actively abused* once stolen. **Behavioral monitoring** fills that gap: establish baselines for normal token use and flag deviations such as impossible travel (use from distant locations in an unrealistic timeframe), abnormal request volumes, or unexpected network origins. This is often the only signal that catches a compromised token that otherwise passes every validation check.
 
