@@ -1,0 +1,64 @@
+---
+// An interactive figure built with the Anatomy kit (src/figures/kit). The
+// static art is server-rendered; the live code for each figure is loaded only
+// on pages that show it, by the <iso-figure> element below.
+import { figures, type FigureName } from "@/figures";
+import "@/figures/kit/iso.css";
+import "@/figures/figures.css";
+
+interface Props {
+  name: FigureName;
+  fig?: string;
+}
+
+const { name, fig = "Fig 1" } = Astro.props;
+const entry = figures[name];
+---
+
+<iso-figure class="iso block" data-figure={name}>
+  <figure class="iso-figure">
+    <div class="iso-plate">
+      <div class="iso-plate-corners" aria-hidden="true">
+        <span class="iso-plate-corner" data-corner="fig">{fig}</span>
+        <span class="iso-plate-corner" data-corner="title">{entry.title}</span>
+        <span class="iso-plate-corner" data-corner="hint">{entry.hint}</span>
+      </div>
+      <div class="iso-stage" tabindex="0" role="group" aria-label={`${entry.title} figure. Keys 1 to 4 send a request; 0 resets.`} set:html={entry.art} />
+      <span class="iso-plate-corner fig-readout" data-corner="readout" data-readout aria-live="polite">{entry.readout}</span>
+    </div>
+    <figcaption class="iso-legend">
+      <div class="fig-controls" role="group" aria-label="Send a request">
+        {entry.controls.map((c) => (
+          <button type="button" data-scenario={c.id} aria-pressed="false">{c.id} · {c.label}</button>
+        ))}
+        <button type="button" data-reset>Reset</button>
+      </div>
+      <span class="iso-caption">{entry.caption}</span>
+    </figcaption>
+  </figure>
+</iso-figure>
+
+<script>
+  const loaders: Record<string, () => Promise<{ mount: (root: HTMLElement) => () => void }>> = {
+    "idempotency-keys": () => import("../figures/idempotency-keys/live"),
+  };
+
+  class IsoFigure extends HTMLElement {
+    private cleanup?: () => void;
+
+    connectedCallback() {
+      const load = loaders[this.dataset.figure ?? ""];
+      if (!load) return;
+      load().then(({ mount }) => {
+        if (this.isConnected && !this.cleanup) this.cleanup = mount(this);
+      });
+    }
+
+    disconnectedCallback() {
+      this.cleanup?.();
+      this.cleanup = undefined;
+    }
+  }
+
+  if (!customElements.get("iso-figure")) customElements.define("iso-figure", IsoFigure);
+</script>

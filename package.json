@@ -18,7 +18,8 @@
     "check:content": "bun run check:internal-links && bun run check:gaps && bun run check:links",
     "factcheck": "node scripts/factcheck.mjs",
     "enrich:tools": "node scripts/enrich-tools.mjs",
-    "research:guides": "node scripts/research-guides.mjs"
+    "research:guides": "node scripts/research-guides.mjs",
+    "figures": "bun src/figures/idempotency-keys/build.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

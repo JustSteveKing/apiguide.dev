@@ -233,6 +233,13 @@ The site's surfaces follow the Linear and Vercel vernacular, by request:
   search, popular lookups, staggered 80ms). Everything else moves only in
   answer to the reader: card lift and pointer-following spotlight, chevron
   nudge, pill hovers. `prefers-reduced-motion` turns all of it off.
+- **Figures**: a guide may carry one interactive isometric figure, drawn
+  with the Anatomy kit in `src/figures/` (see its README). A figure is a
+  machine whose working is the concept, in the kit's monochrome tones taken
+  from the slate scale, with status hues only where the status is the point
+  (the idempotency figure's lamp: green for 2xx, amber for 4xx). It moves
+  only when the reader presses one of its controls: no autoplay, no idle
+  tour. Under `prefers-reduced-motion` a press jumps straight to the result.
 
 ## Typography and structure
 

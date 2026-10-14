@@ -2,6 +2,7 @@
 title: "Idempotency & Request Retries"
 description: "How to implement idempotency keys, Redis-based locking, and safe client retry logic."
 category: "reliability"
+figure: "idempotency-keys"
 ---
 
 ## Introduction to Idempotency

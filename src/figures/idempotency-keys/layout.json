@@ -1,0 +1,31 @@
+{
+  "P": {
+    "origin": [
+      285.0151125185434,
+      181.95867978712027
+    ],
+    "scale": 1.3744327043202267,
+    "azimuth": 52,
+    "elevation": 30
+  },
+  "stations": {
+    "INLET": -118,
+    "READER": -66,
+    "PRESS": 2,
+    "TRAY_AT": 122,
+    "RAIL_TO": 96,
+    "TRAY_X": 98
+  },
+  "heights": {
+    "RAIL_H": 3,
+    "TRAY_FLOOR": 2,
+    "PIN_REST": 9.4,
+    "PIN_READ": 4.3,
+    "RAM_REST": 24,
+    "RAM_PRESS": 4.3,
+    "RECEIPT_Z": 9.4,
+    "RECEIPT_DROP": 36,
+    "TAB_REST": 7,
+    "TAB_UP": 15
+  }
+}
