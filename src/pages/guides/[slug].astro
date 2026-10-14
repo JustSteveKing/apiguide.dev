@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Figure from '@/components/Figure.astro';
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides');
@@ -66,9 +67,12 @@ const guideJsonLd = [
 
     <!-- Markdown Content Body -->
     <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
-      <article class="prose max-w-[60ch]">
-        <Content />
-      </article>
+      <div class="max-w-[60ch] min-w-0">
+        {g.data.figure && <Figure name={g.data.figure} />}
+        <article class="prose max-w-[60ch]">
+          <Content />
+        </article>
+      </div>
       <TableOfContents headings={headings} />
     </div>
   </main>

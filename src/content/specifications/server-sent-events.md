@@ -7,7 +7,7 @@ officialUrl: "https://html.spec.whatwg.org/multipage/server-sent-events.html"
 
 ## What is Server-Sent Events?
 
-Server-Sent Events (SSE) is a standard that lets a server push a continuous stream of updates to a client over a single, long-lived HTTP connection. It is defined by the WHATWG HTML Living Standard and is built on ordinary HTTP, so it works through existing proxies, load balancers, and firewalls without special handling.
+Server-Sent Events (SSE) is a standard that lets a server push a continuous stream of updates to a client over a single, long-lived HTTP connection. It is defined by the WHATWG HTML Living Standard and is built on ordinary HTTP, so it works through existing proxies, load balancers, and firewalls without a protocol upgrade, provided intermediaries do not buffer the stream or drop idle connections (see Practical considerations below).
 
 Unlike WebSocket, SSE is strictly one-way: data flows from server to client only. The client subscribes once, and the server sends events as they occur. This makes SSE a natural fit for notifications, live feeds, progress updates, and streaming token output from language models.
 
@@ -15,7 +15,7 @@ The transport uses the `text/event-stream` media type. The browser-side API is `
 
 ---
 
-## The event stream format
+## 1. The event stream format
 
 An SSE response is a stream of UTF-8 encoded text. Each event is a block of one or more fields, and events are separated by a blank line. The defined fields are `data`, `event`, `id`, and `retry`. Lines beginning with a colon are comments and are ignored.
 
@@ -59,7 +59,7 @@ data: second line
 
 ---
 
-## Reconnection and Last-Event-ID
+## 2. Reconnection and Last-Event-ID
 
 SSE has built-in resilience. When a connection drops, the client automatically reconnects after the retry interval (default is implementation-defined, commonly a few seconds, and can be set with the `retry` field).
 
@@ -76,7 +76,7 @@ The client's last event ID is only updated by events that carry an `id` field, s
 
 ---
 
-## The EventSource API
+## 3. The EventSource API
 
 On the client, the `EventSource` interface consumes a stream and dispatches events. It manages reconnection automatically.
 
@@ -104,7 +104,7 @@ By default `EventSource` does not send credentials cross-origin. Pass `{ withCre
 
 ---
 
-## Comparison with WebSocket and long-polling
+## 4. Comparison with WebSocket and long-polling
 
 | Aspect              | Server-Sent Events        | WebSocket                    | Long-polling               |
 | ------------------- | ------------------------- | ---------------------------- | -------------------------- |
@@ -120,7 +120,7 @@ SSE is the simplest choice when you only need server-to-client updates over stan
 
 ---
 
-## Practical considerations
+## 5. Practical considerations
 
 - SSE carries only UTF-8 text. Binary data must be encoded, for example as Base64.
 - Over HTTP/1.1, browsers limit the number of concurrent connections per origin (commonly six), which can starve other requests. HTTP/2 multiplexing largely removes this concern.

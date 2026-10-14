@@ -8,7 +8,7 @@ category: "design"
 
 HATEOAS, Hypermedia As The Engine Of Application State, is the constraint that separates Level 3 of the [Richardson Maturity Model](/guides/rest-principles) from everything below it. The idea: a client should be able to navigate an API purely by following links returned in responses, rather than by hard-coding URLs from documentation.
 
-It is the same model as a web browser. You do not memorise URLs for every page; you follow links. HATEOAS applies that principle to machine clients.
+It is the same model as a web browser. You do not memorize URLs for every page; you follow links. HATEOAS applies that principle to machine clients.
 
 ---
 
@@ -29,7 +29,7 @@ A hypermedia response includes the data and the actions available on it, express
 }
 ```
 
-The presence of `cancel` and `pay` tells the client this order can be cancelled or paid. Once the order ships, the server simply stops returning those links, so the available state transitions are always driven by the server.
+The presence of `cancel` and `pay` tells the client this order can be canceled or paid. Once the order ships, the server simply stops returning those links, so the available state transitions are always driven by the server.
 
 ---
 
@@ -75,7 +75,7 @@ Its low ceremony is why HAL is the most common hypermedia format in production.
 
 ## 4. JSON:API
 
-JSON:API is a more prescriptive specification served as `application/vnd.api+json`. It standardises pagination links, relationship links, and [sparse fieldsets](/guides/sparse-fieldsets) in one package.
+JSON:API is a more prescriptive specification served as `application/vnd.api+json`. It standardizes pagination links, relationship links, and [sparse fieldsets](/guides/sparse-fieldsets) in one package.
 
 ```json
 {

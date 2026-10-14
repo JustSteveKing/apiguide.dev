@@ -49,7 +49,7 @@ Concise header values cannot explain *why* or *how to migrate*. Pair them with a
 ```http
 Deprecation: @1735689600
 Sunset: Sun, 27 Sep 2026 00:00:00 GMT
-Link: <https://developer.apiguide.dev/deprecation>; rel="deprecation"; type="text/html"
+Link: <https://developer.example.com/deprecation>; rel="deprecation"; type="text/html"
 ```
 
 You can add a second `Link` with `rel="successor-version"` to point at the replacement endpoint. One real-world caution: keep these links maintained, because a `rel="deprecation"` URL that 404s leaves consumers unable to find migration details, which defeats the purpose.
@@ -87,17 +87,18 @@ Offer clear migration paths and, for critical accounts, dedicated support. Monit
 
 ## 6. The Final Sunset
 
-At the sunset date, return **`410 Gone`** for permanently removed resources, not `404 Not Found`. `410` communicates that the resource is intentionally and permanently gone, which is distinct from a resource that simply cannot be found.
+At the sunset date, return **`410 Gone`** for permanently removed resources, not `404 Not Found`. `410` communicates that the resource is intentionally and permanently gone, which is distinct from a resource that simply cannot be found. The [Gone](/errors/gone) error page has a ready-made `type` URI for the problem response.
 
 ```http
 HTTP/1.1 410 Gone
 Content-Type: application/problem+json
 
 {
-  "type": "https://developer.apiguide.dev/errors/sunset",
-  "title": "This endpoint has been retired",
+  "type": "https://apiguide.dev/errors/gone",
+  "title": "Gone",
+  "status": 410,
   "detail": "GET /v1/search was sunset on 2025-12-31. Use /v2/search.",
-  "migration": "https://developer.apiguide.dev/migrate/v2"
+  "migration": "https://developer.example.com/migrate/v2"
 }
 ```
 

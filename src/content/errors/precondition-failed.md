@@ -9,7 +9,7 @@ publishedDate: 2026-07-09
 
 ## When to use it
 
-Use 412 Precondition Failed when the client attaches a conditional header such as `If-Match` or `If-Unmodified-Since`, and the condition evaluates to false because the resource changed on the server since the client last saw it. This is the backbone of optimistic concurrency control: the client sends the ETag it believes is current, and the server rejects the write if that ETag no longer matches the live representation.
+Use 412 Precondition Failed when the client attaches a conditional header such as `If-Match` or [`If-Unmodified-Since`](/headers/if-unmodified-since), and the condition evaluates to false because the resource changed on the server since the client last saw it. This is the backbone of optimistic concurrency control: the client sends the ETag it believes is current, and the server rejects the write if that ETag no longer matches the live representation.
 
 The typical flow is a read followed by a write. A `GET` returns the resource along with an `ETag`, the client edits its local copy, then sends a `PUT` or `PATCH` carrying `If-Match: "<etag>"`. If another actor updated the resource in the meantime, the stored ETag differs, the precondition fails, and the server responds with 412 rather than silently overwriting the newer state.
 

@@ -65,6 +65,8 @@ CloudEvents and [AsyncAPI](/specifications/asyncapi) solve adjacent but distinct
 
 In practice, an AsyncAPI document can declare that a message's payload conforms to the CloudEvents format, giving you channel-level documentation (via AsyncAPI) plus a portable, interoperable event structure (via CloudEvents) inside each message. Neither spec makes the other redundant: AsyncAPI has no opinion on your event's internal metadata shape, and CloudEvents has no concept of channels, brokers, or pub/sub operations at all.
 
+---
+
 ## Best Practices
 
 * Namespace your `type` attribute with a reverse-DNS-style prefix (e.g. `com.yourcompany.resource.action`) to avoid collisions as the number of event types grows.

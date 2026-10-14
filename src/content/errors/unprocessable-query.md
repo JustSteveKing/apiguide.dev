@@ -1,7 +1,7 @@
 ---
 title: Unprocessable Query
 statusCode: 422
-statusText: Unprocessable Entity
+statusText: Unprocessable Content
 category: client-error
 relatedCodes: ['invalid-pagination-cursor', 'invalid-query-parameter']
 publishedDate: 2026-03-16
@@ -15,9 +15,9 @@ A pagination request asking for `page=2` on a collection with one page of result
 
 ## When not to use it
 
-400 is for requests the server can't even parse or validate structurally. Missing a required field, sending a string where you need an integer, malformed JSON. If validation fails before you've touched business logic, that's 400.
+400 is for requests the server cannot parse. Malformed JSON in the body is `malformed-request-body`. A query parameter the endpoint never accepts, such as an unsupported `sort` field, is `invalid-query-parameter`.
 
-A common mistake is reaching for 422 on every validation failure, including basic type errors. If a `Form Request` rejects the payload because `email` isn't a valid email address, that's a 400 level problem, not a 422 one. Save 422 for cases where the values are individually valid but jointly impossible.
+Do not use this type for a request body that parses but fails validation, such as a missing required field, a string where an integer belongs, or an invalid email address. RFC 9110 defines 422 for content whose type and syntax the server understands but whose instructions it cannot process, so those are 422 too, but they belong to `validation-failed`, which carries per-field errors. Use this type when the problem is the query: values that are individually valid but cannot be satisfied together or against the current data.
 
 ## Example response
 

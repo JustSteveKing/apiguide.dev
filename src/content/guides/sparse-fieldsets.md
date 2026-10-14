@@ -38,7 +38,7 @@ Server rules that keep this predictable:
 
 ## 2. JSON:API Sparse Fieldsets
 
-JSON:API formalises field selection per resource type using a `fields[TYPE]` syntax. This matters when a response contains several types (through inclusion) and you want to trim each independently.
+JSON:API formalizes field selection per resource type using a `fields[TYPE]` syntax. This matters when a response contains several types (through inclusion) and you want to trim each independently.
 
 ```http
 GET /articles?fields[articles]=title,author&fields[people]=name
@@ -56,7 +56,7 @@ GraphQL was designed around precise field selection as a first-class feature; th
 | --- | --- | --- |
 | Selection | Query parameter | Query language |
 | Caching | Standard HTTP caching | Needs bespoke tooling |
-| Nesting | Shallow, via `include` | Arbitrary depth |
+| Nesting | Named relationship paths, via `include` | Arbitrary depth |
 | Learning curve | Minimal | Steeper |
 
 Sparse fieldsets are a lightweight, HTTP-native answer to over-fetching. GraphQL is the heavier tool when clients need deeply nested, highly variable shapes. See [caching](/guides/caching) for why HTTP-native wins matter.

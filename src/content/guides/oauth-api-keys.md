@@ -6,7 +6,7 @@ category: "security"
 
 ## Introduction
 
-API keys and OAuth 2.0 solve overlapping but distinct problems: an API key identifies which application or account is calling the API, while OAuth is a delegation protocol that lets an application act on behalf of a user without ever seeing that user's password. This guide covers how to issue and handle both safely. For the HTTP-level mechanics of sending credentials on the wire (Bearer tokens, Basic auth, and Message Signatures), see the [Authentication guide](/guides/authentication); this guide focuses on where the tokens and keys actually come from.
+API keys and [OAuth 2.0](/specifications/oauth2) solve overlapping but distinct problems: an API key identifies which application or account is calling the API, while OAuth is a delegation protocol that lets an application act on behalf of a user without ever seeing that user's password. This guide covers how to issue and handle both safely. For the HTTP-level mechanics of sending credentials on the wire (Bearer tokens, Basic auth, and Message Signatures), see the [Authentication guide](/guides/authentication); this guide focuses on where the tokens and keys actually come from.
 
 ---
 

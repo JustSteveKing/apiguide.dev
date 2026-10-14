@@ -15,7 +15,7 @@ The key test: has the server been able to understand what the client is asking f
 
 ## When not to use it
 
-If the cursor decodes fine and points to a real position, but that position is no longer valid because the underlying dataset changed, that's closer to 422 or even 410 depending on your API's semantics. Don't use 400 for a request the server understood but can't fulfil.
+If the cursor decodes fine and points to a real position, but that position is no longer valid because the underlying dataset changed, that's closer to 422 or even 410 depending on your API's semantics. Don't use 400 for a request the server understood but can't fulfill.
 
 ## Example response
 

@@ -8,12 +8,12 @@ relatedCodes: [200]
 
 ## What is the Age header?
 
-The `Age` response header, defined in RFC 9111, gives the estimated number of seconds that have elapsed since the response was produced by the origin server. It is added by caches and CDNs, so its presence usually means the response was served from a cache rather than freshly generated.
+The `Age` response header, defined in RFC 9111, gives the sender's estimate, in seconds, of the time since the response was generated or successfully validated at the origin server. It is added by caches and CDNs. RFC 9111 states that its presence implies the response was not generated or validated by the origin for this request, but the reverse does not hold: a response without `Age` may still have come from a cache that does not send it.
 
 ## API Usage & Best Practices
 
 * **Estimate freshness**: Comparing `Age` against the freshness lifetime from `Cache-Control: max-age` tells you how much of a cached response's usable life remains.
-* **Diagnose caching**: A large `Age` value confirms a request was satisfied by a CDN edge, which is useful when debugging why clients are seeing stale data.
+* **Diagnose caching**: Any `Age` value, including `0`, means some cache on the path answered the request, which is useful when debugging why clients are seeing stale data. It does not say which cache; use [`Cache-Status`](/headers/cache-status) for that.
 
 ## Examples
 

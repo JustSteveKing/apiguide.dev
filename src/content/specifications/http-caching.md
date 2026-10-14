@@ -15,7 +15,7 @@ Published in June 2022 as part of the HTTP core revision, it obsoletes the cachi
 
 ---
 
-## Shared versus private caches
+## 1. Shared versus private caches
 
 RFC 9111 distinguishes two kinds of cache, and several directives behave differently between them:
 
@@ -26,9 +26,11 @@ RFC 9111 distinguishes two kinds of cache, and several directives behave differe
 
 The distinction matters for anything user-specific. A response marked `private` may be stored by a browser but must not be stored by a shared cache, preventing one user's personalized data from being served to another.
 
+Two later RFCs add to this for shared caches. [`CDN-Cache-Control`](/headers/cdn-cache-control) (RFC 9213) lets you give a CDN its own freshness rules without changing what browsers see in `Cache-Control`, and [`Cache-Status`](/headers/cache-status) (RFC 9211) lets each cache on the path report whether it served a hit or forwarded the request, which is the first thing to check when a response is not being cached the way you expect.
+
 ---
 
-## Freshness
+## 2. Freshness
 
 The primary mechanism is *freshness*. A stored response is fresh if its age has not exceeded its freshness lifetime, and a fresh response can be served without contacting the origin.
 
@@ -55,7 +57,7 @@ Here the response may be reused for 3600 seconds and has already been cached for
 
 ---
 
-## Cache-Control directives
+## 3. Cache-Control directives
 
 `Cache-Control` is the primary way to control caching. It carries one or more directives that apply to requests, responses, or both.
 
@@ -69,13 +71,13 @@ Here the response may be reused for 3600 seconds and has already been cached for
 | `public`           | Response   | May be stored even when it would not normally be cacheable   |
 | `must-revalidate`  | Response   | Once stale, must revalidate; do not serve stale on error     |
 | `proxy-revalidate` | Response   | Like `must-revalidate` but for shared caches only            |
-| `immutable`        | Response   | The response body will not change during its freshness lifetime |
+| `immutable`        | Response   | The response body will not change during its freshness lifetime (defined in RFC 8246, not RFC 9111) |
 
 A common point of confusion: `no-cache` does not forbid storage. It requires revalidation with the origin before reuse. To prevent storage entirely, use `no-store`.
 
 ---
 
-## Validation
+## 4. Validation
 
 When a stored response becomes stale, a cache does not have to discard it. Instead it can *validate* it with the origin using a conditional request. If the origin confirms the stored copy is still good, it returns `304 Not Modified` with no body, saving bandwidth.
 
@@ -99,7 +101,7 @@ Entity-tags are preferred because they can detect any change, whereas `Last-Modi
 
 ---
 
-## The Vary header
+## 5. The Vary header
 
 A cache normally keys stored responses by the request URI. When a response was selected through content negotiation, the URI alone is not enough. The `Vary` header lists the request header fields that influenced the response, so the cache only reuses it for matching requests.
 
@@ -115,8 +117,8 @@ This tells the cache to store separate variants per `Accept-Encoding` and `Accep
 
 ---
 
-## Heuristic freshness
+## 6. Heuristic freshness
 
-When a response is cacheable but carries no explicit freshness information (no `max-age`, `s-maxage`, or `Expires`), a cache may compute a *heuristic* freshness lifetime. RFC 9111 permits this only when the status code is defined as heuristically cacheable, such as `200 OK`.
+When a response is cacheable but carries no explicit freshness information (no `max-age`, `s-maxage`, or `Expires`), a cache may compute a *heuristic* freshness lifetime. RFC 9111 permits this only when the status code is defined as heuristically cacheable, such as `200 OK`, or the response is explicitly marked cacheable, for example with `public`.
 
-A common heuristic uses the `Last-Modified` date: the cache assumes a lifetime of roughly 10% of the time since the resource was last modified. When a cache serves a heuristically fresh response whose age exceeds 24 hours, it is expected to attach a `Warning` where applicable. To avoid unpredictable behavior, provide explicit `Cache-Control` directives rather than relying on heuristics.
+A common heuristic uses the `Last-Modified` date: RFC 9111 suggests a lifetime of no more than some fraction of the time since the resource was last modified, with 10% as a typical setting. Earlier specifications had the cache attach a `Warning` header when it served such a response more than 24 hours old. RFC 9111 obsoletes `Warning` altogether (Section 5.5) because it was rarely generated or surfaced, so do not emit it and do not rely on receiving it; the `Age` header carries the same information. To avoid unpredictable behavior, provide explicit `Cache-Control` directives rather than relying on heuristics.

@@ -7,7 +7,7 @@ officialUrl: "https://openid.net/specs/openid-connect-core-1_0.html"
 
 ## What is OpenID Connect?
 
-OpenID Connect (OIDC) is a thin identity layer built on top of the OAuth 2.0 authorization framework. Where OAuth 2.0 answers "is this client allowed to access this resource?", OIDC answers "who is the user, and how were they authenticated?". It standardizes authentication so that a client (the Relying Party) can verify a user's identity based on the work of an OpenID Provider (OP), and obtain basic profile information in an interoperable way.
+OpenID Connect (OIDC) is a thin identity layer built on top of the [OAuth 2.0](/specifications/oauth2) authorization framework. Where OAuth 2.0 answers "is this client allowed to access this resource?", OIDC answers "who is the user, and how were they authenticated?". It standardizes authentication so that a client (the Relying Party) can verify a user's identity based on the work of an OpenID Provider (OP), and obtain basic profile information in an interoperable way.
 
 The central artifact OIDC adds to OAuth 2.0 is the **ID Token**, a signed JWT that asserts the user's identity.
 

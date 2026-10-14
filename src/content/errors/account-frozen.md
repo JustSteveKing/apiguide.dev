@@ -3,7 +3,7 @@ title: Account Frozen
 statusCode: 403
 statusText: Forbidden
 category: client-error
-relatedCodes: ['insufficient-funds', 'insufficient-scope', 'unauthorized']
+relatedCodes: ['insufficient-funds', 'insufficient-scope', 'unauthorized', 'forbidden']
 publishedDate: 2026-09-04
 ---
 

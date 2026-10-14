@@ -12,7 +12,9 @@ The `If-Modified-Since` request header is used to check if a resource has been u
 
 ## API Usage & Best Practices
 
-* **Used as a fallback**: Often used in place of ETags when date-based resolution is preferred or when proxy caches do not support ETags.
+* **Ignored when If-None-Match is present**: RFC 9110 requires a recipient to ignore `If-Modified-Since` if the request also carries [`If-None-Match`](/headers/if-none-match), because entity-tag comparison is the more accurate condition. Clients send both only for the sake of older intermediaries that might not implement `If-None-Match`.
+* **Use it when there is no ETag**: It validates against [`Last-Modified`](/headers/last-modified), which has one-second resolution, so two changes within the same second are indistinguishable. Prefer [`ETag`](/headers/etag) where the server can generate one.
+* **GET and HEAD only**: RFC 9110 requires the field to be ignored on any other method, and when the resource has no modification date.
 * **Format requirements**: Must contain a valid HTTP date (e.g. GMT format).
 
 ## Examples

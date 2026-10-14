@@ -85,7 +85,7 @@ A common pattern is reporting multiple field-level validation failures in a sing
 }
 ```
 
-Here `pointer` is a JSON Pointer (RFC 6901) into the request body. Some APIs instead use `parameter` for query/form fields or `header` for header-based failures.
+Here `pointer` is a [JSON Pointer](/specifications/json-pointer) (RFC 6901) into the request body. Some APIs instead use `parameter` for query/form fields or `header` for header-based failures.
 
 ---
 

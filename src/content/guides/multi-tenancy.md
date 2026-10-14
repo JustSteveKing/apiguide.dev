@@ -100,7 +100,7 @@ Retry-After: 30
 
 Isolation must hold in every shared component, not just the primary database. Authentication and authorization alone do not achieve isolation; explicit isolation constructs are required.
 
-* **Tenant context**: establish `tenantId` early using non-guessable identifiers (such as UUIDv7), bind it to the authenticated session, and propagate it through every layer.
+* **Tenant context**: establish `tenantId` early, bind it to the authenticated session, and propagate it through every layer. Use non-sequential identifiers such as UUIDv7 so tenant IDs do not reveal how many tenants you have, but do not rely on them being hard to guess: RFC 9562 says implementations should not assume that, and isolation has to hold even when an attacker knows another tenant's ID. See [identifiers](/guides/identifiers).
 * **Authorization**: make roles tenant-scoped ("Admin of Tenant A" is distinct from "Admin of Tenant B"). Combine RBAC and ABAC behind centralized authorization middleware and a policy enforcement point, rather than scattering checks through the code.
 * **Shared components**: prefix cache keys with the tenant ID and validate the tenant on retrieval; scope message-queue topics with ACLs; prefix file-storage paths and bound them with IAM policies.
 * **Encryption**: for regulated tenants, per-tenant encryption keys provide cryptographic separation at rest.

@@ -64,7 +64,7 @@ Vary: Accept, Accept-Encoding
 
 Without `Vary: Accept`, a cache might serve a JSON body to a client that asked for XML. Without `Vary: Accept-Encoding`, it might hand a gzip body to a client that cannot decode it.
 
-The risk is cardinality. Varying on `User-Agent` (thousands of values) or `Cookie` (unique per user) fragments the cache so badly it stops working. Normalize first, collapsing `User-Agent` into a `mobile`/`desktop` class and vary on that, and reduce `Accept-Encoding` to gzip-or-not. Never use `Vary: *`; prefer `Cache-Control: private` when a response truly must not be shared.
+The risk is cardinality. Varying on [`User-Agent`](/headers/user-agent) (thousands of values) or `Cookie` (unique per user) fragments the cache so badly it stops working. Normalize first, collapsing `User-Agent` into a `mobile`/`desktop` class and vary on that, and reduce `Accept-Encoding` to gzip-or-not. Never use `Vary: *`; prefer `Cache-Control: private` when a response truly must not be shared.
 
 ---
 

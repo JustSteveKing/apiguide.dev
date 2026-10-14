@@ -14,7 +14,7 @@ The `CONNECT` method is used by clients to ask a proxy to establish a TCP tunnel
 ## API Usage & Best Practices
 
 * **Proxy tunnelling**: CONNECT targets a proxy so it can open a raw connection to an origin server, after which bytes flow through untouched.
-* **Secure by design**: The proxy cannot read the tunnelled payload, which is why CONNECT underpins HTTPS-over-proxy setups.
+* **Secure by design**: The proxy cannot read the tunneled payload, which is why CONNECT underpins HTTPS-over-proxy setups.
 * **Authenticate first**: Proxies frequently require credentials, returning 407 until valid proxy authentication is supplied.
 
 ## Common Response Codes

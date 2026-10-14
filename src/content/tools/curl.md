@@ -9,20 +9,24 @@ pricing: "open-source"
 
 ## What is curl?
 
-curl is a command-line tool and library for transferring data with URLs. It is used in command lines or scripts for data transfer and also as libcurl, an Internet transfer engine integrated into numerous devices and software applications.
+curl is an open-source command-line tool for transferring data with URLs, and libcurl is the library behind it, embedded in a very wide range of operating systems, devices and applications. It is released under an MIT-style license. For API work it is the lowest common denominator: every API documentation site shows curl examples, every platform has it, and a curl command is the most portable way to hand someone a reproducible request. It speaks HTTP/0.9 through HTTP/3 and over two dozen other protocols, and supports authentication schemes from Basic and Digest to Bearer tokens and AWS SigV4.
 
 ## Why use it in the API Lifecycle?
 
-* **Protocol Support**: Supports a wide range of protocols including DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, MQTTS, POP3, POP3S, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS, WSS.
-* **Proxy Capabilities**: Functions with various proxy types such as SOCKS4, SOCKS5, HTTP, HTTPS (HTTP/1 and HTTP/2), tunneling, via Unix domain sockets, HAProxy, and SOCKS+HTTP proxy chains.
-* **HTTP Feature Set**: Provides extensive HTTP functionality including GET, POST, PUT, HEAD, multipart formpost, support for HTTP/0.9 to HTTP/3, HSTS, Alt-Svc, cookies, ETags, transfer compression, ranges, custom headers, custom methods, and redirect following.
-* **Authentication Mechanisms**: Offers support for authentication methods including Basic, Plain, Digest, CRAM-MD5, SCRAM-SHA, NTLM, Negotiate, Kerberos, Bearer tokens, AWS Sigv4, SASL, and .netrc.
-* **TLS and Security Features**: Supports TLS versions 1.0-1.3, mutual authentication, STARTTLS, OCSP stapling, ECH, False Start, key pinning, PQC readiness, session resumption, early data, and export/import of sessions.
-* **Connection Management**: Includes features such as connection reuse, interface binding, Happy Eyeballs, IPv4/IPv6-only modes, Unix domain sockets, TCP keepalive, TCP Fast Open, TCP Nodelay, MPTCP, VLAN priority, and IP Type Of Service.
+* **Reproducible requests**: A single command captures method, URL, headers and body, which makes it the standard format for bug reports and documentation examples.
+* **Full HTTP control**: Custom methods (`-X`), arbitrary headers (`-H`), HTTP version selection (`--http1.1`, `--http2`, `--http3`), redirect following (`-L`) and ranges (`-r`).
+* **JSON shortcut**: `--json` (since 7.82.0) posts a body with `Content-Type: application/json` and `Accept: application/json` set for you.
+* **Wire-level visibility**: `-v`, `--trace-ascii` and `-D` show exactly what was sent and received, including TLS negotiation and response headers.
+* **Scriptable checks**: `-w '%{response_code}'` and other write-out variables expose status, timings and sizes for shell scripts and health checks.
+* **Connection control**: `--resolve` and `--connect-to` send a request to a specific IP or host while keeping the original `Host` and TLS name, which is how you test a server behind a load balancer or CDN.
 
 ## Best Practices
 
-* Utilize the 'Everything curl' e-book for comprehensive understanding of curl and libcurl functionalities.
-* Refer to the official documentation and man page for detailed usage instructions and parameters.
-* Engage with the curl-users or curl-library mailing lists for community support and discussions.
-* Report bugs and security issues through the designated channels to contribute to project improvement.
+* Use `--fail-with-body` (since 7.76.0) in scripts and CI. Without it curl exits 0 on a [`500 Internal Server Error`](/status-codes/500); with plain `--fail` it exits 22 but discards the body, which is usually the [Problem Details](/specifications/problem-details) document that explains the failure.
+* Debug with `-v` or `--trace-ascii -`, not just the body. Most API bugs are in headers: a missing [`Content-Type`](/headers/content-type), a [`Vary`](/headers/vary) that defeats caching, or a redirect that drops [`Authorization`](/headers/authorization).
+* Use `--retry` for transient failures in scripts. It retries timeouts and [`408`](/status-codes/408), [`429`](/status-codes/429), [`500`](/status-codes/500), [`502`](/status-codes/502), [`503`](/status-codes/503) and [`504`](/status-codes/504), and honors [`Retry-After`](/headers/retry-after). Avoid `--retry-all-errors` on non-idempotent requests; curl's own documentation warns it can duplicate data. See [Retries and Backoff](/guides/retries-backoff).
+* Keep tokens out of shell history and process lists. Read headers from a file with `-H @headers.txt`, or use `--variable` and `--expand-header` (since 8.3.0) to pull a value from an environment variable, instead of typing `-H "Authorization: Bearer ..."` inline.
+* Test conditional requests with `--etag-save` and `--etag-compare` to confirm the server returns [`304 Not Modified`](/status-codes/304) for an unchanged [`ETag`](/headers/etag). See [Conditional Requests](/guides/conditional-requests).
+* Add `--compressed` when checking response size or caching. Without it curl does not send [`Accept-Encoding`](/headers/accept-encoding), so you see the uncompressed path that real clients rarely take.
+* Time requests with `-w` variables such as `%{time_connect}`, `%{time_starttransfer}` and `%{time_total}` to separate network and TLS cost from server processing time.
+* For repeatable suites rather than one-off checks, move to [Hurl](/tools/testing-mocking/hurl), which runs on libcurl and adds captures and assertions in a plain-text file.

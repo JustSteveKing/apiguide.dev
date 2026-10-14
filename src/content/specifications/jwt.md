@@ -7,7 +7,7 @@ officialUrl: "https://www.rfc-editor.org/rfc/rfc7519"
 
 ## What is a JWT?
 
-A JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The claims are encoded as a JSON object that is either digitally signed (as a JWS) or encrypted (as a JWE). JWTs are the de facto format for bearer credentials in modern APIs, most notably as OAuth 2.0 access tokens and OpenID Connect ID Tokens.
+A JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The claims are encoded as a JSON object that is either digitally signed (as a JWS) or encrypted (as a JWE). JWTs are the de facto format for bearer credentials in modern APIs, most notably as [OAuth 2.0](/specifications/oauth2) access tokens and OpenID Connect ID Tokens.
 
 A signed JWT is three Base64URL-encoded segments joined by dots:
 ```text

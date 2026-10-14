@@ -13,7 +13,7 @@ The `Content-Range` response header describes where a returned chunk of data fit
 ## API Usage & Best Practices
 
 * **Reassembling downloads**: Clients use the range and total-length values to place each chunk correctly and to know when the whole resource has been received.
-* **Signalling unsatisfiable ranges**: In a `416 Range Not Satisfiable` response, `Content-Range: bytes */146515` reports the total size so the client can retry with a valid range.
+* **Signaling unsatisfiable ranges**: In a `416 Range Not Satisfiable` response, `Content-Range: bytes */146515` reports the total size so the client can retry with a valid range.
 
 ## Examples
 

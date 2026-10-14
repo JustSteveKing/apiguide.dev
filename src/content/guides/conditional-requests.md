@@ -6,7 +6,7 @@ category: "performance"
 
 ## Introduction to Conditional Requests
 
-Conditional requests let a client attach preconditions to an operation so the server only acts when the resource is in an expected state. Defined by RFC 7232 (and carried into RFC 9110), they solve two distinct problems: revalidating cached representations without transferring a full body, and preventing the "lost update" scenario when multiple clients modify the same resource. For API designers they are not optional optimizations but foundational tools for efficiency and data integrity.
+Conditional requests let a client attach preconditions to an operation so the server only acts when the resource is in an expected state. Defined in RFC 9110 (which obsoleted RFC 7232), they solve two distinct problems: revalidating cached representations without transferring a full body, and preventing the "lost update" scenario when multiple clients modify the same resource. For API designers they are not optional optimizations but foundational tools for efficiency and data integrity.
 
 ---
 
@@ -96,13 +96,13 @@ A [`412 Precondition Failed`](/status-codes/412) tells the client its copy is st
 Two headers mirror the ETag-based conditionals using dates instead of entity tags. All HTTP dates are expressed in GMT.
 
 * **`If-Modified-Since`**: for GET/HEAD. The server returns the body only if the resource changed after the given date, otherwise `304`. Ideal for revalidating a cached entity that has no ETag.
-* **`If-Unmodified-Since`**: for mutations. The request proceeds only if the resource has not changed since the given date, failing with `412` otherwise. It is the timestamp equivalent of `If-Match`.
+* **[`If-Unmodified-Since`](/headers/if-unmodified-since)**: for mutations. The request proceeds only if the resource has not changed since the given date, failing with `412` otherwise. It is the timestamp equivalent of `If-Match`.
 
 ---
 
 ## 6. Precedence Rules
 
-When several precondition headers appear in one request, RFC 7232 defines a fixed evaluation order:
+When several precondition headers appear in one request, RFC 9110 defines a fixed evaluation order:
 
 1. `If-Match`: if present, `If-Unmodified-Since` is ignored.
 2. `If-Unmodified-Since`.

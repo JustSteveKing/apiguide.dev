@@ -1,8 +1,8 @@
 ---
 title: "OpenAPI Specification (OAS)"
 description: "A comprehensive, multi-section guide to the OpenAPI Specification (OAS), detailing root structures, paths, component registries, and version diffs."
-currentVersion: "3.1.0"
-officialUrl: "https://spec.openapis.org/oas/v3.1.0"
+currentVersion: "3.2.1"
+officialUrl: "https://spec.openapis.org/oas/v3.2.1.html"
 ---
 
 ## Core Architecture of OpenAPI
@@ -60,7 +60,7 @@ The `paths` object forms the core routing table of the API. Each path item repre
 Endpoints can define variable parameters using curly braces (e.g., `/users/{userId}`). These must be declared inside the `parameters` array of the path or the specific operation.
 
 ### HTTP Methods (Operations)
-Each path item supports standard HTTP verbs (`get`, `post`, `put`, `patch`, `delete`, `options`, `head`). Each operation must define:
+Each path item supports the standard HTTP methods as fixed fields (`get`, `put`, `post`, `delete`, `options`, `head`, `patch`, `trace`, and from 3.2 `query`). None of an operation's fields is strictly required, but a useful one defines:
 * **`operationId`**: A globally unique identifier for the action, used by SDK code generators as the method name.
 * **`parameters`**: Operation-level parameters passed in `query`, `header`, `path`, or `cookie`.
 * **`requestBody`**: The payload sent during POST, PUT, or PATCH.
@@ -142,4 +142,41 @@ The shift from OpenAPI 3.0 to 3.1 introduced critical modifications designed to 
 | **Nullable types** | Uses `nullable: true` | Uses arrays like `type: [string, "null"]` |
 | **`exclusiveMinimum`** | Boolean value (works with `minimum`) | Numeric value (replaces `minimum` when exclusive) |
 | **Webhooks** | Not natively supported | First-class support via root-level `webhooks` node |
-| **File uploads** | Complex `type: file` | Native binary format representation |
+| **File uploads** | `type: string` with `format: binary` or `format: byte` | `contentMediaType` and `contentEncoding` from JSON Schema |
+
+---
+
+## 5. What OpenAPI 3.2 Added
+
+OpenAPI 3.2.0 was published on 19 September 2025, and 3.2.1, a patch release, on 10 September 2026. Patch releases fix errors and clarify wording without changing the feature set, so tooling makes no distinction between 3.2.0 and 3.2.1. Minor versions add features, and the specification reserves the right to make low-impact breaking changes in them, so migrating from 3.1 is not guaranteed to be a one-line edit. The 3.1 line continues as 3.1.2 for toolchains that have not moved. The additions that change how you describe an API:
+
+| Area | 3.2 addition |
+| :--- | :--- |
+| **Methods** | A `query` field on the Path Item for the [`QUERY`](/methods/query) method, and `additionalOperations`, a map keyed by method name for anything else (for example WebDAV's [`COPY`](/methods/copy)). It must not repeat a method that has its own fixed field. |
+| **Query strings** | `in: "querystring"` describes the entire query string as one parameter, with its shape given by `content`, typically `application/x-www-form-urlencoded`. It cannot be combined with `in: "query"` parameters on the same operation. |
+| **Streaming** | `itemSchema` on the Media Type Object describes each item in a sequential media type such as `application/jsonl`, `application/x-ndjson`, `application/json-seq` or `text/event-stream`, rather than the stream as a whole. |
+| **Tags** | `parent` nests one tag under another, and `kind` categorizes a tag (`nav`, `badge`, `audience` are the common values). |
+| **Document identity** | A root-level `$self` gives the document its own URI, which also serves as its base URI for resolving relative references. |
+| **Security** | A `deviceAuthorization` OAuth flow, `oauth2MetadataUrl` pointing at RFC 8414 authorization server metadata, and `deprecated` on a security scheme. |
+
+```yaml
+openapi: 3.2.1
+paths:
+  /orders/search:
+    query:
+      operationId: searchOrders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderFilter'
+      responses:
+        '200':
+          description: Matching orders, one per line
+          content:
+            application/jsonl:
+              itemSchema:
+                $ref: '#/components/schemas/Order'
+```
+
+If you write new descriptions, target 3.2 when your toolchain supports it, because `itemSchema` and `query` describe things 3.1 can only document in prose. Check your generators and validators first: support for each minor version lands tool by tool. To change a description you do not own, such as one generated from code, layer edits on top with an [OpenAPI Overlay](/specifications/openapi-overlay) rather than forking the file.

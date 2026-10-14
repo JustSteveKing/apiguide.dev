@@ -43,7 +43,7 @@ If an offset genuinely matters to the domain (a calendar event in a specific loc
 
 Floating-point numbers cannot represent many decimal values exactly, so `0.1 + 0.2` is not `0.3`. For currency this is unacceptable. Two safe options:
 
-Represent the amount as an integer in the currency's **minor units** (cents), always paired with an explicit currency:
+Represent the amount as an integer in the currency's **minor units**, always paired with an explicit currency. Minor units are not always cents: the ISO 4217 exponent is 2 for `USD`, 0 for `JPY` and 3 for `BHD`, so never hard-code a division by 100:
 
 ```json
 { "amount": 4999, "currency": "USD" }
@@ -55,7 +55,7 @@ Or represent it as a **string** to preserve exact decimal precision:
 { "amount": "49.99", "currency": "USD" }
 ```
 
-Pick one convention and document which. Always include the ISO 4217 currency code; an amount without a currency is meaningless.
+Pick one convention and document which. Always include the ISO 4217 currency code; an amount without a currency is meaningless. See [money, decimals and nulls](/guides/money-decimals-nulls) for currency exponents and large numbers.
 
 ---
 
@@ -67,7 +67,7 @@ Represent a fixed set of states as string enums, not integers or booleans. Strin
 { "status": "shipped" }
 ```
 
-Prefer this over `"status": 3` (what is 3?) or a pile of booleans like `is_shipped`, `is_delivered` that can contradict each other. Document the full set of allowed values, and design clients to tolerate unknown ones so you can add states without breaking them.
+Prefer this over `"status": 3` (what is 3?) or a pile of booleans like `is_shipped`, `is_delivered` that can contradict each other. Document the full set of allowed values, and design clients to tolerate unknown ones so you can add states without breaking them. [Forward-compatible enums](/guides/forward-compatible-enums) covers how to write that down in OpenAPI, [Protocol Buffers](/specifications/protocol-buffers) and GraphQL.
 
 ---
 
@@ -81,7 +81,7 @@ A missing field and a `null` field can mean different things. Decide the semanti
 | `"middle_name": null` | Explicitly cleared / no value |
 | field omitted | Unknown, or "leave unchanged" on PATCH |
 
-The distinction is what makes partial updates work: omitting a field says "don't touch it," while sending `null` says "clear it." Be explicit about this in your documentation.
+The distinction is what makes partial updates work: omitting a field says "don't touch it," while sending `null` says "clear it." Be explicit about this in your documentation. [Money, decimals and nulls](/guides/money-decimals-nulls) covers empty values and what [JSON Merge Patch](/specifications/json-merge-patch) does with `null`.
 
 ---
 

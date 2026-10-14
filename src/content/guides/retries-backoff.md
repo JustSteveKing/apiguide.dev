@@ -116,7 +116,7 @@ Combining retries with a circuit breaker prevents retries from piling onto an al
 
 Explicit client-side timeouts stop resources from being held indefinitely.
 
-* **Connection timeout**: max time to establish the connection. A conservative starting point is roughly 3× the round-trip time.
+* **Connection timeout**: max time to establish the connection. A conservative starting point is roughly 3x the round-trip time.
 * **Request timeout**: max time to wait for a response once connected, tuned from observed latency and SLAs.
 
 Default timeouts are often infinite or far too high. Cooperative timeouts also help the server: an upstream timeout signal lets it abort long-running work and reclaim resources.
@@ -125,6 +125,6 @@ Default timeouts are often infinite or far too high. Cooperative timeouts also h
 
 ## 6. Observability and Standards
 
-Monitor retry counts, circuit-breaker state transitions, and backoff delays so retry storms surface before they become outages. Tooling like OpenTelemetry unifies logs, traces, and metrics for this. Machine-readable error bodies (RFC 9457, `application/problem+json`) also let clients make smarter retry decisions from structured error data.
+Monitor retry counts, circuit-breaker state transitions, and backoff delays so retry storms surface before they become outages. Tooling like [OpenTelemetry](/specifications/opentelemetry) unifies logs, traces, and metrics for this. Machine-readable error bodies (RFC 9457, `application/problem+json`) also let clients make smarter retry decisions from structured error data.
 
 In summary: retry only transient failures, back off exponentially with jitter, honor `Retry-After`, make writes idempotent, and wrap it all in circuit breakers and explicit timeouts.

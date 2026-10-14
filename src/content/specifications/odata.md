@@ -11,6 +11,8 @@ OData (Open Data Protocol) is an OASIS standard that defines a uniform way to qu
 
 OData grew out of Microsoft's work on the Astoria project in the mid-2000s and was later standardized under OASIS, which is why it remains most visible in Microsoft-adjacent tooling today.
 
+The current OASIS Standard is OData Version 4.01. Version 4.02, which revises it, is still a draft: the TC approved Committee Specification Draft 02 on 19 August 2026 and put it out for public review until 27 September 2026. Build against 4.01 until 4.02 is approved.
+
 ---
 
 ## 1. The Query Conventions
@@ -71,11 +73,13 @@ The trade-off is flexibility: OData's query language is powerful but verbose, an
 
 OData is not the default choice for public consumer-facing APIs, but it's deeply embedded in specific ecosystems:
 
-* **Microsoft products**: SharePoint, Dynamics 365, Power BI, and Azure Active Directory Graph all expose OData endpoints. Microsoft Graph itself is heavily OData-influenced.
+* **Microsoft products**: SharePoint, Dynamics 365, Power BI, and Microsoft Graph all expose OData endpoints; Microsoft Graph supports the OData v4 system query options such as `$filter`, `$select` and `$expand`. (Its predecessor, Azure AD Graph, was retired on August 31, 2025.)
 * **SAP**: SAP Gateway and the SAP Business Technology Platform use OData extensively for exposing business data (customers, orders, financial records) to UI5/Fiori front ends.
 * **Enterprise data platforms**: Systems that need generic, tool-driven data access (BI tools, reporting dashboards, low-code platforms) favor OData because a single client library can introspect and query any OData-compliant backend.
 
 If you're building a general-purpose public API, plain REST or GraphQL is usually a simpler starting point. But if you're integrating with an existing Microsoft or SAP-centric enterprise stack, you'll likely encounter OData whether you choose it or not.
+
+---
 
 ## Best Practices
 

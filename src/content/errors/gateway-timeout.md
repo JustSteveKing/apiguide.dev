@@ -3,7 +3,7 @@ title: Gateway Timeout
 statusCode: 504
 statusText: Gateway Timeout
 category: server-error
-relatedCodes: ['service-unavailable', 'internal-server-error']
+relatedCodes: ['service-unavailable', 'internal-server-error', 'bad-gateway']
 publishedDate: 2025-12-04
 ---
 
@@ -15,7 +15,7 @@ This error tells the client that the request reached the edge network or gateway
 
 ## When not to use it
 
-Do not use 504 if the application server failed or returned a blank response quickly (use 500 Internal Server Error). Do not use this code if the server is down or undergoing maintenance (use 503 Service Unavailable).
+Do not use 504 if the application server failed with an unhandled error (use 500 Internal Server Error). Do not use this code if the server is down or undergoing maintenance (use 503 Service Unavailable). If the upstream did respond, but with something invalid, empty or unusable, use `bad-gateway` (502).
 
 ## Example response
 

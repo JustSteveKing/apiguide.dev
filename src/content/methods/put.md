@@ -24,4 +24,4 @@ The `PUT` method replaces the state of the target resource entirely with the pay
 * **400 Bad Request**: The request body is structurally malformed (invalid JSON).
 * **404 Not Found**: The target resource doesn't exist and the server doesn't allow PUT to create it.
 * **412 Precondition Failed**: The `If-Match` ETag check failed, indicating concurrent edits.
-* **422 Unprocessable Entity**: The replacement payload was parsed but failed input validation.
+* **422 Unprocessable Content**: The replacement payload was parsed but failed input validation.

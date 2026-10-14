@@ -1,0 +1,173 @@
+/* Figures: the Anatomy kit's tokens, driven by the site's own palette.
+
+   The kit (kit/iso.css) paints every fill and stroke from --anatomy-* tokens.
+   Here they are set from the slate scale in main.css, keyed on data-theme on
+   <html> like the rest of the site, never on prefers-color-scheme. The only
+   hues are the status ones, on the lamp: green for 2xx, amber for 4xx. */
+
+:root:not([data-theme="light"]) .iso {
+  --anatomy-page: var(--color-slate-50);
+  --anatomy-card: var(--color-slate-100);
+  --anatomy-text: var(--color-slate-600);
+  --anatomy-strong: var(--color-slate-900);
+  --anatomy-muted: var(--color-slate-500);
+  --anatomy-paper: var(--color-slate-100);
+  --anatomy-face: var(--color-slate-200);
+  --anatomy-top: color-mix(in oklab, var(--color-slate-200) 80%, var(--color-slate-300));
+  --anatomy-shade-0: color-mix(in oklab, var(--color-slate-100) 55%, var(--color-slate-50));
+  --anatomy-shade-1: var(--color-slate-100);
+  --anatomy-shade-2: color-mix(in oklab, var(--color-slate-100) 55%, var(--color-slate-200));
+  --anatomy-shade-3: var(--color-slate-200);
+  --anatomy-lit-top: var(--color-slate-300);
+  --anatomy-lit-shade: color-mix(in oklab, var(--color-slate-200) 60%, var(--color-slate-300));
+  --anatomy-hi: var(--color-slate-700);
+  --anatomy-mid: var(--color-slate-500);
+  --anatomy-lo: var(--color-slate-400);
+  --anatomy-faint: var(--color-slate-300);
+  --anatomy-lit: var(--color-slate-950);
+  --anatomy-halo: #000;
+  --anatomy-halo-opacity: 0.85;
+  --anatomy-dot: var(--color-slate-800);
+  --fig-window: var(--color-slate-50);
+}
+
+:root[data-theme="light"] .iso {
+  --anatomy-page: var(--color-slate-50);
+  --anatomy-card: color-mix(in oklab, var(--color-slate-50) 60%, #fff);
+  --anatomy-text: var(--color-slate-600);
+  --anatomy-strong: var(--color-slate-950);
+  --anatomy-muted: var(--color-slate-500);
+  --anatomy-paper: color-mix(in oklab, var(--color-slate-50) 60%, #fff);
+  --anatomy-face: #fff;
+  --anatomy-top: #fff;
+  --anatomy-shade-0: color-mix(in oklab, var(--color-slate-200) 55%, var(--color-slate-100));
+  --anatomy-shade-1: var(--color-slate-100);
+  --anatomy-shade-2: color-mix(in oklab, var(--color-slate-100) 50%, var(--color-slate-50));
+  --anatomy-shade-3: var(--color-slate-50);
+  --anatomy-lit-top: #fff;
+  --anatomy-lit-shade: var(--color-slate-50);
+  --anatomy-hi: var(--color-slate-800);
+  --anatomy-mid: var(--color-slate-500);
+  --anatomy-lo: var(--color-slate-300);
+  --anatomy-faint: var(--color-slate-200);
+  --anatomy-lit: var(--color-slate-950);
+  --anatomy-halo: var(--color-slate-500);
+  --anatomy-halo-opacity: 0.3;
+  --anatomy-dot: var(--color-slate-700);
+  --fig-window: var(--color-slate-200);
+}
+
+.iso {
+  --anatomy-mono: var(--font-mono);
+  --fig-ok: var(--color-green-500);
+  --fig-bad: var(--color-amber-500);
+}
+
+/* The card sits in the page like any other panel: a hairline, not the kit's
+   ruled frame. */
+.iso .iso-figure {
+  margin: 0 0 2.5rem;
+}
+
+.iso .iso-plate {
+  border-radius: 0.875rem;
+  box-shadow: none;
+  border: 1px solid color-mix(in oklab, var(--color-slate-950) 8%, transparent);
+  padding: 44px 16px 52px;
+}
+
+.iso .iso-plate-corner {
+  font-family: var(--font-sans);
+  font-size: 11px;
+}
+
+.iso .iso-legend {
+  font-size: 0.875rem;
+  color: var(--color-slate-600);
+}
+
+.iso .iso-stage {
+  outline: none;
+  border-radius: 0.5rem;
+}
+
+.iso .iso-stage:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-ultra-500);
+}
+
+/* Machine parts the kit has no class for. */
+.iso .fig-window {
+  fill: var(--fig-window);
+}
+
+.iso .fig-digits {
+  fill: var(--anatomy-hi);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+/* The lamp lens takes the status hue of the last response; dark when off. */
+.iso .fig-lamp .iso-top,
+.iso .fig-lamp .iso-shade {
+  transition: fill 240ms var(--anatomy-ease);
+}
+
+.iso .fig-lamp[data-status="ok"] .iso-top { fill: var(--fig-ok); }
+.iso .fig-lamp[data-status="ok"] .iso-shade { fill: color-mix(in oklab, var(--fig-ok) 70%, var(--anatomy-paper)); }
+.iso .fig-lamp[data-status="bad"] .iso-top { fill: var(--fig-bad); }
+.iso .fig-lamp[data-status="bad"] .iso-shade { fill: color-mix(in oklab, var(--fig-bad) 70%, var(--anatomy-paper)); }
+
+/* The card shows the body it carries. */
+.iso [data-body="A"] [data-holes="B"],
+.iso [data-body="B"] [data-holes="A"] {
+  display: none;
+}
+
+/* A raised in-flight tab is the one other part that lights. */
+.iso [data-on] > .iso-solid > .iso-top { fill: var(--anatomy-lit-top); }
+.iso [data-on] > .iso-solid > .iso-edge { stroke: var(--anatomy-lit); }
+
+/* The controls under the card. */
+.iso .fig-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.iso .fig-controls button {
+  font: 500 0.8125rem/1 var(--font-sans);
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--color-slate-950) 12%, transparent);
+  color: var(--color-slate-800);
+  background: color-mix(in oklab, var(--color-slate-100) 60%, transparent);
+  cursor: pointer;
+}
+
+.iso .fig-controls button:hover {
+  border-color: color-mix(in oklab, var(--color-slate-950) 24%, transparent);
+}
+
+.iso .fig-controls button:focus-visible {
+  outline: 2px solid var(--color-ultra-500);
+  outline-offset: 2px;
+}
+
+.iso .fig-controls button[aria-pressed="true"] {
+  color: var(--color-slate-950);
+  border-color: var(--color-ultra-500);
+}
+
+/* The readout lives outside the aria-hidden corners so it can be announced. */
+.iso .fig-readout {
+  right: 20px;
+  bottom: 18px;
+}
+
+/* On a phone the bench gets more of the card: scale the drawing up inside it. */
+@media (max-width: 560px) {
+  .iso .iso-plate { overflow: hidden; }
+  .iso .iso-stage svg { width: 118%; max-width: none; margin-left: -9%; }
+}

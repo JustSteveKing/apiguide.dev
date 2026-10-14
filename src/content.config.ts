@@ -2,6 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { guideCategories } from './config/themes';
+import { figureNames } from './figures/names';
 
 export const collections = {
     errors: defineCollection({
@@ -70,6 +71,7 @@ export const collections = {
             title: z.string(),
             description: z.string(),
             category: z.enum(guideCategories),
+            figure: z.enum(figureNames).optional(),
         }),
     }),
     tools: defineCollection({

@@ -13,7 +13,7 @@ The `UNLOCK` method is a WebDAV extension (RFC 4918) used by clients to release 
 
 ## API Usage & Best Practices
 
-* **Provide the Lock-Token**: Supply the `Lock-Token` header naming the exact lock to remove, or the server cannot honour the request.
+* **Provide the Lock-Token**: Supply the `Lock-Token` header naming the exact lock to remove, or the server cannot honor the request.
 * **Release when done**: Always unlock as soon as editing finishes so other clients are not blocked longer than necessary.
 * **Idempotent removal**: Once a lock is gone the resource is simply unlocked, so repeating UNLOCK leaves the same end state.
 

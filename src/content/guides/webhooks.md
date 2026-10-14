@@ -18,15 +18,18 @@ Since clients expose public endpoints to receive webhooks, they need a mechanism
 
 ### Implementation steps:
 1. Provide the user with a shared secret key (e.g., in their developer dashboard).
-2. Before sending the webhook, compute a hash signature of the raw request body using HMAC SHA-256 and the shared secret:
+2. Before sending the webhook, sign the message ID, the timestamp and the raw request body together using HMAC SHA-256 and the shared secret. Signing the body alone leaves the timestamp open to tampering, which defeats replay protection:
    ```text
-   signature = HMAC-SHA256(secret, request_body)
+   signed_content = "{webhook-id}.{webhook-timestamp}.{body}"
+   signature      = base64(HMAC-SHA256(secret, signed_content))
    ```
-3. Send the signature in a custom header, along with a timestamp (to prevent replay attacks):
+3. Send the message ID, timestamp and signature in the three headers defined by [Standard Webhooks](/specifications/standard-webhooks), rather than inventing your own format:
    ```http
-   X-Webhook-Signature: t=1720440000,v1=5b7a192c0199cf8e184e27f...
+   webhook-id: msg_2KWPBgLlAfxdpx2AI54pPJ85f4W
+   webhook-timestamp: 1720440000
+   webhook-signature: v1,K5oZfzN95Z9UVu1EsfQmfVNQhnkZ2pj9o9NDN/H/pI4=
    ```
-4. The client computes the same hash using their copy of the secret and verifies it matches `v1`. They should also reject requests where the timestamp `t` differs significantly from the current time.
+4. The client recomputes the signature with their copy of the secret and compares it in constant time against each `v1` entry in `webhook-signature` (the header is a space-delimited list, so rotation can carry two). They should also reject requests where `webhook-timestamp` differs significantly from the current time, and use `webhook-id`, which stays the same across retries, to drop duplicates.
 
 ---
 
