@@ -9,20 +9,18 @@ pricing: "freemium"
 
 ## What is Sentry?
 
-Sentry is an application performance monitoring tool that helps developers and software teams identify errors and resolve issues. It assists in observing application behavior and provides debugging capabilities.
+Sentry is application monitoring software for developers and software teams to identify errors, resolve issues, and continuously learn. It provides a platform to address application problems without compromising development speed.
 
 ## Why use it in the API Lifecycle?
 
-* **Error Monitoring**: Tracks and identifies application errors, providing insights into their causes and impact.
-* **Performance Monitoring and Tracing**: Analyzes application performance, including slow queries, N+1 issues, and request timeouts, by connecting data through distributed traces.
-* **Session Replay**: Records and replays user sessions to provide visual context for errors and performance problems.
-* **AI-Assisted Debugging (Seer)**: Automatically identifies the root cause of issues and generates merge-ready patches using a debugging agent and code reviewer.
-* **AI Code Review**: Predicts and prevents errors before deployment by correlating PRs against error and performance history.
-* **Contextual Data Correlation**: Connects errors, logs, session replays, performance spans, and profiles through a unified tracing mechanism.
+* **Monitor in five lines**: Integrate the SDK with minimal code and without installing agents, avoiding performance impacts.
+* **Automatically root-cause any issue**: Identify critical issues before code merges and resolve them in production using Seer, a debugging agent and code reviewer.
+* **Agent tracing**: Monitor AI agents to detect unexpected outputs, incorrect tool calls, and visualize performance and cost.
+* **Stay in the flow**: Sentry integrates with platforms like GitHub, Slack, Jira, and Linear, and includes Sentry's MCP server for comprehensive context during issue resolution from development to production.
 
 ## Best Practices
 
-* Integrate the SDK with minimal code (e.g., five lines) early in your application's lifecycle for comprehensive error and performance data capture.
-* Adjust transaction sampling rates for tracing to balance data collection with performance impact, particularly when deploying to production environments.
-* Utilize debug mode during initial SDK setup to verify correct data transmission and behavior.
-* Leverage integrations with development tools such as GitHub, Slack, Jira, and Linear to embed error and performance context directly into existing team workflows.
+* Integrate Sentry SDKs early in the application lifecycle for comprehensive error capture.
+* Utilize Seer for automated root cause analysis and precise patch generation to streamline issue resolution.
+* Connect Sentry with existing development tools like GitHub and Slack to maintain workflow continuity and enhance collaboration around fixes.
+* Configure performance monitoring with appropriate sample rates to balance data collection with system overhead.

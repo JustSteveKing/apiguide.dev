@@ -1,10 +1,10 @@
 ---
+import { pageURL } from "@/utils/pagePath";
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
-import RelatedCard from '../../components/RelatedCard.astro';
 
 export async function getStaticPaths() {
   const errors = await getCollection('errors');
@@ -27,21 +27,27 @@ const relatedErrors = error.data.relatedCodes
 import { errorCategoryThemes } from '../../config/themes';
 
 const activeTheme = errorCategoryThemes[error.data.category];
+// The URI this page exists to be: the `type` member of an RFC 9457 response.
+const typeURI = `https://apiguide.dev/errors/${error.id}`;
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+import WireHero from '@/components/WireHero.astro';
+import RegistryGroup from '@/components/RegistryGroup.astro';
+import RegistryRow from '@/components/RegistryRow.astro';
+import { excerpt } from '@/utils/excerpt';
 
 const errorJsonLd = [
   getTechArticleSchema({
     headline: `${error.data.statusCode} ${error.data.title} Error Schema`,
     description: error.data.statusText,
-    url: Astro.url.href,
+    url: pageURL(Astro.url, Astro.site).href,
     category: activeTheme.label,
     publishedDate: error.data.publishedDate,
     updatedDate: error.data.updatedDate
   }),
   getBreadcrumbSchema([
-    { name: "API Errors", path: "/errors/" },
-    { name: error.data.title, path: `/errors/${error.id}/` }
+    { name: "API Errors", path: "/errors" },
+    { name: error.data.title, path: `/errors/${error.id}` }
   ])
 ];
 ---
@@ -51,16 +57,16 @@ const errorJsonLd = [
   description={`Authoritative reference schema and details for the HTTP ${error.data.statusCode} (${error.data.title}) error.`}
   jsonLd={errorJsonLd}
 >
-  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "API Errors Reference", href: "/errors/" },
+      { name: "Errors", href: "/errors" },
       { name: error.data.title }
     ]} />
 
-    <!-- Deprecation Notice (Always uses Uranium theme) -->
+    <!-- Deprecation notice: always red, since a deprecated type is a warning -->
     {error.data.deprecated && (
-      <div class="bg-uranium-100 border border-uranium-200 text-uranium-900 p-5 rounded-lg mb-8" role="alert">
+      <div class="bg-red-100 border border-red-200 text-red-900 p-5 rounded-lg mb-8" role="alert">
         <h2 class="font-bold text-lg mb-1">Deprecated</h2>
         <p class="text-sm">
           This error type has been deprecated. If you are designing new API endpoints, avoid throwing this error and consult the related errors listed below.
@@ -70,48 +76,48 @@ const errorJsonLd = [
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-6 text-paper-950">{error.data.title}</h1>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="HTTP Status">
-          <a href={`/status-codes/${error.data.statusCode}/`} class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold hover:underline ${activeTheme.badge}`}>
+      <h1 class="text-4xl font-bold tracking-tight mb-6 text-slate-950">{error.data.title}</h1>
+      <WireHero
+        lead={'"type": "'}
+        identity={typeURI}
+        trail={'"'}
+        size="md"
+        copy={typeURI}
+        copyLabel="Copy problem type URI"
+        dot={activeTheme.dot}
+        label={`Problem type, ${activeTheme.label.toLowerCase()}`}
+      />
+
+      <div class="mt-8 grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
+        <MetaItem label="Status code">
+          <a href={`/status-codes/${error.data.statusCode}`} class="text-ultra-600 hover:text-ultra-800 hover:underline">
             {error.data.statusCode} {error.data.statusText}
           </a>
         </MetaItem>
         <MetaItem label="Category" value={activeTheme.label} />
         <MetaItem label="Published" value={error.data.publishedDate.toISOString().split('T')[0]} />
         {error.data.updatedDate && (
-          <MetaItem label="Last Updated" value={error.data.updatedDate.toISOString().split('T')[0]} />
+          <MetaItem label="Updated" value={error.data.updatedDate.toISOString().split('T')[0]} />
         )}
       </div>
     </header>
 
     <!-- Markdown Content Body -->
-    <div class="border-b border-paper-300 pb-10 lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="border-b border-slate-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
         <Content />
       </article>
       <TableOfContents headings={headings} />
     </div>
 
-    <!-- Related Errors -->
     {relatedErrors.length > 0 && (
-      <section class="mt-10">
-        <h2 class="text-2xl font-bold mb-6 text-paper-800">Related Errors</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {relatedErrors.map(related => {
-            const relatedTheme = errorCategoryThemes[related.data.category];
-            return (
-              <RelatedCard 
-                href={`/errors/${related.id}/`}
-                title={related.data.title}
-                description={`HTTP ${related.data.statusCode} • ${related.data.statusText}`}
-                theme={related.data.category === 'client-error' ? 'ochre' : 'uranium'}
-              />
-            );
-          })}
-        </div>
-      </section>
+      <div class="mt-12">
+        <RegistryGroup id="related-errors" title="Related problem types" count={relatedErrors.length}>
+          {relatedErrors.map(r => (
+            <RegistryRow href={`/errors/${r.id}`} code={String(r.data.statusCode)} tone={errorCategoryThemes[r.data.category].tone} name={r.data.title} description={excerpt(r.body, 140)} />
+          ))}
+        </RegistryGroup>
+      </div>
     )}
   </main>
 </Layout>

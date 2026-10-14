@@ -23,7 +23,7 @@ Because the secret never travels over the wire, an attacker who intercepts a req
 
 Do not use MD5 or SHA-1. Both are considered cryptographically broken. HMAC is standardized in NIST FIPS 198-1, and SHA-256 (from FIPS 180-4) is the minimum recommended hash. Stripe explicitly forbids weaker hashes to prevent downgrade attacks.
 
-```
+```text
 signature = HMAC-SHA256(signing_secret, raw_request_body)
 ```
 
@@ -59,7 +59,7 @@ Use a **constant-time comparison** function that always inspects the full length
 * Go: `hmac.Equal()`
 * Python: `hmac.compare_digest()`
 
-```
+```text
 expected = HMAC-SHA256(secret, raw_body)
 received = decode(header["X-Hub-Signature-256"])
 
@@ -84,7 +84,7 @@ The sender includes a timestamp in the signed content and typically also in a he
 
 The Standard Webhooks specification defines the signed content as the message ID, timestamp, and payload joined by full stops, and sends metadata in the `webhook-id`, `webhook-timestamp`, and `webhook-signature` headers:
 
-```
+```text
 signed_content = f"{webhook_id}.{webhook_timestamp}.{raw_body}"
 signature      = base64(HMAC-SHA256(secret, signed_content))
 ```

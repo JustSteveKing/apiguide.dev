@@ -9,17 +9,20 @@ pricing: "freemium"
 
 ## What is Datadog APM?
 
-Datadog provides a cloud monitoring service that integrates metrics, traces, and logs from applications, tools, and services. It offers visibility into any stack or application at any scale. The platform unifies observability and security to support various operational needs.
+Datadog provides an integrated platform for monitoring and securing cloud environments. It offers tools for observability, security, digital experience, software delivery, and service management across various scales and applications. The platform helps users gain visibility into the health and performance of their systems.
 
 ## Why use it in the API Lifecycle?
 
-* **Infrastructure Monitoring**: Monitor infrastructure from a high-level overview down to deep details.
-* **Log Management**: Analyze and explore logs for rapid troubleshooting of issues.
-* **Application Performance Monitoring (APM)**: Monitor, optimize, and investigate application performance.
-* **Network Monitoring**: Analyze network traffic patterns across cloud environments.
-* **Synthetic Monitoring**: Proactively monitor critical application features.
-* **Security**: Provide unified security and observability to defend against AI-powered attacks.
+* **Infrastructure Monitoring**: Provides an overview and detailed metrics of infrastructure performance.
+* **Log Management**: Enables analysis and exploration of logs for troubleshooting.
+* **Application Performance Monitoring (APM)**: Monitors, optimizes, and investigates application performance.
+* **Bits AI**: Utilizes AI agents for issue investigation and remediation.
+* **Security**: Offers unified security and observability to address threats.
+* **Network Monitoring**: Analyzes network traffic patterns in cloud environments.
 
 ## Best Practices
 
-* Correlate your API logs with trace IDs so you can view the exact debug logs for a specific failing transaction.
+* Utilize the platform's unified view to correlate data across infrastructure, applications, and logs for comprehensive insights.
+* Implement AI agents for automated investigation and remediation workflows to accelerate issue resolution.
+* Leverage security features to monitor and defend against threats in dynamic cloud environments.
+* Proactively monitor critical application features using synthetic monitoring to detect issues before they impact users.

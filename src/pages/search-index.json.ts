@@ -14,43 +14,43 @@ export async function GET() {
     ...errors.map(e => ({
       title: `${e.data.statusCode} ${e.data.title}`,
       description: e.data.statusText,
-      url: `/errors/${e.id}/`,
+      url: `/errors/${e.id}`,
       type: 'Error Schema'
     })),
     ...statusCodes.map(sc => ({
       title: `${sc.data.code} ${sc.data.title}`,
       description: sc.data.description,
-      url: `/status-codes/${sc.data.code}/`,
+      url: `/status-codes/${sc.data.code}`,
       type: 'Status Code'
     })),
     ...headers.map(h => ({
       title: h.data.name,
       description: h.data.description,
-      url: `/headers/${h.id}/`,
+      url: `/headers/${h.id}`,
       type: 'HTTP Header'
     })),
     ...methods.map(m => ({
       title: m.data.name,
       description: m.data.description,
-      url: `/methods/${m.id}/`,
+      url: `/methods/${m.id}`,
       type: 'Request Verb'
     })),
     ...guides.map(g => ({
       title: g.data.title,
       description: g.data.description,
-      url: `/guides/${g.id}/`,
+      url: `/guides/${g.id}`,
       type: 'Developer Guide'
     })),
     ...specs.map(s => ({
       title: s.data.title,
       description: s.data.description,
-      url: `/specifications/${s.id}/`,
+      url: `/specifications/${s.id}`,
       type: 'API Spec'
     })),
     ...tools.map(t => ({
       title: t.data.name,
       description: t.data.description,
-      url: `/tools/${t.data.category}/${t.id}/`,
+      url: `/tools/${t.data.category}/${t.id}`,
       type: 'API Tool'
     }))
   ];

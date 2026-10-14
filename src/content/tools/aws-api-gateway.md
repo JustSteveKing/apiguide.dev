@@ -9,20 +9,20 @@ pricing: "paid"
 
 ## What is AWS API Gateway?
 
-Amazon API Gateway is a fully managed service that allows developers to create, publish, maintain, monitor, and secure HTTP, REST, and WebSocket APIs. It acts as a front door for applications to access backend services and functionality.
+Amazon API Gateway is a service for creating, publishing, maintaining, monitoring, and securing APIs at various scales. It supports RESTful APIs and WebSocket APIs for real-time communication. The service handles tasks such as traffic management, authorization, throttling, and API version management.
 
 ## Why use it in the API Lifecycle?
 
-* **API Creation and Management**: Allows developers to create, publish, and maintain HTTP, REST, and WebSocket APIs.
-* **Traffic Management**: Handles concurrent API calls, including request throttling, to ensure backend system stability.
-* **Authorization and Access Control**: Secures APIs using AWS IAM, Amazon Cognito, native OIDC/OAuth2 support, and custom Lambda authorizers.
-* **Performance Optimization**: Routes API requests through a global network of edge locations to reduce latency for end users.
-* **Monitoring**: Provides performance metrics, data latency, and error rates through an integrated dashboard with Amazon CloudWatch.
-* **API Version Management**: Enables running multiple versions of the same API simultaneously for iterative development and release.
+* **API Creation and Management**: Create, publish, maintain, and monitor HTTP, REST, and WebSocket APIs.
+* **Traffic Management**: Manage traffic, including throttling and API version management, for concurrent API calls.
+* **Security Controls**: Authorize API access using AWS Identity and Access Management (IAM), Amazon Cognito, OIDC, OAuth2, and custom Lambda authorizers.
+* **Performance Optimization**: Reduce latency for API requests and responses by utilizing a global network of edge locations with Amazon CloudFront.
+* **Developer Portals**: Create managed developer portals for APIs to facilitate central discovery, documentation, and governance across AWS infrastructure.
+* **Cost Optimization**: Utilize a tiered pricing model that reduces costs as API usage scales, with no minimum fees or upfront commitments.
 
 ## Best Practices
 
-* Utilize API versioning to iterate, test, and release new API versions.
-* Select HTTP APIs for basic proxy functions to manage costs efficiently, reserving REST APIs for scenarios requiring advanced management features.
-* Engage with available step-by-step tutorials to understand the service's functionalities before implementation.
-* Regularly monitor API performance, latency, and error metrics through the integrated CloudWatch dashboard.
+* Leverage HTTP APIs for serverless workloads and HTTP backends when only API proxy functionality is needed, as they can be more cost-effective.
+* Use REST APIs when both API proxy functionality and API management features are required in a single solution.
+* Implement WebSocket APIs for applications requiring real-time, two-way communication, such as chat applications or streaming dashboards.
+* Monitor API performance metrics and error rates through the API Gateway dashboard integrated with Amazon CloudWatch for operational insights.

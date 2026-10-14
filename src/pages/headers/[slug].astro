@@ -1,10 +1,10 @@
 ---
+import { pageURL } from "@/utils/pagePath";
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
-import RelatedCard from '../../components/RelatedCard.astro';
 
 export async function getStaticPaths() {
   const headers = await getCollection('headers');
@@ -27,27 +27,26 @@ const sortedRelatedCodes = relatedCodes.sort((a, b) => a.data.code - b.data.code
 import { headerCategoryThemes } from '../../config/themes';
 
 const activeTheme = headerCategoryThemes[h.data.category];
+const example = headerExampleValue(h.body, h.data.name);
 
-const getCodeTheme = (cat: string) => {
-  if (cat === 'client-error') return 'ochre';
-  if (cat === 'server-error') return 'uranium';
-  if (cat === 'success') return 'emerald';
-  if (cat === 'redirection') return 'chartres';
-  return 'yinmn';
-};
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+import WireHero from '@/components/WireHero.astro';
+import { headerExampleValue } from '@/utils/wireExample';
+import RegistryGroup from '@/components/RegistryGroup.astro';
+import RegistryRow from '@/components/RegistryRow.astro';
+import { statusCategoryThemes } from '@/config/themes';
 
 const headerJsonLd = [
   getTechArticleSchema({
     headline: `${h.data.name} HTTP Header Reference`,
     description: h.data.description,
-    url: Astro.url.href,
+    url: pageURL(Astro.url, Astro.site).href,
     category: activeTheme.label
   }),
   getBreadcrumbSchema([
-    { name: "HTTP Headers", path: "/headers/" },
-    { name: h.data.name, path: `/headers/${h.id}/` }
+    { name: "HTTP Headers", path: "/headers" },
+    { name: h.data.name, path: `/headers/${h.id}` }
   ])
 ];
 ---
@@ -57,76 +56,58 @@ const headerJsonLd = [
   description={`Detailed usage patterns, RFC specifications, and status code correlations for the HTTP ${h.data.name} header.`}
   jsonLd={headerJsonLd}
 >
-  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "HTTP Headers Reference", href: "/headers/" },
+      { name: "Headers", href: "/headers" },
       { name: h.data.name }
     ]} />
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
-        <code>{h.data.name}</code> Header
-      </h1>
-      <p class="text-lg text-paper-600 mb-6 italic">
+      <WireHero
+        identity={h.data.name}
+        heading
+        trail={example ? `: ${example}` : ':'}
+        copy={example ? `${h.data.name}: ${example}` : h.data.name}
+        copyLabel="Copy header line"
+        dot={activeTheme.dot}
+        label={activeTheme.label}
+      />
+      <p class="text-lg text-slate-700 mt-6 mb-8 max-w-2xl">
         {h.data.description}
       </p>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="Header Type">
-          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
-            {activeTheme.label}
-          </span>
-        </MetaItem>
-        <MetaItem label="Specification">
-          {h.data.standard ? (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-900 border border-emerald-200">
-              Standard RFC compliant
-            </span>
-          ) : (
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-ochre-100 text-ochre-900 border border-ochre-200">
-              Custom / Draft Extension
-            </span>
-          )}
-        </MetaItem>
-        <MetaItem label="Associated Codes" value={h.data.relatedCodes && h.data.relatedCodes.length > 0 ? h.data.relatedCodes.map(code => 'HTTP ' + code).join(',') : 'None'} />
+
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
+        <MetaItem label="Direction" value={activeTheme.label} />
+        <MetaItem label="Status" value={h.data.standard ? 'Standardized' : 'Not standardized'} />
+        {h.data.relatedCodes && h.data.relatedCodes.length > 0 && (
+          <MetaItem label="Seen with">
+            {h.data.relatedCodes.map((code, i) => (
+              <>{i > 0 && ', '}<a href={`/status-codes/${code}`} class="text-ultra-600 hover:text-ultra-800 hover:underline">{code}</a></>
+            ))}
+          </MetaItem>
+        )}
       </div>
     </header>
 
     <!-- Markdown Content Body -->
-    <div class="border-b border-paper-300 pb-10 lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="border-b border-slate-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
         <Content />
       </article>
       <TableOfContents headings={headings} />
     </div>
 
-    <!-- Associated HTTP Status Codes -->
-    <section class="mt-10">
-      <h2 class="text-2xl font-bold mb-6 text-paper-800">
-        Associated HTTP Status Codes
-      </h2>
-      
-      {sortedRelatedCodes.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {sortedRelatedCodes.map(code => (
-            <RelatedCard 
-              href={`/status-codes/${code.data.code}/`}
-              title={`HTTP ${code.data.code}: ${code.data.title}`}
-              description={code.data.description}
-              theme={getCodeTheme(code.data.category)}
-            />
+    {sortedRelatedCodes.length > 0 && (
+      <div class="mt-12">
+        <RegistryGroup id="related-codes" title="Status codes seen with it" count={sortedRelatedCodes.length}>
+          {sortedRelatedCodes.map(c => (
+            <RegistryRow href={`/status-codes/${c.data.code}`} code={String(c.data.code)} tone={statusCategoryThemes[c.data.category].tone} name={c.data.title} description={c.data.description} />
           ))}
-        </div>
-      ) : (
-        <div class="bg-paper-100 border border-paper-300 text-paper-700 p-5 rounded-xl text-sm">
-          <p>
-            No specific HTTP status codes are explicitly tied to the usage of the <code>{h.data.name}</code> header in our reference yet.
-          </p>
-        </div>
-      )}
-    </section>
+        </RegistryGroup>
+      </div>
+    )}
   </main>
 </Layout>
 

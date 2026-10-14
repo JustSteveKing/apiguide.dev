@@ -1,6 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
+import WireHero from '@/components/WireHero.astro';
+// Through Expressive Code like every fenced block in content, so this example
+// gets the same highlighting, frame and copy button.
+import { Code } from 'astro-expressive-code/components';
+
+const rateLimitExample = `{
+  "type": "https://apiguide.dev/errors/rate-limit-exceeded",
+  "title": "Rate Limit Exceeded",
+  "status": 429,
+  "detail": "Rate limit of 100 requests per minute exceeded for this API key.",
+  "instance": "/v1/leads"
+}`;
 
 // This page is hand-authored rather than a content collection, so its headings are
 // declared here in the same shape `render()` would return.
@@ -16,26 +28,36 @@ const headings = [
   title="Problem+JSON Specification (RFC 9457) | apiguide.dev"
   description="Comprehensive guide to the Problem+JSON error response format, URI types, self-documenting APIs, and standard implementation patterns."
 >
-  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
-    <!-- Breadcrumb -->
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <nav class="mb-8 text-sm" aria-label="Breadcrumb">
-      <a href="/errors/" class="text-chartres-600 hover:text-chartres-800 hover:underline">API Errors Reference</a>
-      <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
-      <span class="text-paper-600">Problem+JSON Specification</span>
+      <a href="/" class="text-ultra-600 hover:text-ultra-800 hover:underline">Home</a>
+      <span class="mx-2 text-slate-400" aria-hidden="true">/</span>
+      <a href="/errors" class="text-ultra-600 hover:text-ultra-800 hover:underline">Errors</a>
+      <span class="mx-2 text-slate-400" aria-hidden="true">/</span>
+      <span class="text-slate-700">Problem+JSON</span>
     </nav>
 
-    <h1 class="text-4xl font-extrabold tracking-tight mb-8 text-paper-950">Problem+JSON (RFC 9457) Guide</h1>
+    <header class="mb-12">
+      <h1 class="text-4xl font-bold tracking-tight mb-6 text-slate-950">Problem+JSON</h1>
+      <WireHero
+        lead="Content-Type: "
+        identity="application/problem+json"
+        size="md"
+        copy="Content-Type: application/problem+json"
+        copyLabel="Copy header line"
+      />
+    </header>
 
     <!-- Semantic Content Body -->
-    <div class="lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
-      <p class="text-lg leading-relaxed text-paper-800">
-        <strong>Problem+JSON</strong> (defined in <a href="https://datatracker.ietf.org/doc/html/rfc9457" class="text-chartres-600 hover:text-chartres-800 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9457</a>, which obsoletes RFC 7807) is a standardized format for carrying machine-readable details of errors in HTTP response payloads. It avoids the need to invent custom error formats for every API.
+      <p class="text-lg leading-relaxed text-slate-800">
+        <strong>Problem+JSON</strong> (defined in <a href="https://datatracker.ietf.org/doc/html/rfc9457" class="text-ultra-600 hover:text-ultra-800 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9457</a>, which obsoletes RFC 7807) is a standardized format for carrying machine-readable details of errors in HTTP response payloads. It avoids the need to invent custom error formats for every API.
       </p>
 
       <h2 id="why-a-standard-error-format">Why a standard error format?</h2>
       <p>
-        In traditional APIs, error formats vary wildy. One API might return <code>{`{"error": "message"}`}</code>, another might return <code>{`{"status": "fail", "code": 4041}`}</code>, and another might just return plain HTML.
+        In traditional APIs, error formats vary wildly. One API might return <code>{`{"error": "message"}`}</code>, another might return <code>{`{"status": "fail", "code": 4041}`}</code>, and another might just return plain HTML.
       </p>
       <p>
         Problem+JSON provides a predictable structure that clients can parse programmatically, while remaining flexible enough to contain custom attributes for complex validation or debugging information.
@@ -53,8 +75,8 @@ const headings = [
 
       <h2 id="why-is-type-a-uri">Why is <code>type</code> a URI?</h2>
       
-      <!-- Yinmn informational semantic note -->
-      <aside class="bg-yinmn-100 border-l-4 border-yinmn-500 p-5 text-yinmn-950 rounded-r-lg shadow-sm my-6" role="note">
+      <!-- Informational note -->
+      <aside class="bg-violet-100 border-l-4 border-violet-500 p-5 text-violet-950 rounded-r-lg shadow-sm my-6" role="note">
         <strong class="font-bold block mb-1">Key Concept</strong>
         The <code>type</code> field is the single most important aspect of RFC 9457. It MUST be a URI (such as <code>https://apiguide.dev/errors/rate-limit-exceeded</code>).
       </aside>
@@ -74,13 +96,7 @@ const headings = [
       <h2 id="example-implementation">Example Implementation</h2>
       <p>Here is how a rate limit exceeded error looks in Problem+JSON format:</p>
       
-      <pre class="bg-paper-100 border border-paper-300 rounded-lg p-5 overflow-x-auto font-mono text-sm text-paper-950"><code>{`{
-  "type": "https://apiguide.dev/errors/rate-limit-exceeded",
-  "title": "Rate Limit Exceeded",
-  "status": 429,
-  "detail": "Rate limit of 100 requests per minute exceeded for this API key.",
-  "instance": "/v1/leads"
-}`}</code></pre>
+      <Code lang="json" code={rateLimitExample} />
 
       <p>
         By pointing the <code>type</code> field to <code>https://apiguide.dev/errors/rate-limit-exceeded</code>, we ensure that both developers and automated client tooling have a single source of truth for understanding this HTTP response.

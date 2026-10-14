@@ -9,20 +9,18 @@ pricing: "open-source"
 
 ## What is Spectral (Stoplight)?
 
-Spectral is an open-source API style guide enforcer and linter. It uses rules to target API descriptions for quality improvement and enforces API Style Guide rules, such as naming conventions for OpenAPI models or prohibiting integers in URLs.
+Spectral is an open-source API style guide enforcer and linter. It can be used as a ruleset engine for JSON or YAML data, with specific consideration for OpenAPI, AsyncAPI, and JSON Schema. The tool helps in improving API description quality and enforcing API style guide rules.
 
 ## Why use it in the API Lifecycle?
 
-* **Generic Ruleset Engine**: Applies rules to JSON or YAML data, with specific support for OpenAPI, AsyncAPI, and JSON Schema.
-* **API Style Guide Enforcement**: Enforces API style guide rules, including naming conventions for models or restricting data types in URLs.
-* **Customizable Rulesets**: Allows users to utilize default rulesets, extend them, or create custom rulesets for organizational API style guides.
-* **Multiple Deployment Options**: Available as a CLI binary for macOS, Linux, and Windows, and as an NPM/Yarn package with a CLI and JavaScript API.
-* **Stoplight Platform Integration**: Integrates with Stoplight Platform to provide real-time feedback during API design and editing.
-* **Shareable Style Guide Projects**: Enables teams to share style guides and automatically generate documentation within Stoplight Platform.
+* **Style Guide Enforcement**: Apply custom rulesets or use default OpenAPI/AsyncAPI rulesets to ensure API descriptions adhere to organizational style guides, including naming conventions and data structure rules.
+* **Quality Improvement**: Validate API descriptions to ensure they are useful and follow best practices, preventing issues that can arise from permissive or vague specifications.
+* **Command-Line Interface and JavaScript API**: Utilize Spectral as a CLI binary for various operating systems or integrate it as an NPM/Yarn package with a JavaScript API into existing workflows and continuous integration pipelines.
+* **Stoplight Platform Integration**: Receive real-time feedback on API descriptions within the Stoplight Platform's visual editor, integrating linting directly into the design process.
 
 ## Best Practices
 
-* Automate API style guide enforcement to ensure consistency across APIs.
-* Create or extend rulesets to specifically match an organization's unique API style guide requirements.
-* Integrate Spectral into continuous integration (CI) pipelines to automate style guide checks.
-* Utilize visual editors, such as Stoplight Platform, to receive real-time feedback during API description authoring.
+* Automate API style guide enforcement to reduce manual decision-making and promote consistency across API descriptions within teams.
+* Use curated or custom style guides with Spectral to improve API quality and prevent common description pitfalls.
+* Incorporate Spectral into Continuous Integration pipelines to apply style guides consistently across different Git repositories.
+* Leverage Style Guide Projects in the Stoplight Platform to share and document style guides within an organization.

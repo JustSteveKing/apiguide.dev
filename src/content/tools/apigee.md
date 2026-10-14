@@ -9,20 +9,20 @@ pricing: "paid"
 
 ## What is Apigee (Google Cloud)?
 
-Apigee API Management is Google Cloud's native solution for building, managing, and securing APIs across various use cases and environments. It enables users to operate APIs with high performance and supports different architectural styles. The tool is designed for scale and can be deployed in diverse infrastructure setups.
+Apigee is Google Cloud’s API management tool designed to build, manage, and secure APIs across various use cases, environments, and scales. It provides comprehensive capabilities to support diverse API architectural styles and offers flexible pricing options.
 
 ## Why use it in the API Lifecycle?
 
-* **Gemini Code Assist in Apigee API Management**: Generate OpenAPI specifications from natural language and use @mention functionality in Cloud Code and Gemini Chat. Benefit from improved Enterprise Context with nested object support and proactive duplicate API prevention, as well as generate mock servers for parallel development.
-* **Universal catalog for your APIs**: Consolidate API specifications into API hub, which supports open standards. API hub allows developers to access APIs and govern them for consistent quality, and can generate assets like API proxies or integrations.
-* **Automated API Security with ML based abuse detection**: Advanced API Security detects undocumented and unmanaged APIs linked to Google Cloud L7 Load Balancers. It assesses managed APIs, flags those not meeting security standards, and uses ML-powered dashboards to identify critical API abuses, reducing incident response time.
-* **High-performance API proxies**: Orchestrate and manage API traffic supporting styles like REST, gRPC, SOAP, and GraphQL. It allows proxying internal microservices managed in a service mesh as REST APIs to enhance security.
-* **Hybrid/multicloud deployments**: Deploy APIs in various environments, including on-premises or any public cloud, by configuring Apigee hybrid. This allows hosting containerized runtime services in a Kubernetes cluster for agility while maintaining consistent API management.
-* **Traffic management and control policies**: Program API behavior without coding using over 50 configurable policies for security, rate limiting, transformation, and mediation. Custom scripts and code can extend API functionality.
+* **API Security with ML-based Abuse Detection**: Detects undocumented and unmanaged APIs linked to Google Cloud L7 Load Balancers, assesses managed APIs for security standards, and uses ML-powered dashboards to identify critical API abuses by finding patterns in bot alerts, reducing incident response time.
+* **High-performance API Proxies**: Orchestrates and manages traffic for applications, supporting styles like REST, gRPC, SOAP, and GraphQL. It allows proxying internal microservices managed in a service mesh as REST APIs to enhance security.
+* **Hybrid/Multicloud Deployments**: Enables architectural freedom to deploy APIs in any environment, including on-premises or public clouds, by configuring Apigee hybrid. It hosts and manages containerized runtime services in a Kubernetes cluster for agility and interoperability.
+* **Traffic Management and Control Policies**: Programs API behavior on API proxies without writing code using over 50 configurable policies for security, rate limiting, transformation, and mediation. Custom scripts can extend API functionality.
+* **Developer Portals Integrated into API Lifecycle**: Bundles APIs into API products and publishes them in integrated developer portals or customized Drupal experiences. It facilitates onboarding of partners/developers and secures access to APIs.
+* **Built-in and Custom API Analytics Dashboards**: Provides dashboards to analyze API traffic for performance, spikes, and improvement opportunities. Custom dashboards can be built to evaluate API quality and developer engagement.
 
 ## Best Practices
 
-* To build modern applications and architectures, build API proxies that enable applications to access data and functionality from various backend systems and decouple monolithic applications into microservices.
-* For modernizing legacy applications, modularize application components by using API proxies as a gateway to create an abstraction layer that insulates client-facing applications from backend services.
-* To create new business channels, publish API products in developer portals to onboard partners and define rate plans to monetize API consumption.
-* For uniform operations across hybrid or multicloud environments, utilize Apigee hybrid to host containerized runtime services in your own Kubernetes cluster to blend systems while maintaining consistent API control and compliance.
+* Consolidate API specifications into API hub to allow developers to access APIs and govern them to a consistent quality.
+* Deploy API proxies to control traffic to backend services with granular controls like security, rate limiting, and quotas.
+* Package legacy applications using API proxies as a gateway to create an abstraction layer that insulates client-facing applications from backend services.
+* Implement multi-layered security with advanced controls by combining Apigee, Cloud Armor, and reCAPTCHA Enterprise for comprehensive protection against various threats.

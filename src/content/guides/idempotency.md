@@ -33,6 +33,6 @@ When API clients experience network timeouts or receive [`429`](/status-codes/42
 * **Exponential Backoff**: Multiply the wait time exponentially for each failure (e.g. 1s, 2s, 4s, 8s).
 * **Jitter (Randomness)**: Add random variation to the wait time. Without jitter, all clients retrying a downed service will backoff and strike the service at the exact same synchronized intervals, creating a "thundering herd" effect.
 
-```
+```text
 sleep = random_between(0, base * (factor ^ attempt))
 ```

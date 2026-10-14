@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
     <defs>
         <linearGradient id="favicon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#2852B8" />
-            <stop offset="100%" stop-color="#162750" />
+            <stop offset="0%" stop-color="#2B2FD9" />
+            <stop offset="100%" stop-color="#1A1D8F" />
         </linearGradient>
     </defs>
     <!-- Rounded squircle background -->
@@ -14,8 +14,8 @@
                 stroke-linecap="round" 
                 stroke-linejoin="round" 
                 stroke-width="0.75"
-                stroke="#FAF6F0"
-                fill="#FAF6F0"
+                stroke="#F7F8FA"
+                fill="#F7F8FA"
                 d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
             />
         </svg>

@@ -34,7 +34,7 @@ A common mistake is returning 429 for global outages just because it feels close
 
 Pair this with real headers on the response, not just the body:
 
-```
+```http
 Retry-After: 42
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 0

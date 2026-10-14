@@ -1,0 +1,86 @@
+---
+/**
+ * The opening line of a reference page, set as the HTTP text it documents:
+ * `HTTP/1.1 409 Conflict`, `Retry-After: 120`, `GET request-target HTTP/1.1`,
+ * or an error's `type` URI.
+ *
+ * This is the one bold element on the page, so everything around it stays
+ * quiet. The parts of the line that are protocol grammar (`lead`, `trail`)
+ * are muted; the part that is this page's identity is full ink, and is the
+ * page's h1 when `heading` is set.
+ */
+interface Props {
+  identity: string;
+  lead?: string;
+  trail?: string;
+  /** Render the identity as the page's h1. */
+  heading?: boolean;
+  /** Text the copy button puts on the clipboard. No button when absent. */
+  copy?: string;
+  copyLabel?: string;
+  /** Status dot colour, from a `dot` in src/config/themes.ts. */
+  dot?: string;
+  /** Category label shown beside the dot, such as "Client error (4xx)". */
+  label?: string;
+  /** Long values such as URIs use the smaller size so they wrap less. */
+  size?: 'lg' | 'md';
+}
+
+const { identity, lead, trail, heading = false, copy, copyLabel = 'Copy', dot, label, size = 'lg' } = Astro.props;
+const Identity = heading ? 'h1' : 'span';
+const sizeClass = size === 'lg' ? 'wire-lg' : 'wire-md';
+// Let URIs and paths break after a slash rather than mid-segment.
+const parts = identity.split(/(?<=\/)/);
+---
+
+<div class="wire-hero surface relative overflow-hidden px-6 py-6 sm:px-8 sm:py-7">
+  <div class="wire-hero-glow" aria-hidden="true"></div>
+  {label && (
+    <p class="mb-4 flex items-center gap-2 text-sm text-slate-700">
+      {dot && <span class={`h-2 w-2 rounded-full ${dot}`} aria-hidden="true"></span>}
+      {label}
+    </p>
+  )}
+  <div class="flex items-start justify-between gap-4">
+    <div class={`wire-line ${sizeClass} font-mono text-slate-950 min-w-0`}>
+      {lead && <span class="text-slate-600">{lead}</span>}<Identity class="inline font-mono font-medium">{parts.map((part, i) => <>{i > 0 && <wbr />}{part}</>)}</Identity>{trail && <span class="text-slate-600">{trail}</span>}
+    </div>
+    {copy && (
+      <button
+        type="button"
+        class="wire-copy shrink-0 mt-1 h-8 px-3 rounded-full border border-slate-950/[0.1] bg-slate-950/[0.04] text-xs font-medium text-slate-800 hover:text-slate-950 hover:border-ultra-500/60 hover:bg-ultra-500/10 transition-colors data-[copied]:border-green-600 data-[copied]:text-green-800"
+        data-copy={copy}
+        aria-label={`${copyLabel}: ${copy}`}
+      >
+        <span data-copy-idle>Copy</span><span data-copy-done hidden>Copied</span>
+      </button>
+    )}
+  </div>
+</div>
+
+<script>
+  function initWireCopy() {
+    for (const button of document.querySelectorAll<HTMLButtonElement>('.wire-copy')) {
+      if (button.dataset.bound) continue;
+      button.dataset.bound = 'true';
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(button.dataset.copy ?? '');
+        } catch {
+          return;
+        }
+        const idle = button.querySelector<HTMLElement>('[data-copy-idle]');
+        const done = button.querySelector<HTMLElement>('[data-copy-done]');
+        button.dataset.copied = '';
+        idle?.setAttribute('hidden', '');
+        done?.removeAttribute('hidden');
+        setTimeout(() => {
+          delete button.dataset.copied;
+          done?.setAttribute('hidden', '');
+          idle?.removeAttribute('hidden');
+        }, 1600);
+      });
+    }
+  }
+  document.addEventListener('astro:page-load', initWireCopy);
+</script>

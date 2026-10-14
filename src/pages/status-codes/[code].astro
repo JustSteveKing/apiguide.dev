@@ -1,10 +1,10 @@
 ---
+import { pageURL } from "@/utils/pagePath";
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
-import RelatedCard from '../../components/RelatedCard.astro';
 
 export async function getStaticPaths() {
   const statusCodes = await getCollection('statusCodes');
@@ -32,30 +32,27 @@ const relatedStatusCodes = sc.data.relatedCodes
   : [];
 const sortedRelatedCodes = relatedStatusCodes.sort((a, b) => a.data.code - b.data.code);
 
-const getCodeTheme = (cat: string) => {
-  if (cat === 'client-error') return 'ochre';
-  if (cat === 'server-error') return 'uranium';
-  if (cat === 'success') return 'emerald';
-  if (cat === 'redirection') return 'chartres';
-  return 'yinmn';
-};
 
 import { statusCategoryThemes } from '../../config/themes';
 
 const activeTheme = statusCategoryThemes[sc.data.category];
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
+import WireHero from '@/components/WireHero.astro';
+import RegistryGroup from '@/components/RegistryGroup.astro';
+import RegistryRow from '@/components/RegistryRow.astro';
+import { excerpt } from '@/utils/excerpt';
 
 const scJsonLd = [
   getTechArticleSchema({
     headline: `HTTP ${sc.data.code} ${sc.data.title} Reference`,
     description: sc.data.description,
-    url: Astro.url.href,
+    url: pageURL(Astro.url, Astro.site).href,
     category: activeTheme.label
   }),
   getBreadcrumbSchema([
-    { name: "HTTP Status Codes", path: "/status-codes/" },
-    { name: `HTTP ${sc.data.code}`, path: `/status-codes/${sc.data.code}/` }
+    { name: "HTTP Status Codes", path: "/status-codes" },
+    { name: `HTTP ${sc.data.code}`, path: `/status-codes/${sc.data.code}` }
   ])
 ];
 ---
@@ -65,113 +62,71 @@ const scJsonLd = [
   description={`Detailed guide explaining when and how to use HTTP status code ${sc.data.code} (${sc.data.title}) in REST APIs, including specific error subtypes.`}
   jsonLd={scJsonLd}
 >
-  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "HTTP Status Codes Reference", href: "/status-codes/" },
-      { name: `HTTP ${sc.data.code}` }
+      { name: "Status codes", href: "/status-codes" },
+      { name: `${sc.data.code} ${sc.data.title}` }
     ]} />
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
-        HTTP {sc.data.code} &mdash; {sc.data.title}
-      </h1>
-      <p class="text-lg text-paper-600 mb-6 italic">
+      <WireHero
+        lead="HTTP/1.1 "
+        identity={`${sc.data.code} ${sc.data.title}`}
+        heading
+        copy={`HTTP/1.1 ${sc.data.code} ${sc.data.title}`}
+        copyLabel="Copy status line"
+        dot={activeTheme.dot}
+        label={activeTheme.label}
+      />
+      <p class="text-lg text-slate-700 mt-6 mb-8 max-w-2xl">
         {sc.data.description}
       </p>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
-        <MetaItem label="Status Code">
-          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
-            HTTP {sc.data.code}
-          </span>
-        </MetaItem>
+
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
         <MetaItem label="Category" value={activeTheme.label} />
-        <MetaItem label="API Error Subtypes" value={`${matchingErrors.length} ${matchingErrors.length === 1 ? 'error schema' : 'error schemas'}`} />
-        <MetaItem label="HTTP Headers" value={`${matchingHeaders.length} ${matchingHeaders.length === 1 ? 'header' : 'headers'}`} />
+        <MetaItem label="API error types" value={`${matchingErrors.length} ${matchingErrors.length === 1 ? 'error schema' : 'error schemas'}`} />
+        <MetaItem label="Related headers" value={`${matchingHeaders.length} ${matchingHeaders.length === 1 ? 'header' : 'headers'}`} />
       </div>
     </header>
 
     <!-- Markdown Content Body -->
-    <div class="border-b border-paper-300 pb-10 lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="border-b border-slate-300 pb-10 flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
         <Content />
       </article>
       <TableOfContents headings={headings} />
     </div>
 
-    <!-- Specific API Errors Using This Status Code -->
-    <section class="mt-10">
-      <h2 class="text-2xl font-bold mb-6 text-paper-800">
-        Specific API Error Types for {sc.data.code}
-      </h2>
-      
-      {matchingErrors.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {matchingErrors.map(error => (
-            <RelatedCard 
-              href={`/errors/${error.id}/`}
-              title={error.data.title}
-              description={`Custom error schema (Slug: ${error.id})`}
-              badge={error.data.deprecated ? "Deprecated" : undefined}
-              theme={error.data.category === 'client-error' ? 'ochre' : 'uranium'}
-            />
+    {matchingErrors.length > 0 && (
+      <div class="mt-12">
+        <RegistryGroup id="error-types" title={`Problem types for ${sc.data.code}`} count={matchingErrors.length}>
+          {matchingErrors.map(e => (
+            <RegistryRow href={`/errors/${e.id}`} name={e.data.title} description={excerpt(e.body, 140)} note={e.data.deprecated ? 'Deprecated' : undefined} />
           ))}
-        </div>
-      ) : (
-        <div class="bg-paper-100 border border-paper-300 text-paper-700 p-5 rounded-xl text-sm">
-          <p>
-            No specific Problem+JSON schemas have been defined for HTTP {sc.data.code} on apiguide.dev yet.
-          </p>
-        </div>
-      )}
-    </section>
+        </RegistryGroup>
+      </div>
+    )}
 
-    <!-- Associated HTTP Headers -->
-    <section class="mt-12 border-t border-paper-300 pt-10">
-      <h2 class="text-2xl font-bold mb-6 text-paper-800">
-        Associated HTTP Headers
-      </h2>
-      
-      {matchingHeaders.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {matchingHeaders.length > 0 && (
+      <div class="mt-12">
+        <RegistryGroup id="related-headers" title="Headers seen with it" count={matchingHeaders.length}>
           {matchingHeaders.map(h => (
-            <RelatedCard 
-              href={`/headers/${h.id}/`}
-              title={h.data.name}
-              description={h.data.description}
-              theme="yinmn"
-            />
+            <RegistryRow href={`/headers/${h.id}`} code={h.data.name} codeWidth="lg" name={h.data.name} description={h.data.description} />
           ))}
-        </div>
-      ) : (
-        <div class="bg-paper-100 border border-paper-300 text-paper-700 p-5 rounded-xl text-sm">
-          <p>
-            No specific HTTP headers are explicitly linked to HTTP {sc.data.code} in our directory yet.
-          </p>
-        </div>
-      )}
-    </section>
+        </RegistryGroup>
+      </div>
+    )}
 
-    <!-- Related HTTP Status Codes -->
     {sortedRelatedCodes.length > 0 && (
-      <section class="mt-12 border-t border-paper-300 pt-10">
-        <h2 class="text-2xl font-bold mb-6 text-paper-800">
-          Related HTTP Status Codes
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {sortedRelatedCodes.map(code => (
-            <RelatedCard
-              href={`/status-codes/${code.data.code}/`}
-              title={`HTTP ${code.data.code}: ${code.data.title}`}
-              description={code.data.description}
-              theme={getCodeTheme(code.data.category)}
-            />
+      <div class="mt-12">
+        <RegistryGroup id="related-codes" title="Codes to compare" count={sortedRelatedCodes.length}>
+          {sortedRelatedCodes.map(c => (
+            <RegistryRow href={`/status-codes/${c.data.code}`} code={String(c.data.code)} tone={statusCategoryThemes[c.data.category].tone} name={c.data.title} description={c.data.description} />
           ))}
-        </div>
-      </section>
+        </RegistryGroup>
+      </div>
     )}
   </main>
 </Layout>

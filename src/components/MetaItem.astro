@@ -6,9 +6,12 @@ interface Props {
 
 const { label, value } = Astro.props;
 ---
-<div class="border border-paper-300 rounded-xl p-4 bg-paper-100/30 backdrop-blur-xs flex flex-col justify-between">
-  <span class="block text-paper-600 font-medium text-xs mb-1.5">{label}</span>
-  <span class="text-paper-900 font-semibold text-sm">
+{/* One row per item on a phone, one cell per item from sm up. No box of its
+    own: the panel it sits in is the box, and a box per item inside it cost a
+    third of a phone screen before the content started. */}
+<div class="flex items-baseline justify-between gap-4 py-2.5 border-b border-slate-300 last:border-b-0 sm:block sm:py-0 sm:border-b-0">
+  <span class="block text-slate-700 font-medium text-xs sm:mb-1.5">{label}</span>
+  <span class="text-slate-900 font-semibold text-sm text-right sm:text-left">
     {value !== undefined ? value : <slot />}
   </span>
 </div>

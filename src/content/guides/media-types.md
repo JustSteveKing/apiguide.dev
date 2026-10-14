@@ -14,7 +14,7 @@ Media types, also called MIME types or content types, identify the format of dat
 
 A media type is a `type/subtype` pair, optionally followed by `;` parameters. Type and subtype names are case-insensitive; parameter values follow per-parameter rules.
 
-```
+```text
 application/vnd.api+json; version=2
 └─────────┘ └─┘└─┘ └──┘  └───────┘
    type    tree name suffix parameter

@@ -1,6 +1,6 @@
 # OG card fonts
 
-These are the Latin subsets of the site's two typefaces, used **only** at build time by
+These are Latin subsets of Inter, the site's text and display typeface, used **only** at build time by
 `src/pages/og/[...path].ts` to convert social-card text into SVG paths.
 
 They are not served to browsers. The site itself now self-hosts its typefaces as variable
@@ -23,12 +23,11 @@ resolution from the pipeline entirely, so a card looks the same wherever it is b
 
 | File | Used for | Licence |
 | --- | --- | --- |
-| `lora-latin-700-normal.woff2` | Card title, matching the site's `--font-display` | OFL 1.1, see `Lora-OFL.txt` |
 | `inter-latin-400-normal.woff2` | Card subtitle and the `.dev` in the wordmark | OFL 1.1, see `Inter-OFL.txt` |
 | `inter-latin-600-normal.woff2` | Category label and footer tagline | OFL 1.1, see `Inter-OFL.txt` |
-| `inter-latin-700-normal.woff2` | `apiguide` in the wordmark | OFL 1.1, see `Inter-OFL.txt` |
+| `inter-latin-700-normal.woff2` | Card title and `apiguide` in the wordmark | OFL 1.1, see `Inter-OFL.txt` |
 
-One file per weight rather than two variable fonts: fontkitten cannot instance a variation
+One file per weight rather than one variable font: fontkitten cannot instance a variation
 out of a WOFF2 (`getVariation()` returns an object whose tables are undefined), so static
 instances are the workable form. Roughly 93KB in total, and build-time only.
 
@@ -41,9 +40,9 @@ they do not cover, so a title carrying something exotic degrades rather than ren
 Static per-weight subsets come from the Fontsource mirror:
 
 ```
-curl -L -o lora-latin-700-normal.woff2 \
-  https://cdn.jsdelivr.net/npm/@fontsource/lora/files/lora-latin-700-normal.woff2
+curl -L -o inter-latin-700-normal.woff2 \
+  https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff2
 ```
 
-Google's own CDN now serves a variable file for every weight of both families, which is why
+Google's own CDN now serves a variable file for every weight, which is why
 it is not the source here.

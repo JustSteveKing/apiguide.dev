@@ -9,20 +9,20 @@ pricing: "freemium"
 
 ## What is Zuplo?
 
-Zuplo is a fully-managed API management platform designed for developers. It enables teams to launch and manage APIs by adding features like rate-limiting and authentication quickly, without the complexity of traditional gateways. The platform integrates with GitOps workflows to manage API configurations and deployments.
+Zuplo is a unified gateway for managing APIs, AI models, and Model Context Protocol (MCP) calls. It functions as a programmable policy engine to secure, govern, and observe traffic across these different services, whether they are inbound or outbound. The platform provides a single point for enforcing policies such as authentication, rate limits, and auditing.
 
 ## Why use it in the API Lifecycle?
 
-* **Authentication and Access Control**: Supports various authentication methods including JWT, OAuth2, mTLS, and API keys, alongside access control policies.
-* **Rate Limiting and Quotas**: Enables the application of per-key quotas and rate limits at the edge for API traffic governance.
-* **AI Gateway Functionality**: Provides capabilities to route traffic between AI providers, enforce budgets, semantically cache responses, and block prompt injections.
-* **MCP Server Generation**: Allows for the automatic generation of Model Context Protocol (MCP) servers from existing APIs, including scoped tool access and authentication.
-* **Global Edge Deployment**: Deploys APIs to over 300 edge locations, offering sub-50ms latency and auto-scaling capabilities.
-* **API Monetization Tools**: Includes a self-serve developer portal with tiered pricing, usage tracking, and built-in billing to convert API traffic into revenue.
+* **AI Gateway**: Routes LLM traffic, manages budgets per team, and applies guardrails.
+* **MCP Gateway**: Manages access for AI agents via MCP, providing scoped and audited access.
+* **MCP Server**: Publishes OpenAPI specifications as MCP tools.
+* **API Management**: Provides API keys, rate limits, and GitOps integration.
+* **Authentication**: Supports API keys, JWT, and OAuth with per-key rate limits for users and agents.
+* **API Monetization**: Enables metering, pricing, and billing for APIs and AI based on requests or tokens, integrated with Stripe.
 
 ## Best Practices
 
-* Adopt a GitOps workflow to manage API configurations, authentication, and rate limits through version control for rapid deployment and consistent environments.
-* Define security, access controls, and traffic rules centrally, then enforce them uniformly across all teams and projects to ensure standardization and compliance.
-* Leverage integrated audit logs, usage analytics, and cost attribution features to meet compliance requirements and support internal reporting.
-* Delegate infrastructure maintenance, security, and scaling to the platform to allow engineering teams to focus on developing and shipping API features.
+* Consolidate API, LLM, and MCP traffic through the gateway to apply consistent authentication, rate limiting, spend caps, and audit policies.
+* Implement dynamic rate limiting to manage and prevent cost spikes from unmetered traffic to origins.
+* Utilize the platform's logging and attribution features to understand agent activity, identify denial clusters, and analyze latency trends.
+* Transition existing API management systems incrementally by starting with new traffic types (LLM calls, MCP servers) and then migrating other API routes to consolidate operations.

@@ -1,4 +1,5 @@
 ---
+import { pageURL } from "@/utils/pagePath";
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
@@ -25,12 +26,12 @@ const guideJsonLd = [
   getTechArticleSchema({
     headline: g.data.title,
     description: g.data.description,
-    url: Astro.url.href,
+    url: pageURL(Astro.url, Astro.site).href,
     category: activeTheme.label
   }),
   getBreadcrumbSchema([
-    { name: "Guides", path: "/guides/" },
-    { name: g.data.title, path: `/guides/${g.id}/` }
+    { name: "Guides", path: "/guides" },
+    { name: g.data.title, path: `/guides/${g.id}` }
   ])
 ];
 ---
@@ -40,31 +41,31 @@ const guideJsonLd = [
   description={g.data.description}
   jsonLd={guideJsonLd}
 >
-  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "Guides", href: "/guides/" },
+      { name: "Guides", href: "/guides" },
       { name: g.data.title }
     ]} />
 
     <!-- Title & Metadata -->
-    <header class="mb-10 border-b border-paper-300 pb-6">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">
+    <header class="mb-10">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-slate-950">
         {g.data.title}
       </h1>
-      <p class="text-lg text-paper-600 mb-4">
+      <p class="text-lg text-slate-600 mb-4">
         {g.data.description}
       </p>
       <div class="flex items-center gap-2 text-sm">
-        <span class="text-paper-600">Topic:</span>
-        <span class={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider ${activeTheme.badge}`}>
+        <span class="text-slate-600">Topic:</span>
+        <span class={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
           {activeTheme.label}
         </span>
       </div>
     </header>
 
     <!-- Markdown Content Body -->
-    <div class="lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
         <Content />
       </article>

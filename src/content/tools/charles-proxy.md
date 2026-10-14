@@ -9,19 +9,20 @@ pricing: "paid"
 
 ## What is Charles Proxy?
 
-Charles is an HTTP proxy, HTTP monitor, and web debugging proxy application. It sits between a machine and the Internet as a forward proxy, letting developers view all HTTP and SSL/HTTPS traffic passing through. This includes requests, responses, and HTTP headers containing cookies and caching information.
+Charles is an HTTP proxy, HTTP monitor, and Reverse Proxy application that allows developers to view all HTTP and SSL/HTTPS traffic between their machine and the Internet. It captures requests, responses, and HTTP headers, including cookies and caching information. The tool is available for Windows, Mac OS, and Linux.
 
 ## Why use it in the API Lifecycle?
 
-* **Traffic Recording**: Records all HTTP and HTTPS traffic between the machine and the Internet.
-* **Content Inspection**: Displays the contents of HTTP requests, responses, cookies, and headers.
-* **SSL/HTTPS Support**: Functions as an SSL/HTTPS proxy to inspect encrypted traffic.
-* **Network Throttling**: Allows simulation of slower internet connection speeds for testing.
-* **Traffic Statistics**: Provides statistics for network activity.
+* **Traffic Recording**: Records all traffic between the browser and the Internet.
+* **Content Visibility**: Reveals the contents of all requests, responses, cookies, and headers.
+* **SSL and HTTPS Support**: Supports SSL and HTTPS traffic analysis.
+* **Slow Internet Simulation**: Simulates slower internet connections.
+* **Download Statistics**: Provides download statistics.
+* **Configurable**: Offers configurable settings.
 
 ## Best Practices
 
-* Utilize Charles for observing and modifying traffic during mobile application testing workflows.
-* Employ Charles to debug HTTP connections specifically for mobile devices.
-* Analyze application store XML data by proxying traffic through Charles.
-* Debug Flash/server interactions by monitoring traffic flows in Charles.
+* Utilize Charles to identify and resolve bugs related to HTTP/S communication.
+* Employ the tool for detailed analysis of HTTP headers, cookies, and caching information during development.
+* Use the slow internet simulation feature to test application performance under various network conditions.
+* Monitor traffic with mobile devices using Charles for comprehensive testing as described in external reviews.

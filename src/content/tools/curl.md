@@ -9,17 +9,20 @@ pricing: "open-source"
 
 ## What is curl?
 
-curl is a command-line tool and library designed for transferring data using various network protocols with URLs. It is used in scripts for data transfer and is also available as libcurl, which serves as the Internet transfer engine for numerous software applications across many devices. The tool is integrated into over twenty billion installations globally.
+curl is a command-line tool and library for transferring data with URLs. It is used in command lines or scripts for data transfer and also as libcurl, an Internet transfer engine integrated into numerous devices and software applications.
 
 ## Why use it in the API Lifecycle?
 
-* **Protocol Support**: Supports a wide array of protocols for data transfer, including HTTP, HTTPS, FTP, FTPS, SFTP, SMTP, IMAP, and LDAP.
-* **HTTP Capabilities**: Provides comprehensive HTTP functionality, including support for HTTP/0.9 through HTTP/3, cookies, custom headers, and following redirects.
-* **Authentication Mechanisms**: Offers various authentication methods such as Basic, Digest, CRAM-MD5, SCRAM-SHA, NTLM, Negotiate, Kerberos, Bearer tokens, and AWS Sigv4.
-* **TLS/SSL Features**: Includes support for TLS versions 1.0-1.3, mutual authentication, STARTTLS, OCSP stapling, and key pinning.
-* **Name Resolution**: Enables advanced name resolution features including DNS-over-HTTPS, custom address configuration for hosts, and DNS caching.
-* **Transfer Control**: Allows for detailed control over transfers, including rate limiting, stall detection, retries, and configurable timeouts.
+* **Protocol Support**: Supports a wide range of protocols including DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, MQTTS, POP3, POP3S, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS, WSS.
+* **Proxy Capabilities**: Functions with various proxy types such as SOCKS4, SOCKS5, HTTP, HTTPS (HTTP/1 and HTTP/2), tunneling, via Unix domain sockets, HAProxy, and SOCKS+HTTP proxy chains.
+* **HTTP Feature Set**: Provides extensive HTTP functionality including GET, POST, PUT, HEAD, multipart formpost, support for HTTP/0.9 to HTTP/3, HSTS, Alt-Svc, cookies, ETags, transfer compression, ranges, custom headers, custom methods, and redirect following.
+* **Authentication Mechanisms**: Offers support for authentication methods including Basic, Plain, Digest, CRAM-MD5, SCRAM-SHA, NTLM, Negotiate, Kerberos, Bearer tokens, AWS Sigv4, SASL, and .netrc.
+* **TLS and Security Features**: Supports TLS versions 1.0-1.3, mutual authentication, STARTTLS, OCSP stapling, ECH, False Start, key pinning, PQC readiness, session resumption, early data, and export/import of sessions.
+* **Connection Management**: Includes features such as connection reuse, interface binding, Happy Eyeballs, IPv4/IPv6-only modes, Unix domain sockets, TCP keepalive, TCP Fast Open, TCP Nodelay, MPTCP, VLAN priority, and IP Type Of Service.
 
 ## Best Practices
 
-* Use the `-i` flag to include response headers in the output, which is crucial when debugging CORS, caching, or rate limits.
+* Utilize the 'Everything curl' e-book for comprehensive understanding of curl and libcurl functionalities.
+* Refer to the official documentation and man page for detailed usage instructions and parameters.
+* Engage with the curl-users or curl-library mailing lists for community support and discussions.
+* Report bugs and security issues through the designated channels to contribute to project improvement.

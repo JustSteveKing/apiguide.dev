@@ -2,6 +2,10 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { guideCategories, guideCategoryThemes } from '../../config/themes';
+import IndexHeader from '@/components/IndexHeader.astro';
+import SectionJump from '@/components/SectionJump.astro';
+import RegistryGroup from '@/components/RegistryGroup.astro';
+import RegistryRow from '@/components/RegistryRow.astro';
 
 const allGuides = await getCollection('guides');
 
@@ -24,62 +28,25 @@ const sections = guideCategories
   .filter(section => section.guides.length > 0);
 ---
 
-<Layout 
+<Layout
   title="API Guides & Specifications | apiguide.dev"
   description="In-depth developer guides on API design, versioning, reliability, webhooks, caching, security and agent-readiness."
 >
   <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
-    <!-- Header -->
-    <header class="mb-12 border-b border-paper-300 pb-8">
-      <nav class="mb-4 text-sm" aria-label="Breadcrumb">
-        <a href="/" class="text-chartres-600 hover:text-chartres-800 hover:underline">Home</a>
-        <span class="mx-2 text-paper-400" aria-hidden="true">/</span>
-        <span class="text-paper-600">Guides</span>
-      </nav>
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950">Developer Guides</h1>
-      <p class="text-lg text-paper-600 max-w-2xl">
-        Authoritative guides mapping complex HTTP specifications to concrete web API design patterns, in eight sections from the shape of a resource to what a model makes of it.
-      </p>
-    </header>
+    <IndexHeader
+      crumb="Guides"
+      title="Guides"
+      intro="Long-form guides to designing HTTP APIs, in eight sections from the shape of a resource to what a model makes of it."
+    >
+      <SectionJump items={sections.map(section => ({ href: `#cat-${section.category}`, label: section.label, count: section.guides.length }))} />
+    </IndexHeader>
 
-    <!-- Guides List -->
-    <div class="space-y-16">
-      {sections.map(section => (
-        <section aria-labelledby={`cat-${section.category}`}>
-          <div class="mb-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-paper-300 pb-3">
-            <h2 id={`cat-${section.category}`} class="text-2xl font-bold tracking-tight text-paper-950">
-              {section.label}
-            </h2>
-            <span class={`inline-flex items-center px-2.5 py-0.5 rounded text-xxs font-semibold uppercase tracking-wider ${section.badge}`}>
-              {section.guides.length} {section.guides.length === 1 ? 'guide' : 'guides'}
-            </span>
-            <p class="w-full text-sm text-paper-700">{section.blurb}</p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {section.guides.map(g => (
-              <div class="card border border-paper-300 rounded-xl p-6 bg-paper-100/50 hover:bg-paper-100 hover:shadow-md transition-all flex flex-col justify-between">
-                <div>
-                  <h3 class="text-xl font-bold text-paper-950 mb-3">
-                    <a href={`/guides/${g.id}/`} class="text-chartres-600 hover:text-chartres-800 hover:underline">
-                      {g.data.title}
-                    </a>
-                  </h3>
-                  <p class="text-sm text-paper-700 leading-relaxed mb-6">
-                    {g.data.description}
-                  </p>
-                </div>
-                <div class="text-xs text-paper-600 font-medium border-t border-paper-300 pt-4">
-                  <a href={`/guides/${g.id}/`} class="text-chartres-600 hover:underline">
-                    Read full guide &rarr;
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
-
+    {sections.map(section => (
+      <RegistryGroup id={`cat-${section.category}`} title={section.label} count={section.guides.length} blurb={section.blurb} columns={2}>
+        {section.guides.map(g => (
+          <RegistryRow href={`/guides/${g.id}`} name={g.data.title} description={g.data.description} />
+        ))}
+      </RegistryGroup>
+    ))}
   </main>
 </Layout>

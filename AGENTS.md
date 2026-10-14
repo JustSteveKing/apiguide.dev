@@ -54,13 +54,75 @@ just check its status.
 `check:internal-links` needs no network and no Tabstack, only a build. It is
 the cheapest of the four and the one most likely to catch your mistake.
 
-`bun run check:content` runs all three checks in order.
+`bun run check:content` runs `check:internal-links`, `check:gaps` and
+`check:links` in that order. It does not run `factcheck`.
+
+`factcheck` defaults to files changed against `HEAD~1`. To check one page,
+which is the nearest thing this repo has to running a single test:
+
+```sh
+bun run factcheck -- methods/trace            # collection/slug shorthand
+bun run factcheck -- src/content/errors/x.md  # or a path
+FACTCHECK_BASE=origin/main bun run factcheck  # diff against another base
+```
+
+There is no test suite and no linter. `bun run build` (zod schemas, strict
+TypeScript) and the checks above are the whole of the safety net.
+
+Two further Tabstack scripts, `enrich:tools` and `research:guides`, write
+proposals to `scripts/out/`, which is gitignored. They never touch
+`src/content/`; their output is for a human to review and fold in by hand.
+`research:guides` still labels its planned guides with the old four
+categories (`caching`, `security`, `negotiation`, `core`), so map those onto
+the current eight before using anything it produces.
 
 ## Deployment
 
-Cloudflare Pages, project `apiguidedev`, from `wrangler.json`. Output is
-`dist`. `bun run deploy` pushes a build directly, but the normal path is
-merging to `main`.
+Cloudflare, project `apiguidedev`, from `wrangler.json`. Production builds
+run on **Workers Builds** and serve `dist` as Workers static assets, so the
+`assets` block in `wrangler.json` is what decides URL behaviour:
+`html_handling: "drop-trailing-slash"` serves `/errors/x` and redirects
+`/errors/x/` to it, and `not_found_handling: "404-page"` serves `404.html`
+with a 404 (without it, a miss is an empty 404). Test those with `bunx
+wrangler dev`, which runs the Workers asset rules; `bun run pages:dev`
+emulates Pages, which behaves differently on misses. `bun run deploy`
+pushes a build directly, but the normal path is merging to `main`.
+
+**After changing `ec.config.mjs`, clear the Astro cache** (`rm -rf .astro
+node_modules/.astro`) before building. Rendered Markdown is cached with
+Expressive Code's stylesheet link in it, so a config change without a content
+change leaves every Markdown page pointing at a stylesheet the new build did
+not emit, and code blocks fall back to Typography's grey. The same applies to
+a Cloudflare Pages build if its build cache is enabled.
+
+## How the site is built
+
+Astro, fully static, Tailwind v4 through its Vite plugin. `@/` is aliased to
+`src/`. One layout, `src/layouts/Layout.astro`.
+
+Each collection has an `index.astro` and a `[slug].astro` under
+`src/pages/<collection>/`, except status codes (`[code].astro`) and tools
+(`[category]/[slug].astro`). Beyond those, several routes read every
+collection at build time, so **a new collection, or a new field you want
+surfaced, has to be wired into each of them**:
+
+| Route | What it is |
+| :--- | :--- |
+| `src/pages/search-index.json.ts` | Index fetched by `CommandPalette.astro` for site search |
+| `src/pages/llms.txt.ts` | `/llms.txt`, a plain-text index of the catalogue |
+| `src/pages/og/[...path].ts` | Open Graph cards, rendered to PNG by sharp |
+
+The OG renderer converts text to vector paths with `fontkitten` from the
+static WOFF2 files in `src/assets/fonts/`, because librsvg ignores
+`@font-face` and would otherwise use whatever fonts the build machine has.
+See `src/assets/fonts/README.md` before changing a typeface.
+
+`/problem-json` is hand-written Astro, not a collection entry, so its table
+of contents is a `headings` array declared at the top of the file. Change a
+heading there and you must change the array to match.
+
+Structured data comes from `src/utils/jsonLd.ts`. The `scripts/` checks share
+`scripts/lib/` for Tabstack calls, content listing and frontmatter parsing.
 
 ## Where content goes
 
@@ -152,9 +214,17 @@ shape:
 3. A `---` rule between every top-level section.
 4. `###` for subsections inside a numbered section.
 
-Tables for anything enumerable. Fenced code blocks with a language tag;
-`astro-expressive-code` renders them, on `github-light` and `github-dark`
-together, so they follow the page's colour scheme.
+Tables for anything enumerable. Every fenced code block carries a language
+tag: `http` for request and response lines and headers (the commonest),
+`json`, `yaml` and so on, and `text` for pseudocode or diagrams, never a bare
+fence. Expressive Code renders every block, with `github-dark` and
+`github-light` switched by the same `data-theme` attribute as the page. Its
+options live in `ec.config.mjs`, not `astro.config.mjs`.
+
+A code example in an `.astro` template uses the `<Code>` component from
+`astro-expressive-code/components`, never a hand-written `<pre>`, so it gets
+the same highlighting, frame and copy button. Do not add `.prose pre` styles:
+they outrank Typography's defaults and land on Expressive Code's own `<pre>`.
 
 ## Guide categories
 
@@ -189,7 +259,12 @@ first mention of any status code, header or method:
 
 Conventions, both universal across the existing 231 internal links:
 
-- **No trailing slash**: `/methods/get`, never `/methods/get/`.
+- **No trailing slash**: `/methods/get`, never `/methods/get/`. This holds in
+  templates too, including template literals. The build emits
+  `methods/get.html` (`build.format: 'file'`), so the no-slash form is served
+  directly and the slash form redirects to it. Code that needs the current
+  page's own URL must use `src/utils/pagePath.ts`, because during a build
+  `Astro.url.pathname` ends in `.html`.
 - **Code-formatted link text** for a code, header or method name.
 
 Never link to a page that does not exist. `bun run build` will not catch it.
@@ -230,20 +305,33 @@ value. `status=cancelled` stays as written; it is data, not prose.
 `DESIGN.md` is the authority and it is genuinely worth reading before you
 touch a template. The short version:
 
-- The palette derives from **Storied Colors**, a catalogue of real pigments
-  with documented provenance: Chartres Blue, Yellow Ochre, Uranium Red,
-  Emerald Green, YInMn Blue, plus a warm neutral scale called Paper that
-  replaces grey throughout.
-- **Do not invent a colour.** There are five pigments. If you need more
-  distinctions than that, reuse a hue with a different treatment, which is
-  what the guide categories do: four pairs share a hue, solid against
-  outline, and each pair is a real kinship rather than a workaround.
-- Every scale is redefined for dark mode in `src/styles/main.css`, inverted,
-  so `bg-x-100 text-x-900` works in both. Check any new pairing at both
-  schemes and keep text at 4.5:1 or better.
+- The palette is **Ultramarine field**: blue-grey slate neutrals, one
+  saturated ultramarine (`ultra`) as the brand, and a hue per status class:
+  slate 1xx, green 2xx, violet 3xx, amber 4xx, red 5xx. Six families, 50 to
+  950, in `src/styles/main.css`; Tailwind's default colours are switched off.
+- **Do not invent a colour.** If you need more distinctions, reuse a hue
+  with a different treatment (solid, outline, inverted), which is what the
+  guide categories do: three pairs share a hue, solid against outline, and
+  each pair is a real kinship rather than a workaround.
+- **Amber, red and green are status colours**: client error, server error,
+  success. A category, a price or any other label that is not a status
+  never uses them, because a security guide in the 5xx badge reads as a
+  failure. Categories draw on ultra, violet and slate.
+- **Dark is the primary theme**. Readers get their OS setting until they
+  use the header toggle, which stores their choice; either way the result is
+  `data-theme` on `<html>`. Never use a `prefers-color-scheme`
+  query for colour: it disagrees with the toggle. Use the tokens, or
+  `.only-dark` / `.only-light` for assets. Check every new pairing in both
+  themes and keep text at 4.5:1 or better.
 - Badge and label styles live in `src/config/themes.ts`. Import them. A
   template that defines its own copy will drift, which is how the guides
   index ended up with a category the schema had never allowed.
+- Type is Inter for prose and headings, Fira Code only for wire text. Each
+  reference page opens on a `WireHero`; indexes and related lists are
+  `RegistryGroup` and `RegistryRow` cards. Borders are hairlines
+  (`border-slate-950/[0.08]`), panels are `.surface`. Read "Surfaces, depth
+  and motion" and "Typography and structure" in DESIGN.md before adding a
+  template: glow and motion are allowed in the listed places only.
 
 ## Licensing
 

@@ -31,6 +31,6 @@ Do not use this if the client is unauthenticated (use `unauthorized` or 401). Do
 
 Include a `WWW-Authenticate` header naming the missing scope, per RFC 6750:
 
-```
+```http
 WWW-Authenticate: Bearer error="insufficient_scope", error_description="The request requires the 'leads:write' scope", scope="leads:write"
 ```

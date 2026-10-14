@@ -32,6 +32,6 @@ Do not use 401 if the client has successfully authenticated, but lacks the neces
 
 Include a header to specify the authentication scheme:
 
-```
+```http
 WWW-Authenticate: Bearer realm="api"
 ```

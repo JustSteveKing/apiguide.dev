@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 const { t } = Astro.props;
 const { Content, headings } = await render(t);
 
-import { toolCategoryThemes, pricingThemes } from '@/config/themes';
+import { toolCategoryThemes, pricingThemes, pricingLabels, lifecycleStageLabels } from '@/config/themes';
 
 const activeTheme = toolCategoryThemes[t.data.category];
 
@@ -34,9 +34,9 @@ const toolJsonLd = [
     category: t.data.category
   }),
   getBreadcrumbSchema([
-    { name: "API Tooling", path: "/tools/" },
-    { name: activeTheme.label, path: `/tools/${t.data.category}/` },
-    { name: t.data.name, path: `/tools/${t.data.category}/${t.id}/` }
+    { name: "API Tooling", path: "/tools" },
+    { name: activeTheme.label, path: `/tools/${t.data.category}` },
+    { name: t.data.name, path: `/tools/${t.data.category}/${t.id}` }
   ])
 ];
 ---
@@ -46,56 +46,53 @@ const toolJsonLd = [
   description={t.data.description}
   jsonLd={toolJsonLd}
 >
-  <main class="max-w-5xl mx-auto px-6 py-16 font-sans">
+  <main class="max-w-6xl mx-auto px-6 py-16 font-sans">
     <!-- Breadcrumbs Component -->
     <Breadcrumbs items={[
-      { name: "API Tooling Reference", href: "/tools/" },
-      { name: activeTheme.label, href: `/tools/${t.data.category}/` },
+      { name: "Tools", href: "/tools" },
+      { name: activeTheme.label, href: `/tools/${t.data.category}` },
       { name: t.data.name }
     ]} />
 
     <!-- Title & Metadata -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-paper-950 font-display">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-slate-950 font-display">
         {t.data.name}
       </h1>
-      <p class="text-lg text-paper-600 mb-6 italic">
+      <p class="text-lg text-slate-600 mb-6 italic">
         {t.data.description}
       </p>
       
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 p-5 bg-paper-100 border border-paper-300 rounded-xl text-sm">
+      <div class="grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
         <MetaItem label="Category">
           <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
             {activeTheme.label}
           </span>
         </MetaItem>
-        <MetaItem label="Pricing Model">
-          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold uppercase ${pricingThemes[t.data.pricing]}`}>
-            {t.data.pricing.replace('-', '')}
+        <MetaItem label="Pricing">
+          <span class={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${pricingThemes[t.data.pricing]}`}>
+            {pricingLabels[t.data.pricing]}
           </span>
         </MetaItem>
-        <MetaItem label="Lifecycle Stages">
+        <MetaItem label="Lifecycle stages">
           <div class="flex flex-wrap gap-1">
             {t.data.lifecycleStages.map(stage => (
-              <span class="inline-flex items-center px-1.5 py-px rounded bg-paper-200 text-paper-700 border border-paper-300 text-xxs font-semibold uppercase">
-                {stage}
+              <span class="inline-flex items-center px-1.5 py-px rounded bg-slate-200 text-slate-700 border border-slate-300 text-xxs font-semibold">
+                {lifecycleStageLabels[stage]}
               </span>
             ))}
           </div>
         </MetaItem>
-        <MetaItem label="Official Website">
-          <span class="font-bold text-chartres-600 block mb-0.5">
-            <a href={t.data.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
-              Official Website &rarr;
-            </a>
-          </span>
-          <span class="text-xxs text-paper-600 block break-all">{t.data.url}</span>
+        <MetaItem label="Website">
+          <a href={t.data.url} target="_blank" rel="noopener noreferrer" class="text-ultra-600 hover:text-ultra-800 hover:underline break-all">
+            {new URL(t.data.url).host.replace(/^www\./, '')}
+          </a>
         </MetaItem>
       </div>
     </header>
 
     <!-- Markdown Content Body -->
-    <div class="lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
+    <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,60ch)_minmax(0,1fr)] lg:gap-10">
       <article class="prose max-w-[60ch]">
         <Content />
       </article>
