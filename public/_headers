@@ -1,0 +1,6 @@
+# JSON Schemas are fetched by editors and validators, some of them from a
+# browser, so they need their media type and an open CORS policy.
+/schemas/*
+  Content-Type: application/schema+json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600
