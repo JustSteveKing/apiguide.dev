@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apiguide.dev/schemas/errors/v1/catalogue.schema.json",
+  "title": "Error catalogue",
+  "description": "The configuration file at the root of an error catalogue of RFC 9457 problem types.",
+  "type": "object",
+  "required": ["schema", "base_url"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "description": "The version of the catalogue format.",
+      "const": "v1"
+    },
+    "base_url": {
+      "description": "The absolute http or https URL each slug is appended to, forming the type URI.",
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://[^/?#]+"
+    },
+    "default_template": {
+      "description": "The template new types are created from when none is named.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    }
+  }
+}

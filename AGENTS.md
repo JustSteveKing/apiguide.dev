@@ -95,6 +95,25 @@ change leaves every Markdown page pointing at a stylesheet the new build did
 not emit, and code blocks fall back to Typography's grey. The same applies to
 a Cloudflare Pages build if its build cache is enabled.
 
+## Published schemas
+
+`public/schemas/` holds JSON Schemas that other tools resolve by URL. Each
+file's URL is its `$id`, so the same rule applies as for `/errors/<name>`:
+**never rename, move or delete one**.
+
+`public/schemas/errors/v1/` is the catalogue format for
+[JustSteveKing/errors](https://github.com/JustSteveKing/errors), a CLI that
+keeps RFC 9457 problem types as Markdown in a repository. That repository's
+`schema/` directory is the source of truth: copy changes from it, never edit
+here. Files are published under the name their `$id` ends in, such as
+`problem-type.schema.json`, which is not the repository's filename. Within
+`v1`, changes may only add optional fields; anything else is a new version
+directory.
+
+`public/_headers` serves them as `application/schema+json` with
+`Access-Control-Allow-Origin: *`, because some validators fetch them from a
+browser.
+
 ## How the site is built
 
 Astro, fully static, Tailwind v4 through its Vite plugin. `@/` is aliased to
