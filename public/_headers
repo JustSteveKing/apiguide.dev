@@ -4,3 +4,17 @@
   Content-Type: application/schema+json
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=3600
+
+# RFC 9727: the API catalog is a Linkset, with the RFC's profile parameter.
+/.well-known/api-catalog
+  Content-Type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"
+  Access-Control-Allow-Origin: *
+
+# The errors catalogue is consumed by tools, some of them in a browser:
+# /errors/<slug>.json, /errors/index.json, and the pages the type URIs name.
+/errors/*
+  Access-Control-Allow-Origin: *
+
+# Markdown siblings of each page, and the full-text dump, for agents.
+/llms-full.txt
+  Access-Control-Allow-Origin: *
