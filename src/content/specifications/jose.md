@@ -3,6 +3,7 @@ title: "JOSE: JWS, JWE, JWK and JWA (RFC 7515-7518)"
 description: "A reference for the JSON Object Signing and Encryption suite: JWS signatures, JWE encryption and its five-part compact form, JWK keys and key sets, the JWA algorithm registry, the compact and JSON serializations, and the alg pitfalls behind most JWT vulnerabilities."
 currentVersion: "RFC 7515, 7516, 7517, 7518"
 officialUrl: "https://datatracker.ietf.org/wg/jose/about/"
+updatedDate: 2026-10-17
 ---
 
 ## What is JOSE?

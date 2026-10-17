@@ -5,6 +5,7 @@ statusText: Not Found
 category: client-error
 relatedCodes: ['method-not-allowed', 'gone', 'forbidden']
 publishedDate: 2025-11-03
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

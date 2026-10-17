@@ -5,6 +5,7 @@ category: "clients-debugging"
 lifecycleStages: ["development", "testing"]
 url: "https://proxyman.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Proxyman?

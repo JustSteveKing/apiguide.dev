@@ -4,6 +4,10 @@ description: "Records each proxy or gateway a message passed through, with the p
 category: "both"
 standard: true
 relatedCodes: [502, 504]
+reference:
+  title: "RFC 9110, Section 7.6.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-7.6.3
+updatedDate: 2026-10-14
 ---
 
 ## What is the Via header?

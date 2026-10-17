@@ -4,6 +4,10 @@ description: "Declares, per signature label, which message components an RFC 942
 category: "both"
 standard: true
 relatedCodes: [400, 401]
+reference:
+  title: "RFC 9421, Section 4.1"
+  url: https://www.rfc-editor.org/rfc/rfc9421.html#section-4.1
+updatedDate: 2026-10-17
 ---
 
 ## What is the Signature-Input header?

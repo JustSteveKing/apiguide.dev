@@ -4,6 +4,10 @@ description: "Directives for caching mechanisms in both requests and responses."
 category: "both"
 standard: true
 relatedCodes: [200, 304]
+reference:
+  title: "RFC 9111, Section 5.2"
+  url: https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2
+updatedDate: 2026-10-14
 ---
 
 ## What is the Cache-Control header?

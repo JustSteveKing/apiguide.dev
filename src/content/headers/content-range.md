@@ -4,6 +4,10 @@ description: "Indicates which portion of a resource is delivered in a partial re
 category: "response"
 standard: true
 relatedCodes: [206, 416]
+reference:
+  title: "RFC 9110, Section 14.4"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-14.4
+updatedDate: 2026-10-14
 ---
 
 ## What is the Content-Range header?

@@ -5,6 +5,10 @@ safe: false
 idempotent: true
 cacheable: false
 relatedCodes: [200, 202, 204, 404, 409, 410]
+reference:
+  title: "RFC 9110, Section 9.3.5"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-9.3.5
+updatedDate: 2026-07-09
 ---
 
 ## What is the DELETE method?

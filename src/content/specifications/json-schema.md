@@ -3,6 +3,7 @@ title: "JSON Schema in Web APIs"
 description: "An authoritative guide to JSON Schema, detailing validation vocabulary, conditional schemas, logical operators, and $ref definition resolving."
 currentVersion: "Draft 2020-12"
 officialUrl: "https://json-schema.org"
+updatedDate: 2026-07-08
 ---
 
 ## Introduction to JSON Schema

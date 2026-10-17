@@ -4,6 +4,10 @@ description: "A server-issued nonce the client must put in its next DPoP proofs,
 category: "response"
 standard: true
 relatedCodes: [200, 400, 401]
+reference:
+  title: "RFC 9449"
+  url: https://www.rfc-editor.org/rfc/rfc9449.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the DPoP-Nonce header?

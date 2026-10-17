@@ -3,6 +3,10 @@ name: "Server"
 description: "Names the software the origin server used to handle the request. Optional, and best kept short or left out of API responses."
 category: "response"
 standard: true
+reference:
+  title: "RFC 9110, Section 10.2.4"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.2.4
+updatedDate: 2026-10-17
 ---
 
 ## What is the Server header?

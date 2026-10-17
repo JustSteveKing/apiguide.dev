@@ -4,6 +4,10 @@ description: "Lets a TLS-terminating reverse proxy pass the client's mTLS certif
 category: "request"
 standard: true
 relatedCodes: [400, 403, 431]
+reference:
+  title: "RFC 9440, Section 2"
+  url: https://www.rfc-editor.org/rfc/rfc9440.html#section-2
+updatedDate: 2026-10-17
 ---
 
 ## What is the Client-Cert header?

@@ -4,6 +4,10 @@ description: "Indicates the media type of the request or response body payload."
 category: "both"
 standard: true
 relatedCodes: [415]
+reference:
+  title: "RFC 9110, Section 8.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3
+updatedDate: 2026-07-08
 ---
 
 ## What is the Content-Type header?

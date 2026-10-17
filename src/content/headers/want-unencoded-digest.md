@@ -4,6 +4,10 @@ description: "Asks the other side to send an Unencoded-Digest of the representat
 category: "both"
 standard: false
 relatedCodes: [200]
+reference:
+  title: "RFC-ietf-httpbis-unencoded-digest-05, Section 4"
+  url: https://datatracker.ietf.org/doc/draft-ietf-httpbis-unencoded-digest/
+updatedDate: 2026-10-17
 ---
 
 ## What is the Want-Unencoded-Digest header?

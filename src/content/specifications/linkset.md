@@ -3,6 +3,7 @@ title: "Linkset (RFC 9264)"
 description: "A reference for RFC 9264, which defines application/linkset and application/linkset+json for publishing sets of web links as a standalone document, plus the linkset link relation for discovering them."
 currentVersion: "RFC 9264"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9264.html"
+updatedDate: 2026-10-17
 ---
 
 ## What is a Linkset?

@@ -4,6 +4,10 @@ description: "Identifies a URI for the specific representation enclosed in the m
 category: "both"
 standard: true
 relatedCodes: [200, 201]
+reference:
+  title: "RFC 9110, Section 8.7"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-8.7
+updatedDate: 2026-10-14
 ---
 
 ## What is the Content-Location header?

@@ -4,6 +4,10 @@ description: "Negotiates WebSocket protocol extensions such as permessage-deflat
 category: "both"
 standard: true
 relatedCodes: [101]
+reference:
+  title: "RFC 6455"
+  url: https://www.rfc-editor.org/rfc/rfc6455.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Sec-WebSocket-Extensions header?

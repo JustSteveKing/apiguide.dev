@@ -3,6 +3,10 @@ name: "Authentication-Info"
 description: "Returns scheme-specific information to the client after its credentials have been accepted, such as the next nonce in Digest authentication."
 category: "response"
 standard: true
+reference:
+  title: "RFC 9110, Section 11.6.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-11.6.3
+updatedDate: 2026-10-14
 ---
 
 ## What is the Authentication-Info header?

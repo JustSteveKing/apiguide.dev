@@ -4,6 +4,10 @@ description: "Carries a hash of the actual message content, so the recipient can
 category: "both"
 standard: true
 relatedCodes: [200, 206]
+reference:
+  title: "RFC 9530, Section 2"
+  url: https://www.rfc-editor.org/rfc/rfc9530.html#section-2
+updatedDate: 2026-10-17
 ---
 
 ## What is the Content-Digest header?

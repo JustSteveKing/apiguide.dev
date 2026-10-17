@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["design", "testing"]
 url: "https://quobix.com/vacuum"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is vacuum?

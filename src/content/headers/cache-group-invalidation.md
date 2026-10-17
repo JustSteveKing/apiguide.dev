@@ -4,6 +4,10 @@ description: "Sent on a response to an unsafe request, it asks caches to invalid
 category: "response"
 standard: true
 relatedCodes: [200, 204]
+reference:
+  title: "RFC 9875"
+  url: https://www.rfc-editor.org/rfc/rfc9875.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Cache-Group-Invalidation header?

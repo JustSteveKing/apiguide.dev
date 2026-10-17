@@ -4,6 +4,7 @@ description: "De facto request header that tunnels another method, such as PUT o
 category: "request"
 standard: false
 relatedCodes: [400, 403, 405]
+updatedDate: 2026-10-17
 ---
 
 ## What is the X-HTTP-Method-Override header?

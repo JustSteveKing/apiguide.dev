@@ -5,6 +5,10 @@ safe: false
 idempotent: false
 cacheable: false
 relatedCodes: [200, 405, 407]
+reference:
+  title: "RFC 9110, Section 9.3.6"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-9.3.6
+updatedDate: 2026-10-14
 ---
 
 ## What is the CONNECT method?

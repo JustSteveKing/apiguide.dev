@@ -4,6 +4,10 @@ description: "The time in seconds since a cached response was generated at the o
 category: "response"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 9111, Section 5.1"
+  url: https://www.rfc-editor.org/rfc/rfc9111.html#section-5.1
+updatedDate: 2026-10-14
 ---
 
 ## What is the Age header?

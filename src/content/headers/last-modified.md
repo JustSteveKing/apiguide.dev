@@ -4,6 +4,10 @@ description: "The date and time a resource was last changed, used for cache vali
 category: "response"
 standard: true
 relatedCodes: [200, 304, 412]
+reference:
+  title: "RFC 9110, Section 8.8.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8.2
+updatedDate: 2026-10-14
 ---
 
 ## What is the Last-Modified header?

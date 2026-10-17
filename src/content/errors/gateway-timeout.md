@@ -5,6 +5,7 @@ statusText: Gateway Timeout
 category: server-error
 relatedCodes: ['service-unavailable', 'internal-server-error', 'bad-gateway']
 publishedDate: 2025-12-04
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

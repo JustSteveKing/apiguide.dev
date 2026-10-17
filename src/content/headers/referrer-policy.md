@@ -3,6 +3,10 @@ name: "Referrer-Policy"
 description: "Controls how much of the current URL a browser puts in the Referer header of requests made from a page. Send no-referrer on API responses."
 category: "response"
 standard: true
+reference:
+  title: "W3C Referrer Policy"
+  url: https://www.w3.org/TR/referrer-policy/
+updatedDate: 2026-10-17
 ---
 
 ## What is the Referrer-Policy header?

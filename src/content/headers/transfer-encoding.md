@@ -4,6 +4,10 @@ description: "Lists the transfer codings, such as chunked, applied to an HTTP/1.
 category: "both"
 standard: true
 relatedCodes: [400, 501]
+reference:
+  title: "RFC 9112, Section 6.1"
+  url: https://www.rfc-editor.org/rfc/rfc9112.html#section-6.1
+updatedDate: 2026-10-14
 ---
 
 ## What is the Transfer-Encoding header?

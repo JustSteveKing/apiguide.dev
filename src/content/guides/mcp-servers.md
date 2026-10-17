@@ -2,6 +2,7 @@
 title: "Exposing an HTTP API as an MCP Server"
 description: "Building a Model Context Protocol server in front of an existing API: curating tools rather than mirroring endpoints, choosing a transport, OAuth without token passthrough, returning errors the model can act on, paginating for a context window, and marking destructive operations."
 category: "agents"
+updatedDate: 2026-10-14
 ---
 
 ## The Server Is a New Client of Your API

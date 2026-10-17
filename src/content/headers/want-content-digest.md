@@ -4,6 +4,10 @@ description: "Asks the other side to send a Content-Digest, and says which hash 
 category: "both"
 standard: true
 relatedCodes: [400]
+reference:
+  title: "RFC 9530, Section 4"
+  url: https://www.rfc-editor.org/rfc/rfc9530.html#section-4
+updatedDate: 2026-10-17
 ---
 
 ## What is the Want-Content-Digest header?

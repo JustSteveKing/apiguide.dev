@@ -3,6 +3,7 @@ title: "RateLimit Header Fields (Internet-Draft)"
 description: "A reference for draft-ietf-httpapi-ratelimit-headers, the IETF HTTPAPI draft that defines the RateLimit and RateLimit-Policy fields, quota units, partition keys and rate limit problem types. An active Internet-Draft, not yet an RFC."
 currentVersion: "draft-ietf-httpapi-ratelimit-headers-11"
 officialUrl: "https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/"
+updatedDate: 2026-10-17
 ---
 
 ## What are the RateLimit header fields?

@@ -2,6 +2,7 @@
 title: "Bulk & Batch Operations"
 description: "How to design batch endpoints, handle partial success, and process bulk writes idempotently and asynchronously."
 category: "events"
+updatedDate: 2026-09-30
 ---
 
 ## Introduction to Bulk Operations

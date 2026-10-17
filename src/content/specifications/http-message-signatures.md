@@ -3,6 +3,7 @@ title: "HTTP Message Signatures (RFC 9421)"
 description: "A reference for RFC 9421, the IETF standard for signing HTTP requests and responses: covered components, derived components, the signature base, signature parameters, the algorithm registry, and requesting signatures with Accept-Signature."
 currentVersion: "RFC 9421"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9421.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is HTTP Message Signatures?

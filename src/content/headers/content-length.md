@@ -4,6 +4,10 @@ description: "Indicates the size of the request or response body in bytes."
 category: "both"
 standard: true
 relatedCodes: [411, 413]
+reference:
+  title: "RFC 9110, Section 8.6"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-8.6
+updatedDate: 2026-10-14
 ---
 
 ## What is the Content-Length header?

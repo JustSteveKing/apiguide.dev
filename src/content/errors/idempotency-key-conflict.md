@@ -5,6 +5,7 @@ statusText: Unprocessable Content
 category: client-error
 relatedCodes: ['resource-conflict', 'stale-resource-version']
 publishedDate: 2026-05-19
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

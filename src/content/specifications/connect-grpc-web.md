@@ -3,6 +3,7 @@ title: "Connect and gRPC-Web"
 description: "A reference for the two protocols that carry Protocol Buffers RPCs to browsers and over HTTP/1.1: the Connect protocol, with plain JSON unary calls, GET for side-effect-free methods and JSON errors, and gRPC-Web, with trailers in the body and a translating proxy."
 currentVersion: "Connect protocol v1; gRPC-Web (PROTOCOL-WEB)"
 officialUrl: "https://connectrpc.com/docs/protocol/"
+updatedDate: 2026-10-17
 ---
 
 ## Why gRPC needs a second protocol

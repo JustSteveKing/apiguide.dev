@@ -2,6 +2,7 @@
 title: "Forward-Compatible Enums"
 description: "How to add enum values without breaking clients: open versus closed enums, the tolerant reader, documented unknown handling, OpenAPI and JSON Schema patterns, protobuf's UNSPECIFIED zero value and GraphQL's enum caveats."
 category: "evolution"
+updatedDate: 2026-10-14
 ---
 
 ## The Enum You Will Need to Widen

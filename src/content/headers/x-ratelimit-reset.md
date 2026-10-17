@@ -4,6 +4,7 @@ description: "De facto header saying when the rate limit window resets. Sent as 
 category: "response"
 standard: false
 relatedCodes: [403, 429]
+updatedDate: 2026-10-17
 ---
 
 ## What is the X-RateLimit-Reset header?

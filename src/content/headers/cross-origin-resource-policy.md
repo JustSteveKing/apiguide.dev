@@ -3,6 +3,10 @@ name: "Cross-Origin-Resource-Policy"
 description: "Tells browsers which sites may load a response through no-cors requests such as img and script tags. Does not affect CORS fetches."
 category: "response"
 standard: true
+reference:
+  title: "WHATWG Fetch Standard"
+  url: https://fetch.spec.whatwg.org/
+updatedDate: 2026-10-17
 ---
 
 ## What is the Cross-Origin-Resource-Policy header?

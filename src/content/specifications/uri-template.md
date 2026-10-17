@@ -3,6 +3,7 @@ title: "URI Template (RFC 6570)"
 description: "A reference for RFC 6570 URI Templates: the four levels, expression operators, the prefix and explode modifiers, how HAL and hypermedia APIs use templated links, and how OpenAPI path templating differs from RFC 6570."
 currentVersion: "RFC 6570"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc6570.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is a URI Template?

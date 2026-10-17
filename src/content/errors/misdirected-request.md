@@ -5,6 +5,7 @@ statusText: Misdirected Request
 category: client-error
 relatedCodes: ['resource-not-found', 'bad-gateway', 'too-early']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

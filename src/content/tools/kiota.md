@@ -5,6 +5,7 @@ category: "sdk-generation"
 lifecycleStages: ["development"]
 url: "https://learn.microsoft.com/en-us/openapi/kiota/overview"
 pricing: "open-source"
+updatedDate: 2026-10-17
 ---
 
 ## What is Kiota?

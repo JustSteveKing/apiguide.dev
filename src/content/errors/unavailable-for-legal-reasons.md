@@ -5,6 +5,7 @@ statusText: Unavailable For Legal Reasons
 category: client-error
 relatedCodes: ['forbidden', 'gone', 'resource-not-found']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

@@ -3,6 +3,10 @@ name: "From"
 description: "An email address for the human responsible for the requesting user agent. Crawlers and bots should send it; nobody should trust it."
 category: "request"
 standard: true
+reference:
+  title: "RFC 9110, Section 10.1.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.1.2
+updatedDate: 2026-10-17
 ---
 
 ## What is the From header?

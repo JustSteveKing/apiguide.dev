@@ -3,6 +3,7 @@ title: "Deprecation and Sunset Headers (RFC 9745, RFC 8594)"
 description: "A reference for the two HTTP response fields that announce the end of a resource: Deprecation (RFC 9745) for when it stopped being recommended, Sunset (RFC 8594) for when it will stop responding, and the deprecation and sunset link relations."
 currentVersion: "RFC 9745 / RFC 8594"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9745.html"
+updatedDate: 2026-10-17
 ---
 
 ## What are Deprecation and Sunset?

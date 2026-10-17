@@ -2,6 +2,7 @@
 title: "Choosing an API Style: REST, GraphQL, gRPC, Events, JSON-RPC"
 description: "When resource-oriented HTTP, GraphQL, gRPC, event-driven delivery or JSON-RPC is the right call, what each one costs you, and why most real systems use more than one."
 category: "design"
+updatedDate: 2026-10-14
 ---
 
 ## The Style Follows the Consumer

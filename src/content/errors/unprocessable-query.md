@@ -5,6 +5,7 @@ statusText: Unprocessable Content
 category: client-error
 relatedCodes: ['invalid-pagination-cursor', 'invalid-query-parameter']
 publishedDate: 2026-03-16
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

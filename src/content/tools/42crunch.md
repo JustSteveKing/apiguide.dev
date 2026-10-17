@@ -5,6 +5,7 @@ category: "security-testing"
 lifecycleStages: ["design", "testing", "deployment"]
 url: "https://42crunch.com"
 pricing: "paid"
+updatedDate: 2026-10-17
 ---
 
 ## What is 42Crunch?

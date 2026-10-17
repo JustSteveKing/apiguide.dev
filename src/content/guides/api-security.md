@@ -2,6 +2,7 @@
 title: "API Security Best Practices"
 description: "A practical checklist for securing HTTP APIs: TLS, authentication versus authorization, the OWASP API Security Top 10, input validation, rate limiting, and least privilege."
 category: "security"
+updatedDate: 2026-10-17
 ---
 
 ## Introduction to API Security

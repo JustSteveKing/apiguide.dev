@@ -3,6 +3,7 @@ title: "Resumable Uploads for HTTP (Internet-Draft)"
 description: "A reference for draft-ietf-httpbis-resumable-upload, the IETF HTTP working group draft for resuming interrupted uploads: upload resources, the Upload-Offset, Upload-Complete, Upload-Length and Upload-Limit fields, the provisional 104 status code, and its tus origins. An active Internet-Draft, not yet an RFC."
 currentVersion: "draft-ietf-httpbis-resumable-upload-13"
 officialUrl: "https://datatracker.ietf.org/doc/draft-ietf-httpbis-resumable-upload/"
+updatedDate: 2026-10-17
 ---
 
 ## What is Resumable Uploads for HTTP?

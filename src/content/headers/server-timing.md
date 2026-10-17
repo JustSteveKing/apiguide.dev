@@ -4,6 +4,10 @@ description: "Lets a server report named backend timings, such as database or ca
 category: "response"
 standard: false
 relatedCodes: [200]
+reference:
+  title: "W3C Server Timing"
+  url: https://www.w3.org/TR/server-timing/
+updatedDate: 2026-10-14
 ---
 
 ## What is the Server-Timing header?

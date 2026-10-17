@@ -3,6 +3,7 @@ title: "GraphQL over HTTP"
 description: "A reference for the GraphQL Foundation's GraphQL-over-HTTP specification: request parameters, GET and POST rules, the application/graphql-response+json media type, Accept negotiation for legacy clients, and the status code rules, including 294 for partial success."
 currentVersion: "Stage 2 (Draft), working draft"
 officialUrl: "https://http-spec.graphql.org/draft/"
+updatedDate: 2026-10-17
 ---
 
 ## Why GraphQL needed an HTTP specification

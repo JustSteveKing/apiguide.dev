@@ -4,6 +4,10 @@ description: "Lets each proxy, gateway or CDN on the path say what it did with a
 category: "response"
 standard: true
 relatedCodes: [502, 503, 504]
+reference:
+  title: "RFC 9209"
+  url: https://www.rfc-editor.org/rfc/rfc9209.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Proxy-Status header?

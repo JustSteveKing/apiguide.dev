@@ -2,6 +2,7 @@
 title: "Input Validation & Injection Prevention"
 description: "Server-side schema validation, allowlisting, and canonicalization, plus defenses against SQL/NoSQL/command injection and mass assignment."
 category: "security"
+updatedDate: 2026-10-17
 ---
 
 ## Introduction to Input Validation

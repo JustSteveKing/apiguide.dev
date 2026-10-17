@@ -4,6 +4,10 @@ description: "Carries a hash of the full selected representation, independent of
 category: "both"
 standard: true
 relatedCodes: [200, 206]
+reference:
+  title: "RFC 9530, Section 3"
+  url: https://www.rfc-editor.org/rfc/rfc9530.html#section-3
+updatedDate: 2026-10-17
 ---
 
 ## What is the Repr-Digest header?

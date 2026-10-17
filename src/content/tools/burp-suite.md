@@ -5,6 +5,7 @@ category: "security-testing"
 lifecycleStages: ["testing"]
 url: "https://portswigger.net/burp"
 pricing: "freemium"
+updatedDate: 2026-10-17
 ---
 
 ## What is Burp Suite?

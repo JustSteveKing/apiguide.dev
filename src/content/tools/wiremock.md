@@ -5,6 +5,7 @@ category: "testing-mocking"
 lifecycleStages: ["testing"]
 url: "https://wiremock.org"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is WireMock?

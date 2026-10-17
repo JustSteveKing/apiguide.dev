@@ -2,6 +2,7 @@
 title: "Webhooks & Event-Driven API Design"
 description: "Best practices for webhooks, covering secure payload signing, retry scheduling, receiver idempotency, and typed payloads whose changes are new event types rather than quiet mutations."
 category: "events"
+updatedDate: 2026-10-17
 ---
 
 ## Introduction to Webhooks

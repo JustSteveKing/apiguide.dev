@@ -4,6 +4,10 @@ description: "Makes the request conditional; execution occurs only if the resour
 category: "request"
 standard: true
 relatedCodes: [304]
+reference:
+  title: "RFC 9110, Section 13.1.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.3
+updatedDate: 2026-10-14
 ---
 
 ## What is the If-Modified-Since header?

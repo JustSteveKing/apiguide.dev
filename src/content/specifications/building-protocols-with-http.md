@@ -3,6 +3,7 @@ title: "Building Protocols with HTTP (RFC 9205, BCP 56)"
 description: "A reference for RFC 9205, the IETF's Best Current Practice for designing applications on top of HTTP: generic semantics, links over fixed paths, registered methods and status codes, header fields, caching, and how to version and evolve an HTTP API."
 currentVersion: "RFC 9205 (BCP 56)"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9205.html"
+updatedDate: 2026-10-17
 ---
 
 ## What is Building Protocols with HTTP?

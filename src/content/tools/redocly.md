@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["design"]
 url: "https://redocly.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Redoc (Redocly)?

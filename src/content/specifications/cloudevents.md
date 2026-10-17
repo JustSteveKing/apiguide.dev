@@ -3,6 +3,7 @@ title: "CloudEvents"
 description: "An overview of the CloudEvents specification, the CNCF standard for describing event data in a common, vendor-neutral format."
 currentVersion: "1.0.2"
 officialUrl: "https://cloudevents.io/"
+updatedDate: 2026-10-14
 ---
 
 ## What is CloudEvents?

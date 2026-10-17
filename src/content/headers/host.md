@@ -4,6 +4,10 @@ description: "Specifies the target host and port of the resource being requested
 category: "request"
 standard: true
 relatedCodes: [400, 421]
+reference:
+  title: "RFC 9110, Section 7.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-7.2
+updatedDate: 2026-07-10
 ---
 
 ## What is the Host header?

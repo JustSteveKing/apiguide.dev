@@ -4,6 +4,10 @@ description: "Signals how urgent a response is and whether it can be used increm
 category: "both"
 standard: true
 relatedCodes: []
+reference:
+  title: "RFC 9218"
+  url: https://www.rfc-editor.org/rfc/rfc9218.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Priority header?

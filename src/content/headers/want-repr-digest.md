@@ -4,6 +4,10 @@ description: "Asks the other side to send a Repr-Digest of the full selected rep
 category: "both"
 standard: true
 relatedCodes: [200, 206]
+reference:
+  title: "RFC 9530, Section 4"
+  url: https://www.rfc-editor.org/rfc/rfc9530.html#section-4
+updatedDate: 2026-10-17
 ---
 
 ## What is the Want-Repr-Digest header?

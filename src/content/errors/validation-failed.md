@@ -5,6 +5,7 @@ statusText: Unprocessable Content
 category: client-error
 relatedCodes: ['unprocessable-query', 'malformed-request-body']
 publishedDate: 2026-06-22
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

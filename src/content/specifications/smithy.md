@@ -3,6 +3,7 @@ title: "Smithy"
 description: "A reference for Smithy, the protocol-agnostic interface definition language from AWS: IDL 2.0 shapes, services, resources and operations, traits, the restJson1 and rpcv2Cbor protocols, code generation, and how it relates to OpenAPI."
 currentVersion: "Smithy 2.0 (IDL version 2)"
 officialUrl: "https://smithy.io/2.0/index.html"
+updatedDate: 2026-10-17
 ---
 
 ## What is Smithy?

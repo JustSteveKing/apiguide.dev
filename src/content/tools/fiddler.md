@@ -5,6 +5,7 @@ category: "clients-debugging"
 lifecycleStages: ["testing", "development"]
 url: "https://www.telerik.com/fiddler"
 pricing: "paid"
+updatedDate: 2026-10-14
 ---
 
 ## What is Fiddler (Progress)?

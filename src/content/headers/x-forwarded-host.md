@@ -4,6 +4,7 @@ description: "De facto request header in which a proxy records the Host the clie
 category: "request"
 standard: false
 relatedCodes: [400, 421]
+updatedDate: 2026-10-17
 ---
 
 ## What is the X-Forwarded-Host header?

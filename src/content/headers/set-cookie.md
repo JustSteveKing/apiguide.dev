@@ -3,6 +3,10 @@ name: "Set-Cookie"
 description: "Instructs the client to store a cookie and return it on subsequent requests."
 category: "response"
 standard: true
+reference:
+  title: "RFC-ietf-httpbis-rfc6265bis-22, Section 5.8.1"
+  url: https://datatracker.ietf.org/doc/draft-ietf-httpbis-rfc6265bis/
+updatedDate: 2026-07-10
 ---
 
 ## What is the Set-Cookie header?

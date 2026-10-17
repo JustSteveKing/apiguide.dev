@@ -4,6 +4,10 @@ description: "Tags a cacheable response with one or more group names, so a cache
 category: "response"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 9875"
+  url: https://www.rfc-editor.org/rfc/rfc9875.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Cache-Groups header?

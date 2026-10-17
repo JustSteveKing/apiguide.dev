@@ -5,6 +5,10 @@ safe: true
 idempotent: true
 cacheable: false
 relatedCodes: [200, 207, 403]
+reference:
+  title: "RFC 3253, Section 3.6"
+  url: https://www.rfc-editor.org/rfc/rfc3253.html#section-3.6
+updatedDate: 2026-10-14
 ---
 
 ## What is the REPORT method?

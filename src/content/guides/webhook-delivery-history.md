@@ -2,6 +2,7 @@
 title: "Webhook Delivery History"
 description: "Why recording the current state of a webhook delivery is not the same as recording its history, what each attempt should store, and how to make the record useful to the customer rather than only to you."
 category: "events"
+updatedDate: 2026-10-17
 ---
 
 ## State Is Not History

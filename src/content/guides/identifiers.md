@@ -2,6 +2,7 @@
 title: "Resource Identifiers: Integers, UUIDs, ULIDs and Prefixed IDs"
 description: "Choosing public identifiers for an API: sequential integers versus UUIDv4, UUIDv7, ULID and prefixed opaque IDs, enumeration risk, why IDs are strings in JSON, case sensitivity, and why clients must never parse them."
 category: "representation"
+updatedDate: 2026-10-14
 ---
 
 ## An ID Is a Promise You Cannot Take Back

@@ -4,6 +4,7 @@ description: "De facto header carrying a unique ID for one request, echoed in th
 category: "both"
 standard: false
 relatedCodes: [500, 502, 504]
+updatedDate: 2026-10-17
 ---
 
 ## What is the X-Request-ID header?

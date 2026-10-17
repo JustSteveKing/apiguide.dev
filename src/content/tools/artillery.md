@@ -5,6 +5,7 @@ category: "testing-mocking"
 lifecycleStages: ["testing", "monitoring"]
 url: "https://www.artillery.io"
 pricing: "open-source"
+updatedDate: 2026-10-17
 ---
 
 ## What is Artillery?

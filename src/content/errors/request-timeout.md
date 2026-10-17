@@ -5,6 +5,7 @@ statusText: Request Timeout
 category: client-error
 relatedCodes: ['service-unavailable', 'gateway-timeout']
 publishedDate: 2026-07-09
+updatedDate: 2026-09-24
 ---
 
 ## When to use it

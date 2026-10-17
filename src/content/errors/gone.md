@@ -5,6 +5,7 @@ statusText: Gone
 category: client-error
 relatedCodes: ['resource-not-found', 'endpoint-sunset', 'unsupported-api-version', 'method-not-allowed']
 publishedDate: 2026-10-14
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

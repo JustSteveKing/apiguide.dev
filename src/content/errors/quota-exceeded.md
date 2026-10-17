@@ -5,6 +5,7 @@ statusText: Too Many Requests
 category: client-error
 relatedCodes: ['rate-limit-exceeded', 'insufficient-funds', 'forbidden', 'account-frozen']
 publishedDate: 2026-10-14
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

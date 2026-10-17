@@ -5,6 +5,7 @@ category: "sdk-generation"
 lifecycleStages: ["development"]
 url: "https://www.stainless.com"
 pricing: "freemium"
+updatedDate: 2026-10-17
 ---
 
 ## What is Stainless?

@@ -4,6 +4,10 @@ description: "Carries the credentials a client presents to a forward proxy that 
 category: "request"
 standard: true
 relatedCodes: [407]
+reference:
+  title: "RFC 9110, Section 11.7.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-11.7.2
+updatedDate: 2026-10-14
 ---
 
 ## What is the Proxy-Authorization header?

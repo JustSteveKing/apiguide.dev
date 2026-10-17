@@ -5,6 +5,7 @@ statusText: Service Unavailable
 category: server-error
 relatedCodes: ['service-unavailable', 'feature-disabled', 'gateway-timeout']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

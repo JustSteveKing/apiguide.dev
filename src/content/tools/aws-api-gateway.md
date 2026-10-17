@@ -5,6 +5,7 @@ category: "gateways-management"
 lifecycleStages: ["deployment"]
 url: "https://aws.amazon.com/api-gateway"
 pricing: "paid"
+updatedDate: 2026-10-14
 ---
 
 ## What is AWS API Gateway?

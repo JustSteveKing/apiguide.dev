@@ -3,6 +3,7 @@ title: "JSON Pointer (RFC 6901)"
 description: "A reference for JSON Pointer, the string syntax for identifying a single value in a JSON document, covering ~0 and ~1 escaping, the URI fragment form, the array '-' token, and its use in JSON Patch, JSON Schema and problem details."
 currentVersion: "RFC 6901"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc6901.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is JSON Pointer?

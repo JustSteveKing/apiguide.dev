@@ -5,6 +5,7 @@ category: "gateways-management"
 lifecycleStages: ["deployment"]
 url: "https://azure.microsoft.com/en-us/products/api-management"
 pricing: "paid"
+updatedDate: 2026-10-14
 ---
 
 ## What is Azure API Management?

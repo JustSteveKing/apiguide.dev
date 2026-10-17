@@ -5,6 +5,7 @@ statusText: Payment Required
 category: client-error
 relatedCodes: ['account-frozen', 'resource-conflict', 'quota-exceeded']
 publishedDate: 2026-09-04
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

@@ -4,6 +4,10 @@ description: "W3C Trace Context header carrying the trace ID, the caller's span 
 category: "request"
 standard: true
 relatedCodes: []
+reference:
+  title: "W3C Trace Context"
+  url: https://www.w3.org/TR/trace-context/
+updatedDate: 2026-10-14
 ---
 
 ## What is the traceparent header?

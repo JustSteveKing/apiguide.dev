@@ -5,6 +5,7 @@ category: "observability"
 lifecycleStages: ["monitoring"]
 url: "https://www.dynatrace.com"
 pricing: "paid"
+updatedDate: 2026-10-14
 ---
 
 ## What is Dynatrace APM?

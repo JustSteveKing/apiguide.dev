@@ -3,6 +3,10 @@ name: "Content-Security-Policy"
 description: "Tells browsers which sources a document may load and who may frame it. For a JSON API, send the most restrictive policy there is."
 category: "response"
 standard: true
+reference:
+  title: "W3C Content Security Policy Level 3"
+  url: https://www.w3.org/TR/CSP3/
+updatedDate: 2026-10-17
 ---
 
 ## What is the Content-Security-Policy header?

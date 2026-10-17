@@ -5,6 +5,7 @@ category: "observability"
 lifecycleStages: ["monitoring"]
 url: "https://newrelic.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is New Relic?

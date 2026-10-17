@@ -3,6 +3,10 @@ name: "TE"
 description: "Tells the server whether the client accepts trailer fields and, in HTTP/1.1, which transfer codings besides chunked it can take."
 category: "request"
 standard: true
+reference:
+  title: "RFC 9110, Section 10.1.4"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.1.4
+updatedDate: 2026-10-17
 ---
 
 ## What is the TE header?

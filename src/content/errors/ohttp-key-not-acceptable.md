@@ -6,6 +6,7 @@ category: client-error
 relatedCodes: ['date-not-acceptable']
 publishedDate: 2026-10-17
 registeredType: https://iana.org/assignments/http-problem-types#ohttp-key
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

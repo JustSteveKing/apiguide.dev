@@ -2,6 +2,7 @@
 title: "mTLS & Client Certificates"
 description: "How mutual TLS authenticates both sides of an API connection, when to use it over bearer tokens, and how to manage certificate rotation and validation."
 category: "security"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Mutual TLS

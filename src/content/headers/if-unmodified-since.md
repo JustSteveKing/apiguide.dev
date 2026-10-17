@@ -4,6 +4,10 @@ description: "Makes a request conditional on the resource not having been modifi
 category: "request"
 standard: true
 relatedCodes: [412, 428]
+reference:
+  title: "RFC 9110, Section 13.1.4"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.4
+updatedDate: 2026-10-14
 ---
 
 ## What is the If-Unmodified-Since header?

@@ -4,6 +4,10 @@ description: "Advertises which media types a resource accepts in POST requests, 
 category: "response"
 standard: true
 relatedCodes: [201, 415]
+reference:
+  title: "W3C Linked Data Platform 1.0"
+  url: https://www.w3.org/TR/ldp/
+updatedDate: 2026-10-14
 ---
 
 ## What is the Accept-Post header?

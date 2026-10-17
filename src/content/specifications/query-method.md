@@ -3,6 +3,7 @@ title: "The HTTP QUERY Method (RFC 10008)"
 description: "A reference for RFC 10008, which defines QUERY, a safe, idempotent and cacheable HTTP method that carries the query in the request body: Content-Type rules, the Accept-Query field, Location and Content-Location, redirects and cache keys."
 currentVersion: "RFC 10008"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc10008.html"
+updatedDate: 2026-10-17
 ---
 
 ## What is RFC 10008?

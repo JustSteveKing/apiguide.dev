@@ -5,6 +5,7 @@ category: "security-testing"
 lifecycleStages: ["testing", "deployment"]
 url: "https://www.zaproxy.org"
 pricing: "open-source"
+updatedDate: 2026-10-17
 ---
 
 ## What is ZAP?

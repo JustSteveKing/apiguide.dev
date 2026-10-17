@@ -4,6 +4,10 @@ description: "Provides a means to serialize relationships between resources in H
 category: "both"
 standard: true
 relatedCodes: [103, 200, 206]
+reference:
+  title: "RFC 8288"
+  url: https://www.rfc-editor.org/rfc/rfc8288.html
+updatedDate: 2026-10-14
 ---
 
 ## What is the Link header?

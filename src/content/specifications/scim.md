@@ -3,6 +3,7 @@ title: "SCIM (System for Cross-domain Identity Management)"
 description: "A reference for SCIM 2.0, the standard protocol for automating user and group provisioning across identity providers and applications, covering the core schema, resource endpoints, PATCH operations, and filtering."
 currentVersion: "2.0"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc7644"
+updatedDate: 2026-10-14
 ---
 
 ## What is SCIM?

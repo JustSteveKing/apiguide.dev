@@ -3,6 +3,7 @@ title: "OAuth 2.0 and OAuth 2.1"
 description: "A reference for the OAuth 2.0 authorization framework (RFC 6749, RFC 6750) and the OAuth 2.1 draft, covering roles, grant types, PKCE, the RFC 9700 security BCP, token revocation and introspection, and server metadata."
 currentVersion: "RFC 6749 (OAuth 2.1 in draft)"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc6749.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is OAuth 2.0?

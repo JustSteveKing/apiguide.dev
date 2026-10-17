@@ -4,6 +4,10 @@ description: "Indicates whether the body should be displayed inline or treated a
 category: "response"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 6266"
+  url: https://www.rfc-editor.org/rfc/rfc6266.html
+updatedDate: 2026-07-10
 ---
 
 ## What is the Content-Disposition header?

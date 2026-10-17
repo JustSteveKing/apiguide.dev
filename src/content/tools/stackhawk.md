@@ -5,6 +5,7 @@ category: "security-testing"
 lifecycleStages: ["development", "testing"]
 url: "https://www.stackhawk.com"
 pricing: "paid"
+updatedDate: 2026-10-17
 ---
 
 ## What is StackHawk?

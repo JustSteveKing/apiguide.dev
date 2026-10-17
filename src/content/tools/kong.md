@@ -5,6 +5,7 @@ category: "gateways-management"
 lifecycleStages: ["deployment"]
 url: "https://konghq.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Kong Gateway?

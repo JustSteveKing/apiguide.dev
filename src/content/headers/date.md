@@ -4,6 +4,10 @@ description: "The date and time at which the message was originated, sent as an 
 category: "both"
 standard: true
 relatedCodes: [200, 304]
+reference:
+  title: "RFC 9110, Section 6.6.1"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-6.6.1
+updatedDate: 2026-10-14
 ---
 
 ## What is the Date header?

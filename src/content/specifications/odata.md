@@ -3,6 +3,7 @@ title: "OData (Open Data Protocol)"
 description: "An overview of the OData specification, covering standardized query conventions, resource modeling, and where it fits alongside ad-hoc REST APIs."
 currentVersion: "4.01"
 officialUrl: "https://www.odata.org/"
+updatedDate: 2026-10-14
 ---
 
 ## What is OData?

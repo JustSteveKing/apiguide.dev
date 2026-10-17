@@ -4,6 +4,10 @@ description: "Standard header in which proxies record the client address, protoc
 category: "request"
 standard: true
 relatedCodes: [403, 429]
+reference:
+  title: "RFC 7239"
+  url: https://www.rfc-editor.org/rfc/rfc7239.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Forwarded header?

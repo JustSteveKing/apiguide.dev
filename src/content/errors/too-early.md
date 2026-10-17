@@ -5,6 +5,7 @@ statusText: Too Early
 category: client-error
 relatedCodes: ['idempotency-key-conflict', 'service-unavailable', 'misdirected-request']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

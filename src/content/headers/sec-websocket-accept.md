@@ -4,6 +4,10 @@ description: "The server's answer to Sec-WebSocket-Key: a base64 SHA-1 of the ke
 category: "response"
 standard: true
 relatedCodes: [101]
+reference:
+  title: "RFC 6455"
+  url: https://www.rfc-editor.org/rfc/rfc6455.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Sec-WebSocket-Accept header?

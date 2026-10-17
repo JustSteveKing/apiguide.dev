@@ -5,6 +5,7 @@ category: "observability"
 lifecycleStages: ["monitoring"]
 url: "https://www.jaegertracing.io"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is Jaeger?

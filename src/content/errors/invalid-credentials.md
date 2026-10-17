@@ -5,6 +5,7 @@ statusText: Unauthorized
 category: client-error
 relatedCodes: ['unauthorized', 'token-revoked', 'mfa-required', 'rate-limit-exceeded']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

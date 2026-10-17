@@ -4,6 +4,7 @@ description: "De facto header giving the requests left in the current rate limit
 category: "response"
 standard: false
 relatedCodes: [403, 429]
+updatedDate: 2026-10-17
 ---
 
 ## What is the X-RateLimit-Remaining header?

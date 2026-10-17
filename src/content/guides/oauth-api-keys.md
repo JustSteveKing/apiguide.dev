@@ -2,6 +2,7 @@
 title: "OAuth 2.0 & API Keys"
 description: "How API key authentication compares to OAuth 2.0, and when to use client credentials versus authorization code with PKCE."
 category: "security"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction

@@ -4,6 +4,10 @@ description: "Indicates the origin (scheme, host, and port) that a cross-origin 
 category: "request"
 standard: true
 relatedCodes: []
+reference:
+  title: "RFC 6454"
+  url: https://www.rfc-editor.org/rfc/rfc6454.html
+updatedDate: 2026-07-10
 ---
 
 ## What is the Origin header?

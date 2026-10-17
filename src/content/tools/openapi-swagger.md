@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["design", "development"]
 url: "https://swagger.io"
 pricing: "freemium"
+updatedDate: 2026-10-17
 ---
 
 ## What is Swagger (SmartBear)?

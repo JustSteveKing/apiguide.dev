@@ -4,6 +4,10 @@ description: "Reports the quota currently available to the client under each nam
 category: "response"
 standard: false
 relatedCodes: [429]
+reference:
+  title: "IETF draft-ietf-httpapi-ratelimit-headers"
+  url: https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/
+updatedDate: 2026-10-14
 ---
 
 ## What is the RateLimit header?

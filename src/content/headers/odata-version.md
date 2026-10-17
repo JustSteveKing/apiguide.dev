@@ -4,6 +4,7 @@ description: "States which OData protocol version, 4.0 or 4.01, a request or res
 category: "both"
 standard: true
 relatedCodes: [400]
+updatedDate: 2026-10-17
 ---
 
 ## What is the OData-Version header?

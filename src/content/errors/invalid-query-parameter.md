@@ -5,6 +5,7 @@ statusText: Bad Request
 category: client-error
 relatedCodes: ['unprocessable-query', 'invalid-pagination-cursor', 'malformed-request-body', 'validation-failed']
 publishedDate: 2026-10-08
+updatedDate: 2026-10-09
 ---
 
 ## When to use it

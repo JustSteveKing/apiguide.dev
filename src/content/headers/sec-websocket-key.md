@@ -4,6 +4,10 @@ description: "A random base64 nonce in the WebSocket opening handshake, which th
 category: "request"
 standard: true
 relatedCodes: [101, 400]
+reference:
+  title: "RFC 6455"
+  url: https://www.rfc-editor.org/rfc/rfc6455.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Sec-WebSocket-Key header?

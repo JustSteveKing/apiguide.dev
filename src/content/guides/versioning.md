@@ -2,6 +2,7 @@
 title: "API Versioning Strategies"
 description: "Compare URI, Header, and Date-based versioning methods, and how to safely deprecate endpoints."
 category: "evolution"
+updatedDate: 2026-09-30
 ---
 
 ## Introduction to API Versioning

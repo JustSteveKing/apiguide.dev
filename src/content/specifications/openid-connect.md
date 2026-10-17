@@ -3,6 +3,7 @@ title: "OpenID Connect (OIDC)"
 description: "A reference for OpenID Connect, the identity layer on top of OAuth 2.0, covering the ID Token, the authorization code flow with PKCE, the UserInfo endpoint, discovery, and standard scopes."
 currentVersion: "1.0"
 officialUrl: "https://openid.net/specs/openid-connect-core-1_0.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is OpenID Connect?

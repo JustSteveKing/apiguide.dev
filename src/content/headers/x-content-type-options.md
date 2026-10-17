@@ -3,6 +3,10 @@ name: "X-Content-Type-Options"
 description: "Tells browsers not to second-guess the declared Content-Type, blocking scripts and stylesheets served with the wrong media type."
 category: "response"
 standard: true
+reference:
+  title: "WHATWG Fetch Standard"
+  url: https://fetch.spec.whatwg.org/
+updatedDate: 2026-10-14
 ---
 
 ## What is the X-Content-Type-Options header?

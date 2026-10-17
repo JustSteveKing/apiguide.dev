@@ -4,6 +4,10 @@ description: "The WebSocket protocol version in the opening handshake. Always 13
 category: "both"
 standard: true
 relatedCodes: [101, 400, 426]
+reference:
+  title: "RFC 6455"
+  url: https://www.rfc-editor.org/rfc/rfc6455.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Sec-WebSocket-Version header?

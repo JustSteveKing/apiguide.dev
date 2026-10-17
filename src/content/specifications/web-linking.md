@@ -3,6 +3,7 @@ title: "Web Linking (RFC 8288)"
 description: "A reference for RFC 8288, which defines the abstract model for typed links, the Link header field, the IANA Link Relations registry and extension relation types, with the relations APIs use for pagination and discovery."
 currentVersion: "RFC 8288"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc8288.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is Web Linking?

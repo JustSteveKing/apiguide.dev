@@ -3,6 +3,7 @@ title: "OpenAPI Overlay Specification"
 description: "The OpenAPI Initiative format for describing repeatable changes to an OpenAPI document: JSONPath targets, update, remove and copy actions, applied in order."
 currentVersion: "1.2.0"
 officialUrl: "https://spec.openapis.org/overlay/v1.2.0.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is the Overlay Specification?

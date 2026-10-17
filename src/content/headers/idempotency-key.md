@@ -4,6 +4,10 @@ description: "Custom request header used to prevent duplicate operations (mutati
 category: "request"
 standard: false
 relatedCodes: [400, 409, 422]
+reference:
+  title: "IETF draft-ietf-httpapi-idempotency-key-header (expired)"
+  url: https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/
+updatedDate: 2026-10-14
 ---
 
 ## What is the Idempotency-Key header?

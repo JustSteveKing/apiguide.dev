@@ -4,6 +4,10 @@ description: "Lists the request headers that are permitted during the actual COR
 category: "response"
 standard: true
 relatedCodes: [204]
+reference:
+  title: "WHATWG Fetch Standard"
+  url: https://fetch.spec.whatwg.org/
+updatedDate: 2026-07-10
 ---
 
 ## What is the Access-Control-Allow-Headers header?

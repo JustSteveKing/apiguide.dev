@@ -3,6 +3,7 @@ title: "DPoP: Demonstrating Proof of Possession (RFC 9449)"
 description: "A reference for RFC 9449, which binds OAuth access and refresh tokens to a client-held key: the DPoP proof JWT and its claims, the DPoP authorization scheme, server-supplied nonces, the cnf jkt binding, and how resource servers validate a proof."
 currentVersion: "RFC 9449"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9449.html"
+updatedDate: 2026-10-17
 ---
 
 ## What is DPoP?

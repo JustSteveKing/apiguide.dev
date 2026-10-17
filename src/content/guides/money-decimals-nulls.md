@@ -2,6 +2,7 @@
 title: "Money, Decimals and Nulls in JSON"
 description: "Representing money as integer minor units or decimal strings, ISO 4217 currency codes and exponents, why floats and large JSON numbers lose data, and the difference between null, absent and empty, including under JSON Merge Patch."
 category: "representation"
+updatedDate: 2026-10-14
 ---
 
 ## JSON Has Fewer Types Than Your Domain

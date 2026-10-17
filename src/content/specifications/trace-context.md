@@ -3,6 +3,7 @@ title: "W3C Trace Context"
 description: "The W3C Recommendation that standardizes the traceparent and tracestate headers, so a distributed trace survives every hop between services, vendors and languages."
 currentVersion: "Level 1 (W3C Recommendation)"
 officialUrl: "https://www.w3.org/TR/trace-context/"
+updatedDate: 2026-10-14
 ---
 
 ## What is W3C Trace Context?

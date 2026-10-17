@@ -3,6 +3,7 @@ title: "Protocol Buffers"
 description: "Google's language-neutral schema language and binary serialization format: proto3 and Editions, the wire format, field numbers, the rules for evolving a schema safely, and the JSON mapping."
 currentVersion: "Edition 2024"
 officialUrl: "https://protobuf.dev/"
+updatedDate: 2026-10-14
 ---
 
 ## What are Protocol Buffers?

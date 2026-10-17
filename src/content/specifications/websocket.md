@@ -3,6 +3,7 @@ title: "WebSocket Protocol"
 description: "A reference guide to the WebSocket Protocol defined in RFC 6455, covering the HTTP Upgrade handshake, full-duplex framing, subprotocols, and how it compares to SSE and HTTP polling."
 currentVersion: "RFC 6455"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc6455"
+updatedDate: 2026-10-14
 ---
 
 ## What is the WebSocket Protocol?

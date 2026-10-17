@@ -2,6 +2,7 @@
 title: "Internationalization & Localization"
 description: "How REST APIs negotiate language, separate message localization from data formatting, and standardize timestamps for a global audience."
 category: "representation"
+updatedDate: 2026-09-30
 ---
 
 ## Introduction to Internationalization

@@ -5,6 +5,7 @@ category: "sdk-generation"
 lifecycleStages: ["development", "deployment"]
 url: "https://buildwithfern.com"
 pricing: "freemium"
+updatedDate: 2026-10-17
 ---
 
 ## What is Fern?

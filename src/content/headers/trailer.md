@@ -3,6 +3,10 @@ name: "Trailer"
 description: "Announces in the header section which fields the sender expects to send as trailers, after the body."
 category: "both"
 standard: true
+reference:
+  title: "RFC 9110, Section 6.6.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-6.6.2
+updatedDate: 2026-10-17
 ---
 
 ## What is the Trailer header?

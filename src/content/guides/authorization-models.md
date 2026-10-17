@@ -2,6 +2,7 @@
 title: "Authorization Models: RBAC & ABAC"
 description: "How to choose and combine RBAC, ABAC, and ReBAC, apply least privilege, and prevent object-level authorization failures like BOLA."
 category: "security"
+updatedDate: 2026-09-24
 ---
 
 ## Introduction to Authorization Models

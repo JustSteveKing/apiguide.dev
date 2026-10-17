@@ -3,6 +3,7 @@ title: "HTTP/3 (RFC 9114)"
 description: "A reference guide to HTTP/3 as defined in RFC 9114, the version of HTTP that runs over QUIC to eliminate transport-layer head-of-line blocking, with QPACK header compression, 0-RTT, connection migration, and Alt-Svc discovery."
 currentVersion: "RFC 9114"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9114.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is HTTP/3?

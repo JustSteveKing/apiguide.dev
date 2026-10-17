@@ -4,6 +4,10 @@ description: "The misspelled request header naming the resource the target URI w
 category: "request"
 standard: true
 relatedCodes: [403]
+reference:
+  title: "RFC 9110, Section 10.1.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.1.3
+updatedDate: 2026-10-17
 ---
 
 ## What is the Referer header?

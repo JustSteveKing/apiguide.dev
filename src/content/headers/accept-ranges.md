@@ -4,6 +4,10 @@ description: "Advertises whether a server supports range requests for a resource
 category: "response"
 standard: true
 relatedCodes: [206]
+reference:
+  title: "RFC 9110, Section 14.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-14.3
+updatedDate: 2026-07-10
 ---
 
 ## What is the Accept-Ranges header?

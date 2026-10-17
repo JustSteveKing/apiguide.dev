@@ -3,6 +3,7 @@ title: "Server-Sent Events (SSE)"
 description: "A practical guide to Server-Sent Events, the HTML standard for one-way server-to-client streaming over a single long-lived HTTP connection using the text/event-stream media type."
 currentVersion: "WHATWG Living Standard"
 officialUrl: "https://html.spec.whatwg.org/multipage/server-sent-events.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is Server-Sent Events?

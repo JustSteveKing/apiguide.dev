@@ -4,6 +4,10 @@ description: "Carries an RFC 9449 proof-of-possession JWT, signed by the client'
 category: "request"
 standard: true
 relatedCodes: [400, 401]
+reference:
+  title: "RFC 9449"
+  url: https://www.rfc-editor.org/rfc/rfc9449.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the DPoP header?

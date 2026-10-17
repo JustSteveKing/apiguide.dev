@@ -3,6 +3,7 @@ title: "OAuth 2.0 Security Best Current Practice (RFC 9700)"
 description: "A reference for RFC 9700 (BCP 240), the IETF's current security baseline for OAuth 2.0: exact redirect URI matching, mandatory PKCE, the end of the implicit and password grants, sender-constrained tokens, refresh token rotation and mix-up defenses."
 currentVersion: "RFC 9700 (BCP 240)"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9700.html"
+updatedDate: 2026-10-17
 ---
 
 ## What is the OAuth 2.0 Security BCP?

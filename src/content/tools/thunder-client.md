@@ -5,6 +5,7 @@ category: "clients-debugging"
 lifecycleStages: ["development", "testing"]
 url: "https://www.thunderclient.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Thunder Client?

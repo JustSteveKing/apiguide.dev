@@ -1,22 +1,188 @@
 {
   "status-codes": [
     {
-      "names": ["104"],
+      "names": [
+        "104"
+      ],
       "reason": "Temporary registration for the resumable uploads draft, expiring 2026-11-13 unless renewed. Covered on the resumable uploads specification page; give it its own page if it becomes permanent."
     }
   ],
   "methods": [
     {
-      "names": ["ACL", "BASELINE-CONTROL", "BIND", "CHECKIN", "CHECKOUT", "LABEL", "MERGE", "MKACTIVITY", "MKCALENDAR", "MKREDIRECTREF", "MKWORKSPACE", "ORDERPATCH", "REBIND", "UNBIND", "UNCHECKOUT", "UPDATE", "UPDATEREDIRECTREF", "VERSION-CONTROL"],
+      "names": [
+        "ACL",
+        "BASELINE-CONTROL",
+        "BIND",
+        "CHECKIN",
+        "CHECKOUT",
+        "LABEL",
+        "MERGE",
+        "MKACTIVITY",
+        "MKCALENDAR",
+        "MKREDIRECTREF",
+        "MKWORKSPACE",
+        "ORDERPATCH",
+        "REBIND",
+        "UNBIND",
+        "UNCHECKOUT",
+        "UPDATE",
+        "UPDATEREDIRECTREF",
+        "VERSION-CONTROL"
+      ],
       "reason": "WebDAV access control, versioning, binding, ordering, redirect references and CalDAV. File-system and calendar protocols, not API design."
     },
     {
-      "names": ["LINK", "UNLINK"],
+      "names": [
+        "LINK",
+        "UNLINK"
+      ],
       "reason": "Historic, from RFC 2068. Never widely implemented."
     },
     {
-      "names": ["PRI"],
+      "names": [
+        "PRI"
+      ],
       "reason": "The HTTP/2 connection preface, not a method a client sends."
+    }
+  ],
+  "headers": [
+    {
+      "names": [
+        "DASL",
+        "DAV",
+        "Depth",
+        "Destination",
+        "If",
+        "Label",
+        "Lock-Token",
+        "Ordering-Type",
+        "Overwrite",
+        "Position",
+        "Redirect-Ref",
+        "Apply-To-Redirect-Ref",
+        "Status-URI",
+        "Timeout",
+        "SLUG"
+      ],
+      "reason": "WebDAV, its extensions and AtomPub. File-system and publishing protocols, not API design."
+    },
+    {
+      "names": [
+        "Cal-Managed-ID",
+        "CalDAV-Timezones",
+        "If-Schedule-Tag-Match",
+        "Schedule-Reply",
+        "Schedule-Tag"
+      ],
+      "reason": "CalDAV."
+    },
+    {
+      "names": [
+        "A-IM",
+        "IM",
+        "Delta-Base",
+        "Accept-Features",
+        "Alternates",
+        "Negotiate",
+        "TCN",
+        "Variant-Vary",
+        "Meter",
+        "Accept-Additions"
+      ],
+      "reason": "Delta encoding (RFC 3229), transparent content negotiation (RFC 2295), hit metering (RFC 2227) and RFC 2324. Historic or experimental, never deployed for APIs."
+    },
+    {
+      "names": [
+        "Sec-Token-Binding",
+        "Include-Referred-Token-Binding-ID",
+        "Public-Key-Pins",
+        "Public-Key-Pins-Report-Only",
+        "Hobareg"
+      ],
+      "reason": "Token Binding, HPKP and HOBA: abandoned or removed from browsers. Documenting them would only invite their use."
+    },
+    {
+      "names": [
+        "CMCD-Object",
+        "CMCD-Request",
+        "CMCD-Session",
+        "CMCD-Status",
+        "CMSD-Dynamic",
+        "CMSD-Static",
+        "CTA-Common-Access-Token"
+      ],
+      "reason": "CTA media streaming telemetry and access tokens."
+    },
+    {
+      "names": [
+        "Capsule-Protocol",
+        "Connect-UDP-Bind",
+        "Proxy-Public-Address",
+        "Concealed-Auth-Export",
+        "ALPN",
+        "Alt-Used",
+        "OSCORE",
+        "Cert-Not-After",
+        "Cert-Not-Before",
+        "Replay-Nonce",
+        "Topic",
+        "TTL",
+        "Urgency",
+        "Incremental"
+      ],
+      "reason": "Transport, proxying (MASQUE), CoAP, ACME and Web Push plumbing. Below or beside the API layer; a reader designing an HTTP API does not set these."
+    },
+    {
+      "names": [
+        "Accept-CH",
+        "Activate-Storage-Access",
+        "Sec-Fetch-Storage-Access",
+        "Sec-GPC",
+        "Sec-Purpose",
+        "Origin-Agent-Cluster",
+        "Ping-From",
+        "Ping-To",
+        "Refresh",
+        "AMP-Cache-Transform",
+        "NEL",
+        "Reporting-Endpoints",
+        "Timing-Allow-Origin",
+        "Cross-Origin-Embedder-Policy",
+        "Cross-Origin-Embedder-Policy-Report-Only",
+        "Cross-Origin-Opener-Policy",
+        "Cross-Origin-Opener-Policy-Report-Only",
+        "Content-Security-Policy-Report-Only"
+      ],
+      "reason": "Browser document and navigation features. They govern pages, not API responses; the API-relevant security headers (CSP, CORP, X-Frame-Options, Referrer-Policy) are documented."
+    },
+    {
+      "names": [
+        "Accept-Datetime",
+        "Memento-Datetime"
+      ],
+      "reason": "Memento (RFC 7089), web archiving."
+    },
+    {
+      "names": [
+        "Authentication-Control",
+        "Optional-WWW-Authenticate",
+        "Detached-JWS",
+        "Set-Txn"
+      ],
+      "reason": "Experimental HTTP authentication extensions (RFC 8053), GNAP and the SCIM security event profile: too narrow for this catalogue."
+    },
+    {
+      "names": [
+        "Configuration-Context",
+        "OSLC-Core-Version",
+        "EDIINT-Features",
+        "MIME-Version",
+        "Isolation",
+        "OData-EntityId",
+        "OData-Isolation",
+        "OData-MaxVersion"
+      ],
+      "reason": "Protocol-specific (OSLC, EDIINT AS2, MIME, OData internals). OData is covered by its specification page and OData-Version."
     }
   ]
 }

@@ -4,6 +4,10 @@ description: "Sent by an EventSource client when it reconnects to a Server-Sent 
 category: "request"
 standard: true
 relatedCodes: [200, 204]
+reference:
+  title: "WHATWG HTML Living Standard"
+  url: https://html.spec.whatwg.org/multipage/
+updatedDate: 2026-10-17
 ---
 
 ## What is the Last-Event-ID header?

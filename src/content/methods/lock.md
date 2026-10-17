@@ -5,6 +5,10 @@ safe: false
 idempotent: false
 cacheable: false
 relatedCodes: [200, 423]
+reference:
+  title: "RFC 4918, Section 9.10"
+  url: https://www.rfc-editor.org/rfc/rfc4918.html#section-9.10
+updatedDate: 2026-07-10
 ---
 
 ## What is the LOCK method?

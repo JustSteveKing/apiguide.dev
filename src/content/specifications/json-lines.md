@@ -3,6 +3,7 @@ title: "JSON Lines and NDJSON"
 description: "A reference for newline-delimited JSON: the JSON Lines and NDJSON conventions, their rules for encoding and line endings, the unregistered media type situation, and RFC 7464 JSON Text Sequences as the IETF alternative."
 currentVersion: "JSON Lines / NDJSON 1.0.0"
 officialUrl: "https://jsonlines.org/"
+updatedDate: 2026-10-17
 ---
 
 ## What are JSON Lines and NDJSON?

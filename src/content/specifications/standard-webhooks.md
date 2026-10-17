@@ -3,6 +3,7 @@ title: "Standard Webhooks"
 description: "An open specification for sending webhooks consistently: the webhook-id, webhook-timestamp and webhook-signature headers, HMAC-SHA256 and Ed25519 signing, and delivery rules."
 currentVersion: "1.0.0"
 officialUrl: "https://www.standardwebhooks.com/"
+updatedDate: 2026-10-14
 ---
 
 ## What is Standard Webhooks?

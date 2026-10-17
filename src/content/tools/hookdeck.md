@@ -5,6 +5,7 @@ category: "webhooks"
 lifecycleStages: ["development", "deployment", "monitoring"]
 url: "https://hookdeck.com"
 pricing: "freemium"
+updatedDate: 2026-10-17
 ---
 
 ## What is Hookdeck?

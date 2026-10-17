@@ -5,6 +5,7 @@ statusText: Bad Request
 category: client-error
 relatedCodes: ['unprocessable-query']
 publishedDate: 2026-04-14
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

@@ -5,6 +5,7 @@ statusText: Unauthorized
 category: client-error
 relatedCodes: ['missing-signature', 'unauthorized', 'digest-mismatched-values']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

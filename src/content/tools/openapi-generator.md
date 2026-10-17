@@ -5,6 +5,7 @@ category: "sdk-generation"
 lifecycleStages: ["development"]
 url: "https://openapi-generator.tech"
 pricing: "open-source"
+updatedDate: 2026-10-17
 ---
 
 ## What is OpenAPI Generator?

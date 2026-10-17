@@ -5,6 +5,7 @@ category: "clients-debugging"
 lifecycleStages: ["development"]
 url: "https://httpie.io"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is HTTPie?

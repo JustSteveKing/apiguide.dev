@@ -4,7 +4,9 @@
 // later than what the frontmatter says. Run it before committing content.
 //
 // It never moves a date backwards, so a hand-set date for a review that did
-// not change the file survives.
+// not change the file survives. Changes that only touch the frontmatter this
+// tooling maintains (reference, updatedDate) do not count as an update, so
+// running sync:references does not make every page look freshly edited.
 //
 // Usage: bun run sync:dates [--dry-run]
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -22,10 +24,21 @@ const dirty = new Set(
 );
 const root = git('rev-parse', '--show-toplevel');
 
+// A diff line that only maintains metadata rather than changing the page.
+const MAINTENANCE = /^[+-](reference:|  title:|  url:|updatedDate:)/;
+
+function substantive(diff) {
+  return diff.split('\n').some((l) => /^[+-]/.test(l) && !/^(\+\+\+|---)/.test(l) && !MAINTENANCE.test(l));
+}
+
 function lastChanged(path) {
   const rel = path.replace(`${root}/`, '');
-  if (dirty.has(rel)) return today;
-  return git('log', '-1', '--format=%as', '--', rel) || today;
+  if (dirty.has(rel) && substantive(git('diff', 'HEAD', '--', rel))) return today;
+  for (const line of git('log', '--format=%H %as', '--', rel).split('\n').filter(Boolean)) {
+    const [sha, date] = line.split(' ');
+    if (substantive(git('show', '--format=', sha, '--', rel))) return date;
+  }
+  return dirty.has(rel) ? today : '';
 }
 
 function setDate(path, date) {
@@ -46,7 +59,7 @@ for (const c of COLLECTIONS) {
     const current = readFrontmatter(f.path).updatedDate;
     const currentDay = current ? new Date(current).toISOString().slice(0, 10) : '';
     const last = lastChanged(f.path);
-    if (currentDay >= last) continue;
+    if (!last || currentDay >= last) continue;
     changed++;
     if (!dryRun) setDate(f.path, last);
   }

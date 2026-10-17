@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["design", "development"]
 url: "https://www.asyncapi.com/tools"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is AsyncAPI Tooling?

@@ -3,6 +3,7 @@ title: "Idempotency-Key Header Field (Internet-Draft)"
 description: "A reference for draft-ietf-httpapi-idempotency-key-header, the IETF HTTPAPI draft that standardizes the Idempotency-Key request header for making POST and PATCH safely retryable: key syntax, fingerprints, expiry and the 400, 409 and 422 error cases. Expired, not an RFC."
 currentVersion: "draft-ietf-httpapi-idempotency-key-header-07 (expired)"
 officialUrl: "https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/"
+updatedDate: 2026-10-17
 ---
 
 ## What is the Idempotency-Key header draft?

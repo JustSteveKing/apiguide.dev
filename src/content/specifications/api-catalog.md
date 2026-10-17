@@ -3,6 +3,7 @@ title: "api-catalog (RFC 9727)"
 description: "A reference for RFC 9727, which defines the /.well-known/api-catalog URI and the api-catalog link relation so clients can discover a publisher's APIs, their descriptions and their documentation from a known location."
 currentVersion: "RFC 9727"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9727.html"
+updatedDate: 2026-10-17
 ---
 
 ## What is api-catalog?

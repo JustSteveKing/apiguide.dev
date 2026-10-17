@@ -3,6 +3,7 @@ title: "JSON Merge Patch (RFC 7396)"
 description: "A reference for JSON Merge Patch, the document-shaped format for partial updates with PATCH, covering the merge algorithm, null-as-delete semantics, array replacement, and when the format is the wrong choice."
 currentVersion: "RFC 7396"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc7396.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is JSON Merge Patch?

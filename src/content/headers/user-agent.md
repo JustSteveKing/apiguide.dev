@@ -4,6 +4,10 @@ description: "Identifies the client software making the request, as a list of pr
 category: "request"
 standard: true
 relatedCodes: [400, 403]
+reference:
+  title: "RFC 9110, Section 10.1.5"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.1.5
+updatedDate: 2026-10-14
 ---
 
 ## What is the User-Agent header?

@@ -3,6 +3,7 @@ title: "AsyncAPI Specification"
 description: "A deep-dive explanation of the AsyncAPI Specification, detailing message-driven architectures, channels, protocols, and event bindings."
 currentVersion: "3.1.0"
 officialUrl: "https://www.asyncapi.com/docs/reference/specification/v3.1.0"
+updatedDate: 2026-10-14
 ---
 
 ## Core Architecture of AsyncAPI

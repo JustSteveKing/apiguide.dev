@@ -5,7 +5,7 @@ statusText: Unauthorized
 category: client-error
 relatedCodes: ['expired-authentication-token', 'insufficient-scope']
 publishedDate: 2025-11-24
-updatedDate: 2026-04-02
+updatedDate: 2026-10-13
 ---
 
 ## When to use it

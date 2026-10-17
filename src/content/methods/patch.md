@@ -5,6 +5,10 @@ safe: false
 idempotent: false
 cacheable: false
 relatedCodes: [200, 204, 400, 404, 412, 422]
+reference:
+  title: "RFC 5789, Section 2"
+  url: https://www.rfc-editor.org/rfc/rfc5789.html#section-2
+updatedDate: 2026-10-14
 ---
 
 ## What is the PATCH method?

@@ -3,6 +3,7 @@ title: "HTTP/2 (RFC 9113)"
 description: "A reference guide to HTTP/2 as defined in RFC 9113, covering binary framing, multiplexed streams over a single connection, HPACK header compression, stream prioritization, and the transport-layer head-of-line blocking that HTTP/3 later addressed."
 currentVersion: "RFC 9113"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9113.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is HTTP/2?

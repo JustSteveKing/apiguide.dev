@@ -5,6 +5,7 @@ statusText: Unauthorized
 category: client-error
 relatedCodes: ['expired-authentication-token', 'unauthorized', 'invalid-credentials']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

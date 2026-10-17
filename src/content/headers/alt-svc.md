@@ -4,6 +4,10 @@ description: "Advertises another protocol, host or port where the same origin ca
 category: "response"
 standard: true
 relatedCodes: [421]
+reference:
+  title: "RFC 7838"
+  url: https://www.rfc-editor.org/rfc/rfc7838.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Alt-Svc header?

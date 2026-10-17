@@ -4,6 +4,10 @@ description: "Declares what compression algorithms the client supports for the r
 category: "request"
 standard: true
 relatedCodes: [406]
+reference:
+  title: "RFC 9110, Section 12.5.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.3
+updatedDate: 2026-07-08
 ---
 
 ## What is the Accept-Encoding header?

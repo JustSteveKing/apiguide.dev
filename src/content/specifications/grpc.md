@@ -3,6 +3,7 @@ title: gRPC
 description: A high-performance, open-source RPC framework that carries Protocol Buffers messages over HTTP/2, with generated clients and servers, four streaming patterns and its own status codes.
 currentVersion: "gRPC over HTTP/2 (PROTOCOL-HTTP2)"
 officialUrl: https://grpc.io/
+updatedDate: 2026-10-14
 ---
 
 ## What is gRPC?

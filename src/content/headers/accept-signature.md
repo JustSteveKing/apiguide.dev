@@ -4,6 +4,10 @@ description: "Asks the other side to sign its message with RFC 9421 HTTP Message
 category: "both"
 standard: true
 relatedCodes: [400, 401]
+reference:
+  title: "RFC 9421, Section 5.1"
+  url: https://www.rfc-editor.org/rfc/rfc9421.html#section-5.1
+updatedDate: 2026-10-17
 ---
 
 ## What is the Accept-Signature header?

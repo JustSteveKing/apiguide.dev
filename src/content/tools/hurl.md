@@ -5,6 +5,7 @@ category: "testing-mocking"
 lifecycleStages: ["development", "testing"]
 url: "https://hurl.dev"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is Hurl?

@@ -5,6 +5,7 @@ statusText: Range Not Satisfiable
 category: client-error
 relatedCodes: ['invalid-query-parameter', 'unprocessable-query', 'precondition-failed']
 publishedDate: 2026-10-14
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

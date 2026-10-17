@@ -4,6 +4,7 @@ description: "De facto request header in which a proxy records whether the clien
 category: "request"
 standard: false
 relatedCodes: [301, 308]
+updatedDate: 2026-10-17
 ---
 
 ## What is the X-Forwarded-Proto header?

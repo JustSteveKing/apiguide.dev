@@ -6,6 +6,7 @@ category: client-error
 relatedCodes: ['ohttp-key-not-acceptable', 'malformed-request-body']
 publishedDate: 2026-10-17
 registeredType: https://iana.org/assignments/http-problem-types#date
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

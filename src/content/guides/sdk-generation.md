@@ -2,6 +2,7 @@
 title: "Generating SDKs from OpenAPI"
 description: "Generated against handwritten client libraries, what an OpenAPI document needs before a generator can produce a good SDK, versioning the SDK separately from the API, and the retry, idempotency, pagination and User-Agent behavior an SDK should own."
 category: "evolution"
+updatedDate: 2026-10-17
 ---
 
 ## An SDK Is a Second Contract

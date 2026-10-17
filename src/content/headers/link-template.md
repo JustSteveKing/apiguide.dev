@@ -4,6 +4,10 @@ description: "Like Link, but the target is a URI Template, so a client can build
 category: "both"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 9652"
+  url: https://www.rfc-editor.org/rfc/rfc9652.html
+updatedDate: 2026-10-17
 ---
 
 ## What is the Link-Template header?

@@ -5,6 +5,7 @@ statusText: Locked
 category: client-error
 relatedCodes: ['resource-conflict', 'stale-resource-version', 'precondition-failed', 'account-frozen']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

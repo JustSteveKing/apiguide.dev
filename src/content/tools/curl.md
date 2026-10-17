@@ -5,6 +5,7 @@ category: "clients-debugging"
 lifecycleStages: ["development", "testing"]
 url: "https://curl.se"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is curl?

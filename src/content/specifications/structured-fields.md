@@ -3,6 +3,7 @@ title: "Structured Field Values for HTTP (RFC 9651)"
 description: "A reference for RFC 9651, the common syntax for new HTTP header and trailer fields: Lists, Dictionaries and Items, parameters, the bare item types including Date and Display String, strict parsing, and which fields use it."
 currentVersion: "RFC 9651"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9651.html"
+updatedDate: 2026-10-14
 ---
 
 ## What are Structured Fields?

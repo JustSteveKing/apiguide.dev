@@ -4,6 +4,7 @@ description: "De facto request header listing the client and proxy IP addresses 
 category: "request"
 standard: false
 relatedCodes: [403, 429]
+updatedDate: 2026-10-17
 ---
 
 ## What is the X-Forwarded-For header?

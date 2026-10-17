@@ -5,6 +5,7 @@ statusText: Gone
 category: client-error
 relatedCodes: ['gone', 'unsupported-api-version', 'resource-not-found']
 publishedDate: 2026-10-17
+updatedDate: 2026-10-17
 ---
 
 ## When to use it

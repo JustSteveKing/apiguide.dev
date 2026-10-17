@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["design"]
 url: "https://stoplight.io/open-source/spectral"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is Spectral (Stoplight)?

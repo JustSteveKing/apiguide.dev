@@ -3,6 +3,7 @@ title: "JSON-RPC 2.0"
 description: "A minimal, transport-agnostic remote procedure call protocol in JSON: requests, responses, notifications, batches and the reserved error codes, and the base protocol under MCP."
 currentVersion: "2.0"
 officialUrl: "https://www.jsonrpc.org/specification"
+updatedDate: 2026-10-14
 ---
 
 ## What is JSON-RPC?

@@ -4,6 +4,10 @@ description: "Requests only part of a resource by specifying one or more byte ra
 category: "request"
 standard: true
 relatedCodes: [206, 416, 200]
+reference:
+  title: "RFC 9110, Section 14.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-14.2
+updatedDate: 2026-07-10
 ---
 
 ## What is the Range header?

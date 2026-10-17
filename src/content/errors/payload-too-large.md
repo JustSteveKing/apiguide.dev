@@ -5,6 +5,7 @@ statusText: Content Too Large
 category: client-error
 relatedCodes: ['malformed-request-body', 'unsupported-media-type', 'uri-too-long', 'request-header-fields-too-large', 'length-required']
 publishedDate: 2026-01-27
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

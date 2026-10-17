@@ -4,6 +4,10 @@ description: "The proxy counterpart of Authentication-Info: scheme-specific data
 category: "response"
 standard: true
 relatedCodes: [407]
+reference:
+  title: "RFC 9110, Section 11.7.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-11.7.3
+updatedDate: 2026-10-17
 ---
 
 ## What is the Proxy-Authentication-Info header?

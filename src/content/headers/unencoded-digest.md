@@ -4,6 +4,10 @@ description: "Carries a hash of the full representation with no content coding a
 category: "both"
 standard: false
 relatedCodes: [200, 206]
+reference:
+  title: "RFC-ietf-httpbis-unencoded-digest-05, Section 3"
+  url: https://datatracker.ietf.org/doc/draft-ietf-httpbis-unencoded-digest/
+updatedDate: 2026-10-17
 ---
 
 ## What is the Unencoded-Digest header?

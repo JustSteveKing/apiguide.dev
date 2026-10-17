@@ -4,6 +4,10 @@ description: "A hop counter for TRACE and OPTIONS that limits how many proxies m
 category: "request"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 9110, Section 7.6.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-7.6.2
+updatedDate: 2026-10-17
 ---
 
 ## What is the Max-Forwards header?

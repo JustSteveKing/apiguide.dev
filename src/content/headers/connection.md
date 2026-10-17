@@ -3,6 +3,10 @@ name: "Connection"
 description: "Lists control options for the current HTTP/1.1 connection and names the hop-by-hop fields that intermediaries must strip before forwarding."
 category: "both"
 standard: true
+reference:
+  title: "RFC 9110, Section 7.6.1"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-7.6.1
+updatedDate: 2026-10-14
 ---
 
 ## What is the Connection header?

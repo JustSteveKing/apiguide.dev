@@ -5,6 +5,7 @@ statusText: Unsupported Media Type
 category: client-error
 relatedCodes: ['malformed-request-body', 'payload-too-large']
 publishedDate: 2026-04-28
+updatedDate: 2026-07-09
 ---
 
 ## When to use it

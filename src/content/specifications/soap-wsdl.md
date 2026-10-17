@@ -3,6 +3,7 @@ title: "SOAP and WSDL"
 description: "A reference for integrators meeting legacy SOAP services: SOAP 1.1 and 1.2 envelopes, the SOAPAction header and the action parameter, faults and their HTTP status codes, WSDL 1.1 and 2.0, document/literal style, and WS-Security."
 currentVersion: "SOAP 1.2 (Second Edition, 2007); WSDL 1.1 / 2.0"
 officialUrl: "https://www.w3.org/TR/soap12-part1/"
+updatedDate: 2026-10-17
 ---
 
 ## What are SOAP and WSDL?

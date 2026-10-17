@@ -3,6 +3,10 @@ name: "X-Frame-Options"
 description: "Legacy header that tells browsers whether a response may be shown in a frame. Superseded by CSP frame-ancestors, but still worth sending as DENY."
 category: "response"
 standard: true
+reference:
+  title: "WHATWG HTML Living Standard"
+  url: https://html.spec.whatwg.org/multipage/
+updatedDate: 2026-10-17
 ---
 
 ## What is the X-Frame-Options header?
