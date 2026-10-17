@@ -41,7 +41,7 @@ async function check(url) {
 
 const CONCURRENCY = 4;
 
-// Collect (url → [where it's referenced]) from specs.officialUrl and tools.url.
+// Collect (url → [where it's referenced]) from specs.officialUrl, tools.url and reference.url.
 function collectUrls() {
   const map = new Map();
   const add = (url, where) => {
@@ -51,6 +51,9 @@ function collectUrls() {
   };
   for (const f of listFiles('specifications')) add(readFrontmatter(f.path).officialUrl, `specifications/${f.slug}`);
   for (const f of listFiles('tools')) add(readFrontmatter(f.path).url, `tools/${f.slug}`);
+  for (const c of ['status-codes', 'headers', 'methods']) {
+    for (const f of listFiles(c)) add(readFrontmatter(f.path).reference?.url, `${c}/${f.slug} (reference)`);
+  }
   return map;
 }
 
