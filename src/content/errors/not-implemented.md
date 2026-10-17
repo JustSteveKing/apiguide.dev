@@ -5,6 +5,7 @@ statusText: Not Implemented
 category: server-error
 relatedCodes: ['method-not-allowed', 'resource-not-found', 'invalid-query-parameter']
 publishedDate: 2026-10-14
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

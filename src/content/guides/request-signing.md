@@ -2,6 +2,7 @@
 title: "Request Signing"
 description: "Signing outbound API requests with HMAC, AWS SigV4-style canonical requests, signed headers, body digests, and clock-skew handling."
 category: "security"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Request Signing

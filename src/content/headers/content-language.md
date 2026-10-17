@@ -4,6 +4,10 @@ description: "Describes the natural language(s) of the intended audience for the
 category: "both"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 9110, Section 8.5"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-8.5
+updatedDate: 2026-07-10
 ---
 
 ## What is the Content-Language header?

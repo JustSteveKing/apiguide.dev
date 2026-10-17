@@ -5,6 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
+import Provenance from '@/components/Provenance.astro';
 
 export async function getStaticPaths() {
   const headers = await getCollection('headers');
@@ -88,6 +89,7 @@ const headerJsonLd = [
             ))}
           </MetaItem>
         )}
+        <Provenance reference={h.data.reference} updatedDate={h.data.updatedDate} />
       </div>
     </header>
 

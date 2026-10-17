@@ -5,6 +5,7 @@ category: "clients-debugging"
 lifecycleStages: ["development"]
 url: "https://hoppscotch.io"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Hoppscotch?

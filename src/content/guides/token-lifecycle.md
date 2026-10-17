@@ -2,6 +2,7 @@
 title: "Token Lifecycle: Rotation, Refresh & Revocation"
 description: "Managing the full life of API tokens: short-lived access tokens, single-use refresh token rotation, revocation, introspection, and JWKS key rotation."
 category: "security"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Token Lifecycle

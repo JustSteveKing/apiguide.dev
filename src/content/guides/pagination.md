@@ -2,6 +2,7 @@
 title: "Pagination Patterns (Offset vs. Cursor)"
 description: "Detailed guide comparing offset and cursor pagination, detailing how to implement cursors and hypermedia headers."
 category: "design"
+updatedDate: 2026-09-30
 ---
 
 ## Introduction to Pagination

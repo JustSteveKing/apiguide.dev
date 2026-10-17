@@ -4,6 +4,10 @@ description: "Specifies how long the results of a CORS preflight request can be 
 category: "response"
 standard: true
 relatedCodes: [204]
+reference:
+  title: "WHATWG Fetch Standard"
+  url: https://fetch.spec.whatwg.org/
+updatedDate: 2026-07-10
 ---
 
 ## What is the Access-Control-Max-Age header?

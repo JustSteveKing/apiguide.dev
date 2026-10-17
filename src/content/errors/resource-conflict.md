@@ -5,6 +5,7 @@ statusText: Conflict
 category: client-error
 relatedCodes: ['idempotency-key-conflict', 'stale-resource-version']
 publishedDate: 2026-02-24
+updatedDate: 2026-07-09
 ---
 
 ## When to use it

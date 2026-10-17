@@ -4,6 +4,10 @@ description: "Signals that a resource supports the QUERY method and lists the qu
 category: "response"
 standard: true
 relatedCodes: [200, 415]
+reference:
+  title: "RFC 10008, Section 3"
+  url: https://www.rfc-editor.org/rfc/rfc10008.html#section-3
+updatedDate: 2026-10-14
 ---
 
 ## What is the Accept-Query header?

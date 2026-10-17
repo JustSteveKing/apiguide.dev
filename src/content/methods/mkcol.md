@@ -5,6 +5,10 @@ safe: false
 idempotent: true
 cacheable: false
 relatedCodes: [201, 405, 409]
+reference:
+  title: "RFC 4918, Section 9.3"
+  url: https://www.rfc-editor.org/rfc/rfc4918.html#section-9.3
+updatedDate: 2026-07-10
 ---
 
 ## What is the MKCOL method?

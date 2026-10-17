@@ -3,6 +3,7 @@ title: "JSON Web Token (JWT)"
 description: "A technical reference for JSON Web Tokens, covering the header/payload/signature structure, registered claims, JWS versus JWE, signing algorithms, and common validation pitfalls."
 currentVersion: "RFC 7519"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc7519"
+updatedDate: 2026-10-14
 ---
 
 ## What is a JWT?

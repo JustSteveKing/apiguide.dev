@@ -4,6 +4,10 @@ description: "Legacy field from early IETF drafts giving the quota left in the c
 category: "response"
 standard: false
 relatedCodes: [429]
+reference:
+  title: "Earlier revisions of draft-ietf-httpapi-ratelimit-headers"
+  url: https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/
+updatedDate: 2026-10-14
 ---
 
 ## What is the RateLimit-Remaining header?

@@ -5,6 +5,7 @@ statusText: Method Not Allowed
 category: client-error
 relatedCodes: ['resource-not-found', 'not-implemented']
 publishedDate: 2025-12-22
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

@@ -4,6 +4,10 @@ description: "Added by an intermediary to mark a request that was received in TL
 category: "request"
 standard: true
 relatedCodes: [425]
+reference:
+  title: "RFC 8470"
+  url: https://www.rfc-editor.org/rfc/rfc8470.html
+updatedDate: 2026-10-14
 ---
 
 ## What is the Early-Data header?

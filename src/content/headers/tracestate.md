@@ -4,6 +4,10 @@ description: "W3C Trace Context companion to traceparent that carries vendor-spe
 category: "request"
 standard: true
 relatedCodes: []
+reference:
+  title: "W3C Trace Context"
+  url: https://www.w3.org/TR/trace-context/
+updatedDate: 2026-10-14
 ---
 
 ## What is the tracestate header?

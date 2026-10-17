@@ -5,6 +5,7 @@ category: "gateways-management"
 lifecycleStages: ["deployment"]
 url: "https://nginx.org"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is NGINX?

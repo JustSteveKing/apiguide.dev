@@ -3,6 +3,7 @@ title: "HAL (Hypertext Application Language)"
 description: "A reference for the Hypertext Application Language, a simple hypermedia format for JSON and XML APIs, covering _links, curies, _embedded resources, and a comparison with JSON:API."
 currentVersion: "draft-kelly-json-hal-11"
 officialUrl: "https://datatracker.ietf.org/doc/html/draft-kelly-json-hal-11"
+updatedDate: 2026-10-14
 ---
 
 ## What is HAL?

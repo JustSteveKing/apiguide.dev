@@ -4,6 +4,10 @@ description: "Sent by the browser in a CORS preflight to announce the method of 
 category: "request"
 standard: true
 relatedCodes: [204]
+reference:
+  title: "WHATWG Fetch Standard"
+  url: https://fetch.spec.whatwg.org/
+updatedDate: 2026-07-10
 ---
 
 ## What is the Access-Control-Request-Method header?

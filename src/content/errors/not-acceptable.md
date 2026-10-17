@@ -5,6 +5,7 @@ statusText: Not Acceptable
 category: client-error
 relatedCodes: ['unsupported-media-type', 'unprocessable-query']
 publishedDate: 2026-07-09
+updatedDate: 2026-09-24
 ---
 
 ## When to use it

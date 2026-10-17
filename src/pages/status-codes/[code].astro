@@ -5,6 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
+import Provenance from '@/components/Provenance.astro';
 
 export async function getStaticPaths() {
   const statusCodes = await getCollection('statusCodes');
@@ -88,6 +89,7 @@ const scJsonLd = [
         <MetaItem label="Category" value={activeTheme.label} />
         <MetaItem label="API error types" value={`${matchingErrors.length} ${matchingErrors.length === 1 ? 'error schema' : 'error schemas'}`} />
         <MetaItem label="Related headers" value={`${matchingHeaders.length} ${matchingHeaders.length === 1 ? 'header' : 'headers'}`} />
+        <Provenance reference={sc.data.reference} updatedDate={sc.data.updatedDate} />
       </div>
     </header>
 

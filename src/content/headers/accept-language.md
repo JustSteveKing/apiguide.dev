@@ -4,6 +4,10 @@ description: "Advertises the natural languages the client prefers for the respon
 category: "request"
 standard: true
 relatedCodes: [406]
+reference:
+  title: "RFC 9110, Section 12.5.4"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.4
+updatedDate: 2026-07-10
 ---
 
 ## What is the Accept-Language header?

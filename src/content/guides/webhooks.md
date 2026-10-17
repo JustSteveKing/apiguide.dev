@@ -2,6 +2,7 @@
 title: "Webhooks & Event-Driven API Design"
 description: "Best practices for webhooks, covering secure payload signing, retry scheduling, receiver idempotency, and typed payloads whose changes are new event types rather than quiet mutations."
 category: "events"
+updatedDate: 2026-10-17
 ---
 
 ## Introduction to Webhooks
@@ -44,6 +45,8 @@ Network glitches are inevitable. If a client server fails to respond, execute a 
 Publish the schedule you actually implement. A receiver cannot size its own replay window, or tell "still coming" apart from "given up", against a policy it has not been told.
 
 Record every attempt while you are at it, rather than the current state of each delivery. See [webhook delivery history](/guides/webhook-delivery-history) for why the distinction matters and what each record should hold.
+
+If you would rather not build the queue, retries and signing yourself, [webhook infrastructure](/tools/webhooks) services such as Svix and Hookdeck Outpost provide them, and both can be self-hosted.
 
 ---
 

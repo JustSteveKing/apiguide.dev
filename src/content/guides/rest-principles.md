@@ -2,6 +2,7 @@
 title: "REST API Design Principles"
 description: "The core constraints of REST: resources, statelessness, the uniform interface, correct verbs and status codes, and the Richardson Maturity Model."
 category: "design"
+updatedDate: 2026-09-30
 ---
 
 ## Introduction to REST

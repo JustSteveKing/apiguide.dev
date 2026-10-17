@@ -3,6 +3,7 @@ title: "HTTP Semantics (RFC 9110)"
 description: "The foundational reference for HTTP, RFC 9110 defines the version-independent semantics of the protocol: methods, status codes, header fields, representations, content negotiation, conditional and range requests, and the authentication framework."
 currentVersion: "RFC 9110"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9110.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is HTTP Semantics?

@@ -4,6 +4,10 @@ description: "Specifies the media types that the client is willing to receive in
 category: "request"
 standard: true
 relatedCodes: [406]
+reference:
+  title: "RFC 9110, Section 12.5.1"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.1
+updatedDate: 2026-07-08
 ---
 
 ## What is the Accept header?

@@ -5,6 +5,10 @@ safe: false
 idempotent: true
 cacheable: false
 relatedCodes: [204, 409]
+reference:
+  title: "RFC 4918, Section 9.11"
+  url: https://www.rfc-editor.org/rfc/rfc4918.html#section-9.11
+updatedDate: 2026-10-14
 ---
 
 ## What is the UNLOCK method?

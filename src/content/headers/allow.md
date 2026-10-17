@@ -4,6 +4,10 @@ description: "Lists the HTTP methods supported by the target resource, on a 405 
 category: "response"
 standard: true
 relatedCodes: [405]
+reference:
+  title: "RFC 9110, Section 10.2.1"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.2.1
+updatedDate: 2026-07-09
 ---
 
 ## What is the Allow header?

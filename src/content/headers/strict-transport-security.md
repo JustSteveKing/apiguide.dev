@@ -3,6 +3,10 @@ name: "Strict-Transport-Security"
 description: "Tells browsers to contact this host only over HTTPS for a set period, refusing plaintext connections and certificate errors."
 category: "response"
 standard: true
+reference:
+  title: "RFC 6797"
+  url: https://www.rfc-editor.org/rfc/rfc6797.html
+updatedDate: 2026-10-14
 ---
 
 ## What is the Strict-Transport-Security header?

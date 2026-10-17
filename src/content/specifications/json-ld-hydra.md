@@ -3,6 +3,7 @@ title: "JSON-LD & Hydra"
 description: "A reference for JSON-LD linked data and the Hydra vocabulary, covering @context, @id, @type, hypermedia-driven operations and collections, and a comparison with HAL and JSON:API."
 currentVersion: "JSON-LD 1.1"
 officialUrl: "https://www.w3.org/TR/json-ld11/"
+updatedDate: 2026-09-24
 ---
 
 ## What is JSON-LD & Hydra?

@@ -23,6 +23,15 @@ Two consequences that shape everything below:
   directly as the `type` member of an RFC 9457 problem response, by anyone,
   not just by this site. Never rename or delete one. If a page has to move,
   it needs a redirect.
+- **A type IANA has registered wins.** If a problem is in the
+  [IANA HTTP Problem Types registry](https://www.iana.org/assignments/http-problem-types/),
+  its page sets `registeredType` to the registry URI. The page then shows
+  that URI as the one to send, the example response uses it, and this
+  site's `/errors/<name>` stays resolvable as an alias. Minting a parallel
+  URI for a registered problem gives clients two `type` values for one
+  meaning, which is exactly what RFC 9457 types exist to prevent. When a
+  draft's type is registered later, add `registeredType` to the existing
+  page rather than creating a new one.
 
 ## Commands
 
@@ -42,14 +51,27 @@ The package manager is **bun**. Do not run `npm install`; it will produce a
 | `bun run check:gaps` | Diff the content against the canonical IANA registries |
 | `bun run factcheck` | Fact-check changed pages against the live web |
 
-The three `check`/`factcheck` scripts are built on the **Tabstack CLI** and
-need it installed and authenticated, or `TABSTACK_BIN` pointing at it. They
-are the only automated check on whether the content is still true, so run
-them when you touch content rather than treating them as optional.
+These checks are the only automated test of whether the content is still
+true, so run them when you touch content rather than treating them as
+optional. Only `factcheck` needs the **Tabstack CLI** (installed and
+authenticated, or `TABSTACK_BIN` pointing at it), because it needs a research
+agent. `check:gaps` reads the IANA registries directly as CSV and XML, and
+`check:links` fetches each URL itself and only falls back to Tabstack for
+sites that bot-wall a plain request.
 
-`check:links` exits 1 on a dead link. `check:gaps` always exits 0, because
-plenty of registry entries are omitted deliberately; read its output, do not
-just check its status.
+Every check distinguishes "found a problem" from "could not run". A check
+that could not run exits non-zero and says so, because the old behaviour, a
+`check:gaps` that printed "Done" and exited 0 while every registry request
+was failing on an exhausted Tabstack quota, looked exactly like a pass.
+
+- `check:gaps` exits 0 when it finds gaps and 2 when a registry cannot be
+  read. Entries omitted on purpose live in `scripts/gaps-ignore.json`, each
+  group with its reason, so its output lists only what nobody has decided
+  about yet. Document an undecided entry or add it there; do not leave it.
+- `check:links` exits 1 on a dead link. A link that bot-walls a direct
+  request and that Tabstack cannot render either is reported as unverified,
+  not dead, and does not fail the run.
+- `factcheck` exits 2 if any page could not be checked.
 
 `check:internal-links` needs no network and no Tabstack, only a build. It is
 the cheapest of the four and the one most likely to catch your mistake.
@@ -130,6 +152,14 @@ surfaced, has to be wired into each of them**:
 | `src/pages/search-index.json.ts` | Index fetched by `CommandPalette.astro` for site search |
 | `src/pages/llms.txt.ts` | `/llms.txt`, a plain-text index of the catalogue |
 | `src/pages/og/[...path].ts` | Open Graph cards, rendered to PNG by sharp |
+| `src/pages/llms-full.txt.ts` | `/llms-full.txt`, every page as Markdown in one file |
+| `src/pages/<collection>/[slug].md.ts` | The Markdown sibling of each page, from `src/utils/markdown.ts` |
+| `src/pages/errors/[slug].json.ts`, `index.json.ts` | Problem types as JSON in the errors CLI format, from `src/utils/problemType.ts`, validating against `public/schemas/errors/v1/` |
+
+`public/.well-known/api-catalog` (RFC 9727) points agents at the errors JSON
+and its schemas; `public/_headers` gives it its Linkset media type.
+`public/_redirects` holds 301s for moved pages, such as tools that changed
+category; add one whenever a URL changes.
 
 The OG renderer converts text to vector paths with `fontkitten` from the
 static WOFF2 files in `src/assets/fonts/`, because librsvg ignores
@@ -152,13 +182,32 @@ if your frontmatter is wrong you will find out from `bun run build`.
 | Directory | Collection key | Files | Required frontmatter |
 | :--- | :--- | ---: | :--- |
 | `src/content/status-codes/` | `statusCodes` | 63 | `code`, `title`, `description`, `category` |
-| `src/content/headers/` | `headers` | 46 | `name`, `description`, `category`, `standard` |
-| `src/content/guides/` | `guides` | 44 | `title`, `description`, `category` |
-| `src/content/tools/` | `tools` | 35 | `name`, `description`, `category`, `lifecycleStages`, `url`, `pricing` |
-| `src/content/errors/` | `errors` | 25 | `title`, `statusCode`, `statusText`, `category`, `publishedDate` |
-| `src/content/specifications/` | `specifications` | 21 | `title`, `description`, `currentVersion`, `officialUrl` |
-| `src/content/methods/` | `methods` | 18 | `name`, `description`, `safe`, `idempotent`, `cacheable` |
+| `src/content/headers/` | `headers` | 118 | `name`, `description`, `category`, `standard` |
+| `src/content/guides/` | `guides` | 56 | `title`, `description`, `category` |
+| `src/content/tools/` | `tools` | 69 | `name`, `description`, `category`, `lifecycleStages`, `url`, `pricing` |
+| `src/content/errors/` | `errors` | 55 | `title`, `statusCode`, `statusText`, `category`, `publishedDate` |
+| `src/content/specifications/` | `specifications` | 56 | `title`, `description`, `currentVersion`, `officialUrl` |
+| `src/content/methods/` | `methods` | 19 | `name`, `description`, `safe`, `idempotent`, `cacheable` |
 | `src/content/sponsors/` | `sponsors` | 1 | `name`, `url` |
+
+### Provenance: `reference` and `updatedDate`
+
+Status codes, headers and methods carry an optional `reference`, the
+document and section that defines them (`title`, and `url` when it has one).
+Every collection carries `updatedDate`. Both render in the page's metadata
+row through `src/components/Provenance.astro`, and both are part of the
+Markdown siblings.
+
+Do not type them by hand where a script can do it:
+
+- `bun run sync:references` fills `reference` for anything registered with
+  IANA, from the registry's own Reference column. It never overwrites one,
+  so for a draft or an unregistered field, write it by hand and it stays.
+  It lists the pages it could not resolve.
+- `bun run sync:dates` moves `updatedDate` forward to the date the file last
+  changed in git, or today for uncommitted changes. Edits that only touch
+  `reference` or `updatedDate` do not count. Run it before you commit
+  content.
 
 Note the directory and the collection key differ for status codes:
 `status-codes` on disk, `statusCodes` in `getCollection()`.
@@ -172,14 +221,14 @@ that has to survive the next design pass.
 - errors: `client-error`, `server-error`
 - statusCodes: `informational`, `success`, `redirection`, `client-error`, `server-error`
 - headers: `request`, `response`, `both`
-- tools: `observability`, `design-documentation`, `testing-mocking`, `gateways-management`, `clients-debugging`
+- tools: defined once in `src/config/themes.ts` as `toolCategories` and imported by the schema, like guides: `design-documentation`, `sdk-generation`, `testing-mocking`, `security-testing`, `clients-debugging`, `gateways-management`, `webhooks`, `observability`
 - guides: see below
 
 ## Page shapes
 
 These are not suggestions. The conformance figures are current as of writing.
 
-**Errors** (25/25 identical). Three `##` sections, in this order:
+**Errors** (55/55 identical). Three `##` sections, in this order:
 
 ```
 ## When to use it
@@ -195,7 +244,7 @@ These are not suggestions. The conformance figures are current as of writing.
 ## How it compares to other codes
 ```
 
-**Headers** (46/46 identical):
+**Headers** (118/118 identical):
 
 ```
 ## What is the <Name> header?
@@ -203,7 +252,7 @@ These are not suggestions. The conformance figures are current as of writing.
 ## Examples
 ```
 
-**Methods** (18/18 identical):
+**Methods** (19/19 identical):
 
 ```
 ## What is the <NAME> method?
@@ -211,7 +260,7 @@ These are not suggestions. The conformance figures are current as of writing.
 ## Common Response Codes
 ```
 
-**Tools** (35/35 identical):
+**Tools** (69/69 identical):
 
 ```
 ## What is <Name>?
@@ -223,7 +272,7 @@ Tool pages live at `/tools/<category>/<slug>`, with the category in the path.
 That is the one collection whose URL is not `/<collection>/<slug>`, and it is
 easy to get wrong when linking to one.
 
-**Guides and specifications** (44/44) are the long form and take a different
+**Guides and specifications** (112/112) are the long form and take a different
 shape:
 
 1. An opening `##` section of prose that states the problem. Named for the
@@ -276,7 +325,7 @@ first mention of any status code, header or method:
 [`409 Conflict`](/status-codes/409)
 ```
 
-Conventions, both universal across the existing 231 internal links:
+Conventions, both universal across the existing internal links:
 
 - **No trailing slash**: `/methods/get`, never `/methods/get/`. This holds in
   templates too, including template literals. The build emits
@@ -369,7 +418,9 @@ do not add a per-file licence header, because the split is by directory.
    pointing at `/guides/security/`, which has never existed.
 3. `bun run check:links` if you added or changed an external URL.
 4. `bun run factcheck` if you wrote or edited content.
-5. No stray characters from pasting. Four guide pages once shipped a visible
+5. `bun run sync:references` if you added a status code, method or header,
+   then `bun run sync:dates`.
+6. No stray characters from pasting. Four guide pages once shipped a visible
    box on the live site from a non-breaking space plus U+FFFC pasted into a
    heading, along with non-breaking hyphens and curly quotes. Grep for them.
 

@@ -2,6 +2,7 @@
 title: "Logging Without Leaking: Secrets and Personal Data"
 description: "What an API must never write to its logs, why redaction belongs at the source, how to correlate requests without identifying people, and how retention and erasure apply to log data."
 category: "security"
+updatedDate: 2026-10-14
 ---
 
 ## Logs Are a Copy of Your Traffic

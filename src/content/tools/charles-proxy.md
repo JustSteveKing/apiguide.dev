@@ -5,6 +5,7 @@ category: "clients-debugging"
 lifecycleStages: ["development", "testing"]
 url: "https://www.charlesproxy.com"
 pricing: "paid"
+updatedDate: 2026-10-14
 ---
 
 ## What is Charles Proxy?

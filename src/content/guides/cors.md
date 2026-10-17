@@ -2,6 +2,7 @@
 title: "Cross-Origin Resource Sharing (CORS)"
 description: "Understand CORS, preflight OPTIONS requests, and access control headers in web APIs."
 category: "security"
+updatedDate: 2026-07-09
 ---
 
 ## Introduction to CORS

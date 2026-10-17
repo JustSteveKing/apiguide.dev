@@ -5,6 +5,7 @@ category: "observability"
 lifecycleStages: ["monitoring"]
 url: "https://www.moesif.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Moesif?

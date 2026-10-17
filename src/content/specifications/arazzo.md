@@ -3,6 +3,7 @@ title: "Arazzo Specification"
 description: "A comprehensive, multi-section breakdown of the Arazzo specification, explaining workflows orchestration, input-output expressions, and state assertions."
 currentVersion: "1.1.0"
 officialUrl: "https://spec.openapis.org/arazzo/v1.1.0.html"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Arazzo

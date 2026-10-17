@@ -5,6 +5,8 @@ statusText: Bad Request
 category: client-error
 relatedCodes: ['digest-mismatched-values', 'digest-unsupported-algorithms', 'malformed-request-body']
 publishedDate: 2026-10-15
+updatedDate: 2026-10-17
+registeredType: https://iana.org/assignments/http-problem-types#digest-invalid-values
 ---
 
 ## When to use it
@@ -13,7 +15,7 @@ Use 400 with an Invalid Digest Values error when a [`Content-Digest`](/headers/c
 
 Skip computing the digest when you know the value is invalid. There is nothing to compare it with, and refusing early costs less than hashing a large body for a result you already know.
 
-This mirrors the `digest-invalid-values` problem type in the IETF HTTPAPI working group's Internet-Draft `draft-ietf-httpapi-digest-fields-problem-types` (revision 06 at the time of writing), which recommends 400. Its type URI is not yet in the IANA HTTP Problem Types registry, so use this page's today. The extension members use the draft's names.
+This is the `digest-invalid-values` problem type from the IETF HTTPAPI working group's `draft-ietf-httpapi-digest-fields-problem-types` (Section 3.2 of revision 06), which recommends 400. IANA registered it in the HTTP Problem Types registry on 2026-06-26, so send the registered URI, `https://iana.org/assignments/http-problem-types#digest-invalid-values`, as the `type`. This page's URI resolves too and documents the same problem, but a client that recognizes registered types will only recognize the IANA one. The extension members below use the draft's names.
 
 ## When not to use it
 
@@ -27,7 +29,7 @@ Do not use this when the field is not a valid Structured Field Dictionary in the
 
 ```json
 {
-  "type": "https://apiguide.dev/errors/digest-invalid-values",
+  "type": "https://iana.org/assignments/http-problem-types#digest-invalid-values",
   "title": "Invalid Digest Values",
   "status": 400,
   "detail": "A digest in the request cannot have come from its hashing algorithm.",

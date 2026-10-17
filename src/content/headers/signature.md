@@ -4,6 +4,10 @@ description: "Carries one or more RFC 9421 HTTP Message Signature values, each k
 category: "both"
 standard: true
 relatedCodes: [400, 401]
+reference:
+  title: "RFC 9421, Section 4.2"
+  url: https://www.rfc-editor.org/rfc/rfc9421.html#section-4.2
+updatedDate: 2026-10-14
 ---
 
 ## What is the Signature header?

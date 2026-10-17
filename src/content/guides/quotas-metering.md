@@ -2,6 +2,7 @@
 title: "Quotas & Usage Metering"
 description: "How a quota differs from a rate limit, how to meter usage without double-counting retries, how to tell clients where they stand, and what to return when the allowance runs out."
 category: "reliability"
+updatedDate: 2026-10-14
 ---
 
 ## Quotas Are Not Rate Limits

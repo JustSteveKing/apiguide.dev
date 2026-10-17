@@ -4,6 +4,10 @@ description: "Advertises which patch document media types a resource accepts in 
 category: "response"
 standard: true
 relatedCodes: [200, 415]
+reference:
+  title: "RFC 5789"
+  url: https://www.rfc-editor.org/rfc/rfc5789.html
+updatedDate: 2026-10-14
 ---
 
 ## What is the Accept-Patch header?

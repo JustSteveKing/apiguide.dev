@@ -2,6 +2,7 @@
 title: "API Authentication Schemes"
 description: "A guide to HTTP-level authentication standards including Basic Auth, Bearer Tokens, and Message Signatures."
 category: "security"
+updatedDate: 2026-07-09
 ---
 
 ## Introduction to API Authentication

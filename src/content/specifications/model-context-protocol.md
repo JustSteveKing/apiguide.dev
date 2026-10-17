@@ -3,6 +3,7 @@ title: "Model Context Protocol (MCP)"
 description: "A reference for the Model Context Protocol, covering its JSON-RPC 2.0 base, host, client and server roles, tools, resources and prompts, the stdio and Streamable HTTP transports, and OAuth-based authorization."
 currentVersion: "2026-07-28"
 officialUrl: "https://modelcontextprotocol.io/specification/latest"
+updatedDate: 2026-10-14
 ---
 
 ## What is the Model Context Protocol?

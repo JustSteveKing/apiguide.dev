@@ -4,6 +4,10 @@ description: "Indicates whether the response can be exposed when the CORS reques
 category: "response"
 standard: true
 relatedCodes: []
+reference:
+  title: "WHATWG Fetch Standard"
+  url: https://fetch.spec.whatwg.org/
+updatedDate: 2026-07-10
 ---
 
 ## What is the Access-Control-Allow-Credentials header?

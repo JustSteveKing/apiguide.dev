@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["development", "deployment"]
 url: "https://www.mintlify.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Mintlify?

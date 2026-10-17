@@ -2,6 +2,7 @@
 title: "Content Negotiation & Media Types"
 description: "Learn how content negotiation works in REST APIs, media types, and standard vendor extensions."
 category: "representation"
+updatedDate: 2026-09-30
 ---
 
 ## What is Content Negotiation?

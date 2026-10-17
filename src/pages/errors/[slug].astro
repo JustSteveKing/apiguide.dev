@@ -28,7 +28,11 @@ import { errorCategoryThemes } from '../../config/themes';
 
 const activeTheme = errorCategoryThemes[error.data.category];
 // The URI this page exists to be: the `type` member of an RFC 9457 response.
-const typeURI = `https://apiguide.dev/errors/${error.id}`;
+// When IANA has registered the problem, the registered URI is the one to send
+// and this site's URI is an alias that documents it.
+const aliasURI = `https://apiguide.dev/errors/${error.id}`;
+const registeredType = error.data.registeredType;
+const typeURI = registeredType ?? aliasURI;
 
 import { getTechArticleSchema, getBreadcrumbSchema } from '../../utils/jsonLd';
 import WireHero from '@/components/WireHero.astro';
@@ -85,8 +89,17 @@ const errorJsonLd = [
         copy={typeURI}
         copyLabel="Copy problem type URI"
         dot={activeTheme.dot}
-        label={`Problem type, ${activeTheme.label.toLowerCase()}`}
+        label={registeredType ? `IANA-registered problem type, ${activeTheme.label.toLowerCase()}` : `Problem type, ${activeTheme.label.toLowerCase()}`}
       />
+
+      {registeredType && (
+        <div class="surface mt-6 px-5 py-4 text-sm text-slate-800" role="note">
+          <p class="font-semibold text-slate-950">Registered with IANA</p>
+          <p class="mt-1">
+            This problem type is in the <a href="https://www.iana.org/assignments/http-problem-types/" class="text-ultra-600 hover:text-ultra-800 hover:underline">IANA HTTP Problem Types registry</a>. Send the registered URI above as the <code>type</code>. <code class="break-all">{aliasURI}</code> also resolves to this page, but a client that recognizes registered types will only recognize the IANA URI.
+          </p>
+        </div>
+      )}
 
       <div class="mt-8 grid grid-cols-1 sm:flex sm:flex-wrap sm:gap-x-12 sm:gap-y-4 py-1 sm:py-4 border-y border-slate-300 text-sm">
         <MetaItem label="Status code">

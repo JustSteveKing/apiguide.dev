@@ -5,6 +5,7 @@ statusText: Unauthorized
 category: client-error
 relatedCodes: ['unauthorized', 'insufficient-scope']
 publishedDate: 2026-02-11
+updatedDate: 2026-10-13
 ---
 
 ## When to use it

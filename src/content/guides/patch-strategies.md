@@ -2,6 +2,7 @@
 title: "PATCH Strategies: JSON Patch vs Merge Patch"
 description: "Comparing JSON Patch and JSON Merge Patch for partial resource updates, including null semantics and media types."
 category: "design"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to PATCH Strategies

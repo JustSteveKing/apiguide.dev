@@ -5,6 +5,7 @@ category: "testing-mocking"
 lifecycleStages: ["development", "testing"]
 url: "https://mockoon.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Mockoon?

@@ -5,6 +5,10 @@ safe: true
 idempotent: true
 cacheable: false
 relatedCodes: [207, 404]
+reference:
+  title: "RFC 4918, Section 9.1"
+  url: https://www.rfc-editor.org/rfc/rfc4918.html#section-9.1
+updatedDate: 2026-07-10
 ---
 
 ## What is the PROPFIND method?

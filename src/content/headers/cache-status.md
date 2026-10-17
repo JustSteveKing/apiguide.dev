@@ -4,6 +4,10 @@ description: "Reports how each cache on the path handled a response: hit or forw
 category: "response"
 standard: true
 relatedCodes: [200, 304]
+reference:
+  title: "RFC 9211"
+  url: https://www.rfc-editor.org/rfc/rfc9211.html
+updatedDate: 2026-10-14
 ---
 
 ## What is the Cache-Status header?

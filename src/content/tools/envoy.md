@@ -5,6 +5,7 @@ category: "gateways-management"
 lifecycleStages: ["deployment"]
 url: "https://www.envoyproxy.io"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is Envoy Proxy?

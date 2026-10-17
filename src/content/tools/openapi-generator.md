@@ -1,10 +1,11 @@
 ---
 name: "OpenAPI Generator"
 description: "A community-maintained, Apache-2.0 generator of client SDKs, server stubs and documentation from OpenAPI 2.0 and 3.x, forked from Swagger Codegen in 2018."
-category: "design-documentation"
+category: "sdk-generation"
 lifecycleStages: ["development"]
 url: "https://openapi-generator.tech"
 pricing: "open-source"
+updatedDate: 2026-10-17
 ---
 
 ## What is OpenAPI Generator?

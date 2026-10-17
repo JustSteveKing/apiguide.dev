@@ -1,0 +1,21 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://apiguide.dev/.well-known/api-catalog",
+      "item": [
+        { "href": "https://apiguide.dev/errors/index.json" }
+      ]
+    },
+    {
+      "anchor": "https://apiguide.dev/errors/index.json",
+      "service-doc": [
+        { "href": "https://apiguide.dev/errors", "type": "text/html" },
+        { "href": "https://apiguide.dev/llms-full.txt", "type": "text/plain" }
+      ],
+      "describedby": [
+        { "href": "https://apiguide.dev/schemas/errors/v1/catalogue.schema.json", "type": "application/schema+json" },
+        { "href": "https://apiguide.dev/schemas/errors/v1/problem-type.schema.json", "type": "application/schema+json" }
+      ]
+    }
+  ]
+}

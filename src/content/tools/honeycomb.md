@@ -5,6 +5,7 @@ category: "observability"
 lifecycleStages: ["monitoring"]
 url: "https://www.honeycomb.io"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Honeycomb?

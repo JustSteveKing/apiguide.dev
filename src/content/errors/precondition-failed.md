@@ -5,6 +5,7 @@ statusText: Precondition Failed
 category: client-error
 relatedCodes: ['precondition-required', 'stale-resource-version', 'resource-conflict']
 publishedDate: 2026-07-09
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

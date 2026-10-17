@@ -5,6 +5,7 @@ category: "testing-mocking"
 lifecycleStages: ["testing"]
 url: "https://soapui.org"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is SoapUI?

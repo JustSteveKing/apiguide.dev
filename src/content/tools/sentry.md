@@ -5,6 +5,7 @@ category: "observability"
 lifecycleStages: ["monitoring"]
 url: "https://sentry.io"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Sentry?

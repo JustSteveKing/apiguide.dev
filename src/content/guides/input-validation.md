@@ -2,6 +2,7 @@
 title: "Input Validation & Injection Prevention"
 description: "Server-side schema validation, allowlisting, and canonicalization, plus defenses against SQL/NoSQL/command injection and mass assignment."
 category: "security"
+updatedDate: 2026-10-17
 ---
 
 ## Introduction to Input Validation
@@ -39,7 +40,7 @@ Define the expected structure of every request and response and validate against
 }
 ```
 
-Setting `additionalProperties: false` rejects unexpected key-value pairs, which directly closes off mass assignment and other unexpected-field attacks. NIST SP 800-228 calls for strict schema enforcement on both requests *and* responses, specifying data types, allowed ranges, and formats.
+Setting `additionalProperties: false` rejects unexpected key-value pairs, which directly closes off mass assignment and other unexpected-field attacks. NIST SP 800-228 calls for strict schema enforcement on both requests *and* responses, specifying data types, allowed ranges, and formats. A contract auditor such as [42Crunch](/tools/security-testing/42crunch) reports schemas in an OpenAPI document that leave these constraints out.
 
 ---
 

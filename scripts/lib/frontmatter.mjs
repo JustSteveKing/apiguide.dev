@@ -1,5 +1,6 @@
 // Tiny frontmatter reader for this repo's simple YAML: strings, numbers,
-// booleans, dates, and single-line inline arrays ([200, 304] / ['a', 'b']).
+// booleans, dates, single-line inline arrays ([200, 304] / ['a', 'b']), and
+// one level of nested mapping (`reference:` followed by indented keys).
 // NOT a general YAML parser — it only needs to cover the content collections.
 import { readFileSync } from 'node:fs';
 
@@ -30,11 +31,23 @@ export function parseFrontmatter(raw) {
   const m = raw.match(/^---\n([\s\S]*?)\n---/);
   if (!m) return {};
   const data = {};
+  let parent = null; // the mapping an indented line belongs to
   for (const line of m[1].split('\n')) {
     if (!line.trim() || line.trimStart().startsWith('#')) continue;
     const idx = line.indexOf(':');
     if (idx === -1) continue;
-    data[line.slice(0, idx).trim()] = parseValue(line.slice(idx + 1).trim());
+    const key = line.slice(0, idx).trim();
+    const value = line.slice(idx + 1).trim();
+    if (/^\s/.test(line)) {
+      if (parent) parent[key] = parseValue(value);
+      continue;
+    }
+    if (value === '') {
+      parent = data[key] = {};
+      continue;
+    }
+    parent = null;
+    data[key] = parseValue(value);
   }
   return data;
 }

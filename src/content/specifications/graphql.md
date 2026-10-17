@@ -3,6 +3,7 @@ title: GraphQL
 description: A query and schema definition language specification for APIs, providing a client-specified runtime to request exact data shapes.
 currentVersion: September 2025
 officialUrl: https://spec.graphql.org/
+updatedDate: 2026-10-14
 ---
 
 ## What is GraphQL?

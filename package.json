@@ -19,6 +19,8 @@
     "factcheck": "node scripts/factcheck.mjs",
     "enrich:tools": "node scripts/enrich-tools.mjs",
     "research:guides": "node scripts/research-guides.mjs",
+    "sync:references": "node scripts/sync-references.mjs",
+    "sync:dates": "node scripts/sync-dates.mjs",
     "figures": "bun src/figures/idempotency-keys/build.ts"
   },
   "dependencies": {

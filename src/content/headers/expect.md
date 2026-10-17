@@ -4,6 +4,10 @@ description: "Signals that the client expects a particular server behavior befor
 category: "request"
 standard: true
 relatedCodes: [100, 417]
+reference:
+  title: "RFC 9110, Section 10.1.1"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.1.1
+updatedDate: 2026-07-10
 ---
 
 ## What is the Expect header?

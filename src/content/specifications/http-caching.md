@@ -3,6 +3,7 @@ title: "HTTP Caching (RFC 9111)"
 description: "A reference guide to HTTP caching as defined in RFC 9111, covering freshness, validation, Cache-Control directives, the Vary header, shared versus private caches, and heuristic freshness."
 currentVersion: "RFC 9111"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9111.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is HTTP Caching?

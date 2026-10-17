@@ -5,6 +5,7 @@ category: "observability"
 lifecycleStages: ["monitoring"]
 url: "https://prometheus.io"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is Prometheus & Grafana?

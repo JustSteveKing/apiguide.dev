@@ -2,6 +2,7 @@
 title: "Outbound Request Safety and SSRF"
 description: "How to fetch user-supplied URLs (webhooks, image imports, link previews, OAuth discovery) without letting a caller reach your internal network or cloud metadata service."
 category: "security"
+updatedDate: 2026-10-14
 ---
 
 ## When Your API Makes the Request

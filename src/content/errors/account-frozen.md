@@ -5,6 +5,7 @@ statusText: Forbidden
 category: client-error
 relatedCodes: ['insufficient-funds', 'insufficient-scope', 'unauthorized', 'forbidden']
 publishedDate: 2026-09-04
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

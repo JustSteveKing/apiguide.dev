@@ -1,128 +1,114 @@
 #!/usr/bin/env node
-// Gap detection: pull the canonical IANA registries via Tabstack's structured
-// extraction and diff them against the content collections on disk. Reports
-// registry entries we do not yet document. Advisory — always exits 0 (many
-// niche entries are intentionally omitted).
+// Gap detection: diff the content collections against the canonical IANA
+// registries (status codes, methods, field names, problem types), fetched
+// straight from IANA as CSV and XML.
 //
-// Usage: npm run check:gaps
-import { extractJson } from './lib/tabstack.mjs';
+// Entries omitted on purpose are listed, with the reason, in
+// scripts/gaps-ignore.json, so what this prints is only what nobody has
+// decided about yet. Gaps are advisory and exit 0. Failing to read a registry
+// is not advisory: it exits 2, because a check that could not run must not
+// look like a check that passed.
+//
+// Usage: bun run check:gaps
+import { readFileSync } from 'node:fs';
+import { fetchCsv, fetchProblemTypes, REGISTRY_URLS } from './lib/iana.mjs';
 import { listFiles } from './lib/content.mjs';
 import { readFrontmatter } from './lib/frontmatter.mjs';
 
+const ignore = JSON.parse(readFileSync(new URL('./gaps-ignore.json', import.meta.url), 'utf8'));
+
+// Every ignore entry is { names: [...], reason: "..." }; keys compare lowercased.
+function ignored(registry) {
+  const map = new Map();
+  for (const group of ignore[registry] ?? []) {
+    for (const name of group.names) map.set(String(name).toLowerCase(), group.reason);
+  }
+  return map;
+}
+
 const REGISTRIES = [
   {
+    key: 'status-codes',
     label: 'HTTP status codes',
-    url: 'https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml',
-    schema: {
-      type: 'object',
-      properties: {
-        codes: {
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              value: { type: 'string', description: 'The status code, e.g. "200"' },
-              description: { type: 'string', description: 'The reason phrase' },
-            },
-            required: ['value'],
-          },
-        },
-      },
-      required: ['codes'],
-    },
-    local: () => new Set(listFiles('status-codes').map((f) => String(readFrontmatter(f.path).code))),
-    remote: (d) =>
-      (d.codes ?? [])
-        .map((c) => ({ key: (c.value ?? '').trim(), label: `${(c.value ?? '').trim()} ${c.description ?? ''}`.trim() }))
-        .filter((c) => /^\d+$/.test(c.key) && !/unassigned/i.test(c.label)),
+    remote: async () =>
+      (await fetchCsv(REGISTRY_URLS.statusCodes))
+        .filter((r) => /^\d{3}$/.test(r.Value) && !/unassigned/i.test(r.Description))
+        .map((r) => ({ key: r.Value, label: `${r.Value} ${r.Description}` })),
+    local: () => listFiles('status-codes').map((f) => String(readFrontmatter(f.path).code)),
   },
   {
+    key: 'methods',
     label: 'HTTP methods',
-    url: 'https://www.iana.org/assignments/http-methods/http-methods.xhtml',
-    schema: {
-      type: 'object',
-      properties: {
-        methods: {
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: { method: { type: 'string' } },
-            required: ['method'],
-          },
-        },
-      },
-      required: ['methods'],
-    },
-    local: () => new Set(listFiles('methods').map((f) => String(readFrontmatter(f.path).name ?? '').toUpperCase())),
-    remote: (d) =>
-      (d.methods ?? [])
-        .map((m) => ({ key: (m.method ?? '').trim().toUpperCase(), label: (m.method ?? '').trim() }))
-        .filter((m) => /^[A-Z*-]+$/.test(m.key) && m.key !== '*'),
+    remote: async () =>
+      (await fetchCsv(REGISTRY_URLS.methods))
+        .filter((r) => r['Method Name'] && r['Method Name'] !== '*')
+        .map((r) => ({ key: r['Method Name'].toLowerCase(), label: r['Method Name'] })),
+    local: () => listFiles('methods').map((f) => String(readFrontmatter(f.path).name ?? '').toLowerCase()),
   },
   {
-    label: 'HTTP fields (headers)',
-    url: 'https://www.iana.org/assignments/http-fields/http-fields.xhtml',
-    schema: {
-      type: 'object',
-      properties: {
-        fields: {
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              name: { type: 'string' },
-              status: { type: 'string', description: 'e.g. permanent, provisional, deprecated' },
-            },
-            required: ['name'],
-          },
-        },
-      },
-      required: ['fields'],
-    },
-    local: () => new Set(listFiles('headers').map((f) => String(readFrontmatter(f.path).name ?? '').toLowerCase())),
-    remote: (d) =>
-      (d.fields ?? [])
-        .map((f) => ({ key: (f.name ?? '').trim().toLowerCase(), label: `${(f.name ?? '').trim()}${f.status ? ` [${f.status}]` : ''}` }))
-        .filter((f) => f.key),
-    noisy: true, // registry is large; missing list needs human triage
+    key: 'headers',
+    label: 'HTTP field names (permanent and provisional)',
+    remote: async () =>
+      (await fetchCsv(REGISTRY_URLS.fields))
+        .filter((r) => ['permanent', 'provisional'].includes(r.Status) && r['Field Name'] !== '*')
+        .map((r) => ({ key: r['Field Name'].toLowerCase(), label: `${r['Field Name']} [${r.Status}] ${r.Reference}` })),
+    local: () => listFiles('headers').map((f) => String(readFrontmatter(f.path).name ?? '').toLowerCase()),
+  },
+  {
+    key: 'problem-types',
+    label: 'HTTP problem types',
+    remote: async () =>
+      (await fetchProblemTypes())
+        .filter((r) => r.type !== 'about:blank')
+        .map((r) => ({ key: r.type.toLowerCase(), label: `${r.type} (${r.name}, ${r.reference})` })),
+    // A registered type is covered when an error page names it in registeredType.
+    local: () => listFiles('errors').map((f) => String(readFrontmatter(f.path).registeredType ?? '').toLowerCase()),
   },
 ];
 
-const CAP = 60;
-
 async function main() {
+  let failures = 0;
+  let total = 0;
   for (const reg of REGISTRIES) {
     process.stdout.write(`\n── ${reg.label} ──\n`);
-    let data;
+    let remote;
     try {
-      data = await extractJson(reg.url, reg.schema);
+      remote = await reg.remote();
     } catch (e) {
-      console.error(`  ✗ extraction failed: ${e.message}`);
+      failures++;
+      console.error(`  ✗ could not read the registry: ${e.message}`);
       continue;
     }
-    const local = reg.local();
-    const remote = reg.remote(data);
+    if (remote.length === 0) {
+      failures++;
+      console.error('  ✗ the registry parsed to nothing; the format has probably changed');
+      continue;
+    }
+    const local = new Set(reg.local());
+    const skip = ignored(reg.key);
     const seen = new Set();
     const missing = [];
+    let skipped = 0;
     for (const r of remote) {
       if (seen.has(r.key)) continue;
       seen.add(r.key);
-      if (!local.has(r.key)) missing.push(r.label);
+      if (local.has(r.key)) continue;
+      if (skip.has(r.key)) { skipped++; continue; }
+      missing.push(r.label);
     }
-    console.log(`  registry: ${seen.size}  documented: ${local.size}  missing: ${missing.length}`);
-    if (missing.length) {
-      const shown = missing.slice(0, CAP);
-      for (const m of shown) console.log(`   • ${m}`);
-      if (missing.length > CAP) console.log(`   …and ${missing.length - CAP} more`);
-      if (reg.noisy) console.log('   (large registry — many entries are niche/experimental; triage before adding)');
-    } else {
-      console.log('   ✓ nothing missing');
-    }
+    console.log(`  registry: ${seen.size}  documented: ${seen.size - missing.length - skipped}  omitted on purpose: ${skipped}  undecided: ${missing.length}`);
+    for (const m of missing) console.log(`   • ${m}`);
+    if (!missing.length) console.log('   ✓ nothing undecided');
+    total += missing.length;
   }
-  console.log('\nDone. Gaps are advisory, not failures.');
+  if (failures) {
+    console.error(`\n${failures} registr${failures === 1 ? 'y' : 'ies'} could not be read. This check did not run.`);
+    process.exit(2);
+  }
+  console.log(`\nDone. ${total} undecided entr${total === 1 ? 'y' : 'ies'}: document each, or add it to scripts/gaps-ignore.json with a reason.`);
 }
 
 main().catch((e) => {
   console.error(e);
-  process.exit(1);
+  process.exit(2);
 });

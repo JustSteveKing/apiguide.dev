@@ -5,6 +5,7 @@ category: "gateways-management"
 lifecycleStages: ["deployment"]
 url: "https://traefik.io"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is Traefik?

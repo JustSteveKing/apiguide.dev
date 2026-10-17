@@ -3,6 +3,7 @@ title: "Problem Details for HTTP APIs (RFC 9457)"
 description: "A reference for the application/problem+json format, covering the standard members, extension members, and validation error patterns used to communicate HTTP API errors."
 currentVersion: "RFC 9457"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9457.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is Problem Details?

@@ -1,8 +1,16 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { guideCategories } from './config/themes';
+import { guideCategories, toolCategories } from './config/themes';
 import { figureNames } from './figures/names';
+
+// Where a page's subject is defined: the RFC section, registry or spec. For
+// registered status codes, methods and fields it comes from the IANA registry
+// via `bun run sync:references`.
+const reference = z.object({
+    title: z.string(),
+    url: z.string().url().optional(),
+}).optional();
 
 export const collections = {
     errors: defineCollection({
@@ -19,6 +27,10 @@ export const collections = {
             publishedDate: z.date(),
             updatedDate: z.date().optional(),
             deprecated: z.boolean().optional(),
+            // The IANA HTTP Problem Types registry URI, when the problem is
+            // registered there. The page then tells readers to send that URI
+            // as the `type`; this site's own URI stays resolvable as an alias.
+            registeredType: z.string().url().optional(),
         }),
     }),
     statusCodes: defineCollection({
@@ -32,6 +44,8 @@ export const collections = {
             description: z.string(),
             category: z.enum(['informational', 'success', 'redirection', 'client-error', 'server-error']),
             relatedCodes: z.array(z.number()).optional(),
+            reference,
+            updatedDate: z.date().optional(),
         }),
     }),
     headers: defineCollection({
@@ -45,6 +59,8 @@ export const collections = {
             category: z.enum(['request', 'response', 'both']),
             standard: z.boolean(),
             relatedCodes: z.array(z.number()).optional(),
+            reference,
+            updatedDate: z.date().optional(),
         }),
     }),
     methods: defineCollection({
@@ -60,6 +76,8 @@ export const collections = {
             cacheable: z.boolean(),
             relatedCodes: z.array(z.number()).optional(),
             draft: z.boolean().optional(),
+            reference,
+            updatedDate: z.date().optional(),
         }),
     }),
     guides: defineCollection({
@@ -71,6 +89,7 @@ export const collections = {
             title: z.string(),
             description: z.string(),
             category: z.enum(guideCategories),
+            updatedDate: z.date().optional(),
             figure: z.enum(figureNames).optional(),
         }),
     }),
@@ -82,10 +101,11 @@ export const collections = {
         schema: z.object({
             name: z.string(),
             description: z.string(),
-            category: z.enum(['observability', 'design-documentation', 'testing-mocking', 'gateways-management', 'clients-debugging']),
+            category: z.enum(toolCategories),
             lifecycleStages: z.array(z.enum(['design', 'development', 'testing', 'deployment', 'monitoring'])),
             url: z.string().url(),
             pricing: z.enum(['free', 'freemium', 'paid', 'open-source']),
+            updatedDate: z.date().optional(),
         }),
     }),
     specifications: defineCollection({
@@ -98,6 +118,7 @@ export const collections = {
             description: z.string(),
             currentVersion: z.string(),
             officialUrl: z.string().url(),
+            updatedDate: z.date().optional(),
         }),
     }),
     sponsors: defineCollection({

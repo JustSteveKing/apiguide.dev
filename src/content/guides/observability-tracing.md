@@ -2,6 +2,7 @@
 title: "Observability & Distributed Tracing"
 description: "Make your API debuggable in production with structured logging, RED and USE metrics, W3C Trace Context, correlation IDs, and OpenTelemetry."
 category: "reliability"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Observability

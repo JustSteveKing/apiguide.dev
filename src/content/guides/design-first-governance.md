@@ -2,6 +2,7 @@
 title: "Design-First Development and API Governance"
 description: "Treating the OpenAPI document as the source of truth: design-first against code-first, overlays instead of forks, a style guide enforced by a linter, breaking-change detection in CI, and a review process that looks at the contract rather than the code."
 category: "evolution"
+updatedDate: 2026-10-14
 ---
 
 ## The Contract Has to Come From Somewhere

@@ -4,6 +4,10 @@ description: "The absolute date and time after which a cached response is consid
 category: "response"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 9111, Section 5.3"
+  url: https://www.rfc-editor.org/rfc/rfc9111.html#section-5.3
+updatedDate: 2026-07-10
 ---
 
 ## What is the Expires header?

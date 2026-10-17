@@ -3,6 +3,10 @@ name: "Cookie"
 description: "Sends previously stored cookies from the client back to the server."
 category: "request"
 standard: true
+reference:
+  title: "RFC-ietf-httpbis-rfc6265bis-22, Section 5.8.1"
+  url: https://datatracker.ietf.org/doc/draft-ietf-httpbis-rfc6265bis/
+updatedDate: 2026-07-10
 ---
 
 ## What is the Cookie header?

@@ -5,6 +5,7 @@ statusText: Forbidden
 category: client-error
 relatedCodes: ['unauthorized', 'expired-authentication-token', 'forbidden']
 publishedDate: 2026-03-02
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

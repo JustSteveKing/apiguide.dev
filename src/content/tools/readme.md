@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["development", "deployment", "monitoring"]
 url: "https://readme.com"
 pricing: "freemium"
+updatedDate: 2026-10-14
 ---
 
 ## What is ReadMe?

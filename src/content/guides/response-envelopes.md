@@ -2,6 +2,7 @@
 title: "Response Envelope Design"
 description: "Weigh wrapping responses in data/meta/errors envelopes against bare bodies, and place pagination and error metadata consistently."
 category: "design"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Response Envelopes

@@ -3,6 +3,7 @@ title: "Agent2Agent Protocol (A2A)"
 description: "A reference for the Agent2Agent protocol, covering Agent Cards and discovery, tasks, messages and artifacts, the JSON-RPC, gRPC and HTTP+JSON bindings, streaming and push notifications, and how A2A differs from MCP."
 currentVersion: "1.0"
 officialUrl: "https://a2a-protocol.org/latest/specification/"
+updatedDate: 2026-10-14
 ---
 
 ## What is A2A?

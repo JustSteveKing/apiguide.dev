@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["design", "development"]
 url: "https://grpc.io"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is gRPC & Protobuf Tooling?

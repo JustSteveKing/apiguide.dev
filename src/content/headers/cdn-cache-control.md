@@ -4,6 +4,10 @@ description: "Cache directives aimed only at CDN caches, letting an origin set e
 category: "response"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 9213"
+  url: https://www.rfc-editor.org/rfc/rfc9213.html
+updatedDate: 2026-10-14
 ---
 
 ## What is the CDN-Cache-Control header?

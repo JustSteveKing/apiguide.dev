@@ -5,6 +5,7 @@ category: "gateways-management"
 lifecycleStages: ["deployment"]
 url: "https://cloud.google.com/apigee"
 pricing: "paid"
+updatedDate: 2026-10-14
 ---
 
 ## What is Apigee (Google Cloud)?

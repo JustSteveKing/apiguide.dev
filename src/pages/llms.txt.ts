@@ -22,6 +22,8 @@ export const GET: APIRoute = async () => {
   let txt = `# apiguide.dev\n\n`;
   txt += `> The flagship reference site for modern, authoritative API design patterns, Problem+JSON error schemas, and integration guides.\n\n`;
 
+  txt += `Every page below is also available as Markdown by appending \`.md\` to its URL, and [/llms-full.txt](/llms-full.txt) holds all of them in one file. Problem types are available as JSON at \`/errors/<slug>.json\`, with the whole catalogue at [/errors/index.json](/errors/index.json); see [/.well-known/api-catalog](/.well-known/api-catalog).\n\n`;
+
   txt += `## Core Sections\n\n`;
   txt += `- [Errors](/errors): Detailed documentation of common HTTP API error patterns.\n`;
   txt += `- [Status Codes](/status-codes): Comprehensive catalog of HTTP response status codes with schemas and examples.\n`;
@@ -29,7 +31,7 @@ export const GET: APIRoute = async () => {
   txt += `- [Methods](/methods): Explanation of HTTP request methods, semantics, and safety properties.\n`;
   txt += `- [Developer Guides](/guides): Best practices on Pagination, Versioning, Idempotency, Webhooks, Caching, and Error Handling.\n`;
   txt += `- [Specifications](/specifications): Deep dives into OpenAPI, AsyncAPI, JSON Schema, JSON:API, and gRPC.\n`;
-  txt += `- [Tooling](/tools): Reviews and comparisons of gateway, debugging, testing, and observability API tools.\n\n`;
+  txt += `- [Tooling](/tools): Reviews and comparisons of API tools for design, SDK generation, testing, security testing, debugging, gateways, webhook infrastructure, and observability.\n\n`;
 
   txt += `## Reference Directory\n\n`;
 

@@ -2,6 +2,7 @@
 title: "Streaming APIs: SSE, WebSocket & Long-Polling"
 description: "Compare Server-Sent Events, WebSocket, and long-polling, with guidance on reconnection, scaling, and when to use each."
 category: "events"
+updatedDate: 2026-09-30
 ---
 
 ## Introduction to Streaming APIs

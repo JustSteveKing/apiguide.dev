@@ -5,6 +5,10 @@ safe: true
 idempotent: true
 cacheable: true
 relatedCodes: [200, 400, 406, 415, 422]
+reference:
+  title: "RFC 10008, Section 2"
+  url: https://www.rfc-editor.org/rfc/rfc10008.html#section-2
+updatedDate: 2026-10-14
 ---
 
 ## What is the QUERY method?

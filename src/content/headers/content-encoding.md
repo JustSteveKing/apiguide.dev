@@ -4,6 +4,10 @@ description: "Indicates the compression encoding that has been applied to the me
 category: "both"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "RFC 9110, Section 8.4"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-8.4
+updatedDate: 2026-07-10
 ---
 
 ## What is the Content-Encoding header?

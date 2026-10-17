@@ -4,6 +4,10 @@ description: "Tells the client how long to wait before making a follow-up reques
 category: "response"
 standard: true
 relatedCodes: [429, 503]
+reference:
+  title: "RFC 9110, Section 10.2.3"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.2.3
+updatedDate: 2026-10-14
 ---
 
 ## What is the Retry-After header?

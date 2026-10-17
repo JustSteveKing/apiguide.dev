@@ -5,6 +5,7 @@ statusText: Bad Request
 category: client-error
 relatedCodes: ['validation-failed', 'unsupported-media-type']
 publishedDate: 2025-11-17
+updatedDate: 2026-09-24
 ---
 
 ## When to use it

@@ -4,6 +4,10 @@ description: "The date after which a resource is expected to become unavailable.
 category: "response"
 standard: true
 relatedCodes: []
+reference:
+  title: "RFC 8594"
+  url: https://www.rfc-editor.org/rfc/rfc8594.html
+updatedDate: 2026-07-10
 ---
 
 ## What is the Sunset header?

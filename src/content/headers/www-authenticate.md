@@ -4,6 +4,10 @@ description: "Defines the authentication method that should be used to gain acce
 category: "response"
 standard: true
 relatedCodes: [401]
+reference:
+  title: "RFC 9110, Section 11.6.1"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-11.6.1
+updatedDate: 2026-07-08
 ---
 
 ## What is the WWW-Authenticate header?

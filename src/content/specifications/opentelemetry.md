@@ -3,6 +3,7 @@ title: "OpenTelemetry"
 description: "The CNCF standard for producing and exporting traces, metrics and logs: the API and SDK model, the OTLP wire protocol, HTTP semantic conventions and the Collector."
 currentVersion: "1.61.0"
 officialUrl: "https://opentelemetry.io/docs/specs/otel/"
+updatedDate: 2026-10-14
 ---
 
 ## What is OpenTelemetry?

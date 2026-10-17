@@ -5,6 +5,7 @@ category: "observability"
 lifecycleStages: ["monitoring"]
 url: "https://www.datadoghq.com"
 pricing: "paid"
+updatedDate: 2026-10-14
 ---
 
 ## What is Datadog APM?

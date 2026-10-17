@@ -2,6 +2,7 @@
 title: "Retries, Backoff & Resilience"
 description: "Idempotent retries, exponential backoff with jitter, honoring Retry-After, circuit breakers, and timeouts."
 category: "reliability"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Retries and Resilience

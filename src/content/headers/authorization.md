@@ -4,6 +4,10 @@ description: "Contains the credentials to authenticate the client with the serve
 category: "request"
 standard: true
 relatedCodes: [401, 403]
+reference:
+  title: "RFC 9110, Section 11.6.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-11.6.2
+updatedDate: 2026-07-10
 ---
 
 ## What is the Authorization header?

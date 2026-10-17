@@ -5,6 +5,7 @@ statusText: URI Too Long
 category: client-error
 relatedCodes: ['request-header-fields-too-large', 'payload-too-large', 'invalid-query-parameter']
 publishedDate: 2026-10-14
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

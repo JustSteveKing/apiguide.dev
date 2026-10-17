@@ -4,6 +4,10 @@ description: "Tells the client which of the preferences it sent in Prefer the se
 category: "response"
 standard: true
 relatedCodes: [200, 201, 202]
+reference:
+  title: "RFC 7240"
+  url: https://www.rfc-editor.org/rfc/rfc7240.html
+updatedDate: 2026-10-14
 ---
 
 ## What is the Preference-Applied header?

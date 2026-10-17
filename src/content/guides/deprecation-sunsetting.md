@@ -2,6 +2,7 @@
 title: "API Deprecation & Sunsetting"
 description: "Signaling API retirement with the Deprecation (RFC 9745) and Sunset (RFC 8594) headers, Link relations, and migration timelines."
 category: "evolution"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Deprecation and Sunsetting

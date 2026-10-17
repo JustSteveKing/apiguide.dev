@@ -3,6 +3,7 @@ title: "OpenAPI Specification (OAS)"
 description: "A comprehensive, multi-section guide to the OpenAPI Specification (OAS), detailing root structures, paths, component registries, and version diffs."
 currentVersion: "3.2.1"
 officialUrl: "https://spec.openapis.org/oas/v3.2.1.html"
+updatedDate: 2026-10-14
 ---
 
 ## Core Architecture of OpenAPI

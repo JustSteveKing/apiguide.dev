@@ -2,6 +2,7 @@
 title: "What Counts as a Breaking Change"
 description: "Why the contract is what consumers observe rather than what you documented, which additive changes still break clients, and why fixing a bug can be a breaking change."
 category: "evolution"
+updatedDate: 2026-09-30
 ---
 
 ## The Contract Is What They Observe

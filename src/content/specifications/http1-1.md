@@ -3,6 +3,7 @@ title: "HTTP/1.1 (RFC 9112)"
 description: "A reference guide to HTTP/1.1 as defined in RFC 9112, covering the text message format, request-target forms, message body length, chunked transfer coding, persistent connections and pipelining, and the framing rules that defend against request smuggling."
 currentVersion: "RFC 9112"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9112.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is HTTP/1.1?

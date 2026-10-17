@@ -4,6 +4,10 @@ description: "Carries a hash of the full selected representation, independent of
 category: "both"
 standard: true
 relatedCodes: [200, 206]
+reference:
+  title: "RFC 9530, Section 3"
+  url: https://www.rfc-editor.org/rfc/rfc9530.html#section-3
+updatedDate: 2026-10-17
 ---
 
 ## What is the Repr-Digest header?
@@ -21,7 +25,7 @@ The value has the same syntax as `Content-Digest`: a [Structured Field](/specifi
 * **State-changing requests**: On a request such as [`PATCH`](/methods/patch), `Repr-Digest` is computed over the enclosed representation (the patch document), not the target resource. In the response, it is computed over the representation the response describes; when the server sends [`Content-Location`](/headers/content-location), that is the resource it names. [`Location`](/headers/location) does not change what is hashed.
 * **Prefer sha-256 or sha-512**: The deprecated algorithms are for carrying forward stored RFC 3230 checksums against accidental corruption, and must not be used where an attacker could be involved.
 * **Not authentication on its own**: As with `Content-Digest`, sign the field with [HTTP Message Signatures](/specifications/http-message-signatures) if you need to know who produced it.
-* **Ask for it with Want-Repr-Digest**: `Want-Repr-Digest` works like `Want-Content-Digest`: a Dictionary of algorithm to preference from 1 to 10, with 0 meaning "not acceptable". In a response, it asks the client to send `Repr-Digest` on future requests. It is a hint, never a requirement the other side has to honor.
+* **Ask for it with Want-Repr-Digest**: [`Want-Repr-Digest`](/headers/want-repr-digest) works like `Want-Content-Digest`: a Dictionary of algorithm to preference from 1 to 10, with 0 meaning "not acceptable". In a response, it asks the client to send `Repr-Digest` on future requests. It is a hint, never a requirement the other side has to honor.
 
 ## Examples
 

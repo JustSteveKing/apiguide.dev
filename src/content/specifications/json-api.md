@@ -3,6 +3,7 @@ title: "JSON:API Specification"
 description: "A detailed breakdown of the JSON:API specification, explaining compounds documents, relations, sparse fieldsets, sorting, and pagination models."
 currentVersion: "1.1"
 officialUrl: "https://jsonapi.org"
+updatedDate: 2026-07-08
 ---
 
 ## What is JSON:API?

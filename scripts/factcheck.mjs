@@ -81,12 +81,14 @@ async function main() {
   console.log(`Fact-checking ${targets.length} file(s) via Tabstack research…\n`);
 
   let flagged = 0;
+  let failed = 0;
   const rel = (p) => p.replace(`${process.cwd()}/`, '');
   await pool(targets, CONCURRENCY, async (path) => {
     let report, citedPages;
     try {
       ({ report, citedPages } = await research(buildQuery(path), 'fast'));
     } catch (e) {
+      failed++;
       console.log(`\n■ ${rel(path)}\n   ✗ research failed: ${e.message}`);
       return;
     }
@@ -102,6 +104,12 @@ async function main() {
     }
   });
 
+  // A file that could not be checked was not checked: say so, and do not
+  // let the summary read as a pass.
+  if (failed) {
+    console.log(`\n✗ ${failed} of ${targets.length} file(s) could not be fact-checked`);
+    process.exit(2);
+  }
   console.log(`\n${flagged ? `⚠ ${flagged} file(s) flagged for review` : '✓ no files flagged'}`);
 }
 

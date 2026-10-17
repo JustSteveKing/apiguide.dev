@@ -4,6 +4,10 @@ description: "Declares, per signature label, which message components an RFC 942
 category: "both"
 standard: true
 relatedCodes: [400, 401]
+reference:
+  title: "RFC 9421, Section 4.1"
+  url: https://www.rfc-editor.org/rfc/rfc9421.html#section-4.1
+updatedDate: 2026-10-17
 ---
 
 ## What is the Signature-Input header?
@@ -43,7 +47,7 @@ The verifier rebuilds the **signature base** from this header: one line per cove
 * **Publish your required coverage as a profile.** Section 3.2.1 expects applications to add requirements: which components must be covered, which algorithms are allowed, maximum age, whether `nonce` is mandatory. Write them down and fail verification when a signature does not meet them, even if it is cryptographically valid.
 * **Do not sign what an intermediary will legitimately change.** Hop-by-hop fields such as [`Connection`](/headers/connection) and [`Transfer-Encoding`](/headers/transfer-encoding) are rewritten in transit. `@authority` changes too when a reverse proxy rewrites the host, which is exactly the case RFC 9421 Section 4.3 walks through. Verify at the first component that sees the original message, or have the proxy verify and add its own signature.
 * **Keep it in headers, not trailers.** The RFC allows a trailer but RECOMMENDS a header, because intermediaries may drop trailers.
-* **Ask for signatures with `Accept-Signature`.** Section 5 defines `Accept-Signature`, a Dictionary with the same shape as `Signature-Input`. In a request it asks the server to sign the response; in a response it asks the client to sign its next request. Parameters such as `created` appear without a value, meaning "include one". A server that signs responses on request should mark them uncacheable or add `Accept-Signature` to [`Vary`](/headers/vary).
+* **Ask for signatures with `Accept-Signature`.** Section 5 defines [`Accept-Signature`](/headers/accept-signature), a Dictionary with the same shape as `Signature-Input`. In a request it asks the server to sign the response; in a response it asks the client to sign its next request. Parameters such as `created` appear without a value, meaning "include one". A server that signs responses on request should mark them uncacheable or add `Accept-Signature` to [`Vary`](/headers/vary).
 
 ## Examples
 

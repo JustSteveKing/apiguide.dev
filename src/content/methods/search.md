@@ -5,6 +5,10 @@ safe: true
 idempotent: true
 cacheable: false
 relatedCodes: [200, 207, 422]
+reference:
+  title: "RFC 5323, Section 2"
+  url: https://www.rfc-editor.org/rfc/rfc5323.html#section-2
+updatedDate: 2026-10-14
 ---
 
 ## What is the SEARCH method?

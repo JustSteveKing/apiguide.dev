@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["design", "development", "testing"]
 url: "https://github.com/JustSteveKing/legible"
 pricing: "open-source"
+updatedDate: 2026-10-14
 ---
 
 ## What is legible?

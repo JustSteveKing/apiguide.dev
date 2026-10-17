@@ -36,6 +36,12 @@ const {
 // Compile a stable canonical URL
 const canonicalURL = pageURL(Astro.url, Astro.site);
 
+// Every reference page has a Markdown sibling at the same path plus .md, and
+// each problem type a JSON one; advertise them so agents need not guess.
+const ownPath = pagePath(Astro.url);
+const isReferencePage = /^\/(errors|status-codes|headers|methods|guides|specifications|tools\/[^/]+)\/[^/]+$/.test(ownPath);
+const isProblemType = /^\/errors\/[^/]+$/.test(ownPath);
+
 // Compile the Open Graph PNG preview image path dynamically
 let ogImagePath = "index.png";
 const pathParts = pagePath(Astro.url).replace(/^\/|\/$/g, ""); // strip leading/trailing slashes
@@ -66,6 +72,9 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		<link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/manifest.json" />
+		<link rel="api-catalog" href="/.well-known/api-catalog" />
+		{isReferencePage && <link rel="alternate" type="text/markdown" href={`${ownPath}.md`} />}
+		{isProblemType && <link rel="alternate" type="application/json" href={`${ownPath}.json`} />}
 		<meta name="generator" content={Astro.generator} />
 		
 		<!-- Google Fonts -->

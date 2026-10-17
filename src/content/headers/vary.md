@@ -4,6 +4,10 @@ description: "Lists the request headers a response depends on, controlling cache
 category: "response"
 standard: true
 relatedCodes: [200, 304]
+reference:
+  title: "RFC 9110, Section 12.5.5"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.5
+updatedDate: 2026-07-10
 ---
 
 ## What is the Vary header?

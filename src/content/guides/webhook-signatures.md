@@ -2,6 +2,7 @@
 title: "Webhook Signature Verification"
 description: "How to verify incoming webhooks with HMAC-SHA256 signatures, signing secrets, timestamp-based replay protection, and constant-time comparison."
 category: "events"
+updatedDate: 2026-10-14
 ---
 
 ## Introduction to Webhook Signatures

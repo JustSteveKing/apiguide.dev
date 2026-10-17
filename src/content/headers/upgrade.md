@@ -4,6 +4,10 @@ description: "Invites the server to switch an HTTP/1.1 connection to a different
 category: "both"
 standard: true
 relatedCodes: [101, 426]
+reference:
+  title: "RFC 9110, Section 7.8"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-7.8
+updatedDate: 2026-10-14
 ---
 
 ## What is the Upgrade header?

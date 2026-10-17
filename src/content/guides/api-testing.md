@@ -2,6 +2,7 @@
 title: "Testing APIs"
 description: "Where each kind of API test earns its place: consumer-driven and schema-based contract testing, generating inputs from OpenAPI, mocks that do not drift, and testing the error, retry and concurrency behavior that clients depend on."
 category: "reliability"
+updatedDate: 2026-10-14
 ---
 
 ## Test the Contract, Not Just the Code

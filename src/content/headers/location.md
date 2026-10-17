@@ -4,6 +4,10 @@ description: "Indicates the URL to redirect the client to, or the URL of a newly
 category: "response"
 standard: true
 relatedCodes: [201, 301, 302, 303, 307, 308]
+reference:
+  title: "RFC 9110, Section 10.2.2"
+  url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.2.2
+updatedDate: 2026-10-14
 ---
 
 ## What is the Location header?

@@ -3,6 +3,7 @@ title: "Digest Fields (RFC 9530)"
 description: "A reference for RFC 9530, which defines Content-Digest and Repr-Digest for HTTP integrity, the Want-Content-Digest and Want-Repr-Digest preference fields, and the hash algorithm registry, and obsoletes RFC 3230's Digest header."
 currentVersion: "RFC 9530"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc9530.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is Digest Fields?

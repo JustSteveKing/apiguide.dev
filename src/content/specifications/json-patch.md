@@ -3,6 +3,7 @@ title: "JSON Patch (RFC 6902)"
 description: "A reference for JSON Patch, the operation-based format for partial updates with PATCH, covering the six operations, JSON Pointer paths, the test operation, atomicity, and error handling."
 currentVersion: "RFC 6902"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc6902.html"
+updatedDate: 2026-10-14
 ---
 
 ## What is JSON Patch?

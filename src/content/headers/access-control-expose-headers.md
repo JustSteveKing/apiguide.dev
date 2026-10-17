@@ -4,6 +4,10 @@ description: "Lists the response headers that browsers are allowed to expose to 
 category: "response"
 standard: true
 relatedCodes: [200]
+reference:
+  title: "WHATWG Fetch Standard"
+  url: https://fetch.spec.whatwg.org/
+updatedDate: 2026-07-10
 ---
 
 ## What is the Access-Control-Expose-Headers header?

@@ -5,6 +5,7 @@ statusText: Length Required
 category: client-error
 relatedCodes: ['payload-too-large', 'request-timeout', 'uri-too-long']
 publishedDate: 2026-10-14
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

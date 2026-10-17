@@ -5,6 +5,7 @@ statusText: Request Header Fields Too Large
 category: client-error
 relatedCodes: ['uri-too-long', 'payload-too-large', 'unauthorized']
 publishedDate: 2026-10-14
+updatedDate: 2026-10-14
 ---
 
 ## When to use it

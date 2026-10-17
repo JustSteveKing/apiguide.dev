@@ -1,10 +1,11 @@
 ---
 name: "Fern"
 description: "A hosted platform, owned by Postman since January 2026, that generates SDKs in nine languages and documentation sites from OpenAPI, AsyncAPI and gRPC definitions."
-category: "design-documentation"
+category: "sdk-generation"
 lifecycleStages: ["development", "deployment"]
 url: "https://buildwithfern.com"
 pricing: "freemium"
+updatedDate: 2026-10-17
 ---
 
 ## What is Fern?

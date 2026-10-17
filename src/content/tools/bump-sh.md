@@ -5,6 +5,7 @@ category: "design-documentation"
 lifecycleStages: ["design", "deployment"]
 url: "https://bump.sh"
 pricing: "paid"
+updatedDate: 2026-10-14
 ---
 
 ## What is Bump.sh?

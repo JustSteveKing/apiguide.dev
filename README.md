@@ -39,15 +39,22 @@ Which means these URLs are a contract. They do not get renamed.
 | Section | Pages | What it covers |
 | :--- | ---: | :--- |
 | [Status codes](https://apiguide.dev/status-codes) | 63 | Every code, what it means, when to use it, how it compares to its neighbours |
-| [Headers](https://apiguide.dev/headers) | 46 | Request and response headers, standard and otherwise |
-| [Guides](https://apiguide.dev/guides) | 44 | Long-form patterns, in eight categories from resource design to agent readiness |
-| [Tools](https://apiguide.dev/tools) | 35 | Gateways, linters, clients, mocks and observability, by lifecycle stage |
-| [Errors](https://apiguide.dev/errors) | 25 | Resolvable problem types for RFC 9457 |
-| [Specifications](https://apiguide.dev/specifications) | 21 | OpenAPI, AsyncAPI, JSON Schema, Arazzo, gRPC and the rest |
-| [Methods](https://apiguide.dev/methods) | 18 | Semantics, safety, idempotency, cacheability |
+| [Headers](https://apiguide.dev/headers) | 118 | Request and response headers, standard and otherwise |
+| [Guides](https://apiguide.dev/guides) | 56 | Long-form patterns, in eight categories from resource design to agent readiness |
+| [Tools](https://apiguide.dev/tools) | 69 | Design, SDK generation, testing, security testing, clients, gateways, webhooks and observability |
+| [Errors](https://apiguide.dev/errors) | 55 | Resolvable problem types for RFC 9457, deferring to IANA where a type is registered |
+| [Specifications](https://apiguide.dev/specifications) | 56 | OpenAPI, AsyncAPI, JSON Schema, Arazzo, gRPC and the rest |
+| [Methods](https://apiguide.dev/methods) | 19 | Semantics, safety, idempotency, cacheability |
 
-Plus [`/problem-json`](https://apiguide.dev/problem-json) and an
-[`/llms.txt`](https://apiguide.dev/llms.txt) index of the whole catalogue.
+Plus [`/problem-json`](https://apiguide.dev/problem-json), an
+[`/llms.txt`](https://apiguide.dev/llms.txt) index of the whole catalogue and
+[`/llms-full.txt`](https://apiguide.dev/llms-full.txt) with all of it. Every
+page is also served as Markdown at its URL plus `.md`, every problem type as
+JSON at `/errors/<name>.json` (with the catalogue at
+[`/errors/index.json`](https://apiguide.dev/errors/index.json), in the
+[errors CLI](https://github.com/JustSteveKing/errors) format), and
+[`/.well-known/api-catalog`](https://apiguide.dev/.well-known/api-catalog)
+points to them (RFC 9727).
 
 ## Running it locally
 
@@ -70,15 +77,18 @@ bun run dev
 
 ### Content checks
 
-Three scripts check whether the content is still true, rather than whether it
-builds. All three need the [Tabstack](https://tabstack.ai) CLI installed and
-authenticated, or `TABSTACK_BIN` pointing at it.
+These check whether the content is still true, rather than whether it
+builds. Only `factcheck` needs the [Tabstack](https://tabstack.ai) CLI
+installed and authenticated, or `TABSTACK_BIN` pointing at it; `check:links`
+uses it as a fallback for sites that block plain requests. Each exits
+non-zero when it could not run, so a silent pass means a real pass.
 
 | Command | Action |
 | :--- | :--- |
+| `bun run check:internal-links` | Confirm every internal link in the build resolves. Needs a build, no network |
 | `bun run check:links` | Confirm external URLs in frontmatter still resolve. Exits 1 on a dead link |
-| `bun run check:gaps` | Diff the catalogue against the canonical IANA registries. Always exits 0; read the output |
-| `bun run factcheck` | Fact-check changed pages against the live web |
+| `bun run check:gaps` | Diff the catalogue against the IANA registries. Lists entries not yet documented or deliberately omitted in `scripts/gaps-ignore.json`; exits 2 if a registry cannot be read |
+| `bun run factcheck` | Fact-check changed pages against the live web. Exits 2 if a page could not be checked |
 
 `bun run factcheck` defaults to files changed against `HEAD~1`, and takes an
 explicit `collection/slug` or path:
@@ -111,7 +121,7 @@ Two licences, because the code and the prose want different things.
 - **Code** is [MIT](LICENSE). Templates, components, styles, configuration
   and the scripts in `scripts/`.
 - **Content** is [CC BY-SA 4.0](LICENSE-CONTENT). Everything under
-  `src/content/`: all 254 pages. Reuse it, translate it, build on it, with
+  `src/content/`: all 436 pages. Reuse it, translate it, build on it, with
   credit and under the same terms.
 
 Linking to a page here is not use of the content and needs no licence. Using
