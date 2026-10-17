@@ -155,23 +155,52 @@ export const guideCategoryThemes: Record<
 };
 
 /**
- * Tool categories follow the guide rule: no amber, red or green. Two
- * hue pairs, solid against outline, for the build-time and run-time halves
- * of the lifecycle, and slate for observability, which watches both.
+ * Tool categories follow the guide rule: no amber, red or green. Violet is
+ * the build-time half of the lifecycle and ultra the run-time half, each in
+ * three treatments: design and documentation solid, testing outline, SDK
+ * generation inverted (it is the build-time output a consumer installs);
+ * clients solid, gateways outline, webhook infrastructure inverted (it is
+ * run-time traffic you send rather than receive). Slate is for the two that
+ * cut across both halves: observability solid, and security testing
+ * inverted, matching the security guides.
  */
 /** Reading order for tool categories: build-time first, then run-time. */
-export const toolCategories = ['design-documentation', 'testing-mocking', 'clients-debugging', 'gateways-management', 'observability'] as const;
+export const toolCategories = [
+  'design-documentation',
+  'sdk-generation',
+  'testing-mocking',
+  'security-testing',
+  'clients-debugging',
+  'gateways-management',
+  'webhooks',
+  'observability'
+] as const;
 
-export const toolCategoryThemes = {
+export type ToolCategory = (typeof toolCategories)[number];
+
+export const toolCategoryThemes: Record<
+  ToolCategory,
+  { badge: string; label: string; blurb: string }
+> = {
   'design-documentation': {
     badge: 'bg-violet-100 text-violet-900 border-violet-200 border',
     label: 'Design & Documentation',
     blurb: 'Write, lint and publish API descriptions such as OpenAPI and AsyncAPI.'
   },
+  'sdk-generation': {
+    badge: 'bg-violet-700 text-violet-50 border-violet-700 border',
+    label: 'SDK Generation',
+    blurb: 'Generate typed client libraries from an API description.'
+  },
   'testing-mocking': {
     badge: 'text-violet-800 border-violet-400 border',
     label: 'Testing & Mocking',
     blurb: 'Mock servers, contract tests and load tests.'
+  },
+  'security-testing': {
+    badge: 'bg-slate-800 text-slate-50 border-slate-800 border',
+    label: 'Security Testing',
+    blurb: 'Audit API contracts and attack running APIs to find vulnerabilities before someone else does.'
   },
   'clients-debugging': {
     badge: 'bg-ultra-100 text-ultra-900 border-ultra-200 border',
@@ -183,12 +212,17 @@ export const toolCategoryThemes = {
     label: 'Gateways & Management',
     blurb: 'Sit in front of an API to route, authenticate and rate-limit its traffic.'
   },
+  'webhooks': {
+    badge: 'bg-ultra-700 text-ultra-50 border-ultra-700 border',
+    label: 'Webhook Infrastructure',
+    blurb: 'Send, receive, retry and inspect webhooks without building the delivery system yourself.'
+  },
   'observability': {
     badge: 'bg-slate-200 text-slate-900 border-slate-300 border',
     label: 'Observability & Monitoring',
     blurb: 'Trace, log and measure an API in production.'
   }
-} as const;
+};
 
 /**
  * Pricing is neutral. It always sits beside a category badge, and a paid

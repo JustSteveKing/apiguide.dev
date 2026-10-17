@@ -194,7 +194,7 @@ that has to survive the next design pass.
 - errors: `client-error`, `server-error`
 - statusCodes: `informational`, `success`, `redirection`, `client-error`, `server-error`
 - headers: `request`, `response`, `both`
-- tools: `observability`, `design-documentation`, `testing-mocking`, `gateways-management`, `clients-debugging`
+- tools: defined once in `src/config/themes.ts` as `toolCategories` and imported by the schema, like guides: `design-documentation`, `sdk-generation`, `testing-mocking`, `security-testing`, `clients-debugging`, `gateways-management`, `webhooks`, `observability`
 - guides: see below
 
 ## Page shapes

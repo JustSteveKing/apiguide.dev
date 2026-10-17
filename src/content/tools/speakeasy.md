@@ -1,7 +1,7 @@
 ---
 name: "Speakeasy"
 description: "An OpenAPI SDK generator for seven languages, plus CLI, MCP server and Terraform provider generation, open-sourced under AGPL-3.0 with commercial licensing."
-category: "design-documentation"
+category: "sdk-generation"
 lifecycleStages: ["development"]
 url: "https://www.speakeasy.com/docs/sdks/create-client-sdks"
 pricing: "freemium"
@@ -17,7 +17,7 @@ Speakeasy's own site now leads with an enterprise AI control plane (an MCP gatew
 
 ## Why use it in the API Lifecycle?
 
-* **A small set of maintained targets.** Seven SDK languages from one vendor, each with its own configuration and test suite, against [OpenAPI Generator](/tools/design-documentation/openapi-generator)'s dozens of community templates of varying maturity. Fewer targets, more consistent output.
+* **A small set of maintained targets.** Seven SDK languages from one vendor, each with its own configuration and test suite, against [OpenAPI Generator](/tools/sdk-generation/openapi-generator)'s dozens of community templates of varying maturity. Fewer targets, more consistent output.
 * **One input, several surfaces.** SDKs, a CLI, an MCP server and a Terraform provider from one document keep every consumer-facing interface on the same contract.
 * **Overlays instead of forks of the spec.** Renaming a method for one language or hiding an operation from the SDK is an overlay applied at generation time, so the source document stays canonical.
 * **Source you can read.** With the generator open, a surprising output can be traced to a template and fixed or reported, rather than waited on.

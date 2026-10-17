@@ -1,0 +1,13 @@
+# Permanent redirects for pages that have moved.
+#
+# Cloudflare Workers static assets read this file from the build output
+# (Astro copies it from public/ to dist/). One rule per line:
+#   /old/path /new/path 301
+# Tool pages live at /tools/<category>/<slug>, so recategorizing a tool
+# changes its URL. Add a line here whenever that happens, and never remove
+# one: other sites link to the old URLs.
+
+# 2026-10: SDK generators moved from design-documentation to sdk-generation.
+/tools/design-documentation/fern /tools/sdk-generation/fern 301
+/tools/design-documentation/openapi-generator /tools/sdk-generation/openapi-generator 301
+/tools/design-documentation/speakeasy /tools/sdk-generation/speakeasy 301

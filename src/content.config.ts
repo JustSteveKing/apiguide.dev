@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { guideCategories } from './config/themes';
+import { guideCategories, toolCategories } from './config/themes';
 import { figureNames } from './figures/names';
 
 // Where a page's subject is defined: the RFC section, registry or spec. For
@@ -101,7 +101,7 @@ export const collections = {
         schema: z.object({
             name: z.string(),
             description: z.string(),
-            category: z.enum(['observability', 'design-documentation', 'testing-mocking', 'gateways-management', 'clients-debugging']),
+            category: z.enum(toolCategories),
             lifecycleStages: z.array(z.enum(['design', 'development', 'testing', 'deployment', 'monitoring'])),
             url: z.string().url(),
             pricing: z.enum(['free', 'freemium', 'paid', 'open-source']),

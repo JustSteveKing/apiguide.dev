@@ -45,6 +45,8 @@ Publish the schedule you actually implement. A receiver cannot size its own repl
 
 Record every attempt while you are at it, rather than the current state of each delivery. See [webhook delivery history](/guides/webhook-delivery-history) for why the distinction matters and what each record should hold.
 
+If you would rather not build the queue, retries and signing yourself, [webhook infrastructure](/tools/webhooks) services such as Svix and Hookdeck Outpost provide them, and both can be self-hosted.
+
 ---
 
 ## 3. Idempotency on the Receiver

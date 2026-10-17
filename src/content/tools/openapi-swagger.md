@@ -15,7 +15,7 @@ Swagger is SmartBear's family of tools for working with OpenAPI definitions. The
 
 * **Swagger UI**: Renders an OpenAPI or AsyncAPI definition as interactive reference documentation with a "Try it out" console. It is embedded in a large number of frameworks as the default `/docs` page, which makes it the format many API consumers recognize.
 * **Swagger Editor**: A browser-based editor with validation and a live preview, useful for editing a definition by hand and seeing what it renders as.
-* **Swagger Codegen**: Generates client SDKs and server stubs from a definition. The community fork [OpenAPI Generator](/tools/design-documentation/openapi-generator), split off in 2018 and is maintained separately by its own community; compare both before choosing.
+* **Swagger Codegen**: Generates client SDKs and server stubs from a definition. The community fork [OpenAPI Generator](/tools/sdk-generation/openapi-generator), split off in 2018 and is maintained separately by its own community; compare both before choosing.
 * **Swagger Core and Parser**: Java libraries for producing a definition from annotated code and for parsing and resolving definitions in your own tooling.
 * **Commercial platform**: Central hosting of definitions, style-rule enforcement, developer portals, and functional and contract testing, for teams that want those as a managed service.
 
