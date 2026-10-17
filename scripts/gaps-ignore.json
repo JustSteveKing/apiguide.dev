@@ -1,0 +1,22 @@
+{
+  "status-codes": [
+    {
+      "names": ["104"],
+      "reason": "Temporary registration for the resumable uploads draft, expiring 2026-11-13 unless renewed. Covered on the resumable uploads specification page; give it its own page if it becomes permanent."
+    }
+  ],
+  "methods": [
+    {
+      "names": ["ACL", "BASELINE-CONTROL", "BIND", "CHECKIN", "CHECKOUT", "LABEL", "MERGE", "MKACTIVITY", "MKCALENDAR", "MKREDIRECTREF", "MKWORKSPACE", "ORDERPATCH", "REBIND", "UNBIND", "UNCHECKOUT", "UPDATE", "UPDATEREDIRECTREF", "VERSION-CONTROL"],
+      "reason": "WebDAV access control, versioning, binding, ordering, redirect references and CalDAV. File-system and calendar protocols, not API design."
+    },
+    {
+      "names": ["LINK", "UNLINK"],
+      "reason": "Historic, from RFC 2068. Never widely implemented."
+    },
+    {
+      "names": ["PRI"],
+      "reason": "The HTTP/2 connection preface, not a method a client sends."
+    }
+  ]
+}

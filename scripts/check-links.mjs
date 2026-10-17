@@ -1,13 +1,43 @@
 #!/usr/bin/env node
-// Link + staleness checker. Confirms every external URL referenced in the
-// content frontmatter still resolves (via Tabstack markdown extraction), and
-// lists draft items to watch for promotion to a final standard.
-// Exits 1 if any link fails to resolve.
+// Link + staleness checker. Confirms every external URL referenced in content
+// frontmatter still resolves, and lists draft items to watch for promotion to
+// a final standard.
 //
-// Usage: npm run check:links
+// Each URL is fetched directly. Only when a site answers with a bot wall
+// (401, 403, 429, 503) is it retried through Tabstack, which renders it like
+// a browser. A URL neither can confirm is reported as unverified rather than
+// dead, so a Tabstack outage cannot turn every bot-walled link into a failure
+// or into a pass. Exits 1 if any link is dead.
+//
+// Usage: bun run check:links
 import { extractMarkdown, pool } from './lib/tabstack.mjs';
 import { listFiles } from './lib/content.mjs';
 import { readFrontmatter } from './lib/frontmatter.mjs';
+
+const UA = 'Mozilla/5.0 (compatible; apiguide.dev link check; +https://apiguide.dev)';
+const BOT_WALL = new Set([401, 403, 429, 503]);
+
+async function direct(url) {
+  try {
+    const res = await fetch(url, { headers: { 'user-agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+    return { status: res.status };
+  } catch (e) {
+    return { status: 0, note: e.cause?.code ?? e.message };
+  }
+}
+
+async function check(url) {
+  const { status, note } = await direct(url);
+  if (status >= 200 && status < 400) return { url, state: 'ok' };
+  if (!BOT_WALL.has(status)) return { url, state: 'dead', note: status ? `HTTP ${status}` : note };
+  try {
+    const { content } = await extractMarkdown(url);
+    if (content && content.trim()) return { url, state: 'ok', note: `HTTP ${status} directly, rendered via Tabstack` };
+    return { url, state: 'unverified', note: `HTTP ${status} directly, Tabstack returned nothing` };
+  } catch (e) {
+    return { url, state: 'unverified', note: `HTTP ${status} directly, Tabstack failed: ${e.message.split('\n').find((l) => /api error/i.test(l))?.trim() ?? e.message.slice(0, 120)}` };
+  }
+}
 
 const CONCURRENCY = 4;
 
@@ -41,23 +71,22 @@ async function main() {
   const urls = [...urlMap.keys()];
   console.log(`Checking ${urls.length} external URL(s)…\n`);
 
-  const results = await pool(urls, CONCURRENCY, async (url) => {
-    try {
-      const { content } = await extractMarkdown(url);
-      return { url, ok: !!content && content.trim().length > 0, note: content ? '' : 'empty content' };
-    } catch (e) {
-      return { url, ok: false, note: e.message };
-    }
-  });
+  const results = await pool(urls, CONCURRENCY, check);
 
-  const failed = [];
+  const dead = [];
+  const unverified = [];
   for (const r of results) {
-    if (r.ok) {
-      console.log(`  ✓ ${r.url}`);
+    const where = () => { for (const w of urlMap.get(r.url)) console.log(`      ↳ ${w}`); };
+    if (r.state === 'ok') {
+      console.log(`  ✓ ${r.url}${r.note ? `  (${r.note})` : ''}`);
+    } else if (r.state === 'unverified') {
+      unverified.push(r);
+      console.log(`  ? ${r.url}  — ${r.note}`);
+      where();
     } else {
-      failed.push(r);
+      dead.push(r);
       console.log(`  ✗ ${r.url}  — ${r.note}`);
-      for (const w of urlMap.get(r.url)) console.log(`      ↳ ${w}`);
+      where();
     }
   }
 
@@ -67,8 +96,9 @@ async function main() {
     for (const d of drafts) console.log(`   • ${d}`);
   }
 
-  console.log(`\n${failed.length ? `✗ ${failed.length} link(s) failed` : '✓ all links resolved'}`);
-  process.exit(failed.length ? 1 : 0);
+  if (unverified.length) console.log(`\n? ${unverified.length} link(s) could not be verified either way; check them by hand`);
+  console.log(`${dead.length ? `✗ ${dead.length} link(s) dead` : '✓ no dead links'}`);
+  process.exit(dead.length ? 1 : 0);
 }
 
 main().catch((e) => {

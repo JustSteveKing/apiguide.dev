@@ -70,15 +70,18 @@ bun run dev
 
 ### Content checks
 
-Three scripts check whether the content is still true, rather than whether it
-builds. All three need the [Tabstack](https://tabstack.ai) CLI installed and
-authenticated, or `TABSTACK_BIN` pointing at it.
+These check whether the content is still true, rather than whether it
+builds. Only `factcheck` needs the [Tabstack](https://tabstack.ai) CLI
+installed and authenticated, or `TABSTACK_BIN` pointing at it; `check:links`
+uses it as a fallback for sites that block plain requests. Each exits
+non-zero when it could not run, so a silent pass means a real pass.
 
 | Command | Action |
 | :--- | :--- |
+| `bun run check:internal-links` | Confirm every internal link in the build resolves. Needs a build, no network |
 | `bun run check:links` | Confirm external URLs in frontmatter still resolve. Exits 1 on a dead link |
-| `bun run check:gaps` | Diff the catalogue against the canonical IANA registries. Always exits 0; read the output |
-| `bun run factcheck` | Fact-check changed pages against the live web |
+| `bun run check:gaps` | Diff the catalogue against the IANA registries. Lists entries not yet documented or deliberately omitted in `scripts/gaps-ignore.json`; exits 2 if a registry cannot be read |
+| `bun run factcheck` | Fact-check changed pages against the live web. Exits 2 if a page could not be checked |
 
 `bun run factcheck` defaults to files changed against `HEAD~1`, and takes an
 explicit `collection/slug` or path:

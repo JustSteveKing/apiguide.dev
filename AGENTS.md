@@ -51,14 +51,27 @@ The package manager is **bun**. Do not run `npm install`; it will produce a
 | `bun run check:gaps` | Diff the content against the canonical IANA registries |
 | `bun run factcheck` | Fact-check changed pages against the live web |
 
-The three `check`/`factcheck` scripts are built on the **Tabstack CLI** and
-need it installed and authenticated, or `TABSTACK_BIN` pointing at it. They
-are the only automated check on whether the content is still true, so run
-them when you touch content rather than treating them as optional.
+These checks are the only automated test of whether the content is still
+true, so run them when you touch content rather than treating them as
+optional. Only `factcheck` needs the **Tabstack CLI** (installed and
+authenticated, or `TABSTACK_BIN` pointing at it), because it needs a research
+agent. `check:gaps` reads the IANA registries directly as CSV and XML, and
+`check:links` fetches each URL itself and only falls back to Tabstack for
+sites that bot-wall a plain request.
 
-`check:links` exits 1 on a dead link. `check:gaps` always exits 0, because
-plenty of registry entries are omitted deliberately; read its output, do not
-just check its status.
+Every check distinguishes "found a problem" from "could not run". A check
+that could not run exits non-zero and says so, because the old behaviour, a
+`check:gaps` that printed "Done" and exited 0 while every registry request
+was failing on an exhausted Tabstack quota, looked exactly like a pass.
+
+- `check:gaps` exits 0 when it finds gaps and 2 when a registry cannot be
+  read. Entries omitted on purpose live in `scripts/gaps-ignore.json`, each
+  group with its reason, so its output lists only what nobody has decided
+  about yet. Document an undecided entry or add it there; do not leave it.
+- `check:links` exits 1 on a dead link. A link that bot-walls a direct
+  request and that Tabstack cannot render either is reported as unverified,
+  not dead, and does not fail the run.
+- `factcheck` exits 2 if any page could not be checked.
 
 `check:internal-links` needs no network and no Tabstack, only a build. It is
 the cheapest of the four and the one most likely to catch your mistake.
