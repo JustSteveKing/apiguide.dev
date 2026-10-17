@@ -53,7 +53,7 @@ The current OWASP list captures the risks responsible for most real breaches. Th
 GET /orders/42
 ```
 
-If any authenticated user can fetch *any* order 42 simply by changing the number, you have a BOLA vulnerability. Always verify ownership on every object access, server-side, using the authenticated identity, not an ID supplied by the client.
+If any authenticated user can fetch *any* order 42 simply by changing the number, you have a BOLA vulnerability. Always verify ownership on every object access, server-side, using the authenticated identity, not an ID supplied by the client. Automated [security testing tools](/tools/security-testing) catch injection and misconfiguration, but no scanner knows your ownership rules, so BOLA needs tests that make one user request another user's objects.
 
 ---
 

@@ -88,4 +88,6 @@ Two things worth exposing alongside it:
 - **A replay control.** Receivers have outages. Without replay, the alternative to a support ticket is nothing.
 - **The endpoint's recent health**, not just individual attempts. "This endpoint has failed every delivery for three days" is a different message from a list of failures, and it is the one that prompts action.
 
+If you send through [webhook infrastructure](/tools/webhooks) rather than your own delivery code, check that it gives customers this view; Svix and Hookdeck Outpost both ship an embeddable portal for it.
+
 For where this sits in a wider review, see section 9 of the [agent-ready API checklist](/guides/agent-ready-checklist).

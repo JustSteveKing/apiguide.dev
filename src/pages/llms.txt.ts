@@ -29,7 +29,7 @@ export const GET: APIRoute = async () => {
   txt += `- [Methods](/methods): Explanation of HTTP request methods, semantics, and safety properties.\n`;
   txt += `- [Developer Guides](/guides): Best practices on Pagination, Versioning, Idempotency, Webhooks, Caching, and Error Handling.\n`;
   txt += `- [Specifications](/specifications): Deep dives into OpenAPI, AsyncAPI, JSON Schema, JSON:API, and gRPC.\n`;
-  txt += `- [Tooling](/tools): Reviews and comparisons of gateway, debugging, testing, and observability API tools.\n\n`;
+  txt += `- [Tooling](/tools): Reviews and comparisons of API tools for design, SDK generation, testing, security testing, debugging, gateways, webhook infrastructure, and observability.\n\n`;
 
   txt += `## Reference Directory\n\n`;
 

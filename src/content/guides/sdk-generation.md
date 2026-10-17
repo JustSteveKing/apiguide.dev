@@ -144,11 +144,12 @@ Evaluate the options against your own document, in the languages you need, by re
 
 | Generator | What it is |
 | :--- | :--- |
-| [OpenAPI Generator](/tools/design-documentation/openapi-generator) | Open source and community maintained, with generators for over 50 client targets plus server stubs and documentation. Output quality varies by language generator |
-| [Speakeasy](/tools/design-documentation/speakeasy) | Generates SDKs in seven languages, plus Terraform providers, CLIs and [MCP](/specifications/model-context-protocol) servers, from OpenAPI. Open-sourced under AGPL-3.0 in September 2026; a commercial license lets you license the generated SDKs however you like |
-| [Fern](/tools/design-documentation/fern) | Hosted service, owned by Postman since January 2026, generating SDKs, API documentation and a CLI from OpenAPI, AsyncAPI, Protobuf or its own Fern Definition. Its public repository is no longer maintained, so generation runs through the hosted service |
+| [OpenAPI Generator](/tools/sdk-generation/openapi-generator) | Open source and community maintained, with generators for over 50 client targets plus server stubs and documentation. Output quality varies by language generator |
+| [Speakeasy](/tools/sdk-generation/speakeasy) | Generates SDKs in seven languages, plus Terraform providers, CLIs and [MCP](/specifications/model-context-protocol) servers, from OpenAPI. Open-sourced under AGPL-3.0 in September 2026; a commercial license lets you license the generated SDKs however you like |
+| [Kiota](/tools/sdk-generation/kiota) | Microsoft's open source (MIT) client generator. Thin generated code over shared per-language core libraries, with path filters to generate only the operations you call. Clients only, no server stubs or docs |
+| [Fern](/tools/sdk-generation/fern) | Hosted service, owned by Postman since January 2026, generating SDKs, API documentation and a CLI from OpenAPI, AsyncAPI, Protobuf or its own Fern Definition. Its public repository is no longer maintained, so generation runs through the hosted service |
 
-Stainless, another commercial generator, stopped taking new signups, projects and SDKs in May 2026 when it joined Anthropic, and is winding down its hosted products. Existing customers keep the SDKs already generated; do not start a new project on it.
+[Stainless](/tools/sdk-generation/stainless), another commercial generator, stopped taking new signups, projects and SDKs in May 2026 when it joined Anthropic, and is winding down its hosted products. Existing customers keep the SDKs already generated; do not start a new project on it.
 
 Questions that separate them in practice:
 
