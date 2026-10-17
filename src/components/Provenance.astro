@@ -1,0 +1,21 @@
+---
+// Where a page's subject is defined, and when the page last changed. Sits in
+// a detail page's metadata row, after that collection's own items, so every
+// reference page shows its source and its age in the same place.
+import MetaItem from '@/components/MetaItem.astro';
+
+interface Props {
+  reference?: { title: string; url?: string };
+  updatedDate?: Date;
+}
+
+const { reference, updatedDate } = Astro.props;
+---
+{reference && (
+  <MetaItem label="Defined in">
+    {reference.url
+      ? <a href={reference.url} class="text-ultra-600 hover:text-ultra-800 hover:underline">{reference.title}</a>
+      : reference.title}
+  </MetaItem>
+)}
+{updatedDate && <MetaItem label="Updated" value={updatedDate.toISOString().split('T')[0]} />}

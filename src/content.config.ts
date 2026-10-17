@@ -4,6 +4,14 @@ import { z } from 'astro/zod';
 import { guideCategories } from './config/themes';
 import { figureNames } from './figures/names';
 
+// Where a page's subject is defined: the RFC section, registry or spec. For
+// registered status codes, methods and fields it comes from the IANA registry
+// via `bun run sync:references`.
+const reference = z.object({
+    title: z.string(),
+    url: z.string().url().optional(),
+}).optional();
+
 export const collections = {
     errors: defineCollection({
         loader: glob({
@@ -36,6 +44,8 @@ export const collections = {
             description: z.string(),
             category: z.enum(['informational', 'success', 'redirection', 'client-error', 'server-error']),
             relatedCodes: z.array(z.number()).optional(),
+            reference,
+            updatedDate: z.date().optional(),
         }),
     }),
     headers: defineCollection({
@@ -49,6 +59,8 @@ export const collections = {
             category: z.enum(['request', 'response', 'both']),
             standard: z.boolean(),
             relatedCodes: z.array(z.number()).optional(),
+            reference,
+            updatedDate: z.date().optional(),
         }),
     }),
     methods: defineCollection({
@@ -64,6 +76,8 @@ export const collections = {
             cacheable: z.boolean(),
             relatedCodes: z.array(z.number()).optional(),
             draft: z.boolean().optional(),
+            reference,
+            updatedDate: z.date().optional(),
         }),
     }),
     guides: defineCollection({
@@ -75,6 +89,7 @@ export const collections = {
             title: z.string(),
             description: z.string(),
             category: z.enum(guideCategories),
+            updatedDate: z.date().optional(),
             figure: z.enum(figureNames).optional(),
         }),
     }),
@@ -102,6 +117,7 @@ export const collections = {
             description: z.string(),
             currentVersion: z.string(),
             officialUrl: z.string().url(),
+            updatedDate: z.date().optional(),
         }),
     }),
     sponsors: defineCollection({

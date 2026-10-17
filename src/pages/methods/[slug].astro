@@ -5,6 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MetaItem from '../../components/MetaItem.astro';
+import Provenance from '@/components/Provenance.astro';
 
 export async function getStaticPaths() {
   const methods = await getCollection('methods');
@@ -82,6 +83,7 @@ const methodJsonLd = [
         <MetaItem label="Safe" value={m.data.safe ? 'Yes' : 'No, changes server state'} />
         <MetaItem label="Idempotent" value={m.data.idempotent ? 'Yes' : 'No, a retry may repeat the effect'} />
         <MetaItem label="Cacheable" value={m.data.cacheable ? 'Yes, by default' : 'No'} />
+        <Provenance reference={m.data.reference} updatedDate={m.data.updatedDate} />
       </div>
     </header>
 

@@ -62,6 +62,12 @@ const guideJsonLd = [
         <span class={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold ${activeTheme.badge}`}>
           {activeTheme.label}
         </span>
+        {g.data.updatedDate && (
+          <>
+            <span class="text-slate-600 ml-4">Updated:</span>
+            <span class="text-slate-900 font-semibold">{g.data.updatedDate.toISOString().split('T')[0]}</span>
+          </>
+        )}
       </div>
     </header>
 
