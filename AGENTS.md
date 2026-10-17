@@ -23,6 +23,15 @@ Two consequences that shape everything below:
   directly as the `type` member of an RFC 9457 problem response, by anyone,
   not just by this site. Never rename or delete one. If a page has to move,
   it needs a redirect.
+- **A type IANA has registered wins.** If a problem is in the
+  [IANA HTTP Problem Types registry](https://www.iana.org/assignments/http-problem-types/),
+  its page sets `registeredType` to the registry URI. The page then shows
+  that URI as the one to send, the example response uses it, and this
+  site's `/errors/<name>` stays resolvable as an alias. Minting a parallel
+  URI for a registered problem gives clients two `type` values for one
+  meaning, which is exactly what RFC 9457 types exist to prevent. When a
+  draft's type is registered later, add `registeredType` to the existing
+  page rather than creating a new one.
 
 ## Commands
 

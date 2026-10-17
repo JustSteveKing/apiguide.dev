@@ -19,6 +19,10 @@ export const collections = {
             publishedDate: z.date(),
             updatedDate: z.date().optional(),
             deprecated: z.boolean().optional(),
+            // The IANA HTTP Problem Types registry URI, when the problem is
+            // registered there. The page then tells readers to send that URI
+            // as the `type`; this site's own URI stays resolvable as an alias.
+            registeredType: z.string().url().optional(),
         }),
     }),
     statusCodes: defineCollection({

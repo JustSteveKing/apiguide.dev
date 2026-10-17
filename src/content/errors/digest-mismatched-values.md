@@ -5,6 +5,8 @@ statusText: Bad Request
 category: client-error
 relatedCodes: ['digest-invalid-values', 'digest-unsupported-algorithms', 'malformed-request-body']
 publishedDate: 2026-10-15
+updatedDate: 2026-10-17
+registeredType: https://iana.org/assignments/http-problem-types#digest-mismatched-values
 ---
 
 ## When to use it
@@ -13,7 +15,7 @@ Use 400 with a Mismatched Digest Values error when a request carries a [`Content
 
 Reject the whole request, even if the same field carries a second digest that does match. A client that sends `sha-256` and `sha-512` side by side and gets one wrong has a problem worth surfacing, and accepting the request on the strength of whichever digest happens to match weakens the check for everyone.
 
-This mirrors the `digest-mismatched-values` problem type in the IETF HTTPAPI working group's Internet-Draft `draft-ietf-httpapi-digest-fields-problem-types` (revision 06 at the time of writing), which recommends 400. The draft's type URI, `https://iana.org/assignments/http-problem-types#digest-mismatched-values`, is not yet in the IANA HTTP Problem Types registry, so use this page's type URI today. The extension members below use the draft's names, so switching later means changing only the `type`.
+This is the `digest-mismatched-values` problem type from the IETF HTTPAPI working group's `draft-ietf-httpapi-digest-fields-problem-types` (Section 3.3 of revision 06), which recommends 400. IANA registered it in the HTTP Problem Types registry on 2026-06-26, so send the registered URI, `https://iana.org/assignments/http-problem-types#digest-mismatched-values`, as the `type`. This page's URI resolves too and documents the same problem, but a client that recognizes registered types will only recognize the IANA one. The extension members below use the draft's names.
 
 ## When not to use it
 
@@ -27,7 +29,7 @@ Do not use this when the field itself does not parse as a Structured Field Dicti
 
 ```json
 {
-  "type": "https://apiguide.dev/errors/digest-mismatched-values",
+  "type": "https://iana.org/assignments/http-problem-types#digest-mismatched-values",
   "title": "Mismatched Digest Values",
   "status": 400,
   "detail": "A digest in the request does not match its content. It may have been changed in transit.",

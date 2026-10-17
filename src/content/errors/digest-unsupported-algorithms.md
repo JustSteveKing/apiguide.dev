@@ -5,6 +5,8 @@ statusText: Bad Request
 category: client-error
 relatedCodes: ['digest-mismatched-values', 'digest-invalid-values', 'unsupported-media-type']
 publishedDate: 2026-10-15
+updatedDate: 2026-10-17
+registeredType: https://iana.org/assignments/http-problem-types#digest-unsupported-algorithms
 ---
 
 ## When to use it
@@ -15,7 +17,7 @@ The usual cause is a client still using one of the algorithms [Digest Fields](/s
 
 Tell the client what would work. Send `Want-Content-Digest` and `Want-Repr-Digest` on the response, listing the algorithms you accept with a weight from 1 to 10, so it can retry with one of them.
 
-This mirrors the `digest-unsupported-algorithms` problem type in the IETF HTTPAPI working group's Internet-Draft `draft-ietf-httpapi-digest-fields-problem-types` (revision 06 at the time of writing), which recommends 400. Its type URI is not yet in the IANA HTTP Problem Types registry, so use this page's today. The extension members use the draft's names.
+This is the `digest-unsupported-algorithms` problem type from the IETF HTTPAPI working group's `draft-ietf-httpapi-digest-fields-problem-types` (Section 3.1 of revision 06), which recommends 400. IANA registered it in the HTTP Problem Types registry on 2026-06-26, so send the registered URI, `https://iana.org/assignments/http-problem-types#digest-unsupported-algorithms`, as the `type`. This page's URI resolves too and documents the same problem, but a client that recognizes registered types will only recognize the IANA one. The extension members below use the draft's names.
 
 ## When not to use it
 
@@ -36,7 +38,7 @@ Want-Repr-Digest: sha-256=10, sha-512=10
 
 ```json
 {
-  "type": "https://apiguide.dev/errors/digest-unsupported-algorithms",
+  "type": "https://iana.org/assignments/http-problem-types#digest-unsupported-algorithms",
   "title": "Unsupported Hashing Algorithms",
   "status": 400,
   "detail": "None of the hashing algorithms in the request is supported. Use sha-256 or sha-512.",
