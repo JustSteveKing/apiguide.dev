@@ -14,7 +14,7 @@ The `X-Forwarded-For` (XFF) request header is a comma-separated list of IP addre
 X-Forwarded-For: <client>, <proxy1>, <proxy2>
 ```
 
-It has never been standardized. [RFC 7239](https://www.rfc-editor.org/rfc/rfc7239.html) defines [`Forwarded`](/headers/forwarded) as its replacement, but `X-Forwarded-For`, along with its companions `X-Forwarded-Proto` and `X-Forwarded-Host`, remains what most load balancers, CDNs and frameworks send by default.
+It has never been standardized. [RFC 7239](https://www.rfc-editor.org/rfc/rfc7239.html) defines [`Forwarded`](/headers/forwarded) as its replacement, but `X-Forwarded-For`, along with its companions [`X-Forwarded-Proto`](/headers/x-forwarded-proto) and [`X-Forwarded-Host`](/headers/x-forwarded-host), remains what most load balancers, CDNs and frameworks send by default.
 
 ## API Usage & Best Practices
 

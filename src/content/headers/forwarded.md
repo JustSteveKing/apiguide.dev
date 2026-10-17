@@ -8,7 +8,7 @@ relatedCodes: [403, 429]
 
 ## What is the Forwarded header?
 
-The `Forwarded` request header, defined in [RFC 7239](https://www.rfc-editor.org/rfc/rfc7239.html), carries the information a reverse proxy would otherwise destroy by terminating the connection: who connected to it, on which interface, over which protocol, and with which `Host`. It is the standardized replacement for [`X-Forwarded-For`](/headers/x-forwarded-for), `X-Forwarded-Proto` and `X-Forwarded-Host`, folding all three into one field.
+The `Forwarded` request header, defined in [RFC 7239](https://www.rfc-editor.org/rfc/rfc7239.html), carries the information a reverse proxy would otherwise destroy by terminating the connection: who connected to it, on which interface, over which protocol, and with which `Host`. It is the standardized replacement for [`X-Forwarded-For`](/headers/x-forwarded-for), [`X-Forwarded-Proto`](/headers/x-forwarded-proto) and [`X-Forwarded-Host`](/headers/x-forwarded-host), folding all three into one field.
 
 The value is a comma-separated list of elements, one per proxy, each a set of semicolon-separated `name=value` pairs. Four parameters are defined:
 
