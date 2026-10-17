@@ -22,6 +22,8 @@ export const GET: APIRoute = async () => {
   let txt = `# apiguide.dev\n\n`;
   txt += `> The flagship reference site for modern, authoritative API design patterns, Problem+JSON error schemas, and integration guides.\n\n`;
 
+  txt += `Every page below is also available as Markdown by appending \`.md\` to its URL, and [/llms-full.txt](/llms-full.txt) holds all of them in one file. Problem types are available as JSON at \`/errors/<slug>.json\`, with the whole catalogue at [/errors/index.json](/errors/index.json); see [/.well-known/api-catalog](/.well-known/api-catalog).\n\n`;
+
   txt += `## Core Sections\n\n`;
   txt += `- [Errors](/errors): Detailed documentation of common HTTP API error patterns.\n`;
   txt += `- [Status Codes](/status-codes): Comprehensive catalog of HTTP response status codes with schemas and examples.\n`;
