@@ -4,6 +4,7 @@ import Layout from '@/layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import MetaItem from '@/components/MetaItem.astro';
+import Provenance from '@/components/Provenance.astro';
 
 export async function getStaticPaths() {
   const tools = await getCollection('tools');
@@ -88,6 +89,7 @@ const toolJsonLd = [
             {new URL(t.data.url).host.replace(/^www\./, '')}
           </a>
         </MetaItem>
+        <Provenance updatedDate={t.data.updatedDate} />
       </div>
     </header>
 

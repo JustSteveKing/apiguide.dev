@@ -105,6 +105,7 @@ export const collections = {
             lifecycleStages: z.array(z.enum(['design', 'development', 'testing', 'deployment', 'monitoring'])),
             url: z.string().url(),
             pricing: z.enum(['free', 'freemium', 'paid', 'open-source']),
+            updatedDate: z.date().optional(),
         }),
     }),
     specifications: defineCollection({
