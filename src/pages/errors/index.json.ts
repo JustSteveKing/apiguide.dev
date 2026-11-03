@@ -2,8 +2,8 @@
 //
 // `catalogue` validates against catalogue.schema.json and each item of `types`
 // against problem-type.schema.json. Types IANA has registered are listed in
-// `registered`, slug to registry URI, because the problem type schema has no
-// member for it: send the registered URI, not BASE_URL + slug, for those.
+// `registered`, slug to registry URI, as well as in each type's `registered_type`:
+// send the registered URI, not BASE_URL + slug, for those.
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { BASE_URL, CATALOGUE_SCHEMA, PROBLEM_TYPE_SCHEMA, toProblemType, jsonResponse } from '@/utils/problemType';

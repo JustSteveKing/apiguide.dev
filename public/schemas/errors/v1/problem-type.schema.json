@@ -26,6 +26,17 @@
       "minimum": 400,
       "maximum": 599
     },
+    "summary": {
+      "description": "One sentence on when to use this type, enough to choose between types that share a status without reading each page.",
+      "type": "string",
+      "minLength": 1
+    },
+    "registered_type": {
+      "description": "The absolute URI of this problem in a public registry such as IANA's HTTP Problem Types. When present, send this URI as the type rather than base_url followed by the slug.",
+      "type": "string",
+      "format": "uri",
+      "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+    },
     "since": {
       "description": "The version the type was introduced in.",
       "type": "string",

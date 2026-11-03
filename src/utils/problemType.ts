@@ -56,6 +56,22 @@ function extensions(body: string | undefined): Record<string, Shape> | undefined
   return Object.keys(out).length ? out : undefined;
 }
 
+/**
+ * The first sentence of "When to use it", as plain text. It is what tells apart
+ * the types that share a status, so the JSON, llms.txt and search all carry it.
+ */
+export function problemSummary(entry: CollectionEntry<'errors'>): string {
+  const section = entry.body?.split(/^## When to use it\s*$/m)[1] ?? '';
+  const paragraph = section.trim().split(/\n\s*\n/)[0] ?? '';
+  const plain = paragraph
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/\s+/g, ' ')
+    .replace(/\b(e\.g|i\.e)\./g, '$1\u0000');
+  const sentence = plain.split(/(?<=[.!?])\s+(?=[A-Z`])/)[0].replace(/\u0000/g, '.').trim();
+  if (!sentence) throw new Error(`${entry.id}: no "When to use it" paragraph to summarise`);
+  return sentence;
+}
+
 /** One problem type, conforming to problem-type.schema.json. */
 export function toProblemType(entry: CollectionEntry<'errors'>) {
   const ext = extensions(entry.body);
@@ -63,6 +79,8 @@ export function toProblemType(entry: CollectionEntry<'errors'>) {
     type: entry.id,
     title: entry.data.title,
     status: entry.data.statusCode,
+    summary: problemSummary(entry),
+    ...(entry.data.registeredType ? { registered_type: entry.data.registeredType } : {}),
     ...(ext ? { extensions: ext } : {}),
   };
 }
