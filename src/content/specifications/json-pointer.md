@@ -3,7 +3,7 @@ title: "JSON Pointer (RFC 6901)"
 description: "A reference for JSON Pointer, the string syntax for identifying a single value in a JSON document, covering ~0 and ~1 escaping, the URI fragment form, the array '-' token, and its use in JSON Patch, JSON Schema and problem details."
 currentVersion: "RFC 6901"
 officialUrl: "https://www.rfc-editor.org/rfc/rfc6901.html"
-updatedDate: 2026-10-14
+updatedDate: 2026-11-03
 ---
 
 ## What is JSON Pointer?
@@ -92,7 +92,7 @@ Do not mix the two forms. `#/items/0` passed to a JSON Patch implementation is n
 
 ## 4. The `-` Token
 
-RFC 6901 reserves `-` as an array token meaning "the nonexistent element after the last one". It never resolves to a value; it exists so other specifications can give it a meaning. JSON Patch does: `{ "op": "add", "path": "/items/-", "value": {...} }` appends. Anywhere else, treat `-` against an array as an error.
+RFC 6901 reserves `-` as an array token meaning "the (nonexistent) member after the last array element". It never resolves to a value; it exists so other specifications can give it a meaning. JSON Patch does: `{ "op": "add", "path": "/items/-", "value": {...} }` appends. Anywhere else, treat `-` against an array as an error.
 
 ---
 
