@@ -87,6 +87,12 @@ export default {
     const response = new Response(asset.body, asset);
     response.headers.append('Vary', 'Accept');
     if (kind !== 'html') response.headers.set('Content-Location', sibling);
+    else if (asset.ok) {
+      response.headers.set(
+        'Link',
+        `<${pathname}.md>; rel="alternate"; type="text/markdown", <${pathname}.json>; rel="alternate"; type="application/json"`,
+      );
+    }
     return response;
   },
 };

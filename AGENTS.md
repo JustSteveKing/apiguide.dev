@@ -118,9 +118,11 @@ invokes the Worker, so keep that list short: Worker requests count against a
 daily limit and static assets do not. It logs what asks for a non-HTML format,
 with no address or token, to Workers Logs.
 
-`public/_headers` rules apply in order, and `! Header` only removes what an
-earlier rule set. Two rules setting one header on a path send both values, so
-`Access-Control-Allow-Origin` must match each path once.
+Two `public/_headers` rules setting one header on a path send both values, so
+`Access-Control-Allow-Origin` must match each path once. A placeholder such as
+`/guides/:slug` also matches `/guides/x.md`, and `! Link` on `/*.md` removes the
+header under `wrangler dev` but not on Cloudflare. So check `_headers` changes on
+a version preview (`bunx wrangler versions upload`), not only locally.
 
 **After changing `ec.config.mjs`, clear the Astro cache** (`rm -rf .astro
 node_modules/.astro`) before building. Rendered Markdown is cached with

@@ -62,30 +62,11 @@
   Content-Type: application/vnd.oai.openapi+json;version=3.1
   Access-Control-Allow-Origin: *
 
-# Advertise each page's siblings in the response, so a client need not parse the
-# HTML to find them.
+# Exact paths only. A rule such as /guides/:slug also matches /guides/x.md, and
+# "! Link" on /*.md removes it under wrangler dev but not on Cloudflare, so a
+# placeholder rule puts a wrong Link on every sibling. src/worker.ts sets Link on
+# /errors/<slug>, and other pages advertise theirs in the HTML.
 /
   Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="alternate"; type="text/plain"
-/errors/:slug
-  Link: </errors/:slug.md>; rel="alternate"; type="text/markdown", </errors/:slug.json>; rel="alternate"; type="application/json"
-/status-codes/:slug
-  Link: </status-codes/:slug.md>; rel="alternate"; type="text/markdown"
-/headers/:slug
-  Link: </headers/:slug.md>; rel="alternate"; type="text/markdown"
-/methods/:slug
-  Link: </methods/:slug.md>; rel="alternate"; type="text/markdown"
-/guides/:slug
-  Link: </guides/:slug.md>; rel="alternate"; type="text/markdown"
-/specifications/:slug
-  Link: </specifications/:slug.md>; rel="alternate"; type="text/markdown"
-/tools/:category/:slug
-  Link: </tools/:category/:slug.md>; rel="alternate"; type="text/markdown"
 /problem-json
   Link: </problem-json.md>; rel="alternate"; type="text/markdown"
-
-# The :slug rules above also match the siblings themselves, so take the header
-# back off them. This has to come after the rules that set it.
-/*.md
-  ! Link
-/*.json
-  ! Link
