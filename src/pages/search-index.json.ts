@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { problemSummary } from '@/utils/problemType';
 
 export async function GET() {
   const errors: CollectionEntry<'errors'>[] = await getCollection('errors');
@@ -13,7 +14,7 @@ export async function GET() {
   const items = [
     ...errors.map(e => ({
       title: `${e.data.statusCode} ${e.data.title}`,
-      description: e.data.statusText,
+      description: problemSummary(e),
       url: `/errors/${e.id}`,
       type: 'Error Schema'
     })),

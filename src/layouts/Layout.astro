@@ -41,6 +41,7 @@ const canonicalURL = pageURL(Astro.url, Astro.site);
 const ownPath = pagePath(Astro.url);
 const isReferencePage = /^\/(errors|status-codes|headers|methods|guides|specifications|tools\/[^/]+)\/[^/]+$/.test(ownPath);
 const isProblemType = /^\/errors\/[^/]+$/.test(ownPath);
+const hasMarkdownIndex = /^\/(errors|status-codes|headers|methods|guides|specifications|tools|problem-json)$/.test(ownPath);
 
 // Compile the Open Graph PNG preview image path dynamically
 let ogImagePath = "index.png";
@@ -73,7 +74,8 @@ const jsonLdPayload = Array.isArray(jsonLd)
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/manifest.json" />
 		<link rel="api-catalog" href="/.well-known/api-catalog" />
-		{isReferencePage && <link rel="alternate" type="text/markdown" href={`${ownPath}.md`} />}
+		{(isReferencePage || hasMarkdownIndex) && <link rel="alternate" type="text/markdown" href={`${ownPath}.md`} />}
+		{ownPath === '/errors' && <link rel="alternate" type="application/json" href="/errors/index.json" />}
 		{isProblemType && <link rel="alternate" type="application/json" href={`${ownPath}.json`} />}
 		<meta name="generator" content={Astro.generator} />
 		

@@ -45,7 +45,7 @@ The package manager is **bun**. Do not run `npm install`; it will produce a
 | `bun run dev` | Dev server on localhost:4321 |
 | `bun run build` | Production build to `./dist/` |
 | `bun run preview` | Preview the build with Astro |
-| `bun run pages:dev` | Preview the build under Cloudflare Pages emulation |
+| `bun run worker:dev` | Serve the build as production does, with the Worker and `_headers` |
 | `bun run check:internal-links` | Verify every internal link in the build resolves |
 | `bun run check:links` | Verify external URLs in frontmatter still resolve |
 | `bun run check:gaps` | Diff the content against the canonical IANA registries |
@@ -105,10 +105,24 @@ run on **Workers Builds** and serve `dist` as Workers static assets, so the
 `assets` block in `wrangler.json` is what decides URL behaviour:
 `html_handling: "drop-trailing-slash"` serves `/errors/x` and redirects
 `/errors/x/` to it, and `not_found_handling: "404-page"` serves `404.html`
-with a 404 (without it, a miss is an empty 404). Test those with `bunx
-wrangler dev`, which runs the Workers asset rules; `bun run pages:dev`
-emulates Pages, which behaves differently on misses. `bun run deploy`
+with a 404 (without it, a miss is an empty 404). Test those with `bun run
+worker:dev`, which runs the Worker and the Workers asset rules. `bun run deploy`
 pushes a build directly, but the normal path is merging to `main`.
+
+`src/worker.ts` runs in front of `/errors/*` only, set by `run_worker_first`.
+A problem type URI is the one URL software follows by itself, so it negotiates:
+`Accept: text/markdown` and `application/json` get the siblings, anything else
+gets the page. A miss on `.md`, `.json` or a negotiated request is an RFC 9457
+problem, not the HTML 404. Everything else is served as static assets and never
+invokes the Worker, so keep that list short: Worker requests count against a
+daily limit and static assets do not. It logs what asks for a non-HTML format,
+with no address or token, to Workers Logs.
+
+Two `public/_headers` rules setting one header on a path send both values, so
+`Access-Control-Allow-Origin` must match each path once. A placeholder such as
+`/guides/:slug` also matches `/guides/x.md`, and `! Link` on `/*.md` removes the
+header under `wrangler dev` but not on Cloudflare. So check `_headers` changes on
+a version preview (`bunx wrangler versions upload`), not only locally.
 
 **After changing `ec.config.mjs`, clear the Astro cache** (`rm -rf .astro
 node_modules/.astro`) before building. Rendered Markdown is cached with
@@ -150,11 +164,16 @@ surfaced, has to be wired into each of them**:
 | Route | What it is |
 | :--- | :--- |
 | `src/pages/search-index.json.ts` | Index fetched by `CommandPalette.astro` for site search |
-| `src/pages/llms.txt.ts` | `/llms.txt`, a plain-text index of the catalogue |
+| `src/pages/llms.txt.ts` | `/llms.txt`, the way in for agents: how to use the site, every problem type, and each section with its size. Keep it readable in one fetch |
+| `src/pages/llms/[section].txt.ts` | `/llms/<section>.txt`, one section's full text |
+| `src/pages/[section].md.ts` | `/<section>.md`, a section's index |
 | `src/pages/og/[...path].ts` | Open Graph cards, rendered to PNG by sharp |
 | `src/pages/llms-full.txt.ts` | `/llms-full.txt`, every page as Markdown in one file |
 | `src/pages/<collection>/[slug].md.ts` | The Markdown sibling of each page, from `src/utils/markdown.ts` |
 | `src/pages/errors/[slug].json.ts`, `index.json.ts` | Problem types as JSON in the errors CLI format, from `src/utils/problemType.ts`, validating against `public/schemas/errors/v1/` |
+
+`public/openapi.json` describes the JSON and agent endpoints by hand: change it
+when they change, and check it with `legible check`.
 
 `public/.well-known/api-catalog` (RFC 9727) points agents at the errors JSON
 and its schemas; `public/_headers` gives it its Linkset media type.
@@ -168,7 +187,8 @@ See `src/assets/fonts/README.md` before changing a typeface.
 
 `/problem-json` is hand-written Astro, not a collection entry, so its table
 of contents is a `headings` array declared at the top of the file. Change a
-heading there and you must change the array to match.
+heading there and you must change the array to match. Its Markdown sibling,
+`src/pages/problem-json.md.ts`, is hand-written too, so keep the two in step.
 
 Structured data comes from `src/utils/jsonLd.ts`. The `scripts/` checks share
 `scripts/lib/` for Tabstack calls, content listing and frontmatter parsing.

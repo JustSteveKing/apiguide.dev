@@ -72,7 +72,7 @@ bun run dev
 | `bun run dev` | Dev server on localhost:4321 |
 | `bun run build` | Build to `./dist/` |
 | `bun run preview` | Preview the build with Astro |
-| `bun run pages:dev` | Preview under Cloudflare Pages emulation |
+| `bun run worker:dev` | Serve the build as production does, with the Worker and `_headers` |
 | `bun run deploy` | Deploy to Cloudflare Pages |
 
 ### Content checks

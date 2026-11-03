@@ -18,3 +18,55 @@
 # Markdown siblings of each page, and the full-text dump, for agents.
 /llms-full.txt
   Access-Control-Allow-Origin: *
+
+# Markdown siblings, the sectioned full text and the index, for agents, some of
+# them running in a browser. /errors/* has this already; two rules setting it on
+# one path would send "*, *", which browsers reject.
+/status-codes/*
+  Access-Control-Allow-Origin: *
+/headers/*
+  Access-Control-Allow-Origin: *
+/methods/*
+  Access-Control-Allow-Origin: *
+/guides/*
+  Access-Control-Allow-Origin: *
+/specifications/*
+  Access-Control-Allow-Origin: *
+/tools/*
+  Access-Control-Allow-Origin: *
+/errors.md
+  Access-Control-Allow-Origin: *
+/status-codes.md
+  Access-Control-Allow-Origin: *
+/headers.md
+  Access-Control-Allow-Origin: *
+/methods.md
+  Access-Control-Allow-Origin: *
+/guides.md
+  Access-Control-Allow-Origin: *
+/specifications.md
+  Access-Control-Allow-Origin: *
+/tools.md
+  Access-Control-Allow-Origin: *
+/problem-json.md
+  Access-Control-Allow-Origin: *
+/llms.txt
+  Access-Control-Allow-Origin: *
+/llms/*
+  Access-Control-Allow-Origin: *
+/search-index.json
+  Access-Control-Allow-Origin: *
+
+# The OpenAPI description of this site's own HTTP interface.
+/openapi.json
+  Content-Type: application/vnd.oai.openapi+json;version=3.1
+  Access-Control-Allow-Origin: *
+
+# Exact paths only. A rule such as /guides/:slug also matches /guides/x.md, and
+# "! Link" on /*.md removes it under wrangler dev but not on Cloudflare, so a
+# placeholder rule puts a wrong Link on every sibling. src/worker.ts sets Link on
+# /errors/<slug>, and other pages advertise theirs in the HTML.
+/
+  Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="alternate"; type="text/plain"
+/problem-json
+  Link: </problem-json.md>; rel="alternate"; type="text/markdown"
