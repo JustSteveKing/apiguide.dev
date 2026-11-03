@@ -11,7 +11,7 @@ The [agent-ready API checklist](/guides/agent-ready-checklist) and [how an API b
 
 So the practical question for a documentation site is what one fetch returns. On this site, the HTML for the [`forbidden` problem type](/errors/forbidden) is 41,994 bytes and its Markdown sibling is 3,548, with the same content for a reader that has no use for the navigation, styles and scripts.
 
-The sections below use this site as a worked example, because every behavior described can be checked with `curl`. One caveat applies to all of it: **these changes shipped on 2026-11-03, and their benefit has not been measured.** The byte counts are facts. Whether agents choose better or read more because of them is not yet known, and section 10 covers how to find out.
+The sections below use this site as a worked example, because every behavior described can be checked with `curl`. One caveat applies to all of it: **these changes shipped on 2026-11-03, and their benefit has not been shown.** The byte counts are facts. Whether agents choose better or read more because of them is not yet known, and section 10 covers how to find out.
 
 ---
 
@@ -49,7 +49,7 @@ Each step down is a choice the reader can make with what it learned from the ste
 
 ## 3. Summaries That Tell Similar Pages Apart
 
-A directory only helps if its descriptions separate the things a reader is choosing between. This site has five problem types for [`403 Forbidden`](/status-codes/403), and until recently `/llms.txt` described each of them as `HTTP 403: Forbidden`. That is true, and useless to a reader trying to choose, because the only way to tell them apart was to fetch all five.
+A directory only helps if its descriptions separate the things a reader is choosing between. This site has five problem types for [`403 Forbidden`](/status-codes/403), and until recently `/llms.txt` described each of them as `HTTP 403: Forbidden`. That left the title and the URL to do all the work of telling them apart, and clear names can carry a lot of that, but a line should add something to the name beside it.
 
 Each type now carries one sentence, the first of its "When to use it" section:
 
@@ -63,9 +63,7 @@ Each type now carries one sentence, the first of its "When to use it" section:
 
 Two things made this cheap. The sentence is derived from content that already existed, so there was nothing new to write and nothing new to keep in step, and the build fails if a page has no such paragraph. It is also the same sentence everywhere: the [JSON](/errors/forbidden.json), the search index, `/llms.txt` and the Markdown all use it.
 
-A useful way to test a description is to read the whole list cold and ask whether you could choose from it. If two lines could swap places unnoticed, neither is doing its job.
-
-<!-- RESULT NOTE FOR STEVE: if the agent choice test gives a number worth publishing, it goes here. Remove this comment before merging either way. -->
+A useful way to test a description is to read the whole list cold and ask whether you could choose from it. If two lines could swap places unnoticed, neither is doing its job. Do not assume this changes what an agent picks, though: good names may already be enough, and summaries are most likely to matter when the question is vague.
 
 Machine-readable output needs the same care. This site's rule is that a problem type [registered with IANA](https://www.iana.org/assignments/http-problem-types/) should be sent with its registered URI, but the per-type JSON used to omit that URI, so an agent reading it would have built the wrong `type`. If a value is the point of the page, put it in every format the page comes in.
 
@@ -232,7 +230,7 @@ This site's content is public and it has no evidence yet of the other signals, s
 Be careful with claims here, including this guide's. Smaller responses are measurable, and whether they produce better outcomes for your readers is a separate question that needs its own evidence. Analytics that run in page JavaScript will not count a client that fetches a page without executing it, so you may be looking at a dashboard that cannot see the traffic in question.
 
 - **Log what you can.** This site's Worker logs the format, path and `User-Agent` for each request that negotiates a non-HTML format, with no address or token. It cannot see requests served directly as static files, such as a `.md` fetched by URL outside `/errors/*`, so it undercounts.
-- **Test the choices directly.** Give an agent only your entry point and a set of realistic situations, then check what it picks. Wrong picks tell you which summaries need rewriting.
+- **Test the choices directly.** Give an agent only your entry point and a set of realistic situations, then check what it picks, against a control without the change. Wrong picks tell you which summaries need rewriting. Perfect scores on both sides may only mean the situations were too easy, so include vague ones.
 - **Decide what would change your mind.** Without a threshold, any number can be read as success.
 
 ---
