@@ -45,6 +45,7 @@ Everything in one file: [/llms-full.txt](${SITE}/llms-full.txt), ${words(entries
 - [Agent-Ready API Checklist](${SITE}/guides/agent-ready-checklist.md)
 - [Tool definitions](${SITE}/guides/tool-definitions.md)
 - [MCP servers](${SITE}/guides/mcp-servers.md)
+- [Making API documentation readable by agents](${SITE}/guides/agent-readable-documentation.md)
 
 ## Problem types
 
