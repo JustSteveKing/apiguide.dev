@@ -3,14 +3,12 @@
 // frontmatter still resolves, and lists draft items to watch for promotion to
 // a final standard.
 //
-// Each URL is fetched directly. Only when a site answers with a bot wall
-// (401, 403, 429, 503) is it retried through Tabstack, which renders it like
-// a browser. A URL neither can confirm is reported as unverified rather than
-// dead, so a Tabstack outage cannot turn every bot-walled link into a failure
-// or into a pass. Exits 1 if any link is dead.
+// Each URL is fetched directly. A site that answers with a bot wall (401, 403,
+// 429, 503) cannot be judged from a plain request, so it is reported as unverified
+// rather than dead or fine. Exits 1 if any link is dead.
 //
 // Usage: bun run check:links
-import { extractMarkdown, pool } from './lib/tabstack.mjs';
+import { pool } from './lib/pool.mjs';
 import { listFiles } from './lib/content.mjs';
 import { readFrontmatter } from './lib/frontmatter.mjs';
 
@@ -30,13 +28,7 @@ async function check(url) {
   const { status, note } = await direct(url);
   if (status >= 200 && status < 400) return { url, state: 'ok' };
   if (!BOT_WALL.has(status)) return { url, state: 'dead', note: status ? `HTTP ${status}` : note };
-  try {
-    const { content } = await extractMarkdown(url);
-    if (content && content.trim()) return { url, state: 'ok', note: `HTTP ${status} directly, rendered via Tabstack` };
-    return { url, state: 'unverified', note: `HTTP ${status} directly, Tabstack returned nothing` };
-  } catch (e) {
-    return { url, state: 'unverified', note: `HTTP ${status} directly, Tabstack failed: ${e.message.split('\n').find((l) => /api error/i.test(l))?.trim() ?? e.message.slice(0, 120)}` };
-  }
+  return { url, state: 'unverified', note: `HTTP ${status} directly, likely a bot wall` };
 }
 
 const CONCURRENCY = 4;

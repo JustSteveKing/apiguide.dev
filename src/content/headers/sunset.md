@@ -7,12 +7,12 @@ relatedCodes: []
 reference:
   title: "RFC 8594"
   url: https://www.rfc-editor.org/rfc/rfc8594.html
-updatedDate: 2026-07-10
+updatedDate: 2026-11-03
 ---
 
 ## What is the Sunset header?
 
-The `Sunset` response header, defined in RFC 8594, carries an HTTP-date indicating the point in time after which the resource is likely to become unresponsive or be removed. It lets API providers communicate a hard end-of-life to their consumers.
+The `Sunset` response header, defined in RFC 8594, carries an HTTP-date indicating the point in time after which the resource is likely to become unresponsive or be removed. It lets API providers announce a planned end-of-life to their consumers, though RFC 8594 says clients should treat the timestamp as a hint, not a guarantee.
 
 ## API Usage & Best Practices
 

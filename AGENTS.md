@@ -48,55 +48,61 @@ The package manager is **bun**. Do not run `npm install`; it will produce a
 | `bun run worker:dev` | Serve the build as production does, with the Worker and `_headers` |
 | `bun run check:internal-links` | Verify every internal link in the build resolves |
 | `bun run check:links` | Verify external URLs in frontmatter still resolve |
+| `bun run check:quotes` | Verify text quoted from an RFC is really in that RFC |
 | `bun run check:gaps` | Diff the content against the canonical IANA registries |
-| `bun run factcheck` | Fact-check changed pages against the live web |
+| `bun run factcheck` | Fact-check changed pages against primary sources |
 
 These checks are the only automated test of whether the content is still
 true, so run them when you touch content rather than treating them as
-optional. Only `factcheck` needs the **Tabstack CLI** (installed and
-authenticated, or `TABSTACK_BIN` pointing at it), because it needs a research
-agent. `check:gaps` reads the IANA registries directly as CSV and XML, and
-`check:links` fetches each URL itself and only falls back to Tabstack for
-sites that bot-wall a plain request.
+optional. Only `factcheck` needs a model: it runs **Claude Code** headless
+(`claude` signed in, or `FACTCHECK_BIN` pointing at it). `check:gaps` reads the
+IANA registries directly as CSV and XML, `check:quotes` reads RFCs as text, and
+`check:links` fetches each URL itself.
 
 Every check distinguishes "found a problem" from "could not run". A check
 that could not run exits non-zero and says so, because the old behaviour, a
 `check:gaps` that printed "Done" and exited 0 while every registry request
-was failing on an exhausted Tabstack quota, looked exactly like a pass.
+was failing on an exhausted API quota, looked exactly like a pass.
 
 - `check:gaps` exits 0 when it finds gaps and 2 when a registry cannot be
   read. Entries omitted on purpose live in `scripts/gaps-ignore.json`, each
   group with its reason, so its output lists only what nobody has decided
   about yet. Document an undecided entry or add it there; do not leave it.
 - `check:links` exits 1 on a dead link. A link that bot-walls a direct
-  request and that Tabstack cannot render either is reported as unverified,
-  not dead, and does not fail the run.
-- `factcheck` exits 2 if any page could not be checked.
+  request is reported as unverified, not dead, and does not fail the run.
+- `check:quotes` exits 1 on a quotation not found in the RFC its sentence names,
+  and 2 if an RFC cannot be read. Scare quotes in a sentence that names an RFC
+  live in `scripts/quotes-ignore.json` with their reason. Fix a real misquote;
+  do not ignore it.
+- `factcheck` exits 1 on findings and 2 if any page could not be checked. A page
+  that fetched no source counts as not checked, and each finding's quoted evidence
+  is looked up in its source by the script, not taken from the model. Findings are
+  leads to read against the source, not corrections to apply.
 
-`check:internal-links` needs no network and no Tabstack, only a build. It is
-the cheapest of the four and the one most likely to catch your mistake.
+`check:internal-links` needs no network and no model, only a build. It is the
+cheapest of these and the one most likely to catch your mistake.
 
-`bun run check:content` runs `check:internal-links`, `check:gaps` and
-`check:links` in that order. It does not run `factcheck`.
+`bun run check:content` runs `check:internal-links`, `check:quotes`, `check:gaps`
+and `check:links` in that order. It does not run `factcheck`, which spends usage
+on every page: expect about $0.40 reported for a short page, more for a long one.
 
 `factcheck` defaults to files changed against `HEAD~1`. To check one page,
 which is the nearest thing this repo has to running a single test:
 
 ```sh
 bun run factcheck -- methods/trace            # collection/slug shorthand
+bun run factcheck -- errors                   # a whole collection
 bun run factcheck -- src/content/errors/x.md  # or a path
+bun run factcheck -- --force errors/forbidden # ignore a stored result
 FACTCHECK_BASE=origin/main bun run factcheck  # diff against another base
 ```
 
+Results are stored in `scripts/out/factcheck/`, which is gitignored, keyed by a
+hash of the page. A long run can stop and resume, and an unchanged page is not
+checked again unless you pass `--force`.
+
 There is no test suite and no linter. `bun run build` (zod schemas, strict
 TypeScript) and the checks above are the whole of the safety net.
-
-Two further Tabstack scripts, `enrich:tools` and `research:guides`, write
-proposals to `scripts/out/`, which is gitignored. They never touch
-`src/content/`; their output is for a human to review and fold in by hand.
-`research:guides` still labels its planned guides with the old four
-categories (`caching`, `security`, `negotiation`, `core`), so map those onto
-the current eight before using anything it produces.
 
 ## Deployment
 
@@ -192,7 +198,7 @@ heading there and you must change the array to match. Its Markdown sibling,
 `src/pages/problem-json.md.ts`, is hand-written too, so keep the two in step.
 
 Structured data comes from `src/utils/jsonLd.ts`. The `scripts/` checks share
-`scripts/lib/` for Tabstack calls, content listing and frontmatter parsing.
+`scripts/lib/` for RFC text, content listing and frontmatter parsing.
 
 ## Where content goes
 
@@ -209,7 +215,7 @@ if your frontmatter is wrong you will find out from `bun run build`.
 | `src/content/errors/` | `errors` | 55 | `title`, `statusCode`, `statusText`, `category`, `publishedDate` |
 | `src/content/specifications/` | `specifications` | 56 | `title`, `description`, `currentVersion`, `officialUrl` |
 | `src/content/methods/` | `methods` | 19 | `name`, `description`, `safe`, `idempotent`, `cacheable` |
-| `src/content/sponsors/` | `sponsors` | 1 | `name`, `url` |
+| `src/content/sponsors/` | `sponsors` | 0 | `name`, `url` |
 
 ### Provenance: `reference` and `updatedDate`
 

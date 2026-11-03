@@ -73,28 +73,30 @@ bun run dev
 | `bun run build` | Build to `./dist/` |
 | `bun run preview` | Preview the build with Astro |
 | `bun run worker:dev` | Serve the build as production does, with the Worker and `_headers` |
-| `bun run deploy` | Deploy to Cloudflare Pages |
+| `bun run deploy` | Deploy to Cloudflare Workers |
 
 ### Content checks
 
 These check whether the content is still true, rather than whether it
-builds. Only `factcheck` needs the [Tabstack](https://tabstack.ai) CLI
-installed and authenticated, or `TABSTACK_BIN` pointing at it; `check:links`
-uses it as a fallback for sites that block plain requests. Each exits
-non-zero when it could not run, so a silent pass means a real pass.
+builds. Only `factcheck` needs a model: it runs
+[Claude Code](https://code.claude.com/docs) headless, signed in, or
+`FACTCHECK_BIN` pointing at it. Each exits non-zero when it could not run, so a
+silent pass means a real pass.
 
 | Command | Action |
 | :--- | :--- |
 | `bun run check:internal-links` | Confirm every internal link in the build resolves. Needs a build, no network |
 | `bun run check:links` | Confirm external URLs in frontmatter still resolve. Exits 1 on a dead link |
+| `bun run check:quotes` | Confirm text quoted from an RFC is really in it. Exits 1 on a quotation not found |
 | `bun run check:gaps` | Diff the catalogue against the IANA registries. Lists entries not yet documented or deliberately omitted in `scripts/gaps-ignore.json`; exits 2 if a registry cannot be read |
-| `bun run factcheck` | Fact-check changed pages against the live web. Exits 2 if a page could not be checked |
+| `bun run factcheck` | Fact-check changed pages against primary sources. Exits 1 on findings and 2 if a page could not be checked |
 
 `bun run factcheck` defaults to files changed against `HEAD~1`, and takes an
 explicit `collection/slug` or path:
 
 ```sh
 bun run factcheck -- methods/trace
+bun run factcheck -- errors
 FACTCHECK_BASE=origin/main bun run factcheck
 ```
 
