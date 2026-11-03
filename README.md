@@ -88,6 +88,7 @@ silent pass means a real pass.
 | `bun run check:internal-links` | Confirm every internal link in the build resolves. Needs a build, no network |
 | `bun run check:links` | Confirm external URLs in frontmatter still resolve. Exits 1 on a dead link |
 | `bun run check:quotes` | Confirm text quoted from an RFC is really in it. Exits 1 on a quotation not found |
+| `bun run check:facts` | Compare frontmatter and citations with IANA and the RFCs, with no model. Exits 1 on a mismatch |
 | `bun run check:gaps` | Diff the catalogue against the IANA registries. Lists entries not yet documented or deliberately omitted in `scripts/gaps-ignore.json`; exits 2 if a registry cannot be read |
 | `bun run factcheck` | Fact-check changed pages against primary sources. Exits 1 on findings and 2 if a page could not be checked |
 

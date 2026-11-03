@@ -67,7 +67,7 @@ Read the primary sources the page depends on with WebFetch: RFCs at https://www.
 
 Check every factual claim: RFC and section numbers, quotations, status codes, header and method semantics, and frontmatter values. Report only claims that a primary source contradicts ("wrong"), that give a false impression despite being literally true ("misleading"), or that state as fact something the cited source does not say ("unsupported"). Advice, opinion, style and invented example data are not factual claims.
 
-In frontmatter, \`standard: true\` on a header means it is registered with IANA, not that its document is standards track. An RFC being absent from a source you read is not evidence against a field defined somewhere else: search for it before calling a claim unsupported.
+In frontmatter, \`standard: true\` on a header means a published specification registered with IANA, whatever track its RFC is on, and \`standard: false\` means a draft or a de facto header, which can still be registered. An RFC being absent from a source you read is not evidence against a field defined somewhere else: search for it before calling a claim unsupported.
 
 For "wrong" and "misleading", source_url is the exact URL you read and source_quote is a short passage copied word for word from it, with no ellipsis. For "unsupported", source_quote may be empty. List every URL you read in sources_read.
 
