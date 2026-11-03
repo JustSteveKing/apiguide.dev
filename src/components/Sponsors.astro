@@ -5,7 +5,9 @@ import { getCollection } from 'astro:content';
 const supportUrl = 'https://github.com/sponsors/JustSteveKing';
 
 const rank: Record<string, number> = { premier: 0, standard: 1 };
-const sponsors = (await getCollection('sponsors')).sort((a, b) => {
+// Asking for an empty collection warns once per page, so only ask if there are files.
+const hasSponsors = Object.keys(import.meta.glob('/src/content/sponsors/*.{md,mdx}')).length > 0;
+const sponsors = (hasSponsors ? await getCollection('sponsors') : []).sort((a, b) => {
   const t = (rank[a.data.tier] ?? 9) - (rank[b.data.tier] ?? 9);
   if (t !== 0) return t;
   const o = (a.data.order ?? 999) - (b.data.order ?? 999);
