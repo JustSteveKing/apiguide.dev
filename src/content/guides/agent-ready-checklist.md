@@ -22,7 +22,7 @@ An agent never sees your controllers, your documentation site, or your README. I
 | Check | Why it matters |
 | --- | --- |
 | A specification exists and is generated from, or verified against, the running API | A specification that drifts is worse than none. It is confidently wrong, and it is the only thing the caller has |
-| Every operation has an `operationId` that is unique, stable and under 64 characters | The `operationId` typically becomes the tool's function name. OpenAI caps names at 64 characters and Anthropic at 128, so 64 is the safe intersection; longer names are rejected outright rather than truncated |
+| Every operation has an `operationId` that is unique, stable and under 64 characters | The `operationId` typically becomes the tool's function name. OpenAI caps names at 64 characters and Anthropic at 128, so 64 is the safe intersection |
 | Every operation has a description that states what it does *and when to use it* | The description is the entire prompt the caller reasons over. "Gets a user" does not distinguish this operation from the three beside it |
 | Every parameter and response property is typed and described | An untyped `data` object is an instruction to guess |
 | Request and response examples are complete payloads, not fragments | A caller assembling a body from leaf-level examples will omit whatever had none |

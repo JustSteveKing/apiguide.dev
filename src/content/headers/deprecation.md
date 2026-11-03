@@ -7,7 +7,7 @@ relatedCodes: []
 reference:
   title: "RFC 9745, Section 2"
   url: https://www.rfc-editor.org/rfc/rfc9745.html#section-2
-updatedDate: 2026-09-30
+updatedDate: 2026-11-03
 ---
 
 ## What is the Deprecation header?

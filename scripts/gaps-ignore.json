@@ -183,6 +183,16 @@
         "OData-MaxVersion"
       ],
       "reason": "Protocol-specific (OSLC, EDIINT AS2, MIME, OData internals). OData is covered by its specification page and OData-Version."
+    },
+    {
+      "names": [
+        "SoapAction",
+        "Close",
+        "Keep-Alive",
+        "Surrogate-Capability",
+        "Surrogate-Control"
+      ],
+      "reason": "SOAP, HTTP/1.1 connection management handled below the API, and an edge cache protocol. Not something an API designer sets or reads."
     }
   ]
 }
