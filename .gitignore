@@ -26,7 +26,7 @@ pnpm-debug.log*
 # PostHog setup wizard artifact
 posthog-setup-report.md
 
-# Tabstack enrichment review output (not committed)
+# Script output for review, such as stored factcheck results (not committed)
 scripts/out/
 
 # Wrangler local state (pages dev)

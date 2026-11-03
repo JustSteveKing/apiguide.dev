@@ -15,10 +15,9 @@
     "check:internal-links": "node scripts/check-internal-links.mjs",
     "check:gaps": "node scripts/check-gaps.mjs",
     "check:links": "node scripts/check-links.mjs",
-    "check:content": "bun run check:internal-links && bun run check:gaps && bun run check:links",
+    "check:quotes": "node scripts/check-quotes.mjs",
+    "check:content": "bun run check:internal-links && bun run check:quotes && bun run check:gaps && bun run check:links",
     "factcheck": "node scripts/factcheck.mjs",
-    "enrich:tools": "node scripts/enrich-tools.mjs",
-    "research:guides": "node scripts/research-guides.mjs",
     "sync:references": "node scripts/sync-references.mjs",
     "sync:dates": "node scripts/sync-dates.mjs",
     "figures": "bun src/figures/idempotency-keys/build.ts"

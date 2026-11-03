@@ -1,0 +1,27 @@
+[
+  {
+    "reason": "The author's own phrase in quotation marks, in a sentence that happens to name an RFC. Not a quotation from it.",
+    "quotes": [
+      {
+        "page": "headers/referer",
+        "quote": "where does traffic come from"
+      },
+      {
+        "page": "guides/agent-ready-checklist",
+        "quote": "who is still calling this"
+      },
+      {
+        "page": "guides/quotas-metering",
+        "quote": "back off and retry later"
+      },
+      {
+        "page": "specifications/http1-1",
+        "quote": "what does `409` mean"
+      },
+      {
+        "page": "specifications/http1-1",
+        "quote": "where does this message end"
+      }
+    ]
+  }
+]
