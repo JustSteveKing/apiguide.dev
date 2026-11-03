@@ -1,9 +1,11 @@
 // Runs in front of /errors/* only (run_worker_first in wrangler.json); every
 // other URL is served straight from static assets and never invokes this.
 //
-// A problem type URI is the one URL on this site that software follows on its
-// own, usually after receiving it in an error, so it answers in the format the
-// caller asks for, and a miss is an RFC 9457 problem rather than an HTML page.
+// A problem type URI is the URL here most likely to be looked up by a developer,
+// or by a tool or agent helping one, after receiving it in an error. RFC 9457 says
+// consumers should not dereference it automatically otherwise, so this is support
+// for debugging. It answers in the format the caller asks for, and a miss is an
+// RFC 9457 problem rather than an HTML page.
 
 interface Env {
   ASSETS: { fetch(request: Request): Promise<Response> };

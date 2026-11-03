@@ -110,7 +110,8 @@ worker:dev`, which runs the Worker and the Workers asset rules. `bun run deploy`
 pushes a build directly, but the normal path is merging to `main`.
 
 `src/worker.ts` runs in front of `/errors/*` only, set by `run_worker_first`.
-A problem type URI is the one URL software follows by itself, so it negotiates:
+A problem type URI is what a developer, or a tool or agent helping one, looks up
+after receiving it in an error, so it negotiates:
 `Accept: text/markdown` and `application/json` get the siblings, anything else
 gets the page. A miss on `.md`, `.json` or a negotiated request is an RFC 9457
 problem, not the HTML 404. Everything else is served as static assets and never
