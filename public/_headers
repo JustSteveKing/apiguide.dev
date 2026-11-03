@@ -18,3 +18,74 @@
 # Markdown siblings of each page, and the full-text dump, for agents.
 /llms-full.txt
   Access-Control-Allow-Origin: *
+
+# Markdown siblings, the sectioned full text and the index, for agents, some of
+# them running in a browser. /errors/* has this already; two rules setting it on
+# one path would send "*, *", which browsers reject.
+/status-codes/*
+  Access-Control-Allow-Origin: *
+/headers/*
+  Access-Control-Allow-Origin: *
+/methods/*
+  Access-Control-Allow-Origin: *
+/guides/*
+  Access-Control-Allow-Origin: *
+/specifications/*
+  Access-Control-Allow-Origin: *
+/tools/*
+  Access-Control-Allow-Origin: *
+/errors.md
+  Access-Control-Allow-Origin: *
+/status-codes.md
+  Access-Control-Allow-Origin: *
+/headers.md
+  Access-Control-Allow-Origin: *
+/methods.md
+  Access-Control-Allow-Origin: *
+/guides.md
+  Access-Control-Allow-Origin: *
+/specifications.md
+  Access-Control-Allow-Origin: *
+/tools.md
+  Access-Control-Allow-Origin: *
+/problem-json.md
+  Access-Control-Allow-Origin: *
+/llms.txt
+  Access-Control-Allow-Origin: *
+/llms/*
+  Access-Control-Allow-Origin: *
+/search-index.json
+  Access-Control-Allow-Origin: *
+
+# The OpenAPI description of this site's own HTTP interface.
+/openapi.json
+  Content-Type: application/vnd.oai.openapi+json;version=3.1
+  Access-Control-Allow-Origin: *
+
+# Advertise each page's siblings in the response, so a client need not parse the
+# HTML to find them.
+/
+  Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="alternate"; type="text/plain"
+/errors/:slug
+  Link: </errors/:slug.md>; rel="alternate"; type="text/markdown", </errors/:slug.json>; rel="alternate"; type="application/json"
+/status-codes/:slug
+  Link: </status-codes/:slug.md>; rel="alternate"; type="text/markdown"
+/headers/:slug
+  Link: </headers/:slug.md>; rel="alternate"; type="text/markdown"
+/methods/:slug
+  Link: </methods/:slug.md>; rel="alternate"; type="text/markdown"
+/guides/:slug
+  Link: </guides/:slug.md>; rel="alternate"; type="text/markdown"
+/specifications/:slug
+  Link: </specifications/:slug.md>; rel="alternate"; type="text/markdown"
+/tools/:category/:slug
+  Link: </tools/:category/:slug.md>; rel="alternate"; type="text/markdown"
+/problem-json
+  Link: </problem-json.md>; rel="alternate"; type="text/markdown"
+
+# The :slug rules above also match the siblings themselves, so take the header
+# back off them. This has to come after the rules that set it.
+/*.md
+  ! Link
+/*.json
+  ! Link

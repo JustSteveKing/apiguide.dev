@@ -1,0 +1,412 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "apiguide.dev",
+    "version": "1.0.0",
+    "description": "The read-only HTTP interface of apiguide.dev, a language-agnostic reference for HTTP API design. No authentication, and every response comes from a static file, so nothing here changes anything.",
+    "license": {
+      "name": "CC BY-SA 4.0",
+      "identifier": "CC-BY-SA-4.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://apiguide.dev"
+    }
+  ],
+  "security": [],
+  "tags": [
+    {
+      "name": "Problem types",
+      "description": "RFC 9457 problem types that any API may use as its type."
+    },
+    {
+      "name": "Discovery",
+      "description": "Finding pages in the reference."
+    }
+  ],
+  "paths": {
+    "/errors/index.json": {
+      "get": {
+        "operationId": "listProblemTypes",
+        "tags": [
+          "Problem types"
+        ],
+        "summary": "List every problem type",
+        "description": "Returns the whole catalogue, with each type's status and a sentence on when to use it. Use this to choose a type, then getProblemTypeDocs for the detail on the ones that fit.",
+        "responses": {
+          "200": {
+            "description": "The catalogue.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "catalogue",
+                    "registered",
+                    "types"
+                  ],
+                  "properties": {
+                    "schemas": {
+                      "type": "object",
+                      "description": "The JSON Schemas these documents validate against."
+                    },
+                    "catalogue": {
+                      "type": "object",
+                      "description": "The catalogue's format version and base_url.",
+                      "properties": {
+                        "schema": {
+                          "type": "string",
+                          "description": "The format version."
+                        },
+                        "base_url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "Prepended to a slug to form its URI."
+                        }
+                      }
+                    },
+                    "registered": {
+                      "type": "object",
+                      "description": "Slug to registry URI, for types IANA has registered.",
+                      "additionalProperties": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    },
+                    "types": {
+                      "type": "array",
+                      "description": "Every problem type.",
+                      "items": {
+                        "$ref": "#/components/schemas/ProblemType"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "catalogue": {
+                    "schema": "v1",
+                    "base_url": "https://apiguide.dev/errors/"
+                  },
+                  "registered": {},
+                  "types": [
+                    {
+                      "type": "forbidden",
+                      "title": "Forbidden",
+                      "status": 403,
+                      "summary": "Use 403 Forbidden when the server knows who the caller is, the credentials are valid, and your authorization rules still refuse this action."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/errors/{slug}.json": {
+      "get": {
+        "operationId": "getProblemType",
+        "tags": [
+          "Problem types"
+        ],
+        "summary": "Get one problem type as data",
+        "description": "Returns one type's status, summary, registered URI if any, and extension members. For prose on when not to use it, use getProblemTypeDocs.",
+        "responses": {
+          "200": {
+            "description": "The problem type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemType"
+                },
+                "example": {
+                  "type": "forbidden",
+                  "title": "Forbidden",
+                  "status": 403,
+                  "summary": "Use 403 Forbidden when the server knows who the caller is, the credentials are valid, and your authorization rules still refuse this action."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no such problem type.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "example": {
+                  "type": "https://apiguide.dev/errors/resource-not-found",
+                  "title": "Resource Not Found",
+                  "status": 404,
+                  "detail": "There is no problem type at /errors/nope.json. The catalogue is at https://apiguide.dev/errors/index.json.",
+                  "instance": "/errors/nope.json"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "The problem type's slug, such as forbidden. List them with listProblemTypes.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+            },
+            "example": "forbidden"
+          }
+        ]
+      }
+    },
+    "/errors/{slug}": {
+      "get": {
+        "operationId": "getProblemTypeDocs",
+        "tags": [
+          "Problem types"
+        ],
+        "summary": "Read a problem type's documentation",
+        "description": "The URL a problem's type points at. It answers in the format the Accept header prefers: HTML by default, text/markdown for the page without its shell, application/json for the same document as getProblemType.",
+        "responses": {
+          "200": {
+            "description": "The documentation.",
+            "content": {
+              "text/markdown": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "# Forbidden\n\n> Use 403 Forbidden when the server knows who the caller is."
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "<!DOCTYPE html>"
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemType"
+                },
+                "example": {
+                  "type": "forbidden",
+                  "title": "Forbidden",
+                  "status": 403,
+                  "summary": "Use 403 Forbidden when the server knows who the caller is, the credentials are valid, and your authorization rules still refuse this action."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no such problem type. Callers asking for HTML get the site's 404 page; callers asking for Markdown or JSON get a problem.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "example": {
+                  "type": "https://apiguide.dev/errors/resource-not-found",
+                  "title": "Resource Not Found",
+                  "status": 404,
+                  "detail": "There is no problem type at /errors/nope.json. The catalogue is at https://apiguide.dev/errors/index.json.",
+                  "instance": "/errors/nope.json"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "The problem type's slug, such as forbidden. List them with listProblemTypes.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+            },
+            "example": "forbidden"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "description": "The format wanted.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "text/markdown"
+          }
+        ]
+      }
+    },
+    "/search-index.json": {
+      "get": {
+        "operationId": "getSearchIndex",
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Get the index of every page",
+        "description": "Returns the title, description, path and kind of every reference page in one array, about 100 KB. There is no search endpoint, so search the array yourself.",
+        "responses": {
+          "200": {
+            "description": "Every page.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "title",
+                      "description",
+                      "url",
+                      "type"
+                    ],
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "The page's title."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "What the page covers."
+                      },
+                      "url": {
+                        "type": "string",
+                        "description": "The page's path. Append .md for Markdown."
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "The kind of page, such as Status Code."
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "title": "404 Not Found",
+                    "description": "The server cannot find the requested resource or URI route.",
+                    "url": "/status-codes/404",
+                    "type": "Status Code"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/llms.txt": {
+      "get": {
+        "operationId": "getAgentIndex",
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Get the entry point for agents",
+        "description": "Returns how to use the site, every problem type, and a link to each other section with its size. Start here if you know nothing about the site.",
+        "responses": {
+          "200": {
+            "description": "The index, as Markdown in plain text.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "# apiguide.dev"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProblemType": {
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "status",
+          "summary"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The slug. Unless registered_type is present, the URI to send is https://apiguide.dev/errors/ followed by this.",
+            "examples": [
+              "forbidden"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "description": "A short summary, the same for every occurrence.",
+            "examples": [
+              "Forbidden"
+            ]
+          },
+          "status": {
+            "type": "integer",
+            "minimum": 400,
+            "maximum": 599,
+            "description": "The HTTP status to send with this problem.",
+            "examples": [
+              403
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "description": "One sentence on when to use this type, for choosing between types that share a status."
+          },
+          "registered_type": {
+            "type": "string",
+            "format": "uri",
+            "description": "The URI IANA registered for this problem. When present, send it as the type instead of this site's URI."
+          },
+          "extensions": {
+            "type": "object",
+            "description": "Extension members this type carries, keyed by member name, each with its JSON type.",
+            "additionalProperties": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Problem": {
+        "type": "object",
+        "description": "An RFC 9457 problem.",
+        "required": [
+          "type",
+          "title",
+          "status"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri",
+            "description": "Identifies the problem type."
+          },
+          "title": {
+            "type": "string",
+            "description": "A short summary of the problem type."
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code."
+          },
+          "detail": {
+            "type": "string",
+            "description": "What went wrong with this request."
+          },
+          "instance": {
+            "type": "string",
+            "description": "The path that was requested."
+          }
+        }
+      }
+    }
+  }
+}
