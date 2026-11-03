@@ -215,7 +215,7 @@ if your frontmatter is wrong you will find out from `bun run build`.
 | `src/content/errors/` | `errors` | 55 | `title`, `statusCode`, `statusText`, `category`, `publishedDate` |
 | `src/content/specifications/` | `specifications` | 56 | `title`, `description`, `currentVersion`, `officialUrl` |
 | `src/content/methods/` | `methods` | 19 | `name`, `description`, `safe`, `idempotent`, `cacheable` |
-| `src/content/sponsors/` | `sponsors` | 1 | `name`, `url` |
+| `src/content/sponsors/` | `sponsors` | 0 | `name`, `url` |
 
 ### Provenance: `reference` and `updatedDate`
 
