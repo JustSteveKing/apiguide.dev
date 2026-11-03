@@ -49,6 +49,7 @@ The package manager is **bun**. Do not run `npm install`; it will produce a
 | `bun run check:internal-links` | Verify every internal link in the build resolves |
 | `bun run check:links` | Verify external URLs in frontmatter still resolve |
 | `bun run check:quotes` | Verify text quoted from an RFC is really in that RFC |
+| `bun run check:facts` | Compare frontmatter and citations with IANA and the RFCs, with no model |
 | `bun run check:gaps` | Diff the content against the canonical IANA registries |
 | `bun run factcheck` | Fact-check changed pages against primary sources |
 
@@ -56,7 +57,8 @@ These checks are the only automated test of whether the content is still
 true, so run them when you touch content rather than treating them as
 optional. Only `factcheck` needs a model: it runs **Claude Code** headless
 (`claude` signed in, or `FACTCHECK_BIN` pointing at it). `check:gaps` reads the
-IANA registries directly as CSV and XML, `check:quotes` reads RFCs as text, and
+IANA registries directly as CSV and XML, `check:quotes` and `check:facts` read
+RFCs as text, and
 `check:links` fetches each URL itself.
 
 Every check distinguishes "found a problem" from "could not run". A check
@@ -74,6 +76,12 @@ was failing on an exhausted API quota, looked exactly like a pass.
   and 2 if an RFC cannot be read. Scare quotes in a sentence that names an RFC
   live in `scripts/quotes-ignore.json` with their reason. Fix a real misquote;
   do not ignore it.
+- `check:facts` exits 1 on a mismatch and 2 if a source cannot be read. It checks
+  frontmatter against IANA, that cited RFC sections exist, that a page's reference
+  section mentions its topic, that an RFC said to define a topic mentions it, and
+  by comparing words, that "RFC N says MUST" uses the RFC's keyword. It cannot judge
+  meaning: run on 10 planted errors it caught 4, where `factcheck` caught all 10.
+  Exceptions live in `scripts/facts-ignore.json`.
 - `factcheck` exits 1 on findings and 2 if any page could not be checked. A page
   that fetched no source counts as not checked, and each finding's quoted evidence
   is looked up in its source by the script, not taken from the model. Findings are
@@ -82,8 +90,8 @@ was failing on an exhausted API quota, looked exactly like a pass.
 `check:internal-links` needs no network and no model, only a build. It is the
 cheapest of these and the one most likely to catch your mistake.
 
-`bun run check:content` runs `check:internal-links`, `check:quotes`, `check:gaps`
-and `check:links` in that order. It does not run `factcheck`, which spends usage
+`bun run check:content` runs `check:internal-links`, `check:quotes`, `check:facts`,
+`check:gaps` and `check:links` in that order. It does not run `factcheck`, which spends usage
 on every page: expect about $0.40 reported for a short page, more for a long one.
 
 `factcheck` defaults to files changed against `HEAD~1`. To check one page,

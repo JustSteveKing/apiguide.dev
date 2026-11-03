@@ -58,7 +58,7 @@ function facts(entry: ReferenceEntry): [string, string][] {
     case 'statusCodes': out.push(['Class', entry.data.category]); break;
     case 'headers':
       out.push(['Direction', entry.data.category]);
-      out.push(['Registered', entry.data.standard ? 'yes' : 'no (de facto)']);
+      out.push(['Standardized', entry.data.standard ? 'yes' : 'no']);
       break;
     case 'methods':
       out.push(['Safe', entry.data.safe ? 'yes' : 'no']);
