@@ -203,7 +203,7 @@ if your frontmatter is wrong you will find out from `bun run build`.
 | :--- | :--- | ---: | :--- |
 | `src/content/status-codes/` | `statusCodes` | 63 | `code`, `title`, `description`, `category` |
 | `src/content/headers/` | `headers` | 118 | `name`, `description`, `category`, `standard` |
-| `src/content/guides/` | `guides` | 56 | `title`, `description`, `category` |
+| `src/content/guides/` | `guides` | 57 | `title`, `description`, `category` |
 | `src/content/tools/` | `tools` | 69 | `name`, `description`, `category`, `lifecycleStages`, `url`, `pricing` |
 | `src/content/errors/` | `errors` | 55 | `title`, `statusCode`, `statusText`, `category`, `publishedDate` |
 | `src/content/specifications/` | `specifications` | 56 | `title`, `description`, `currentVersion`, `officialUrl` |
